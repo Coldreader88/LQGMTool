@@ -59,14 +59,7 @@
     <Reference Include="System.Data.SQLite">
       <HintPath>..\..\DLL\System.Data.SQLite.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SQLite.Linq">
-      <HintPath>..\..\DLL\System.Data.SQLite.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -74,12 +67,28 @@
   <ItemGroup>
     <Compile Include="Bean\GameClass.cs" />
     <Compile Include="Bean\Item.cs" />
+    <Compile Include="Bean\ItemCategory.cs" />
+    <Compile Include="Bean\ItemClassInfo.cs" />
     <Compile Include="Bean\Mail.cs" />
     <Compile Include="Bean\User.cs" />
-    <Compile Include="DbSetting.cs" />
+    <Compile Include="ChangeNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeNameForm.Designer.cs">
+      <DependentUpon>ChangeNameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeUserLevelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChangeUserLevelForm.Designer.cs">
+      <DependentUpon>ChangeUserLevelForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helper\FormExpress.cs" />
     <Compile Include="Helper\IniHelper.cs" />
     <Compile Include="Helper\MSSqlHelper.cs" />
+    <Compile Include="Helper\SQLiteHelper.cs" />
+    <Compile Include="Helper\ItemClassInfoHelper.cs" />
+    <Compile Include="Helper\TextHelper.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +99,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="win32\Kernel32.cs" />
+    <EmbeddedResource Include="ChangeNameForm.resx">
+      <DependentUpon>ChangeNameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChangeUserLevelForm.resx">
+      <DependentUpon>ChangeUserLevelForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

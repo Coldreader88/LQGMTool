@@ -1,31 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Data.SQLite;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace GMTool.Helper
 {
-    public class MSSqlHelper
+    public class SQLiteHelper
     {
-        private SqlConnection conn;
-        private string connStr;
-        public MSSqlHelper()
+        private SQLiteConnection conn;
+        private string path;
+        public SQLiteHelper()
         {
-            this.connStr = null;
+            this.path = null;
         }
-        public MSSqlHelper(string connStr)
+        public SQLiteHelper(string path)
         {
-            this.connStr = connStr;
+            this.path = path;
         }
         public bool Open()
         {
-            return Open(this.connStr);
+            return Open(this.path);
         }
-        public bool Open(string connStr)
+        public bool Open(string path)
         {
-            if (connStr == null)
+            if (path == null)
             {
                 return false;
             }
@@ -33,21 +34,21 @@ namespace GMTool.Helper
             {
                 Close();
             }
-            this.connStr = connStr;
-            conn = new SqlConnection(connStr);
+            this.path = path;
+            conn = new SQLiteConnection("Data Source =" + path);
             try
             {
                 conn.Open();
             }
             catch (Exception)
             {
-                return false;
+
             }
             return IsOpen;
         }
         public bool IsOpen
         {
-            get { return conn != null && conn.State == ConnectionState.Open; }
+            get { return conn != null; }
         }
 
         public void Close()
@@ -65,19 +66,18 @@ namespace GMTool.Helper
                 }
             }
         }
-        public SqlDataReader GetReader(string strSQL)
+        public SQLiteDataReader GetReader(string strSQL)
         {
             return GetReader(strSQL, null);
         }
 
-        public SqlDataReader GetReader(string strSQL, SqlParameter[] paras)
+        public SQLiteDataReader GetReader(string strSQL, SqlParameter[] paras)
         {
             return GetReader(strSQL, paras, CommandType.Text);
         }
-        public SqlDataReader GetReader(string strSQL, SqlParameter[] paras, CommandType cmdtype)
+        public SQLiteDataReader GetReader(string strSQL, SqlParameter[] paras, CommandType cmdtype)
         {
-            if (!IsOpen) return null;
-            SqlCommand command = new SqlCommand(strSQL, conn)
+            SQLiteCommand command = new SQLiteCommand(strSQL, conn)
             {
                 CommandType = cmdtype
             };
@@ -101,9 +101,8 @@ namespace GMTool.Helper
 
         public int ExcuteSQL(string strSQL, SqlParameter[] paras, CommandType cmdType)
         {
-            if (!IsOpen) return 0;
             int num = 0;
-            using (SqlCommand command = new SqlCommand(strSQL, this.conn)
+            using (SQLiteCommand command = new SQLiteCommand(strSQL, this.conn)
             {
                 CommandType = cmdType
             })
@@ -128,9 +127,8 @@ namespace GMTool.Helper
 
         public int ExcuteScalarSQL(string strSQL, SqlParameter[] paras, CommandType cmdType)
         {
-            if (!IsOpen) return 0;
             int num = 0;
-            using (SqlCommand command = new SqlCommand(strSQL, this.conn)
+            using (SQLiteCommand command = new SQLiteCommand(strSQL, this.conn)
             {
                 CommandType = cmdType
             })

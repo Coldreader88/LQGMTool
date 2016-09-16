@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -23,44 +24,69 @@ namespace GMTool
 
         public static int GetSelectIndex(this ListView listView)
         {
-            if (listView.SelectedItems.Count > 0)
+            if (listView.SelectedItems != null)
             {
-                return listView.SelectedItems[0].Index;
+                if (listView.SelectedItems.Count > 0)
+                {
+                    return listView.SelectedItems[0].Index;
+                }
             }
             return -1;
         }
         public static int[] GetSelectIndexs(this ListView listView)
         {
-            int count = listView.SelectedItems.Count;
-            if (count > 0)
+            if (listView.SelectedItems != null)
             {
-                int[] indexs = new int[count];
-                for (int i = 0; i < count; i++)
+                int count = listView.SelectedItems.Count;
+                if (count > 0)
                 {
-                    indexs[i] = listView.SelectedItems[i].Index;
+                    int[] indexs = new int[count];
+                    for (int i = 0; i < count; i++)
+                    {
+                        indexs[i] = listView.SelectedItems[i].Index;
+                    }
+                    return indexs;
                 }
-                return indexs;
             }
             return null;
         }
         public static T GetSelectItem<T>(this ListView listView)
         {
-            if (listView.SelectedItems.Count > 0)
-            {
-                return (T)listView.SelectedItems[0].Tag;
+            if (listView.SelectedItems != null){
+                if (listView.SelectedItems.Count > 0)
+                {
+                    return (T)listView.SelectedItems[0].Tag;
+                }
             }
             return default(T);
         }
 
         public static T[] GetSelectItems<T>(this ListView listView)
         {
-            int count = listView.SelectedItems.Count;
+            if (listView.SelectedItems != null)
+            {
+                int count = listView.SelectedItems.Count;
+                if (count > 0)
+                {
+                    T[] indexs = new T[count];
+                    for (int i = 0; i < count; i++)
+                    {
+                        indexs[i] = (T)listView.SelectedItems[i].Tag;
+                    }
+                    return indexs;
+                }
+            }
+            return null;
+        }
+        public static T[] GetItems<T>(this ListView listView)
+        {
+            int count = listView.Items.Count;
             if (count > 0)
             {
                 T[] indexs = new T[count];
                 for (int i = 0; i < count; i++)
                 {
-                    indexs[i] = (T)listView.SelectedItems[i].Tag;
+                    indexs[i] = (T)listView.Items[i].Tag;
                 }
                 return indexs;
             }
@@ -83,6 +109,24 @@ namespace GMTool
             {
                 listView.Items[index].EnsureVisible();
             }
+        }
+
+        public static Control GetMenuConrtol(this ToolStripMenuItem menu)
+        {
+            if (menu.GetCurrentParent() != null && menu.GetCurrentParent().ContextMenuStrip!=null)
+            {
+                return menu.GetCurrentParent().ContextMenuStrip.SourceControl;
+            }
+            if (menu.GetCurrentParent() != null && menu.GetCurrentParent().ContextMenu != null)
+            {
+                return menu.GetCurrentParent().ContextMenu.SourceControl;
+            }
+            if(menu.GetCurrentParent() is ContextMenuStrip)
+            {
+                ContextMenuStrip cm = (ContextMenuStrip)menu.GetCurrentParent();
+                return cm.SourceControl;
+            }
+            return null;
         }
     }
 }

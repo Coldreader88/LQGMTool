@@ -29,18 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "测试",
             "艾丽莎",
             "12"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
-            "长剑",
-            "单手剑",
-            "2016-11-26",
-            "#FF0F0F",
-            "#FF0F0F",
-            "#FF0F0F",
-            "0"}, -1);
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btn_mssql_open = new System.Windows.Forms.Button();
@@ -67,14 +59,15 @@
             this.contentMenuUserResetGroup = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.contentMenuUserRefresh = new System.Windows.Forms.ToolStripMenuItem();
-            this.list_items = new System.Windows.Forms.ListView();
+            this.list_items_normal = new System.Windows.Forms.ListView();
             this.ch_items_name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_items_type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ch_items_time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_items_color1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_items_color2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_items_color3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ch_items_power = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_items_time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuItem = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.contentMenuDeleteItems = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -92,7 +85,6 @@
             this.contentMenuItemEnchWeapon = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMenuItemEnchClothes = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMenuItemEnchInner = new System.Windows.Forms.ToolStripMenuItem();
-            this.lb_items = new System.Windows.Forms.Label();
             this.list_search = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -124,6 +116,18 @@
             this.tab_mail_user = new System.Windows.Forms.TabPage();
             this.list_mail_user = new System.Windows.Forms.ListView();
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tab_items_normal = new System.Windows.Forms.TabPage();
+            this.tab_items_cash = new System.Windows.Forms.TabPage();
+            this.list_items_cash = new System.Windows.Forms.ListView();
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             this.contextMenuUser.SuspendLayout();
             this.contextMenuItem.SuspendLayout();
@@ -132,6 +136,9 @@
             this.tab_mail_send.SuspendLayout();
             this.contextMenuMail.SuspendLayout();
             this.tab_mail_user.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tab_items_normal.SuspendLayout();
+            this.tab_items_cash.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -145,6 +152,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.groupBox1.Controls.Add(this.btn_mssql_open);
             this.groupBox1.Controls.Add(this.tb_mssql_db);
             this.groupBox1.Controls.Add(this.tb_mssql_server);
@@ -248,6 +256,8 @@
             // 
             // list_users
             // 
+            this.list_users.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.list_users.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ch_userlist_name,
             this.ch_userlist_class,
@@ -259,7 +269,7 @@
             this.list_users.GridLines = true;
             this.list_users.HideSelection = false;
             this.list_users.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem2});
             this.list_users.LabelWrap = false;
             this.list_users.Location = new System.Drawing.Point(7, 32);
             this.list_users.MultiSelect = false;
@@ -366,69 +376,76 @@
             this.contentMenuUserRefresh.Text = "刷新角色";
             this.contentMenuUserRefresh.Click += new System.EventHandler(this.menuRefreshUsers_Click);
             // 
-            // list_items
+            // list_items_normal
             // 
-            this.list_items.BackColor = System.Drawing.SystemColors.Window;
-            this.list_items.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.list_items_normal.BackColor = System.Drawing.SystemColors.Window;
+            this.list_items_normal.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ch_items_name,
+            this.columnHeader12,
             this.ch_items_type,
-            this.ch_items_time,
             this.ch_items_color1,
             this.ch_items_color2,
             this.ch_items_color3,
-            this.ch_items_power});
-            this.list_items.ContextMenuStrip = this.contextMenuItem;
-            this.list_items.Enabled = false;
-            this.list_items.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.list_items.FullRowSelect = true;
-            this.list_items.GridLines = true;
-            this.list_items.HideSelection = false;
-            this.list_items.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
-            this.list_items.LabelWrap = false;
-            this.list_items.Location = new System.Drawing.Point(252, 32);
-            this.list_items.MultiSelect = false;
-            this.list_items.Name = "list_items";
-            this.list_items.ShowItemToolTips = true;
-            this.list_items.Size = new System.Drawing.Size(635, 533);
-            this.list_items.TabIndex = 3;
-            this.list_items.UseCompatibleStateImageBehavior = false;
-            this.list_items.View = System.Windows.Forms.View.Details;
+            this.columnHeader13,
+            this.ch_items_time});
+            this.list_items_normal.ContextMenuStrip = this.contextMenuItem;
+            this.list_items_normal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.list_items_normal.Enabled = false;
+            this.list_items_normal.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.list_items_normal.FullRowSelect = true;
+            this.list_items_normal.GridLines = true;
+            this.list_items_normal.HideSelection = false;
+            this.list_items_normal.LabelEdit = true;
+            this.list_items_normal.LabelWrap = false;
+            this.list_items_normal.Location = new System.Drawing.Point(3, 3);
+            this.list_items_normal.Name = "list_items_normal";
+            this.list_items_normal.ShowItemToolTips = true;
+            this.list_items_normal.Size = new System.Drawing.Size(747, 519);
+            this.list_items_normal.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.list_items_normal.TabIndex = 3;
+            this.list_items_normal.UseCompatibleStateImageBehavior = false;
+            this.list_items_normal.View = System.Windows.Forms.View.Details;
+            this.list_items_normal.SelectedIndexChanged += new System.EventHandler(this.list_items_normal_SelectedIndexChanged);
             // 
             // ch_items_name
             // 
             this.ch_items_name.Text = "名字";
-            this.ch_items_name.Width = 194;
+            this.ch_items_name.Width = 280;
+            // 
+            // columnHeader12
+            // 
+            this.columnHeader12.Text = "数量";
+            this.columnHeader12.Width = 75;
             // 
             // ch_items_type
             // 
             this.ch_items_type.Text = "类型";
-            this.ch_items_type.Width = 77;
+            this.ch_items_type.Width = 80;
+            // 
+            // ch_items_color1
+            // 
+            this.ch_items_color1.Text = "颜色1";
+            this.ch_items_color1.Width = 52;
+            // 
+            // ch_items_color2
+            // 
+            this.ch_items_color2.Text = "颜色2";
+            this.ch_items_color2.Width = 52;
+            // 
+            // ch_items_color3
+            // 
+            this.ch_items_color3.Text = "颜色3";
+            this.ch_items_color3.Width = 49;
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "强化";
+            this.columnHeader13.Width = 45;
             // 
             // ch_items_time
             // 
             this.ch_items_time.Text = "到期时间";
             this.ch_items_time.Width = 90;
-            // 
-            // ch_items_color1
-            // 
-            this.ch_items_color1.Text = "颜色1";
-            this.ch_items_color1.Width = 64;
-            // 
-            // ch_items_color2
-            // 
-            this.ch_items_color2.Text = "颜色2";
-            this.ch_items_color2.Width = 68;
-            // 
-            // ch_items_color3
-            // 
-            this.ch_items_color3.Text = "颜色3";
-            this.ch_items_color3.Width = 64;
-            // 
-            // ch_items_power
-            // 
-            this.ch_items_power.Text = "强化";
-            this.ch_items_power.Width = 43;
             // 
             // contextMenuItem
             // 
@@ -555,19 +572,10 @@
             this.contentMenuItemEnchInner.Size = new System.Drawing.Size(100, 22);
             this.contentMenuItemEnchInner.Text = "内衣";
             // 
-            // lb_items
-            // 
-            this.lb_items.BackColor = System.Drawing.SystemColors.Control;
-            this.lb_items.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lb_items.Location = new System.Drawing.Point(252, 6);
-            this.lb_items.Name = "lb_items";
-            this.lb_items.Size = new System.Drawing.Size(635, 23);
-            this.lb_items.TabIndex = 0;
-            this.lb_items.Text = "背包物品";
-            this.lb_items.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // list_search
             // 
+            this.list_search.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.list_search.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2});
@@ -578,7 +586,7 @@
             this.list_search.GridLines = true;
             this.list_search.HideSelection = false;
             this.list_search.LabelWrap = false;
-            this.list_search.Location = new System.Drawing.Point(891, 35);
+            this.list_search.Location = new System.Drawing.Point(1021, 35);
             this.list_search.Name = "list_search";
             this.list_search.ShowItemToolTips = true;
             this.list_search.Size = new System.Drawing.Size(235, 457);
@@ -627,8 +635,9 @@
             // 
             // label7
             // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(894, 553);
+            this.label7.Location = new System.Drawing.Point(1024, 553);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(53, 12);
             this.label7.TabIndex = 4;
@@ -636,7 +645,8 @@
             // 
             // tb_senditem_count
             // 
-            this.tb_senditem_count.Location = new System.Drawing.Point(950, 551);
+            this.tb_senditem_count.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb_senditem_count.Location = new System.Drawing.Point(1080, 551);
             this.tb_senditem_count.MaxLength = 12;
             this.tb_senditem_count.Name = "tb_senditem_count";
             this.tb_senditem_count.Size = new System.Drawing.Size(176, 21);
@@ -647,8 +657,9 @@
             // 
             // btn_senditem_send_other
             // 
+            this.btn_senditem_send_other.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_senditem_send_other.Enabled = false;
-            this.btn_senditem_send_other.Location = new System.Drawing.Point(1017, 619);
+            this.btn_senditem_send_other.Location = new System.Drawing.Point(1147, 619);
             this.btn_senditem_send_other.Name = "btn_senditem_send_other";
             this.btn_senditem_send_other.Size = new System.Drawing.Size(110, 32);
             this.btn_senditem_send_other.TabIndex = 5;
@@ -658,8 +669,9 @@
             // 
             // btn_senditem_send
             // 
+            this.btn_senditem_send.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_senditem_send.Enabled = false;
-            this.btn_senditem_send.Location = new System.Drawing.Point(894, 618);
+            this.btn_senditem_send.Location = new System.Drawing.Point(1024, 618);
             this.btn_senditem_send.Name = "btn_senditem_send";
             this.btn_senditem_send.Size = new System.Drawing.Size(110, 32);
             this.btn_senditem_send.TabIndex = 5;
@@ -669,8 +681,9 @@
             // 
             // tb_senditem_name
             // 
+            this.tb_senditem_name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.tb_senditem_name.Enabled = false;
-            this.tb_senditem_name.Location = new System.Drawing.Point(950, 498);
+            this.tb_senditem_name.Location = new System.Drawing.Point(1080, 498);
             this.tb_senditem_name.MaxLength = 128;
             this.tb_senditem_name.Name = "tb_senditem_name";
             this.tb_senditem_name.Size = new System.Drawing.Size(176, 21);
@@ -680,8 +693,9 @@
             // 
             // label8
             // 
+            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(894, 501);
+            this.label8.Location = new System.Drawing.Point(1024, 501);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(53, 12);
             this.label8.TabIndex = 4;
@@ -689,20 +703,23 @@
             // 
             // tb_logcat
             // 
+            this.tb_logcat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tb_logcat.Location = new System.Drawing.Point(393, 569);
             this.tb_logcat.Multiline = true;
             this.tb_logcat.Name = "tb_logcat";
             this.tb_logcat.ReadOnly = true;
             this.tb_logcat.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tb_logcat.Size = new System.Drawing.Size(494, 79);
+            this.tb_logcat.Size = new System.Drawing.Size(624, 79);
             this.tb_logcat.TabIndex = 6;
             this.tb_logcat.Text = "日志";
             // 
             // lb_search
             // 
+            this.lb_search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lb_search.BackColor = System.Drawing.SystemColors.Control;
             this.lb_search.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lb_search.Location = new System.Drawing.Point(891, 9);
+            this.lb_search.Location = new System.Drawing.Point(1017, 6);
             this.lb_search.Name = "lb_search";
             this.lb_search.Size = new System.Drawing.Size(235, 23);
             this.lb_search.TabIndex = 0;
@@ -711,8 +728,9 @@
             // 
             // tb_senditem_class
             // 
+            this.tb_senditem_class.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.tb_senditem_class.Enabled = false;
-            this.tb_senditem_class.Location = new System.Drawing.Point(950, 524);
+            this.tb_senditem_class.Location = new System.Drawing.Point(1080, 524);
             this.tb_senditem_class.MaxLength = 128;
             this.tb_senditem_class.Name = "tb_senditem_class";
             this.tb_senditem_class.Size = new System.Drawing.Size(176, 21);
@@ -722,8 +740,9 @@
             // 
             // label10
             // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(894, 527);
+            this.label10.Location = new System.Drawing.Point(1024, 527);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(53, 12);
             this.label10.TabIndex = 4;
@@ -731,8 +750,9 @@
             // 
             // btn_search_name
             // 
+            this.btn_search_name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_search_name.Enabled = false;
-            this.btn_search_name.Location = new System.Drawing.Point(894, 578);
+            this.btn_search_name.Location = new System.Drawing.Point(1024, 578);
             this.btn_search_name.Name = "btn_search_name";
             this.btn_search_name.Size = new System.Drawing.Size(110, 32);
             this.btn_search_name.TabIndex = 5;
@@ -742,8 +762,9 @@
             // 
             // btn_search_id
             // 
+            this.btn_search_id.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_search_id.Enabled = false;
-            this.btn_search_id.Location = new System.Drawing.Point(1017, 578);
+            this.btn_search_id.Location = new System.Drawing.Point(1147, 578);
             this.btn_search_id.Name = "btn_search_id";
             this.btn_search_id.Size = new System.Drawing.Size(110, 32);
             this.btn_search_id.TabIndex = 5;
@@ -753,6 +774,7 @@
             // 
             // tab_mail
             // 
+            this.tab_mail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.tab_mail.Controls.Add(this.tab_mail_send);
             this.tab_mail.Controls.Add(this.tab_mail_user);
             this.tab_mail.Enabled = false;
@@ -866,11 +888,118 @@
             this.columnHeader4.Text = "标题";
             this.columnHeader4.Width = 203;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tab_items_normal);
+            this.tabControl1.Controls.Add(this.tab_items_cash);
+            this.tabControl1.Location = new System.Drawing.Point(254, 12);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(761, 551);
+            this.tabControl1.TabIndex = 8;
+            // 
+            // tab_items_normal
+            // 
+            this.tab_items_normal.Controls.Add(this.list_items_normal);
+            this.tab_items_normal.Location = new System.Drawing.Point(4, 22);
+            this.tab_items_normal.Name = "tab_items_normal";
+            this.tab_items_normal.Padding = new System.Windows.Forms.Padding(3);
+            this.tab_items_normal.Size = new System.Drawing.Size(753, 525);
+            this.tab_items_normal.TabIndex = 0;
+            this.tab_items_normal.Text = "普通背包";
+            this.tab_items_normal.UseVisualStyleBackColor = true;
+            // 
+            // tab_items_cash
+            // 
+            this.tab_items_cash.Controls.Add(this.list_items_cash);
+            this.tab_items_cash.Location = new System.Drawing.Point(4, 22);
+            this.tab_items_cash.Name = "tab_items_cash";
+            this.tab_items_cash.Padding = new System.Windows.Forms.Padding(3);
+            this.tab_items_cash.Size = new System.Drawing.Size(753, 525);
+            this.tab_items_cash.TabIndex = 1;
+            this.tab_items_cash.Text = "现金背包";
+            this.tab_items_cash.UseVisualStyleBackColor = true;
+            // 
+            // list_items_cash
+            // 
+            this.list_items_cash.BackColor = System.Drawing.SystemColors.Window;
+            this.list_items_cash.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader5,
+            this.columnHeader14,
+            this.columnHeader6,
+            this.columnHeader7,
+            this.columnHeader8,
+            this.columnHeader9,
+            this.columnHeader11,
+            this.columnHeader10});
+            this.list_items_cash.ContextMenuStrip = this.contextMenuItem;
+            this.list_items_cash.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.list_items_cash.Enabled = false;
+            this.list_items_cash.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.list_items_cash.FullRowSelect = true;
+            this.list_items_cash.GridLines = true;
+            this.list_items_cash.HideSelection = false;
+            this.list_items_cash.LabelEdit = true;
+            this.list_items_cash.LabelWrap = false;
+            this.list_items_cash.Location = new System.Drawing.Point(3, 3);
+            this.list_items_cash.Name = "list_items_cash";
+            this.list_items_cash.ShowItemToolTips = true;
+            this.list_items_cash.Size = new System.Drawing.Size(747, 519);
+            this.list_items_cash.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.list_items_cash.TabIndex = 4;
+            this.list_items_cash.UseCompatibleStateImageBehavior = false;
+            this.list_items_cash.View = System.Windows.Forms.View.Details;
+            this.list_items_cash.SelectedIndexChanged += new System.EventHandler(this.list_items_cash_SelectedIndexChanged);
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "名字";
+            this.columnHeader5.Width = 270;
+            // 
+            // columnHeader14
+            // 
+            this.columnHeader14.Text = "数量";
+            this.columnHeader14.Width = 46;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "类型";
+            this.columnHeader6.Width = 87;
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "颜色1";
+            this.columnHeader7.Width = 52;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "颜色2";
+            this.columnHeader8.Width = 52;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "颜色3";
+            this.columnHeader9.Width = 49;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "附魔";
+            this.columnHeader11.Width = 105;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "到期时间";
+            this.columnHeader10.Width = 90;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1134, 661);
+            this.ClientSize = new System.Drawing.Size(1264, 661);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.tab_mail);
             this.Controls.Add(this.tb_logcat);
             this.Controls.Add(this.btn_search_id);
@@ -880,17 +1009,14 @@
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.list_items);
             this.Controls.Add(this.list_search);
             this.Controls.Add(this.tb_senditem_class);
             this.Controls.Add(this.tb_senditem_name);
             this.Controls.Add(this.tb_senditem_count);
             this.Controls.Add(this.list_users);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.lb_items);
             this.Controls.Add(this.lb_search);
             this.Controls.Add(this.lb_users);
-            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GM工具";
@@ -905,6 +1031,9 @@
             this.tab_mail_send.ResumeLayout(false);
             this.contextMenuMail.ResumeLayout(false);
             this.tab_mail_user.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tab_items_normal.ResumeLayout(false);
+            this.tab_items_cash.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -927,15 +1056,13 @@
         private System.Windows.Forms.ColumnHeader ch_userlist_name;
         private System.Windows.Forms.ColumnHeader ch_userlist_class;
         private System.Windows.Forms.ColumnHeader ch_userlist_level;
-        private System.Windows.Forms.ListView list_items;
+        private System.Windows.Forms.ListView list_items_normal;
         private System.Windows.Forms.ColumnHeader ch_items_name;
         private System.Windows.Forms.ColumnHeader ch_items_type;
         private System.Windows.Forms.ColumnHeader ch_items_time;
         private System.Windows.Forms.ColumnHeader ch_items_color1;
         private System.Windows.Forms.ColumnHeader ch_items_color2;
         private System.Windows.Forms.ColumnHeader ch_items_color3;
-        private System.Windows.Forms.ColumnHeader ch_items_power;
-        private System.Windows.Forms.Label lb_items;
         private System.Windows.Forms.ListView list_search;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
@@ -995,6 +1122,20 @@
         private System.Windows.Forms.ToolStripMenuItem contentMenuRefreshMail;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem contentMennuAllMaxStar;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tab_items_normal;
+        private System.Windows.Forms.TabPage tab_items_cash;
+        private System.Windows.Forms.ListView list_items_cash;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.ColumnHeader columnHeader7;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.ColumnHeader columnHeader9;
+        private System.Windows.Forms.ColumnHeader columnHeader10;
+        private System.Windows.Forms.ColumnHeader columnHeader13;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.ColumnHeader columnHeader12;
+        private System.Windows.Forms.ColumnHeader columnHeader14;
     }
 }
 
