@@ -563,7 +563,28 @@ namespace GMTool
             }
             return false;
         }
-
+        public static bool CleanItemColor(this MainForm main, User user, params Item[] items)
+        {
+            if (items == null)
+            {
+                return false;
+            }
+            try
+            {
+                foreach (Item item in items)
+                {
+                    string str = "UPDATE Equippable SET Color1 = 0,Color2 = 0,Color3 = 0  WHERE ID IN (SELECT e.ID FROM Item as i,Equippable as e WHERE i.OwnerID ="
+                        + user.CID + " AND e.ID = " + item.ItemID + " AND e.ID = i.ID)";
+                    db.ExcuteSQL(str);
+                }
+                return true;
+            }
+            catch (Exception exception)
+            {
+                main.Error("修改物品颜色失败!\n" + exception);
+            }
+            return false;
+        }
         /// <summary>
         /// 修改颜色
         /// </summary>

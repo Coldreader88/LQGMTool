@@ -171,11 +171,7 @@ namespace GMTool
 
         private void Tsmi_Click(object sender, EventArgs e)
         {
-            if (CurItem == null)
-            {
-                this.Warnning("没选中物品，无法附魔");
-                return;
-            }
+            if (!CheckItem()) return;
             ToolStripMenuItem menu = sender as ToolStripMenuItem;
             if (menu != null && menu.Tag != null)
             {
@@ -200,7 +196,7 @@ namespace GMTool
         #region 数据读取和添加
         private void ReadItems()
         {
-
+            if (!CheckUser()) return;
             AddItemList(this.list_items_normal, this.ReadUserItems(CurUser, PackType.Normal));
             AddItemList(this.list_items_cash, this.ReadUserItems(CurUser, PackType.Cash));
         }
@@ -453,11 +449,13 @@ namespace GMTool
         #region 邮件列表菜单
         private void contentMenuRefreshMail_Click(object sender, EventArgs e)
         {
+            if (!CheckUser()) return;
             ReadMails();
         }
 
         private void contentMenuDeleteMail_Click(object sender, EventArgs e)
         {
+            if (!CheckUser()) return;
             ToolStripMenuItem menu = sender as ToolStripMenuItem;
             Control parent = null;
             if (menu != null)
@@ -498,6 +496,7 @@ namespace GMTool
 
         private void contentMenuDeleteAllMails_Click(object sender, EventArgs e)
         {
+            if (!CheckUser()) return;
             ToolStripMenuItem menu = sender as ToolStripMenuItem;
             Control parent = null;
             if (menu != null)
@@ -540,6 +539,7 @@ namespace GMTool
         #region 搜索列表菜单
         private void contentMenuSendItem1_Click(object sender, EventArgs e)
         {
+            if (!CheckUser()) return;
             int count = this.SendItems(CurUser, 1, list_search.GetSelectItems<ItemClassInfo>());
             if (count > 0)
             {
@@ -550,6 +550,7 @@ namespace GMTool
 
         private void contentMenuSendItem10_Click(object sender, EventArgs e)
         {
+            if (!CheckUser()) return;
             int count = this.SendItems(CurUser, 10, list_search.GetSelectItems<ItemClassInfo>());
             if (count > 0)
             {
@@ -560,6 +561,7 @@ namespace GMTool
 
         private void contentMenuSendItem100_Click(object sender, EventArgs e)
         {
+            if (!CheckUser()) return;
             int count = this.SendItems(CurUser, 100, list_search.GetSelectItems<ItemClassInfo>());
             if (count > 0)
             {
@@ -572,30 +574,35 @@ namespace GMTool
         #region 用户列表菜单
         private void contentMenuUserResetGroup_Click(object sender, EventArgs e)
         {
+            if (!CheckUser()) return;
             log("[" + CurUser.Name + "]阵营技能重置");
             this.ResetGroupSkill(CurUser);
         }
 
         private void contentMenuUserMaxDark_Click(object sender, EventArgs e)
         {
+            if (!CheckUser()) return;
             log("[" + CurUser.Name + "]黑暗阵营满级");
             this.MaxDarkLevel(CurUser);
         }
 
         private void contentMenuUserMaxLight_Click(object sender, EventArgs e)
         {
+            if (!CheckUser()) return;
             log("[" + CurUser.Name + "]光明阵营满级");
             this.MaxLightLevel(CurUser);
         }
 
         private void contentMenuUserMaxSecondClass_Click(object sender, EventArgs e)
         {
+            if (!CheckUser()) return;
             log("[" + CurUser.Name + "]全部副职业满级");
             this.MaxAllSecondClass(CurUser);
         }
 
         private void contentMenuUserModLevel_Click(object sender, EventArgs e)
         {
+            if (!CheckUser()) return;
             using (ChangeUserLevelForm form = new ChangeUserLevelForm(this))
             {
                 if (form.ShowDialog() == DialogResult.OK)
@@ -608,6 +615,7 @@ namespace GMTool
 
         private void contentMenuUserModName_Click(object sender, EventArgs e)
         {
+            if (!CheckUser()) return;
             using (ChangeNameForm form = new ChangeNameForm(this))
             {
                 if (form.ShowDialog() == DialogResult.OK)
@@ -696,7 +704,8 @@ namespace GMTool
         }
         private void contentMenuDeleteItems_Click(object sender, EventArgs e)
         {
-           // if (!CheckItem()) return;
+            if (!CheckUser()) return;
+            // if (!CheckItem()) return;
             if (this.DeleteItem(CurUser, GetSelectItems(sender)))
             {
                 ReadItems();
@@ -809,6 +818,7 @@ namespace GMTool
 
         private void btn_senditem_send_Click(object sender, EventArgs e)
         {
+            if (!CheckUser()) return;
             try
             {
                 int count = Convert.ToInt32(tb_senditem_count.Text);
@@ -946,12 +956,18 @@ namespace GMTool
                 this.lb_color1.Enabled = false;
                 this.lb_color2.Enabled = false;
                 this.lb_color3.Enabled = false;
+                this.tb_color1.Enabled = false;
+                this.tb_color2.Enabled = false;
+                this.tb_color3.Enabled = false;
             }
             else
             {
                 this.lb_color1.Enabled = true;
                 this.lb_color2.Enabled = true;
                 this.lb_color3.Enabled = true;
+                this.tb_color1.Enabled = true;
+                this.tb_color2.Enabled = true;
+                this.tb_color3.Enabled = true;
             }
         }
  
@@ -962,6 +978,15 @@ namespace GMTool
             if (!b)
             {
                 this.Warnning("没有选中物品");
+            }
+            return b;
+        }
+        private bool CheckUser()
+        {
+            bool b = CurUser != null;
+            if (!b)
+            {
+                this.Warnning("没有选择用户");
             }
             return b;
         }
@@ -985,7 +1010,14 @@ namespace GMTool
 
         private void contentMenuColorAll_Click(object sender, EventArgs e)
         {
-            this.ModItemColor(CurUser,lb_color1.BackColor.ToArgb(), lb_color2.BackColor.ToArgb(), lb_color3.BackColor.ToArgb(), GetSelectItems(sender));
+            this.ModItemColor(CurUser, lb_color1.BackColor.ToArgb(), lb_color2.BackColor.ToArgb(), lb_color3.BackColor.ToArgb(), GetSelectItems(sender));
+            ReadItems();
+        }
+    
+
+        private void contentMenuItemColorClean_Click(object sender, EventArgs e)
+        {
+            this.CleanItemColor(CurUser, GetSelectItems(sender));
             ReadItems();
         }
         #endregion
