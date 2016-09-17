@@ -56,6 +56,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Data.SQLite">
       <HintPath>..\..\DLL\System.Data.SQLite.dll</HintPath>
     </Reference>
@@ -65,10 +66,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bean\EnchantInfo.cs" />
     <Compile Include="Bean\GameClass.cs" />
     <Compile Include="Bean\Item.cs" />
+    <Compile Include="Bean\ItemAttribute.cs" />
     <Compile Include="Bean\ItemCategory.cs" />
     <Compile Include="Bean\ItemClassInfo.cs" />
+    <Compile Include="Bean\ItemTradeCategory.cs" />
     <Compile Include="Bean\Mail.cs" />
     <Compile Include="Bean\User.cs" />
     <Compile Include="ChangeNameForm.cs">
@@ -121,6 +125,7 @@
     <None Include="DBIni.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Properties\DataSources\GMTool.Bean.CategoryEx.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

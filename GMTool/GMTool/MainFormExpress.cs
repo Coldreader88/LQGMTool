@@ -3,8 +3,10 @@ using GMTool.Helper;
 using LY;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Windows.Forms;
 
@@ -12,6 +14,7 @@ namespace GMTool
 {
     static class MainFormExpress
     {
+        #region 数据库
         private static MSSqlHelper db = new MSSqlHelper();
         private const string SQL_QUERY_USERS = "select * from CharacterInfo where CreateTime >= '2016-01-01' ORDER BY CreateTime;";
 
@@ -48,7 +51,9 @@ namespace GMTool
         {
             db.Close();
         }
+        #endregion
 
+        #region 读取数据
         public static List<User> ReadUserList(this MainForm main)
         {
             List<User> userList = new List<User>();
@@ -85,6 +90,7 @@ namespace GMTool
                         Convert.ToString(reader["MailTitle"]),
                         Convert.ToString(reader["MailContent"])
                         );
+                    item.Count = Convert.ToInt32(reader["Count"]);
                     mails.Add(item);
                 }
             }
@@ -120,20 +126,20 @@ namespace GMTool
                 string sql;
                 if (type == PackType.Normal)
                 {
-                    sql = "SELECT i.ID,i.ExpireDateTime,i.ItemClass,i.Collection,i.Count,i.Slot,e.Color1,e.Color2,e.Color3,ai.Attribute,ai.Value,ai.Arg,ai.Arg2 "
-                        + "FROM  (Item as i  left join ItemAttribute as ai on i.ID = ai.itemID  and ai.Attribute='ENHANCE') left join Equippable e on e.ID = i.ID "
+                    sql = "SELECT i.ID,i.ExpireDateTime,i.ItemClass,i.Collection,i.Count,i.Slot,e.Color1,e.Color2,e.Color3 "
+                        + "FROM  Item as i left join Equippable e on e.ID = i.ID "
                         + "WHERE i.Collection<100 and i.OwnerID =" + user.CID + " ORDER BY i.Collection,i.Slot";
                 }
                 else if (type == PackType.Cash)
                 {
-                    sql = "SELECT i.ID,i.ExpireDateTime,i.ItemClass,i.Collection,i.Count,i.Slot,e.Color1,e.Color2,e.Color3,ai.Attribute,ai.Value,ai.Arg,ai.Arg2 "
-                        + "FROM  (Item as i  left join ItemAttribute as ai on i.ID = ai.itemID  and ai.Attribute='PREFIX') left join Equippable e on e.ID = i.ID "
+                    sql = "SELECT i.ID,i.ExpireDateTime,i.ItemClass,i.Collection,i.Count,i.Slot,e.Color1,e.Color2,e.Color3 "
+                        + "FROM  Item as i left join Equippable e on e.ID = i.ID "
                         + "WHERE i.Collection>=100 and i.OwnerID =" + user.CID + " ORDER BY i.Collection,i.Slot";
                 }
                 else
                 {
-                    sql = "SELECT i.ID,i.ExpireDateTime,i.ItemClass,i.Collection,i.Count,i.Slot,e.Color1,e.Color2,e.Color3,ai.Attribute,ai.Value,ai.Arg,ai.Arg2 "
-                        + "FROM  (Item as i  left join ItemAttribute as ai on i.ID = ai.itemID  and ai.Attribute='ENHANCE') left join Equippable e on e.ID = i.ID "
+                    sql = "SELECT i.ID,i.ExpireDateTime,i.ItemClass,i.Collection,i.Count,i.Slot,e.Color1,e.Color2,e.Color3 "
+                        + "FROM  Item as i left join Equippable e on e.ID = i.ID "
                         + "WHERE i.OwnerID =" + user.CID + " ORDER BY i.Collection,i.Slot";
                 }
                 using (SqlDataReader reader = db.GetReader(sql))
@@ -155,8 +161,8 @@ namespace GMTool
                         }
                         item.Collection = Convert.ToInt32(reader["Collection"]);
                         item.Slot = Convert.ToInt32(reader["Slot"]);
-                        item.attrName = reader["Attribute"] == DBNull.Value ? null : Convert.ToString(reader["Attribute"]);
-                        item.attrValue = reader["Value"] == DBNull.Value ? null : Convert.ToString(reader["Value"]);
+                        //  item.attrName = reader["Attribute"] == DBNull.Value ? null : Convert.ToString(reader["Attribute"]);
+                        //  item.attrValue = reader["Value"] == DBNull.Value ? null : Convert.ToString(reader["Value"]);
                         item.Count = reader["Count"] == DBNull.Value ? 1 : Convert.ToInt32(reader["Count"]);
                         object o = reader["Color1"];
                         if (o != DBNull.Value)
@@ -176,6 +182,31 @@ namespace GMTool
                         items.Add(item);
                     }
                 }
+                foreach (Item item in items)
+                {
+                    using (SqlDataReader reader2 = db.GetReader("SELECT * FROM ItemAttribute WHERE ItemID = " + item.ItemID))
+                    {
+                        List<ItemAttribute> attrs = new List<ItemAttribute>();
+                        while (reader2 != null && reader2.Read())
+                        {
+                            ItemAttribute attr = new ItemAttribute();
+                            try
+                            {
+                                attr.Type = (ItemAttributeType)Enum.Parse(typeof(ItemAttributeType), ToString(reader2["Attribute"]));
+                                attr.Value = ToString(reader2["Value"]);
+                                attr.Arg = ToString(reader2["Arg"]);
+                                attr.Arg2 = ToString(reader2["Arg2"]);
+                                attrs.Add(attr);
+                            }
+                            catch (Exception ex)
+                            {
+                                main.Error("" + ex);
+                            }
+
+                        }
+                        item.Attributes = attrs.ToArray<ItemAttribute>();
+                    }
+                }
             }
             catch (Exception exception)
             {
@@ -183,7 +214,9 @@ namespace GMTool
             }
             return items;
         }
+        #endregion
 
+        #region 邮件
         public static void DeleteUserMail(this MainForm main, Mail mail)
         {
             try
@@ -207,7 +240,9 @@ namespace GMTool
 
             }
         }
+        #endregion
 
+        #region 角色修改
         public static void MaxSecondClass(this MainForm main, User user, string className)
         {
             try
@@ -268,7 +303,12 @@ namespace GMTool
                 // this.output("角色名 [" + this.txtUserName.Text + "] 已存在!");
             }
         }
-
+        private static string ToString(object obj)
+        {
+            if (obj == DBNull.Value)
+                return "";
+            return Convert.ToString(obj);
+        }
         public static bool CheckName(this MainForm main, string name)
         {
             return db.ExcuteScalarSQL("select count(*) from characterInfo where Name = N'" + name + "'") == 0;
@@ -322,10 +362,185 @@ namespace GMTool
                 main.Error(exception.Message);
             }
         }
+        #endregion
 
-        public static void SendItems(this MainForm main, User user, int count, params Item[] items)
+        #region 发送
+        /// <summary>
+        /// 发送物品
+        /// </summary>
+        public static int SendItems(this MainForm main, User user, int count, params ItemClassInfo[] items)
         {
-
+            if (user == null || items == null)
+            {
+                return 0;
+            }
+            int rs = 0;
+            foreach (ItemClassInfo item in items)
+            {
+                if (item != null)
+                {
+                    rs += SendItem(main, user, count, item.ItemClass, item.Name);
+                }
+            }
+            return rs;
         }
+
+        /// <summary>
+        /// 发送物品
+        /// </summary>
+        public static int SendItem(this MainForm main, User user, int count, string item, string name)
+        {
+            if (user == null || string.IsNullOrEmpty(item))
+            {
+                return 0;
+            }
+            if (string.IsNullOrEmpty(name))
+            {
+                name = item;
+            }
+            return SendMail(main, user, name + "(" + count + ")", name + "(" + item + ":" + count + ")", count, item);
+        }
+
+        public static int SendMail(this MainForm main, User user, string title, string content, int count, string itemClass)
+        {
+            try
+            {
+                string strSQL = "heroes.dbo.HDV_SendItemMail";
+                SqlParameter[] paras = new SqlParameter[8];
+                paras[0] = new SqlParameter("@CID", SqlDbType.BigInt);
+                paras[0].Direction = ParameterDirection.Input;
+                paras[0].Value = user.CID;
+                paras[1] = new SqlParameter("@ItemClassEx", SqlDbType.NVarChar);
+                paras[1].Direction = ParameterDirection.Input;
+                paras[1].Value = itemClass;
+                paras[2] = new SqlParameter("@Count", SqlDbType.Int);
+                paras[2].Direction = ParameterDirection.Input;
+                paras[2].Value = count;
+                paras[3] = new SqlParameter("@IsCharacterBinded", SqlDbType.Bit);
+                paras[3].Direction = ParameterDirection.Input;
+                paras[3].Value = 0;
+                paras[4] = new SqlParameter("@MailTitle", SqlDbType.NVarChar);
+                paras[4].Direction = ParameterDirection.Input;
+                paras[4].Value = title;
+                paras[5] = new SqlParameter("@MailContent", SqlDbType.NVarChar);
+                paras[5].Direction = ParameterDirection.Input;
+                paras[5].Value = content;
+                paras[6] = new SqlParameter("@Result", SqlDbType.Int);
+                paras[6].Direction = ParameterDirection.Output;
+                paras[6].Value = 0;
+                paras[7] = new SqlParameter("@CharacterName", SqlDbType.NVarChar);
+                paras[7].Direction = ParameterDirection.Output;
+                paras[7].Value = "";
+                db.ExcuteSQL(strSQL, paras, CommandType.StoredProcedure);
+                return 1;
+            }
+            catch (Exception exception)
+            {
+                main.Error(exception + "");
+            }
+            return 0;
+        }
+        #endregion
+
+        #region 物品操作
+        /// <summary>
+        /// 删除物品
+        /// </summary>
+        public static bool DeleteItem(this MainForm main, User user, Item item)
+        {
+            if (item != null)
+            {
+                try
+                {
+                    db.ExcuteSQL("DELETE FROM Item Where ID=" + item.ItemID);
+                    return true;
+                }
+                catch (Exception)
+                {
+                }
+            }
+            return false;
+        }
+        /// <summary>
+        /// 强化
+        /// </summary>
+        public static bool ModItemPower(this MainForm main, User user, Item item, int power)
+        {
+            try
+            {
+                switch (db.ExcuteScalarSQL("select count(*) from ItemAttribute where itemID = " + item.ItemID + "and Attribute = 'ENHANCE'"))
+                {
+                    case 0:
+                        db.ExcuteSQL(string.Concat(new object[] { "insert into ItemAttribute([ItemID], [Attribute], [Value], [Arg], [Arg2])VALUES(", item.ItemID, ",'ENHANCE',", power, ",0,0)" }));
+                        break;
+
+                    case 1:
+                        db.ExcuteSQL(string.Concat(new object[] { "update ItemAttribute set Value = ", power, " where itemID=", item.ItemID, "and Attribute = 'ENHANCE'" }));
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                main.Error("强化失败：" + e);
+            }
+
+            return true;
+        }
+        /// <summary>
+        /// 无限时间
+        /// </summary>
+        public static bool UnLimitTime(this MainForm main, User user, params Item[] items)
+        {
+            if (items == null || items.Length == 0)
+            {
+                db.ExcuteSQL("UPDATE Item SET EXpireDateTime = NULL WHERE OwnerID =" + user.CID);
+            }
+            else
+            {
+                foreach (Item item in items)
+                {
+                    db.ExcuteSQL("UPDATE Item SET EXpireDateTime = NULL WHERE OwnerID =" + user.CID +" and ID = "+item.ItemID);
+                }
+            }
+            return true;
+        }
+        /// <summary>
+        /// 品质最大
+        /// </summary>
+        public static bool MaxStar(this MainForm main, User user, params Item[] items)
+        {
+            if (items == null || items.Length == 0)
+            {
+                db.ExcuteSQL("UPDATE Item SET EXpireDateTime = NULL WHERE OwnerID =" + user.CID);
+            }
+            else
+            {
+                foreach (Item item in items)
+                {
+                    MaxStart(main, item);
+                }
+            }
+            return true;
+        }
+        private static void MaxStart(this MainForm main,Item item)
+        {
+            long itemID = item.ItemID;
+            if (db.ExcuteScalarSQL("select count(*) from ItemAttribute where attribute = 'QUALITY' and ItemID = " + itemID) > 0)
+            {
+                db.ExcuteSQL("update ItemAttribute set Arg = 5 where ItemID = " + itemID);
+            }
+            else
+            {
+                db.ExcuteSQL("insert into ItemAttribute(ItemID,Attribute,Value,Arg,Arg2) values(" + itemID + ",'QUALITY','',5,0)");
+            }
+        }
+        /// <summary>
+        /// 附魔
+        /// </summary>
+        public static bool Enchant(this MainForm main, User user, Item item, ItemAttribute attribute)
+        {
+            return false;
+        }
+        #endregion
     }
 }

@@ -7,16 +7,68 @@ namespace GMTool.Bean
 {
     public enum GameClass :byte
     {
-        Lethita=0,
-        Fiona,
-        Evy,
-        Kalok,
-        Kay,
-        Vella,
-        Hurk,
-        Lynn,
-        Arisha,
-        Hagie,
-        Delia
+        Lethita=0,//0x1
+        Fiona,//0x2
+        Evy,//0x4
+        Kalok,//0x8
+        Kay,//0x10
+        Vella,//0x20
+        Hurk,//0x40
+        Lynn,//0x80
+        Arisha,//0x100
+        Hagie,//0x200
+        Delia//0x400
+    }
+    public enum ClassInfo
+    {
+        Lethita = 0x1,
+        Fiona=0x2,
+        Evy=0x4,
+        Kalok=0x8,
+        Kay=0x10,
+        Vella=0x20,
+        Hurk=0x40,
+        Lynn=0x80,
+        Arisha=0x100,
+        Hagie=0x200,
+        Delia=0x400,
+    }
+
+    public static class ClassInfoEx
+    {
+        public const int ALL1 = 
+            (int)ClassInfo.Lethita 
+            | (int)ClassInfo.Fiona 
+            | (int)ClassInfo.Evy 
+            | (int)ClassInfo.Kalok
+            | (int)ClassInfo.Kay
+            | (int)ClassInfo.Vella 
+            | (int)ClassInfo.Lynn 
+            | (int)ClassInfo.Hurk 
+            | (int)ClassInfo.Arisha;
+        public const int ALL2 = ALL1 | (int)ClassInfo.Hagie;
+        public const int ALL3 = ALL2 | (int)ClassInfo.Delia;
+        public static string GetText(int cls)
+        {
+            if (cls == ALL1 || cls== ALL2||cls == ALL3)
+            {
+                return "无";
+            }
+            Array arr= Enum.GetValues(typeof(ClassInfo));
+            StringBuilder sb = new StringBuilder();
+            foreach(ClassInfo c in arr)
+            {
+                if((cls & (int)c) != 0)
+                {
+                    sb.Append("" + c + ",");
+                }
+            }
+            string txt= sb.ToString();
+            if (txt.EndsWith(","))
+            {
+                return txt.Substring(0, txt.Length - 1);
+            }
+            return txt;
+        }
     }
 }

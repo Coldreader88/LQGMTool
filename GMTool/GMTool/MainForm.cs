@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Data.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,16 +17,17 @@ namespace GMTool
     public partial class MainForm : Form
     {
         private string DefTitle;
-        private ItemClassInfoHelper txtHelper;
+        private ItemClassInfoHelper itemsHelper;
         public User CurUser { get; private set; }
 
-        private Item NormalCurItem=null;
-        private Item CashCurItem = null;
+        private int NormalCurItem = -1;
+        private int CashCurItem = -1;
+
         #region 窗体
         public MainForm()
         {
             CurUser = new User(0, 0, 0, "", 0, 1);
-            txtHelper = new ItemClassInfoHelper("./heroes_text_taiwan.txt", "./heroes.db3");
+            itemsHelper = new ItemClassInfoHelper("./heroes_text_taiwan.txt", "./heroes.db3");
             InitializeComponent();
             this.Text += " " + Application.ProductVersion.ToString();
             this.DefTitle = this.Text;
@@ -39,6 +41,7 @@ namespace GMTool
             this.list_items_normal.Items.Clear();
             this.list_search.Items.Clear();
             this.tb_logcat.Text = "";
+            AddTypes();
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -50,17 +53,15 @@ namespace GMTool
         #region 数据库
         private void btn_mssql_open_Click(object sender, EventArgs e)
         {
-            this.list_items_normal.Enabled = false;
-            this.list_users.Enabled = false;
+            this.tab_items.Enabled = false;
+            this.tab_left.Enabled = false;
             this.tab_mail.Enabled = false;
             this.list_search.Enabled = false;
             this.btn_senditem_send.Enabled = false;
-            this.btn_senditem_send_other.Enabled = false;
             this.btn_search_name.Enabled = false;
             this.btn_search_id.Enabled = false;
             this.tb_senditem_class.Enabled = false;
             this.tb_senditem_name.Enabled = false;
-            this.list_items_cash.Enabled = false;
             if (this.btn_mssql_open.Text == "断开")
             {
                 this.CloseDataBase();
@@ -74,7 +75,7 @@ namespace GMTool
                 this.tb_mssql_db.PasswordChar = '\0';
                 this.tb_mssql_user.PasswordChar = '\0';
                 AddUserList(new List<User>());
-                AddSearchItemList(new List<Item>());
+                AddSearchItemList(new List<ItemClassInfo>());
                 AddItemList(this.list_items_normal, new List<Item>());
                 AddItemList(this.list_items_cash, new List<Item>());
                 AddUserMails(new List<Mail>());
@@ -82,9 +83,9 @@ namespace GMTool
             }
             else
             {
-                if (!txtHelper.IsOpen)
+                if (!itemsHelper.IsOpen)
                 {
-                    if (!txtHelper.Read())
+                    if (!itemsHelper.Read())
                     {
                         this.Error("物品文本读取错误。\n请确保heroes_text_taiwan.txt和heroes.db3在程序目录下面");
                         return;
@@ -92,13 +93,11 @@ namespace GMTool
                 }
                 if (this.connectDataBase(this.tb_mssql_server.Text, this.tb_mssql_user.Text, this.tb_mssql_pwd.Text, this.tb_mssql_db.Text))
                 {
-                    this.list_items_normal.Enabled = true;
-                    this.list_items_cash.Enabled = true;
-                    this.list_users.Enabled = true;
+                    this.tab_items.Enabled = true;
+                    this.tab_left.Enabled = true;
                     this.tab_mail.Enabled = true;
                     this.list_search.Enabled = true;
                     this.btn_senditem_send.Enabled = true;
-                    this.btn_senditem_send_other.Enabled = true;
                     this.btn_search_name.Enabled = true;
                     this.btn_search_id.Enabled = true;
                     this.tb_senditem_class.Enabled = true;
@@ -128,10 +127,27 @@ namespace GMTool
         private void ReadItems()
         {
 
-            AddItemList(this.list_items_normal,this.ReadUserItems(CurUser, PackType.Normal));
-            AddItemList(this.list_items_cash,this.ReadUserItems(CurUser, PackType.Cash));
+            AddItemList(this.list_items_normal, this.ReadUserItems(CurUser, PackType.Normal));
+            AddItemList(this.list_items_cash, this.ReadUserItems(CurUser, PackType.Cash));
         }
-        private void AddSearchItemList(List<Item> items)
+        private void SetCurItems(Item item)
+        {
+            if (item != null)
+            {
+                this.tb_senditem_name.Text = item.ItemName;
+                this.tb_senditem_class.Text = item.ItemClass;
+            }
+        }
+        private void SetCurItems(ItemClassInfo item)
+        {
+            if (item != null)
+            {
+                this.tb_senditem_name.Text = item.Name;
+                this.tb_senditem_class.Text = item.ItemClass;
+            }
+        }
+
+        private void AddSearchItemList(List<ItemClassInfo> items)
         {
             int count = items.Count;
             //TODO 
@@ -142,16 +158,29 @@ namespace GMTool
             if (count >= 0)
             {
                 ListViewItem[] vitems = new ListViewItem[count];
-                for(int i=0;i< count; i++)
+                for (int i = 0; i < count; i++)
                 {
+                    ItemClassInfo t = items[i];
                     vitems[i] = new ListViewItem();
+                    vitems[i].Text = t.Name == null ? t.ItemClass : t.Name;
+                    vitems[i].ToolTipText = t.ToString();
+                    vitems[i].Tag = t;
                 }
                 this.list_search.Items.AddRange(vitems);
             }
             this.list_search.EndUpdate();
             this.list_search.GoToRow(index);
         }
-        private void AddItemList(ListView listview,List<Item> items)
+        private void AddTypes()
+        {
+            this.cb_category.Items.Clear();
+            this.cb_item_type.Items.Clear();
+            this.cb_category.Items.AddRange(ItemTradeCategoryEx.Values);
+            this.cb_item_type.Items.AddRange(CategoryEx.Values);
+            this.cb_category.SelectedIndex = 0;
+            this.cb_item_type.SelectedIndex = 0;
+        }
+        private void AddItemList(ListView listview, List<Item> items)
         {
             int count = items.Count;
             //TODO 
@@ -174,53 +203,59 @@ namespace GMTool
                 for (int i = 0; i < count; i++)
                 {
                     Item t = items[i];
-                    ItemClassInfo info = txtHelper.Get(t.ItemClass);
+                    ItemClassInfo info = itemsHelper.Get(t.ItemClass);
                     t.Attach(info);
                     vitems[i] = new ListViewItem();
                     vitems[i].UseItemStyleForSubItems = false;
                     vitems[i].Tag = t;
                     vitems[i].Text = (t.ItemName == null ? t.ItemClass : t.ItemName);
-                    if (NormalCurItem != null && NormalCurItem.ItemID == t.ItemID)
+                    if (t.Attributes != null)
+                    {
+                        foreach (ItemAttribute attr in t.Attributes)
+                        {
+                            if (attr.Type == ItemAttributeType.ENHANCE)
+                            {
+                                vitems[i].Text += "【+" + attr.Value + "】";
+                            }
+                            else if (attr.Type == ItemAttributeType.PREFIX)
+                            {
+                                EnchantInfo einfo = itemsHelper.GetEnchant(attr.Value);
+                                vitems[i].Text += "【" + (einfo == null ? attr.Value : einfo.Name) + "】";
+                            }
+                            else if (attr.Type == ItemAttributeType.QUALITY)
+                            {
+                                vitems[i].Text += "【★" + attr.Arg + "】";
+                            }
+                        }
+                    }
+
+                    if (NormalCurItem == i)
                     {
                         index = i;
                         vitems[i].Checked = true;
                         vitems[i].Selected = true;
                     }
                     vitems[i].SubItems.Add("" + t.Count);
-                    vitems[i].SubItems.Add("" + t.ItemType);
-                    vitems[i].SubItems.Add("");// +(t.Color1==0?"":"#"+t.Color1.ToString("x")));
-                    vitems[i].SubItems.Add("");// + (t.Color2 == 0 ? "" : "#" + t.Color2.ToString("x")));
-                    vitems[i].SubItems.Add("");// + (t.Color3 == 0 ? "" : "#" + t.Color3.ToString("x")));
                     if (!cash)
                     {
-                        if (t.attrName == "ENHANCE")
-                        {
-                            vitems[i].SubItems.Add("" + t.attrValue);
-                        }
-                        else
-                        {
-                            vitems[i].SubItems.Add("");
-                        }
+                        vitems[i].SubItems.Add("" + t.ItemType);
                     }
-                    else
-                    {
-                        if (t.attrName == "PREFIX")
-                        {
-                            vitems[i].SubItems.Add("" + t.attrValue);
-                        }
-                        else
-                        {
-                            vitems[i].SubItems.Add("");
-                        }
-                    }
+                    vitems[i].SubItems.Add("" + t.Category);
+                    int colorIndex = vitems[i].SubItems.Count;
+                    vitems[i].SubItems.Add("" + (t.Color1 == 0 ? "" : t.Color1.ToString("x")));
+                    vitems[i].SubItems.Add("" + (t.Color1 == 0 || t.Color2 == 0 ? "" : t.Color2.ToString("x")));
+                    vitems[i].SubItems.Add("" + (t.Color1 == 0 || t.Color3 == 0 ? "" : t.Color3.ToString("x")));
 
                     vitems[i].SubItems.Add("" + t.Time);
-                    //      vitems[i].SubItems[2].ForeColor = Color.White;
-                    //     vitems[i].SubItems[3].ForeColor = Color.White;
-                    //     vitems[i].SubItems[4].ForeColor = Color.White;
-                    vitems[i].SubItems[3].BackColor = System.Drawing.ColorTranslator.FromHtml((t.Color1 == 0 ? "#00ffffff" : "#" + t.Color1.ToString("X")));
-                    vitems[i].SubItems[4].BackColor = System.Drawing.ColorTranslator.FromHtml((t.Color2 == 0 ? "#00ffffff" : "#" + t.Color2.ToString("X")));
-                    vitems[i].SubItems[5].BackColor = System.Drawing.ColorTranslator.FromHtml((t.Color3 == 0 ? "#00ffffff" : "#" + t.Color3.ToString("X")));
+
+                    vitems[i].SubItems[colorIndex].BackColor = System.Drawing.ColorTranslator.FromHtml((t.Color1 == 0 ? "#00ffffff" : "#" + t.Color1.ToString("X")));
+                    vitems[i].SubItems[colorIndex + 1].BackColor = System.Drawing.ColorTranslator.FromHtml((t.Color2 == 0 ? "#00ffffff" : "#" + t.Color2.ToString("X")));
+                    vitems[i].SubItems[colorIndex + 2].BackColor = System.Drawing.ColorTranslator.FromHtml((t.Color3 == 0 ? "#00ffffff" : "#" + t.Color3.ToString("X")));
+
+                    vitems[i].SubItems[colorIndex].ForeColor = vitems[i].SubItems[colorIndex].BackColor;
+                    vitems[i].SubItems[colorIndex + 1].ForeColor = vitems[i].SubItems[colorIndex + 1].BackColor;
+                    vitems[i].SubItems[colorIndex + 2].ForeColor = vitems[i].SubItems[colorIndex + 2].BackColor;
+
                     vitems[i].ToolTipText = t.ToString();
                 }
                 listview.Items.AddRange(vitems);
@@ -412,17 +447,32 @@ namespace GMTool
         #region 搜索列表菜单
         private void contentMenuSendItem1_Click(object sender, EventArgs e)
         {
-            this.SendItems(CurUser, 1, list_search.GetSelectItems<Item>());
+            int count = this.SendItems(CurUser, 1, list_search.GetSelectItems<ItemClassInfo>());
+            if (count > 0)
+            {
+                ReadMails();
+            }
+            log("发送" + count + "个物品成功");
         }
 
         private void contentMenuSendItem10_Click(object sender, EventArgs e)
         {
-            this.SendItems(CurUser, 10, list_search.GetSelectItems<Item>());
+            int count = this.SendItems(CurUser, 10, list_search.GetSelectItems<ItemClassInfo>());
+            if (count > 0)
+            {
+                ReadMails();
+            }
+            log("发送" + count + "个物品成功");
         }
 
         private void contentMenuSendItem100_Click(object sender, EventArgs e)
         {
-            this.SendItems(CurUser, 100, list_search.GetSelectItems<Item>());
+            int count = this.SendItems(CurUser, 100, list_search.GetSelectItems<ItemClassInfo>());
+            if (count > 0)
+            {
+                ReadMails();
+            }
+            log("发送" + count + "个物品成功");
         }
         #endregion
 
@@ -482,51 +532,184 @@ namespace GMTool
         #endregion
 
         #region 物品菜单
-        private void contentMenuItemAllUnLimitTime_Click(object sender, EventArgs e)
+        private Item GetSelectItem(object sender)
         {
-            ReadItems();
+            ToolStripMenuItem menu = sender as ToolStripMenuItem;
+            Control parent = null;
+            if (menu != null)
+            {
+                parent = menu.GetMenuConrtol();
+            }
+            ListView listview = null;
+            if (parent == this.list_items_cash)
+            {
+                listview = this.list_items_cash;
+            }
+            else if (parent == this.list_items_normal)
+            {
+                listview = this.list_items_normal;
+            }
+            else
+            {
+                return null;
+            }
+            return listview.GetSelectItem<Item>();
         }
-
+        private Item[] GetItems(object sender)
+        {
+            ToolStripMenuItem menu = sender as ToolStripMenuItem;
+            Control parent = null;
+            if (menu != null)
+            {
+                parent = menu.GetMenuConrtol();
+            }
+            ListView listview = null;
+            if (parent == this.list_items_cash)
+            {
+                listview = this.list_items_cash;
+            }
+            else if (parent == this.list_items_normal)
+            {
+                listview = this.list_items_normal;
+            }
+            else
+            {
+                return null;
+            }
+            return listview.GetItems<Item>();
+        }
         private void contentMenuDeleteItems_Click(object sender, EventArgs e)
         {
-            ReadItems();
+            if (this.DeleteItem(CurUser, GetSelectItem(sender)))
+            {
+                ReadItems();
+            }
         }
 
         private void contentMenuItemPower5_Click(object sender, EventArgs e)
         {
-            ReadItems();
+            if (this.ModItemPower(CurUser, GetSelectItem(sender), 5))
+            {
+                ReadItems();
+            }
         }
 
         private void contentMenuItemPower10_Click(object sender, EventArgs e)
         {
-            ReadItems();
+            if (this.ModItemPower(CurUser, GetSelectItem(sender), 10))
+            {
+                ReadItems();
+            }
         }
 
         private void contentMenuItemPower12_Click(object sender, EventArgs e)
         {
-            ReadItems();
+            if (this.ModItemPower(CurUser, GetSelectItem(sender), 12))
+            {
+                ReadItems();
+            }
         }
 
         private void contentMenuItemPower15_Click(object sender, EventArgs e)
         {
-            ReadItems();
+            if (this.ModItemPower(CurUser, GetSelectItem(sender), 15))
+            {
+                ReadItems();
+            }
         }
 
         private void contentMenuItemMaxStar_Click(object sender, EventArgs e)
         {
-            ReadItems();
+            //TODO 
+            if (this.MaxStar(CurUser, GetSelectItem(sender)))
+            {
+                ReadItems();
+            }
         }
 
         private void contentMenuItemUnLimitTime_Click(object sender, EventArgs e)
         {
-            ReadItems();
+            //TODO 
+            if (this.UnLimitTime(CurUser, GetSelectItem(sender)))
+            {
+                ReadItems();
+            }
         }
 
         private void contentMennuAllMaxStar_Click(object sender, EventArgs e)
         {
-            ReadItems();
+            //TODO
+            if (this.MaxStar(CurUser, GetItems(sender)))
+            {
+                ReadItems();
+            }
+        }
+        private void contentMenuItemAllUnLimitTime_Click(object sender, EventArgs e)
+        {
+            if (this.UnLimitTime(CurUser, GetItems(sender)))
+            {
+                ReadItems();
+            }
         }
         #endregion
+
+        #region 搜索相关
+
+        private void btn_search_id_Click(object sender, EventArgs e)
+        {
+            AddSearchItemList(itemsHelper.SearchItems(null, tb_senditem_class.Text, cb_category.Text, cb_item_type.Text));
+        }
+
+        private void btn_search_name_Click(object sender, EventArgs e)
+        {
+            AddSearchItemList(itemsHelper.SearchItems(tb_senditem_name.Text, null, cb_category.Text, cb_item_type.Text));
+        }
+
+        private void btn_senditem_send_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int count = Convert.ToInt32(tb_senditem_count.Text);
+                if (this.SendItem(CurUser, count, tb_senditem_class.Text, tb_senditem_name.Text) > 0)
+                {
+                    ReadMails();
+                    log("发送成功:"+ tb_senditem_name.Text);
+                }
+                else
+                {
+                    log("发送失败:"+ tb_senditem_name.Text);
+                }
+            }
+            catch (Exception)
+            {
+                this.Error("数量不是一个数字");
+            }
+        }
+
+        private void tb_senditem_class_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                if (tb_senditem_class.Enabled)
+                {
+                    AddSearchItemList(itemsHelper.SearchItems(null, tb_senditem_class.Text, cb_category.Text, cb_item_type.Text));
+                }
+            }
+        }
+
+        private void tb_senditem_name_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                if (tb_senditem_name.Enabled)
+                {
+                    AddSearchItemList(itemsHelper.SearchItems(tb_senditem_name.Text, null, cb_category.Text, cb_item_type.Text));
+                }
+            }
+        }
+        #endregion
+
+        #region 选择
 
         private void list_users_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -539,48 +722,33 @@ namespace GMTool
                 ReadItems();
             }
         }
-
-        #region 搜索相关
-
-        private void btn_search_id_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btn_search_name_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btn_senditem_send_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btn_senditem_send_other_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tb_senditem_class_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
-
-        private void tb_senditem_name_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
-        #endregion
-
         private void list_items_normal_SelectedIndexChanged(object sender, EventArgs e)
         {
-            NormalCurItem = this.list_items_normal.GetSelectItem<Item>();
+            int index = this.list_items_normal.GetSelectIndex();
+            if (index >= 0)
+            {
+                NormalCurItem = index;
+            }
+            Item item = this.list_items_normal.GetSelectItem<Item>();
+            SetCurItems(item);
         }
 
         private void list_items_cash_SelectedIndexChanged(object sender, EventArgs e)
         {
-            CashCurItem = this.list_items_cash.GetSelectItem<Item>();
+            int index = this.list_items_cash.GetSelectIndex();
+            if (index >= 0)
+            {
+                CashCurItem = index;
+            }
+            Item item = this.list_items_cash.GetSelectItem<Item>();
+            SetCurItems(item);
         }
+
+        private void list_search_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ItemClassInfo item = this.list_search.GetSelectItem<ItemClassInfo>();
+            SetCurItems(item);
+        }
+        #endregion
     }
 }
