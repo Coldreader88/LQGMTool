@@ -729,15 +729,6 @@ namespace GMTool
             }
         }
 
-        private void contentMenuItemPowers3_Click(object sender, EventArgs e)
-        {
-            if (!CheckItem()) return;
-            if (this.ModItemPower(CurUser, GetSelectItem(sender), 3))
-            {
-                ReadItems();
-            }
-        }
-
         private void contentMenuItemPowers5_Click(object sender, EventArgs e)
         {
             if (!CheckItem()) return;

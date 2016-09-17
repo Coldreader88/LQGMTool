@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "测试",
             "艾丽莎",
             "12"}, -1);
@@ -276,7 +276,7 @@
             this.list_users.GridLines = true;
             this.list_users.HideSelection = false;
             this.list_users.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem2});
             this.list_users.LabelWrap = false;
             this.list_users.Location = new System.Drawing.Point(3, 3);
             this.list_users.MultiSelect = false;
@@ -476,7 +476,7 @@
             this.toolStripSeparator3,
             this.contentMenuDeleteItems});
             this.contextMenuItem.Name = "contextMenuItem";
-            this.contextMenuItem.Size = new System.Drawing.Size(173, 402);
+            this.contextMenuItem.Size = new System.Drawing.Size(173, 424);
             // 
             // contentMenuEnchantPrefix
             // 
@@ -507,24 +507,28 @@
             this.contentMenuItemPower5.Name = "contentMenuItemPower5";
             this.contentMenuItemPower5.Size = new System.Drawing.Size(172, 22);
             this.contentMenuItemPower5.Text = "强化+5";
+            this.contentMenuItemPower5.Click += new System.EventHandler(this.contentMenuItemPowers5_Click);
             // 
             // contentMenuItemPower10
             // 
             this.contentMenuItemPower10.Name = "contentMenuItemPower10";
             this.contentMenuItemPower10.Size = new System.Drawing.Size(172, 22);
             this.contentMenuItemPower10.Text = "强化+10";
+            this.contentMenuItemPower10.Click += new System.EventHandler(this.contentMenuItemPowers10_Click);
             // 
             // contentMenuItemPower12
             // 
             this.contentMenuItemPower12.Name = "contentMenuItemPower12";
             this.contentMenuItemPower12.Size = new System.Drawing.Size(172, 22);
             this.contentMenuItemPower12.Text = "强化+12";
+            this.contentMenuItemPower12.Click += new System.EventHandler(this.contentMenuItemPowers12_Click);
             // 
             // contentMenuItemPower15
             // 
             this.contentMenuItemPower15.Name = "contentMenuItemPower15";
             this.contentMenuItemPower15.Size = new System.Drawing.Size(172, 22);
             this.contentMenuItemPower15.Text = "强化+15";
+            this.contentMenuItemPower15.Click += new System.EventHandler(this.contentMenuItemPowers15_Click);
             // 
             // toolStripSeparator2
             // 
@@ -1073,7 +1077,7 @@
             this.tab_color.Controls.Add(this.label6);
             this.tab_color.Location = new System.Drawing.Point(4, 22);
             this.tab_color.Name = "tab_color";
-            this.tab_color.Size = new System.Drawing.Size(240, 258);
+            this.tab_color.Size = new System.Drawing.Size(240, 278);
             this.tab_color.TabIndex = 2;
             this.tab_color.Text = "物品染色";
             // 
