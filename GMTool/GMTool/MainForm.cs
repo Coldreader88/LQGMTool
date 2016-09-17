@@ -18,6 +18,7 @@ namespace GMTool
     {
         private string DefTitle;
         private ItemClassInfoHelper itemsHelper;
+        private ColorDialog colorDialog;
         public User CurUser { get; private set; }
 
         private int NormalCurItem = -1;
@@ -139,9 +140,9 @@ namespace GMTool
             {
                 if (info.IsPrefix)
                 {
-                    if (prelist == null || i % max==0)
+                    if (prelist == null || i % max == 0)
                     {
-                        prelist = new ToolStripMenuItem(i+"-"+(i+ max));
+                        prelist = new ToolStripMenuItem(i + "-" + (i + max));
                         this.contentMenuEnchantPrefix.DropDownItems.Add(prelist);
                     }
                     i++;
@@ -184,8 +185,9 @@ namespace GMTool
                         log(CurItem.ItemName + " 附魔【" + info.Name + "】成功。");
                         ReadItems();
                     }
-                    else{
-                        this.Warnning(CurItem.ItemName+" 附魔【"+info.Name+"】失败。");
+                    else
+                    {
+                        this.Warnning(CurItem.ItemName + " 附魔【" + info.Name + "】失败。");
                         log(CurItem.ItemName + " 附魔【" + info.Name + "】失败。");
                     }
                 }
@@ -206,7 +208,7 @@ namespace GMTool
             {
                 if (CurItem != null)
                 {
-                    if (item.ItemID == CurItem.ItemID)
+                    if (item == CurItem)
                     {
                         return;
                     }
@@ -225,7 +227,7 @@ namespace GMTool
                     }
                 }
                 //this.tab_color.Text = this.tab_color.Text.Split(' ')[0] + " ("+item.ItemName+")";
-              
+
                 this.tb_senditem_name.Text = item.ItemName;
                 this.tb_senditem_class.Text = item.ItemClass;
             }
@@ -257,6 +259,10 @@ namespace GMTool
                     vitems[i].Text = t.Name == null ? t.ItemClass : t.Name;
                     vitems[i].ToolTipText = t.ToString();
                     vitems[i].Tag = t;
+                    if (i % 2 == 0)
+                        vitems[i].BackColor = Color.GhostWhite;
+                    else
+                        vitems[i].BackColor = Color.White;
                 }
                 this.list_search.Items.AddRange(vitems);
             }
@@ -325,7 +331,10 @@ namespace GMTool
                             }
                         }
                     }
-
+                    if (i % 2 == 0)
+                        vitems[i].BackColor = Color.GhostWhite;
+                    else
+                       vitems[i].BackColor = Color.White;
                     if (NormalCurItem == i)
                     {
                         index = i;
@@ -903,7 +912,7 @@ namespace GMTool
         #endregion
 
         #region 颜色
-    
+
         private void tb_color1_TextChanged(object sender, EventArgs e)
         {
             try
@@ -940,6 +949,24 @@ namespace GMTool
             }
         }
 
+        private Color SelectColor(Color def1, Color def2, Color def3, Color def)
+        {
+            if (!CheckItem()) return def;
+            if (colorDialog == null)
+            {
+                colorDialog = new ColorDialog();
+                colorDialog.FullOpen = true;
+                colorDialog.AnyColor = true;
+            }
+            //是否显示ColorDialog有半部分，运行一下就很了然了
+            colorDialog.Color = def;// new int[] { def1.ToArgb() , def2 .ToArgb(), def3.ToArgb()};//设置自定义颜色
+            if (colorDialog.ShowDialog() == DialogResult.OK)//确定事件响应
+            {
+                return colorDialog.Color;
+            }
+            return def;
+        }
+
         private void chk_lock_color_CheckedChanged(object sender, EventArgs e)
         {
             if (this.chk_lock_color.Checked)
@@ -961,11 +988,11 @@ namespace GMTool
                 this.tb_color3.Enabled = true;
             }
         }
- 
+
 
         private bool CheckItem()
         {
-            bool b =  CurItem != null;
+            bool b = CurItem != null;
             if (!b)
             {
                 this.Warnning("没有选中物品");
@@ -983,13 +1010,13 @@ namespace GMTool
         }
         private void contentMenuColor1_Click(object sender, EventArgs e)
         {
-            this.ModItemColor(CurUser, lb_color1.BackColor.ToArgb(), 0,0, GetSelectItems(sender));
+            this.ModItemColor(CurUser, lb_color1.BackColor.ToArgb(), 0, 0, GetSelectItems(sender));
             ReadItems();
         }
 
         private void contentMenuColor2_Click(object sender, EventArgs e)
         {
-            this.ModItemColor(CurUser, 0, lb_color2.BackColor.ToArgb(),0, GetSelectItems(sender));
+            this.ModItemColor(CurUser, 0, lb_color2.BackColor.ToArgb(), 0, GetSelectItems(sender));
             ReadItems();
         }
 
@@ -1004,7 +1031,7 @@ namespace GMTool
             this.ModItemColor(CurUser, lb_color1.BackColor.ToArgb(), lb_color2.BackColor.ToArgb(), lb_color3.BackColor.ToArgb(), GetSelectItems(sender));
             ReadItems();
         }
-    
+
 
         private void contentMenuItemColorClean_Click(object sender, EventArgs e)
         {
@@ -1012,5 +1039,32 @@ namespace GMTool
             ReadItems();
         }
         #endregion
+
+        private void lb_color1_Click(object sender, EventArgs e)
+        {
+            Color color = SelectColor(lb_color1.BackColor, lb_color2.BackColor, lb_color3.BackColor, lb_color1.BackColor);
+            if (color != lb_color1.BackColor)
+            {
+                lb_color1.BackColor = color;
+            }
+        }
+
+        private void lb_color2_Click(object sender, EventArgs e)
+        {
+            Color color = SelectColor(lb_color1.BackColor, lb_color2.BackColor, lb_color3.BackColor, lb_color2.BackColor);
+            if (color != lb_color2.BackColor)
+            {
+                lb_color2.BackColor = color;
+            }
+        }
+
+        private void lb_color3_Click(object sender, EventArgs e)
+        {
+            Color color = SelectColor(lb_color1.BackColor, lb_color2.BackColor, lb_color3.BackColor, lb_color3.BackColor);
+            if (color != lb_color3.BackColor)
+            {
+                lb_color3.BackColor = color;
+            }
+        }
     }
 }

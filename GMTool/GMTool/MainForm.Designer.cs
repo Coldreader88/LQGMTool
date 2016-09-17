@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "测试",
             "艾丽莎",
             "12"}, -1);
@@ -135,13 +135,13 @@
             this.tab_left = new System.Windows.Forms.TabControl();
             this.tab_user = new System.Windows.Forms.TabPage();
             this.tab_color = new System.Windows.Forms.TabPage();
+            this.lb_color3 = new System.Windows.Forms.Label();
+            this.lb_color2 = new System.Windows.Forms.Label();
+            this.lb_color1 = new System.Windows.Forms.Label();
             this.chk_lock_color = new System.Windows.Forms.CheckBox();
             this.tb_color3 = new System.Windows.Forms.TextBox();
             this.tb_color2 = new System.Windows.Forms.TextBox();
             this.tb_color1 = new System.Windows.Forms.TextBox();
-            this.lb_color3 = new System.Windows.Forms.TextBox();
-            this.lb_color2 = new System.Windows.Forms.TextBox();
-            this.lb_color1 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -182,7 +182,7 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(2, 569);
+            this.groupBox1.Location = new System.Drawing.Point(3, 574);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(385, 79);
             this.groupBox1.TabIndex = 1;
@@ -276,13 +276,13 @@
             this.list_users.GridLines = true;
             this.list_users.HideSelection = false;
             this.list_users.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
+            listViewItem1});
             this.list_users.LabelWrap = false;
             this.list_users.Location = new System.Drawing.Point(3, 3);
             this.list_users.MultiSelect = false;
             this.list_users.Name = "list_users";
             this.list_users.ShowItemToolTips = true;
-            this.list_users.Size = new System.Drawing.Size(234, 272);
+            this.list_users.Size = new System.Drawing.Size(234, 281);
             this.list_users.TabIndex = 3;
             this.list_users.UseCompatibleStateImageBehavior = false;
             this.list_users.View = System.Windows.Forms.View.Details;
@@ -405,7 +405,7 @@
             this.list_items_normal.Location = new System.Drawing.Point(3, 3);
             this.list_items_normal.Name = "list_items_normal";
             this.list_items_normal.ShowItemToolTips = true;
-            this.list_items_normal.Size = new System.Drawing.Size(747, 519);
+            this.list_items_normal.Size = new System.Drawing.Size(721, 524);
             this.list_items_normal.TabIndex = 3;
             this.list_items_normal.UseCompatibleStateImageBehavior = false;
             this.list_items_normal.View = System.Windows.Forms.View.Details;
@@ -424,12 +424,11 @@
             // columnHeader15
             // 
             this.columnHeader15.Text = "分类";
-            this.columnHeader15.Width = 70;
             // 
             // ch_items_type
             // 
             this.ch_items_type.Text = "类型";
-            this.ch_items_type.Width = 85;
+            this.ch_items_type.Width = 80;
             // 
             // ch_items_color1
             // 
@@ -449,7 +448,7 @@
             // ch_items_time
             // 
             this.ch_items_time.Text = "到期时间";
-            this.ch_items_time.Width = 88;
+            this.ch_items_time.Width = 76;
             // 
             // contextMenuItem
             // 
@@ -476,7 +475,7 @@
             this.toolStripSeparator3,
             this.contentMenuDeleteItems});
             this.contextMenuItem.Name = "contextMenuItem";
-            this.contextMenuItem.Size = new System.Drawing.Size(173, 424);
+            this.contextMenuItem.Size = new System.Drawing.Size(173, 402);
             // 
             // contentMenuEnchantPrefix
             // 
@@ -628,7 +627,7 @@
             this.list_search.GridLines = true;
             this.list_search.HideSelection = false;
             this.list_search.LabelWrap = false;
-            this.list_search.Location = new System.Drawing.Point(1021, 35);
+            this.list_search.Location = new System.Drawing.Point(985, 34);
             this.list_search.Name = "list_search";
             this.list_search.ShowItemToolTips = true;
             this.list_search.Size = new System.Drawing.Size(235, 450);
@@ -676,7 +675,7 @@
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(1023, 607);
+            this.label7.Location = new System.Drawing.Point(988, 611);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(53, 12);
             this.label7.TabIndex = 4;
@@ -685,7 +684,7 @@
             // tb_senditem_count
             // 
             this.tb_senditem_count.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_senditem_count.Location = new System.Drawing.Point(1023, 627);
+            this.tb_senditem_count.Location = new System.Drawing.Point(988, 631);
             this.tb_senditem_count.MaxLength = 12;
             this.tb_senditem_count.Name = "tb_senditem_count";
             this.tb_senditem_count.Size = new System.Drawing.Size(77, 21);
@@ -698,7 +697,7 @@
             // 
             this.btn_senditem_send.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_senditem_send.Enabled = false;
-            this.btn_senditem_send.Location = new System.Drawing.Point(1106, 607);
+            this.btn_senditem_send.Location = new System.Drawing.Point(1071, 611);
             this.btn_senditem_send.Name = "btn_senditem_send";
             this.btn_senditem_send.Size = new System.Drawing.Size(144, 41);
             this.btn_senditem_send.TabIndex = 5;
@@ -710,7 +709,7 @@
             // 
             this.tb_senditem_name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.tb_senditem_name.Enabled = false;
-            this.tb_senditem_name.Location = new System.Drawing.Point(1076, 491);
+            this.tb_senditem_name.Location = new System.Drawing.Point(1040, 490);
             this.tb_senditem_name.MaxLength = 128;
             this.tb_senditem_name.Name = "tb_senditem_name";
             this.tb_senditem_name.Size = new System.Drawing.Size(176, 21);
@@ -722,7 +721,7 @@
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(1020, 494);
+            this.label8.Location = new System.Drawing.Point(984, 494);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(53, 12);
             this.label8.TabIndex = 4;
@@ -732,12 +731,12 @@
             // 
             this.tb_logcat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_logcat.Location = new System.Drawing.Point(393, 569);
+            this.tb_logcat.Location = new System.Drawing.Point(394, 574);
             this.tb_logcat.Multiline = true;
             this.tb_logcat.Name = "tb_logcat";
             this.tb_logcat.ReadOnly = true;
             this.tb_logcat.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tb_logcat.Size = new System.Drawing.Size(624, 79);
+            this.tb_logcat.Size = new System.Drawing.Size(582, 79);
             this.tb_logcat.TabIndex = 6;
             this.tb_logcat.Text = "日志";
             // 
@@ -746,7 +745,7 @@
             this.lb_search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lb_search.BackColor = System.Drawing.SystemColors.Control;
             this.lb_search.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lb_search.Location = new System.Drawing.Point(1017, 6);
+            this.lb_search.Location = new System.Drawing.Point(981, 5);
             this.lb_search.Name = "lb_search";
             this.lb_search.Size = new System.Drawing.Size(235, 23);
             this.lb_search.TabIndex = 0;
@@ -757,7 +756,7 @@
             // 
             this.tb_senditem_class.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.tb_senditem_class.Enabled = false;
-            this.tb_senditem_class.Location = new System.Drawing.Point(1076, 517);
+            this.tb_senditem_class.Location = new System.Drawing.Point(1040, 516);
             this.tb_senditem_class.MaxLength = 128;
             this.tb_senditem_class.Name = "tb_senditem_class";
             this.tb_senditem_class.Size = new System.Drawing.Size(176, 21);
@@ -769,7 +768,7 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(1020, 520);
+            this.label10.Location = new System.Drawing.Point(984, 520);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(53, 12);
             this.label10.TabIndex = 4;
@@ -779,7 +778,7 @@
             // 
             this.btn_search_name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_search_name.Enabled = false;
-            this.btn_search_name.Location = new System.Drawing.Point(1024, 569);
+            this.btn_search_name.Location = new System.Drawing.Point(988, 573);
             this.btn_search_name.Name = "btn_search_name";
             this.btn_search_name.Size = new System.Drawing.Size(110, 32);
             this.btn_search_name.TabIndex = 5;
@@ -791,7 +790,7 @@
             // 
             this.btn_search_id.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_search_id.Enabled = false;
-            this.btn_search_id.Location = new System.Drawing.Point(1140, 570);
+            this.btn_search_id.Location = new System.Drawing.Point(1105, 573);
             this.btn_search_id.Name = "btn_search_id";
             this.btn_search_id.Size = new System.Drawing.Size(110, 32);
             this.btn_search_id.TabIndex = 5;
@@ -808,7 +807,7 @@
             this.tab_mail.Location = new System.Drawing.Point(7, 322);
             this.tab_mail.Name = "tab_mail";
             this.tab_mail.SelectedIndex = 0;
-            this.tab_mail.Size = new System.Drawing.Size(239, 245);
+            this.tab_mail.Size = new System.Drawing.Size(239, 246);
             this.tab_mail.TabIndex = 7;
             // 
             // tab_mail_send
@@ -816,7 +815,7 @@
             this.tab_mail_send.Controls.Add(this.list_mail_send);
             this.tab_mail_send.Location = new System.Drawing.Point(4, 22);
             this.tab_mail_send.Name = "tab_mail_send";
-            this.tab_mail_send.Size = new System.Drawing.Size(231, 219);
+            this.tab_mail_send.Size = new System.Drawing.Size(231, 220);
             this.tab_mail_send.TabIndex = 0;
             this.tab_mail_send.Text = "发送中邮件";
             this.tab_mail_send.UseVisualStyleBackColor = true;
@@ -835,7 +834,7 @@
             this.list_mail_send.Location = new System.Drawing.Point(0, 0);
             this.list_mail_send.Name = "list_mail_send";
             this.list_mail_send.ShowItemToolTips = true;
-            this.list_mail_send.Size = new System.Drawing.Size(231, 219);
+            this.list_mail_send.Size = new System.Drawing.Size(231, 220);
             this.list_mail_send.TabIndex = 3;
             this.list_mail_send.UseCompatibleStateImageBehavior = false;
             this.list_mail_send.View = System.Windows.Forms.View.Details;
@@ -923,10 +922,10 @@
             this.tab_items.Controls.Add(this.tab_items_normal);
             this.tab_items.Controls.Add(this.tab_items_cash);
             this.tab_items.Enabled = false;
-            this.tab_items.Location = new System.Drawing.Point(254, 12);
+            this.tab_items.Location = new System.Drawing.Point(253, 3);
             this.tab_items.Name = "tab_items";
             this.tab_items.SelectedIndex = 0;
-            this.tab_items.Size = new System.Drawing.Size(761, 551);
+            this.tab_items.Size = new System.Drawing.Size(728, 565);
             this.tab_items.TabIndex = 8;
             // 
             // tab_items_normal
@@ -935,7 +934,7 @@
             this.tab_items_normal.Location = new System.Drawing.Point(4, 22);
             this.tab_items_normal.Name = "tab_items_normal";
             this.tab_items_normal.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_items_normal.Size = new System.Drawing.Size(753, 525);
+            this.tab_items_normal.Size = new System.Drawing.Size(727, 530);
             this.tab_items_normal.TabIndex = 0;
             this.tab_items_normal.Text = "普通背包";
             this.tab_items_normal.UseVisualStyleBackColor = true;
@@ -946,7 +945,7 @@
             this.tab_items_cash.Location = new System.Drawing.Point(4, 22);
             this.tab_items_cash.Name = "tab_items_cash";
             this.tab_items_cash.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_items_cash.Size = new System.Drawing.Size(753, 525);
+            this.tab_items_cash.Size = new System.Drawing.Size(720, 539);
             this.tab_items_cash.TabIndex = 1;
             this.tab_items_cash.Text = "现金背包";
             this.tab_items_cash.UseVisualStyleBackColor = true;
@@ -972,7 +971,7 @@
             this.list_items_cash.Location = new System.Drawing.Point(3, 3);
             this.list_items_cash.Name = "list_items_cash";
             this.list_items_cash.ShowItemToolTips = true;
-            this.list_items_cash.Size = new System.Drawing.Size(747, 519);
+            this.list_items_cash.Size = new System.Drawing.Size(714, 533);
             this.list_items_cash.TabIndex = 4;
             this.list_items_cash.UseCompatibleStateImageBehavior = false;
             this.list_items_cash.View = System.Windows.Forms.View.Details;
@@ -981,7 +980,7 @@
             // columnHeader5
             // 
             this.columnHeader5.Text = "名字";
-            this.columnHeader5.Width = 328;
+            this.columnHeader5.Width = 320;
             // 
             // columnHeader14
             // 
@@ -990,7 +989,7 @@
             // columnHeader6
             // 
             this.columnHeader6.Text = "类型";
-            this.columnHeader6.Width = 86;
+            this.columnHeader6.Width = 80;
             // 
             // columnHeader7
             // 
@@ -1010,13 +1009,13 @@
             // columnHeader10
             // 
             this.columnHeader10.Text = "到期时间";
-            this.columnHeader10.Width = 90;
+            this.columnHeader10.Width = 75;
             // 
             // label5
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(1020, 548);
+            this.label5.Location = new System.Drawing.Point(984, 548);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 4;
@@ -1024,18 +1023,20 @@
             // 
             // cb_category
             // 
+            this.cb_category.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cb_category.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_category.FormattingEnabled = true;
-            this.cb_category.Location = new System.Drawing.Point(1079, 543);
+            this.cb_category.Location = new System.Drawing.Point(1040, 544);
             this.cb_category.Name = "cb_category";
             this.cb_category.Size = new System.Drawing.Size(72, 20);
             this.cb_category.TabIndex = 9;
             // 
             // cb_item_type
             // 
+            this.cb_item_type.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cb_item_type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_item_type.FormattingEnabled = true;
-            this.cb_item_type.Location = new System.Drawing.Point(1157, 544);
+            this.cb_item_type.Location = new System.Drawing.Point(1118, 545);
             this.cb_item_type.Name = "cb_item_type";
             this.cb_item_type.Size = new System.Drawing.Size(95, 20);
             this.cb_item_type.TabIndex = 9;
@@ -1045,10 +1046,10 @@
             this.tab_left.Controls.Add(this.tab_user);
             this.tab_left.Controls.Add(this.tab_color);
             this.tab_left.Enabled = false;
-            this.tab_left.Location = new System.Drawing.Point(7, 12);
+            this.tab_left.Location = new System.Drawing.Point(3, 3);
             this.tab_left.Name = "tab_left";
             this.tab_left.SelectedIndex = 0;
-            this.tab_left.Size = new System.Drawing.Size(248, 304);
+            this.tab_left.Size = new System.Drawing.Size(248, 313);
             this.tab_left.TabIndex = 10;
             // 
             // tab_user
@@ -1057,7 +1058,7 @@
             this.tab_user.Location = new System.Drawing.Point(4, 22);
             this.tab_user.Name = "tab_user";
             this.tab_user.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_user.Size = new System.Drawing.Size(240, 278);
+            this.tab_user.Size = new System.Drawing.Size(240, 287);
             this.tab_user.TabIndex = 0;
             this.tab_user.Text = "角色列表";
             this.tab_user.UseVisualStyleBackColor = true;
@@ -1065,13 +1066,13 @@
             // tab_color
             // 
             this.tab_color.BackColor = System.Drawing.SystemColors.Control;
+            this.tab_color.Controls.Add(this.lb_color3);
+            this.tab_color.Controls.Add(this.lb_color2);
+            this.tab_color.Controls.Add(this.lb_color1);
             this.tab_color.Controls.Add(this.chk_lock_color);
             this.tab_color.Controls.Add(this.tb_color3);
             this.tab_color.Controls.Add(this.tb_color2);
             this.tab_color.Controls.Add(this.tb_color1);
-            this.tab_color.Controls.Add(this.lb_color3);
-            this.tab_color.Controls.Add(this.lb_color2);
-            this.tab_color.Controls.Add(this.lb_color1);
             this.tab_color.Controls.Add(this.label11);
             this.tab_color.Controls.Add(this.label9);
             this.tab_color.Controls.Add(this.label6);
@@ -1080,6 +1081,34 @@
             this.tab_color.Size = new System.Drawing.Size(240, 278);
             this.tab_color.TabIndex = 2;
             this.tab_color.Text = "物品染色";
+            // 
+            // lb_color3
+            // 
+            this.lb_color3.BackColor = System.Drawing.SystemColors.Control;
+            this.lb_color3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lb_color3.Location = new System.Drawing.Point(56, 84);
+            this.lb_color3.Name = "lb_color3";
+            this.lb_color3.Size = new System.Drawing.Size(70, 23);
+            this.lb_color3.TabIndex = 4;
+            this.lb_color3.Click += new System.EventHandler(this.lb_color3_Click);
+            // 
+            // lb_color2
+            // 
+            this.lb_color2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lb_color2.Location = new System.Drawing.Point(56, 50);
+            this.lb_color2.Name = "lb_color2";
+            this.lb_color2.Size = new System.Drawing.Size(70, 23);
+            this.lb_color2.TabIndex = 4;
+            this.lb_color2.Click += new System.EventHandler(this.lb_color2_Click);
+            // 
+            // lb_color1
+            // 
+            this.lb_color1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lb_color1.Location = new System.Drawing.Point(56, 12);
+            this.lb_color1.Name = "lb_color1";
+            this.lb_color1.Size = new System.Drawing.Size(70, 23);
+            this.lb_color1.TabIndex = 4;
+            this.lb_color1.Click += new System.EventHandler(this.lb_color1_Click);
             // 
             // chk_lock_color
             // 
@@ -1102,7 +1131,7 @@
             // 
             // tb_color2
             // 
-            this.tb_color2.Location = new System.Drawing.Point(139, 50);
+            this.tb_color2.Location = new System.Drawing.Point(139, 52);
             this.tb_color2.Name = "tb_color2";
             this.tb_color2.Size = new System.Drawing.Size(82, 21);
             this.tb_color2.TabIndex = 2;
@@ -1110,41 +1139,11 @@
             // 
             // tb_color1
             // 
-            this.tb_color1.Location = new System.Drawing.Point(139, 18);
+            this.tb_color1.Location = new System.Drawing.Point(139, 12);
             this.tb_color1.Name = "tb_color1";
             this.tb_color1.Size = new System.Drawing.Size(82, 21);
             this.tb_color1.TabIndex = 2;
             this.tb_color1.TextChanged += new System.EventHandler(this.tb_color1_TextChanged);
-            // 
-            // lb_color3
-            // 
-            this.lb_color3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lb_color3.Location = new System.Drawing.Point(56, 86);
-            this.lb_color3.MaxLength = 0;
-            this.lb_color3.Name = "lb_color3";
-            this.lb_color3.ReadOnly = true;
-            this.lb_color3.Size = new System.Drawing.Size(72, 21);
-            this.lb_color3.TabIndex = 1;
-            // 
-            // lb_color2
-            // 
-            this.lb_color2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lb_color2.Location = new System.Drawing.Point(56, 50);
-            this.lb_color2.MaxLength = 0;
-            this.lb_color2.Name = "lb_color2";
-            this.lb_color2.ReadOnly = true;
-            this.lb_color2.Size = new System.Drawing.Size(72, 21);
-            this.lb_color2.TabIndex = 1;
-            // 
-            // lb_color1
-            // 
-            this.lb_color1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lb_color1.Location = new System.Drawing.Point(56, 18);
-            this.lb_color1.MaxLength = 0;
-            this.lb_color1.Name = "lb_color1";
-            this.lb_color1.ReadOnly = true;
-            this.lb_color1.Size = new System.Drawing.Size(72, 21);
-            this.lb_color1.TabIndex = 1;
             // 
             // label11
             // 
@@ -1158,7 +1157,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(15, 55);
+            this.label9.Location = new System.Drawing.Point(15, 57);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(35, 12);
             this.label9.TabIndex = 0;
@@ -1167,7 +1166,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(15, 23);
+            this.label6.Location = new System.Drawing.Point(15, 17);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(35, 12);
             this.label6.TabIndex = 0;
@@ -1177,7 +1176,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 661);
+            this.ClientSize = new System.Drawing.Size(1227, 661);
             this.Controls.Add(this.tab_left);
             this.Controls.Add(this.cb_item_type);
             this.Controls.Add(this.cb_category);
@@ -1320,7 +1319,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem contentMenuEnchantPrefix;
         private System.Windows.Forms.ToolStripMenuItem contentMenuEnchantSuffix;
-        private System.Windows.Forms.TextBox lb_color1;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label6;
@@ -1328,8 +1326,6 @@
         private System.Windows.Forms.TextBox tb_color3;
         private System.Windows.Forms.TextBox tb_color2;
         private System.Windows.Forms.TextBox tb_color1;
-        private System.Windows.Forms.TextBox lb_color3;
-        private System.Windows.Forms.TextBox lb_color2;
         private System.Windows.Forms.ToolStripMenuItem contentMenuItemPower0;
         private System.Windows.Forms.ToolStripMenuItem contentMenuItemColor1;
         private System.Windows.Forms.ToolStripMenuItem contentMenuItemColor2;
@@ -1337,6 +1333,9 @@
         private System.Windows.Forms.ToolStripMenuItem contentMenuItemColorAll;
         private System.Windows.Forms.ToolStripMenuItem contentMenuItemColorClean;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.Label lb_color1;
+        private System.Windows.Forms.Label lb_color3;
+        private System.Windows.Forms.Label lb_color2;
     }
 }
 
