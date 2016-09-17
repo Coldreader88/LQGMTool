@@ -329,7 +329,7 @@ namespace GMTool
                         {
                             if (attr.Type == ItemAttributeType.ENHANCE)
                             {
-                                head = "+" + attr.Value;
+                                head = "+" + attr.Value+" ";
                                 break;
                             }
                         }

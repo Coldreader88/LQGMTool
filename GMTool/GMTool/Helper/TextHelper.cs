@@ -15,6 +15,7 @@ namespace GMTool.Helper
         /// <returns>转换完成后的字符串</returns>
         public static string ToSimplified(string source)
         {
+            if (source == null) return "";
             String target = new String(' ', source.Length);
             int ret = Kernel32.LCMapString(Kernel32.LOCALE_SYSTEM_DEFAULT, Kernel32.LCMAP_SIMPLIFIED_CHINESE, source, source.Length, target, source.Length);
             return target;
@@ -27,6 +28,7 @@ namespace GMTool.Helper
         /// <returns>转换完成后的字符串</returns>
         public static string ToTraditional(string source)
         {
+            if (source == null) return "";
             String target = new String(' ', source.Length);
             int ret = Kernel32.LCMapString(Kernel32.LOCALE_SYSTEM_DEFAULT, Kernel32.LCMAP_TRADITIONAL_CHINESE, source, source.Length, target, source.Length);
             return target;

@@ -431,10 +431,10 @@ namespace GMTool
                 paras[3].Value = 0;
                 paras[4] = new SqlParameter("@MailTitle", SqlDbType.NVarChar);
                 paras[4].Direction = ParameterDirection.Input;
-                paras[4].Value = title;
+                paras[4].Value = TextHelper.ToTraditional(title);
                 paras[5] = new SqlParameter("@MailContent", SqlDbType.NVarChar);
                 paras[5].Direction = ParameterDirection.Input;
-                paras[5].Value = content;
+                paras[5].Value = TextHelper.ToTraditional(content);
                 paras[6] = new SqlParameter("@Result", SqlDbType.Int);
                 paras[6].Direction = ParameterDirection.Output;
                 paras[6].Value = 0;
