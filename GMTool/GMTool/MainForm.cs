@@ -208,10 +208,20 @@ namespace GMTool
         {
             if (item != null)
             {
-                if (item.Color1 != 0)
-                {
-                    this.tab_left.SelectedIndex = 1;
+                   if (item.Color1 != 0)
+                   {
+                    // this.lb_color1.BackColor = ColorTranslator.FromHtml((item.Color1 == 0 ? "#00ffffff" : "#" + item.Color1.ToString("X")));
+                    // this.lb_color1.BackColor = ColorTranslator.FromHtml((item.Color1 == 0 ? "#00ffffff" : "#" + item.Color1.ToString("X")));
+                    // this.lb_color1.BackColor = ColorTranslator.FromHtml((item.Color1 == 0 ? "#00ffffff" : "#" + item.Color1.ToString("X")));
+                    if (!chk_lock_color.Checked)
+                    {
+                        this.tb_color1.Text = (item.Color1 == 0 ? "" : "#" + item.Color1.ToString("X"));
+                        this.tb_color2.Text = (item.Color2 == 0 ? "" : "#" + item.Color2.ToString("X"));
+                        this.tb_color3.Text = (item.Color3 == 0 ? "" : "#" + item.Color3.ToString("X"));
+                    }
                 }
+                //this.tab_color.Text = this.tab_color.Text.Split(' ')[0] + " ("+item.ItemName+")";
+              
                 this.tb_senditem_name.Text = item.ItemName;
                 this.tb_senditem_class.Text = item.ItemClass;
             }
@@ -325,9 +335,9 @@ namespace GMTool
                     }
                     vitems[i].SubItems.Add("" + t.Category);
                     int colorIndex = vitems[i].SubItems.Count;
-                    vitems[i].SubItems.Add("" + (t.Color1 == 0 ? "" : t.Color1.ToString("x")));
-                    vitems[i].SubItems.Add("" + (t.Color1 == 0 || t.Color2 == 0 ? "" : t.Color2.ToString("x")));
-                    vitems[i].SubItems.Add("" + (t.Color1 == 0 || t.Color3 == 0 ? "" : t.Color3.ToString("x")));
+                    vitems[i].SubItems.Add("");// + (t.Color1 == 0 ? "" : t.Color1.ToString("x")));
+                    vitems[i].SubItems.Add("");// + (t.Color1 == 0 || t.Color2 == 0 ? "" : t.Color2.ToString("x")));
+                    vitems[i].SubItems.Add("");// + (t.Color1 == 0 || t.Color3 == 0 ? "" : t.Color3.ToString("x")));
 
                     vitems[i].SubItems.Add("" + t.Time);
 
@@ -353,7 +363,7 @@ namespace GMTool
             //TODO 
             this.list_users.BeginUpdate();
             this.list_users.Items.Clear();
-            this.lb_users.Text = this.lb_users.Text.Split(' ')[0] + " (" + count + ")";
+            this.tab_user.Text = this.tab_user.Text.Split(' ')[0] + " (" + count + ")";
             int index = -1;
             if (count >= 0)
             {
@@ -686,47 +696,72 @@ namespace GMTool
         }
         private void contentMenuDeleteItems_Click(object sender, EventArgs e)
         {
+           // if (!CheckItem()) return;
             if (this.DeleteItem(CurUser, GetSelectItems(sender)))
             {
                 ReadItems();
             }
         }
 
-        private void contentMenuItemPower5_Click(object sender, EventArgs e)
+        private void contentMenuItemPower_Click(object sender, EventArgs e)
         {
+            if (!CheckItem()) return;
+            if (this.ModItemPower(CurUser, GetSelectItem(sender), 0))
+            {
+                ReadItems();
+            }
+        }
+
+        private void contentMenuItemPowers3_Click(object sender, EventArgs e)
+        {
+            if (!CheckItem()) return;
+            if (this.ModItemPower(CurUser, GetSelectItem(sender), 3))
+            {
+                ReadItems();
+            }
+        }
+
+        private void contentMenuItemPowers5_Click(object sender, EventArgs e)
+        {
+            if (!CheckItem()) return;
             if (this.ModItemPower(CurUser, GetSelectItem(sender), 5))
             {
                 ReadItems();
             }
         }
 
-        private void contentMenuItemPower10_Click(object sender, EventArgs e)
+        private void contentMenuItemPowers10_Click(object sender, EventArgs e)
         {
+            if (!CheckItem()) return;
             if (this.ModItemPower(CurUser, GetSelectItem(sender), 10))
             {
                 ReadItems();
             }
         }
 
-        private void contentMenuItemPower12_Click(object sender, EventArgs e)
+        private void contentMenuItemPowers12_Click(object sender, EventArgs e)
         {
+            if (!CheckItem()) return;
             if (this.ModItemPower(CurUser, GetSelectItem(sender), 12))
             {
                 ReadItems();
             }
         }
 
-        private void contentMenuItemPower15_Click(object sender, EventArgs e)
+        private void contentMenuItemPowers15_Click(object sender, EventArgs e)
         {
+            if (!CheckItem()) return;
             if (this.ModItemPower(CurUser, GetSelectItem(sender), 15))
             {
                 ReadItems();
             }
         }
 
+
+
         private void contentMenuItemMaxStar_Click(object sender, EventArgs e)
         {
-            //TODO 
+            if (!CheckItem()) return;
             if (this.MaxStar(CurUser, GetSelectItem(sender)))
             {
                 ReadItems();
@@ -735,7 +770,7 @@ namespace GMTool
 
         private void contentMenuItemUnLimitTime_Click(object sender, EventArgs e)
         {
-            //TODO 
+            if (!CheckItem()) return;
             if (this.UnLimitTime(CurUser, GetSelectItem(sender)))
             {
                 ReadItems();
@@ -744,7 +779,7 @@ namespace GMTool
 
         private void contentMennuAllMaxStar_Click(object sender, EventArgs e)
         {
-            //TODO
+            if (!CheckItem()) return;
             if (this.MaxStar(CurUser, GetItems(sender)))
             {
                 ReadItems();
@@ -752,6 +787,7 @@ namespace GMTool
         }
         private void contentMenuItemAllUnLimitTime_Click(object sender, EventArgs e)
         {
+            if (!CheckItem()) return;
             if (this.UnLimitTime(CurUser, GetItems(sender)))
             {
                 ReadItems();
@@ -862,6 +898,95 @@ namespace GMTool
         {
             ItemClassInfo item = this.list_search.GetSelectItem<ItemClassInfo>();
             SetCurItems(item);
+        }
+        #endregion
+
+        #region 颜色
+    
+        private void tb_color1_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                this.lb_color1.BackColor = ColorTranslator.FromHtml(tb_color1.Text);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void tb_color2_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                this.lb_color2.BackColor = ColorTranslator.FromHtml(tb_color2.Text);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void tb_color3_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                this.lb_color3.BackColor = ColorTranslator.FromHtml(tb_color3.Text);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void chk_lock_color_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.chk_lock_color.Checked)
+            {
+                this.lb_color1.Enabled = false;
+                this.lb_color2.Enabled = false;
+                this.lb_color3.Enabled = false;
+            }
+            else
+            {
+                this.lb_color1.Enabled = true;
+                this.lb_color2.Enabled = true;
+                this.lb_color3.Enabled = true;
+            }
+        }
+ 
+
+        private bool CheckItem()
+        {
+            bool b =  CurItem != null;
+            if (!b)
+            {
+                this.Warnning("没有选中物品");
+            }
+            return b;
+        }
+        private void contentMenuColor1_Click(object sender, EventArgs e)
+        {
+            this.ModItemColor(CurUser, lb_color1.BackColor.ToArgb(), 0,0, GetSelectItems(sender));
+            ReadItems();
+        }
+
+        private void contentMenuColor2_Click(object sender, EventArgs e)
+        {
+            this.ModItemColor(CurUser, 0, lb_color2.BackColor.ToArgb(),0, GetSelectItems(sender));
+            ReadItems();
+        }
+
+        private void contentMenuColor3_Click(object sender, EventArgs e)
+        {
+            this.ModItemColor(CurUser, 0, 0, lb_color3.BackColor.ToArgb(), GetSelectItems(sender));
+            ReadItems();
+        }
+
+        private void contentMenuColorAll_Click(object sender, EventArgs e)
+        {
+            this.ModItemColor(CurUser,lb_color1.BackColor.ToArgb(), lb_color2.BackColor.ToArgb(), lb_color3.BackColor.ToArgb(), GetSelectItems(sender));
+            ReadItems();
         }
         #endregion
     }

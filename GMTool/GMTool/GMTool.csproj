@@ -87,6 +87,9 @@
     <Compile Include="ChangeUserLevelForm.Designer.cs">
       <DependentUpon>ChangeUserLevelForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ContextMenuStripEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Helper\FormExpress.cs" />
     <Compile Include="Helper\IniHelper.cs" />
     <Compile Include="Helper\MSSqlHelper.cs" />

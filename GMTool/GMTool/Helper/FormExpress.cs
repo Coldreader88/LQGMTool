@@ -111,20 +111,29 @@ namespace GMTool
             }
         }
 
-        public static Control GetMenuConrtol(this ToolStripMenuItem menu)
+        public static Control GetMenuConrtol(this ToolStripItem menu)
         {
-            if (menu.GetCurrentParent() != null && menu.GetCurrentParent().ContextMenuStrip!=null)
+            if (menu.OwnerItem != null)
             {
-                return menu.GetCurrentParent().ContextMenuStrip.SourceControl;
+                //多级菜单
+                //MessageBox.Show("" + menu.OwnerItem.Text);
+                return GetMenuConrtol(menu.OwnerItem);
             }
-            if (menu.GetCurrentParent() != null && menu.GetCurrentParent().ContextMenu != null)
+            else if (menu.GetCurrentParent() is ContextMenuStripEx)
             {
-                return menu.GetCurrentParent().ContextMenu.SourceControl;
+                //一级菜单
+                ContextMenuStripEx cm = (ContextMenuStripEx)menu.GetCurrentParent();
+                return cm.SourceConrolEx;
             }
-            if(menu.GetCurrentParent() is ContextMenuStrip)
+            else if (menu.GetCurrentParent() is ContextMenuStrip)
             {
+                //一级菜单
                 ContextMenuStrip cm = (ContextMenuStrip)menu.GetCurrentParent();
                 return cm.SourceControl;
+            }
+            else
+            {
+                MessageBox.Show("" + (menu.GetCurrentParent().GetType()));
             }
             return null;
         }

@@ -487,28 +487,24 @@
             this.contentMenuItemPower5.Name = "contentMenuItemPower5";
             this.contentMenuItemPower5.Size = new System.Drawing.Size(172, 22);
             this.contentMenuItemPower5.Text = "强化+5";
-            this.contentMenuItemPower5.Click += new System.EventHandler(this.contentMenuItemPower5_Click);
             // 
             // contentMenuItemPower10
             // 
             this.contentMenuItemPower10.Name = "contentMenuItemPower10";
             this.contentMenuItemPower10.Size = new System.Drawing.Size(172, 22);
             this.contentMenuItemPower10.Text = "强化+10";
-            this.contentMenuItemPower10.Click += new System.EventHandler(this.contentMenuItemPower10_Click);
             // 
             // contentMenuItemPower12
             // 
             this.contentMenuItemPower12.Name = "contentMenuItemPower12";
             this.contentMenuItemPower12.Size = new System.Drawing.Size(172, 22);
             this.contentMenuItemPower12.Text = "强化+12";
-            this.contentMenuItemPower12.Click += new System.EventHandler(this.contentMenuItemPower12_Click);
             // 
             // contentMenuItemPower15
             // 
             this.contentMenuItemPower15.Name = "contentMenuItemPower15";
             this.contentMenuItemPower15.Size = new System.Drawing.Size(172, 22);
             this.contentMenuItemPower15.Text = "强化+15";
-            this.contentMenuItemPower15.Click += new System.EventHandler(this.contentMenuItemPower15_Click);
             // 
             // toolStripSeparator2
             // 

@@ -55,7 +55,7 @@ namespace GMTool
             try {
                 mainForm.ModUserName(mainForm.CurUser, NewName);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
             this.DialogResult = DialogResult.OK;

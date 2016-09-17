@@ -41,7 +41,7 @@ namespace GMTool
                     this.Error("等级超出1-200的范围");
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
            

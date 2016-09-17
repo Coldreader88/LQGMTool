@@ -432,7 +432,7 @@ namespace GMTool
                 db.ExcuteSQL(strSQL, paras, CommandType.StoredProcedure);
                 return 1;
             }
-            catch (Exception exception)
+            catch (Exception)
             {
             }
             return 0;
@@ -468,6 +468,11 @@ namespace GMTool
         {
             try
             {
+                if (power == 0)
+                {
+                    db.ExcuteSQL(string.Concat(new object[] { "DELETE FROM ItemAttribute where itemID=", item.ItemID, "and Attribute = 'ENHANCE'" }));
+                    return true;
+                }
                 switch (db.ExcuteScalarSQL("select count(*) from ItemAttribute where itemID = " + item.ItemID + "and Attribute = 'ENHANCE'"))
                 {
                     case 0:
@@ -551,7 +556,7 @@ namespace GMTool
                         "INSERT INTO ItemAttribute ([ItemID], [Attribute], [Value], [Arg], [Arg2]) VALUES (",
                         item.ItemID, ", '"+name+"','", attribute.Class, "', '"+attribute.MaxArg+"', '0')" })) > 0;
             }
-            else if (db.ExcuteSQL("UPDATE ItemAttribute SET [Value] ='"+ attribute.Class+ " ,[Arg]='"+ attribute.MaxArg +
+            else if (db.ExcuteSQL("UPDATE ItemAttribute SET [Value] ='"+ attribute.Class+ "',[Arg]='"+ attribute.MaxArg +
                     "' WHERE ItemID =" + item.ItemID+ " AND Attribute = '"+name+"'") > 0)
             {
                 return true;
@@ -559,31 +564,41 @@ namespace GMTool
             return false;
         }
 
-        public static bool ModItemColor(this MainForm main, User user, Item item, int color1, int color2, int color3)
+        /// <summary>
+        /// 修改颜色
+        /// </summary>
+        public static bool ModItemColor(this MainForm main, User user, int color1, int color2, int color3,params Item[] items)
         {
+            if (items == null)
+            {
+                return false;
+            }
             try
             {
-                string str = "UPDATE Equippable SET ";
-                if (color1 != 0)
+                foreach (Item item in items)
                 {
-                    str += " Color1 = " + color1 + ",";
+                    string str = "UPDATE Equippable SET ";
+                    if (color1 != 0)
+                    {
+                        str += " Color1 = " + color1 + ",";
+                    }
+                    if (color2 != 0)
+                    {
+                        str += " Color2 = " + color2 + ",";
+                    }
+                    if (color3 != 0)
+                    {
+                        str += " Color3 = " + color3 + ",";
+                    }
+                    if (str.EndsWith(","))
+                    {
+                        str = str.Substring(0, str.Length - 1);
+                    }
+                    string strSQL = str + " WHERE ID IN (SELECT e.ID FROM Item as i,Equippable as e WHERE i.OwnerID ="
+                        + user.CID + " AND e.ID = " + item.ItemID + " AND e.ID = i.ID)";
+                     db.ExcuteSQL(strSQL);
                 }
-                if (color2 != 0)
-                {
-                    str += " Color2 = " + color2 + ",";
-                }
-                if (color3 != 0)
-                {
-                    str += " Color3 = " + color3 + ",";
-                }
-                if (str.EndsWith(","))
-                {
-                    str = str.Substring(0, str.Length - 1);
-                }
-                string strSQL = str + " WHERE ID IN (SELECT e.ID FROM Item as i,Equippable as e WHERE i.OwnerID ="
-                    + user.CID + " AND e.ID = " + item.ItemID + " AND e.ID = i.ID)";
-
-                return db.ExcuteSQL(strSQL) > 0;
+                return true;
             }
             catch (Exception exception)
             {
