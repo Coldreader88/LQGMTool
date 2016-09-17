@@ -204,8 +204,16 @@ namespace GMTool
         {
             if (item != null)
             {
-                   if (item.Color1 != 0)
-                   {
+                if (CurItem != null)
+                {
+                    if (item.ItemID == CurItem.ItemID)
+                    {
+                        return;
+                    }
+                }
+                CurItem = item;
+                if (item.Color1 != 0)
+                {
                     // this.lb_color1.BackColor = ColorTranslator.FromHtml((item.Color1 == 0 ? "#00ffffff" : "#" + item.Color1.ToString("X")));
                     // this.lb_color1.BackColor = ColorTranslator.FromHtml((item.Color1 == 0 ? "#00ffffff" : "#" + item.Color1.ToString("X")));
                     // this.lb_color1.BackColor = ColorTranslator.FromHtml((item.Color1 == 0 ? "#00ffffff" : "#" + item.Color1.ToString("X")));
@@ -882,10 +890,6 @@ namespace GMTool
                 NormalCurItem = index;
             }
             Item item = this.list_items_normal.GetSelectItem<Item>();
-            if (item != null)
-            {
-                CurItem = item;
-            }
             SetCurItems(item);
         }
 
@@ -897,10 +901,6 @@ namespace GMTool
                 CashCurItem = index;
             }
             Item item = this.list_items_cash.GetSelectItem<Item>();
-            if (item != null)
-            {
-                CurItem = item;
-            }
             SetCurItems(item);
         }
 

@@ -43,7 +43,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.lb_users = new System.Windows.Forms.Label();
             this.list_users = new System.Windows.Forms.ListView();
             this.ch_userlist_name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_userlist_class = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -72,13 +71,20 @@
             this.contentMenuEnchantPrefix = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMenuEnchantSuffix = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.contentMenuItemPower0 = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMenuItemPower5 = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMenuItemPower10 = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMenuItemPower12 = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMenuItemPower15 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.contentMenuItemMaxStar = new System.Windows.Forms.ToolStripMenuItem();
+            this.contentMenuItemColor1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.contentMenuItemColor2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.contentMenuItemColor3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.contentMenuItemColorAll = new System.Windows.Forms.ToolStripMenuItem();
+            this.contentMenuItemColorClean = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.contentMenuItemUnLimitTime = new System.Windows.Forms.ToolStripMenuItem();
+            this.contentMenuItemMaxStar = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMennuAllMaxStar = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMenuItemAllUnLimitTime = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -129,23 +135,16 @@
             this.tab_left = new System.Windows.Forms.TabControl();
             this.tab_user = new System.Windows.Forms.TabPage();
             this.tab_color = new System.Windows.Forms.TabPage();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.lb_color1 = new System.Windows.Forms.TextBox();
-            this.lb_color2 = new System.Windows.Forms.TextBox();
-            this.lb_color3 = new System.Windows.Forms.TextBox();
-            this.tb_color1 = new System.Windows.Forms.TextBox();
-            this.tb_color2 = new System.Windows.Forms.TextBox();
-            this.tb_color3 = new System.Windows.Forms.TextBox();
             this.chk_lock_color = new System.Windows.Forms.CheckBox();
-            this.contentMenuItemPower0 = new System.Windows.Forms.ToolStripMenuItem();
-            this.contentMenuItemColor1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.contentMenuItemColor2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.contentMenuItemColor3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.contentMenuItemColorAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.contentMenuItemColorClean = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.tb_color3 = new System.Windows.Forms.TextBox();
+            this.tb_color2 = new System.Windows.Forms.TextBox();
+            this.tb_color1 = new System.Windows.Forms.TextBox();
+            this.lb_color3 = new System.Windows.Forms.TextBox();
+            this.lb_color2 = new System.Windows.Forms.TextBox();
+            this.lb_color1 = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.contextMenuUser.SuspendLayout();
             this.contextMenuItem.SuspendLayout();
@@ -264,17 +263,6 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "数据库";
             // 
-            // lb_users
-            // 
-            this.lb_users.BackColor = System.Drawing.SystemColors.Control;
-            this.lb_users.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lb_users.Location = new System.Drawing.Point(7, 6);
-            this.lb_users.Name = "lb_users";
-            this.lb_users.Size = new System.Drawing.Size(239, 23);
-            this.lb_users.TabIndex = 0;
-            this.lb_users.Text = "角色列表";
-            this.lb_users.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // list_users
             // 
             this.list_users.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -294,7 +282,7 @@
             this.list_users.MultiSelect = false;
             this.list_users.Name = "list_users";
             this.list_users.ShowItemToolTips = true;
-            this.list_users.Size = new System.Drawing.Size(234, 252);
+            this.list_users.Size = new System.Drawing.Size(234, 272);
             this.list_users.TabIndex = 3;
             this.list_users.UseCompatibleStateImageBehavior = false;
             this.list_users.View = System.Windows.Forms.View.Details;
@@ -507,6 +495,13 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(169, 6);
             // 
+            // contentMenuItemPower0
+            // 
+            this.contentMenuItemPower0.Name = "contentMenuItemPower0";
+            this.contentMenuItemPower0.Size = new System.Drawing.Size(172, 22);
+            this.contentMenuItemPower0.Text = "去除强化";
+            this.contentMenuItemPower0.Click += new System.EventHandler(this.contentMenuItemPower_Click);
+            // 
             // contentMenuItemPower5
             // 
             this.contentMenuItemPower5.Name = "contentMenuItemPower5";
@@ -536,12 +531,45 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
             // 
-            // contentMenuItemMaxStar
+            // contentMenuItemColor1
             // 
-            this.contentMenuItemMaxStar.Name = "contentMenuItemMaxStar";
-            this.contentMenuItemMaxStar.Size = new System.Drawing.Size(172, 22);
-            this.contentMenuItemMaxStar.Text = "品质最大";
-            this.contentMenuItemMaxStar.Click += new System.EventHandler(this.contentMenuItemMaxStar_Click);
+            this.contentMenuItemColor1.Name = "contentMenuItemColor1";
+            this.contentMenuItemColor1.Size = new System.Drawing.Size(172, 22);
+            this.contentMenuItemColor1.Text = "修改颜色1";
+            this.contentMenuItemColor1.Click += new System.EventHandler(this.contentMenuColor1_Click);
+            // 
+            // contentMenuItemColor2
+            // 
+            this.contentMenuItemColor2.Name = "contentMenuItemColor2";
+            this.contentMenuItemColor2.Size = new System.Drawing.Size(172, 22);
+            this.contentMenuItemColor2.Text = "修改颜色2";
+            this.contentMenuItemColor2.Click += new System.EventHandler(this.contentMenuColor2_Click);
+            // 
+            // contentMenuItemColor3
+            // 
+            this.contentMenuItemColor3.Name = "contentMenuItemColor3";
+            this.contentMenuItemColor3.Size = new System.Drawing.Size(172, 22);
+            this.contentMenuItemColor3.Text = "修改颜色3";
+            this.contentMenuItemColor3.Click += new System.EventHandler(this.contentMenuColor3_Click);
+            // 
+            // contentMenuItemColorAll
+            // 
+            this.contentMenuItemColorAll.Name = "contentMenuItemColorAll";
+            this.contentMenuItemColorAll.Size = new System.Drawing.Size(172, 22);
+            this.contentMenuItemColorAll.Text = "修改全部颜色";
+            this.contentMenuItemColorAll.Click += new System.EventHandler(this.contentMenuColorAll_Click);
+            // 
+            // contentMenuItemColorClean
+            // 
+            this.contentMenuItemColorClean.Name = "contentMenuItemColorClean";
+            this.contentMenuItemColorClean.Size = new System.Drawing.Size(172, 22);
+            this.contentMenuItemColorClean.Text = "清除全部颜色";
+            this.contentMenuItemColorClean.Click += new System.EventHandler(this.contentMenuItemColorClean_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(169, 6);
             // 
             // contentMenuItemUnLimitTime
             // 
@@ -549,6 +577,13 @@
             this.contentMenuItemUnLimitTime.Size = new System.Drawing.Size(172, 22);
             this.contentMenuItemUnLimitTime.Text = "无限时间";
             this.contentMenuItemUnLimitTime.Click += new System.EventHandler(this.contentMenuItemUnLimitTime_Click);
+            // 
+            // contentMenuItemMaxStar
+            // 
+            this.contentMenuItemMaxStar.Name = "contentMenuItemMaxStar";
+            this.contentMenuItemMaxStar.Size = new System.Drawing.Size(172, 22);
+            this.contentMenuItemMaxStar.Text = "品质最大";
+            this.contentMenuItemMaxStar.Click += new System.EventHandler(this.contentMenuItemMaxStar_Click);
             // 
             // contentMennuAllMaxStar
             // 
@@ -1006,10 +1041,10 @@
             this.tab_left.Controls.Add(this.tab_user);
             this.tab_left.Controls.Add(this.tab_color);
             this.tab_left.Enabled = false;
-            this.tab_left.Location = new System.Drawing.Point(7, 32);
+            this.tab_left.Location = new System.Drawing.Point(7, 12);
             this.tab_left.Name = "tab_left";
             this.tab_left.SelectedIndex = 0;
-            this.tab_left.Size = new System.Drawing.Size(248, 284);
+            this.tab_left.Size = new System.Drawing.Size(248, 304);
             this.tab_left.TabIndex = 10;
             // 
             // tab_user
@@ -1018,7 +1053,7 @@
             this.tab_user.Location = new System.Drawing.Point(4, 22);
             this.tab_user.Name = "tab_user";
             this.tab_user.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_user.Size = new System.Drawing.Size(240, 258);
+            this.tab_user.Size = new System.Drawing.Size(240, 278);
             this.tab_user.TabIndex = 0;
             this.tab_user.Text = "角色列表";
             this.tab_user.UseVisualStyleBackColor = true;
@@ -1042,87 +1077,6 @@
             this.tab_color.TabIndex = 2;
             this.tab_color.Text = "物品染色";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(15, 23);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 12);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "颜色1";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(15, 55);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(35, 12);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "颜色2";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(15, 90);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(35, 12);
-            this.label11.TabIndex = 0;
-            this.label11.Text = "颜色3";
-            // 
-            // lb_color1
-            // 
-            this.lb_color1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lb_color1.Location = new System.Drawing.Point(56, 18);
-            this.lb_color1.MaxLength = 0;
-            this.lb_color1.Name = "lb_color1";
-            this.lb_color1.ReadOnly = true;
-            this.lb_color1.Size = new System.Drawing.Size(72, 21);
-            this.lb_color1.TabIndex = 1;
-            // 
-            // lb_color2
-            // 
-            this.lb_color2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lb_color2.Location = new System.Drawing.Point(56, 50);
-            this.lb_color2.MaxLength = 0;
-            this.lb_color2.Name = "lb_color2";
-            this.lb_color2.ReadOnly = true;
-            this.lb_color2.Size = new System.Drawing.Size(72, 21);
-            this.lb_color2.TabIndex = 1;
-            // 
-            // lb_color3
-            // 
-            this.lb_color3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lb_color3.Location = new System.Drawing.Point(56, 86);
-            this.lb_color3.MaxLength = 0;
-            this.lb_color3.Name = "lb_color3";
-            this.lb_color3.ReadOnly = true;
-            this.lb_color3.Size = new System.Drawing.Size(72, 21);
-            this.lb_color3.TabIndex = 1;
-            // 
-            // tb_color1
-            // 
-            this.tb_color1.Location = new System.Drawing.Point(139, 18);
-            this.tb_color1.Name = "tb_color1";
-            this.tb_color1.Size = new System.Drawing.Size(82, 21);
-            this.tb_color1.TabIndex = 2;
-            this.tb_color1.TextChanged += new System.EventHandler(this.tb_color1_TextChanged);
-            // 
-            // tb_color2
-            // 
-            this.tb_color2.Location = new System.Drawing.Point(139, 50);
-            this.tb_color2.Name = "tb_color2";
-            this.tb_color2.Size = new System.Drawing.Size(82, 21);
-            this.tb_color2.TabIndex = 2;
-            this.tb_color2.TextChanged += new System.EventHandler(this.tb_color2_TextChanged);
-            // 
-            // tb_color3
-            // 
-            this.tb_color3.Location = new System.Drawing.Point(139, 86);
-            this.tb_color3.Name = "tb_color3";
-            this.tb_color3.Size = new System.Drawing.Size(82, 21);
-            this.tb_color3.TabIndex = 2;
-            this.tb_color3.TextChanged += new System.EventHandler(this.tb_color3_TextChanged);
-            // 
             // chk_lock_color
             // 
             this.chk_lock_color.AutoSize = true;
@@ -1134,52 +1088,86 @@
             this.chk_lock_color.UseVisualStyleBackColor = true;
             this.chk_lock_color.CheckedChanged += new System.EventHandler(this.chk_lock_color_CheckedChanged);
             // 
-            // contentMenuItemPower0
+            // tb_color3
             // 
-            this.contentMenuItemPower0.Name = "contentMenuItemPower0";
-            this.contentMenuItemPower0.Size = new System.Drawing.Size(172, 22);
-            this.contentMenuItemPower0.Text = "去除强化";
-            this.contentMenuItemPower0.Click += new System.EventHandler(this.contentMenuItemPower_Click);
+            this.tb_color3.Location = new System.Drawing.Point(139, 86);
+            this.tb_color3.Name = "tb_color3";
+            this.tb_color3.Size = new System.Drawing.Size(82, 21);
+            this.tb_color3.TabIndex = 2;
+            this.tb_color3.TextChanged += new System.EventHandler(this.tb_color3_TextChanged);
             // 
-            // contentMenuItemColor1
+            // tb_color2
             // 
-            this.contentMenuItemColor1.Name = "contentMenuItemColor1";
-            this.contentMenuItemColor1.Size = new System.Drawing.Size(172, 22);
-            this.contentMenuItemColor1.Text = "修改颜色1";
-            this.contentMenuItemColor1.Click += new System.EventHandler(this.contentMenuColor1_Click);
+            this.tb_color2.Location = new System.Drawing.Point(139, 50);
+            this.tb_color2.Name = "tb_color2";
+            this.tb_color2.Size = new System.Drawing.Size(82, 21);
+            this.tb_color2.TabIndex = 2;
+            this.tb_color2.TextChanged += new System.EventHandler(this.tb_color2_TextChanged);
             // 
-            // contentMenuItemColor2
+            // tb_color1
             // 
-            this.contentMenuItemColor2.Name = "contentMenuItemColor2";
-            this.contentMenuItemColor2.Size = new System.Drawing.Size(172, 22);
-            this.contentMenuItemColor2.Text = "修改颜色2";
-            this.contentMenuItemColor2.Click += new System.EventHandler(this.contentMenuColor2_Click);
+            this.tb_color1.Location = new System.Drawing.Point(139, 18);
+            this.tb_color1.Name = "tb_color1";
+            this.tb_color1.Size = new System.Drawing.Size(82, 21);
+            this.tb_color1.TabIndex = 2;
+            this.tb_color1.TextChanged += new System.EventHandler(this.tb_color1_TextChanged);
             // 
-            // contentMenuItemColor3
+            // lb_color3
             // 
-            this.contentMenuItemColor3.Name = "contentMenuItemColor3";
-            this.contentMenuItemColor3.Size = new System.Drawing.Size(172, 22);
-            this.contentMenuItemColor3.Text = "修改颜色3";
-            this.contentMenuItemColor3.Click += new System.EventHandler(this.contentMenuColor3_Click);
+            this.lb_color3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lb_color3.Location = new System.Drawing.Point(56, 86);
+            this.lb_color3.MaxLength = 0;
+            this.lb_color3.Name = "lb_color3";
+            this.lb_color3.ReadOnly = true;
+            this.lb_color3.Size = new System.Drawing.Size(72, 21);
+            this.lb_color3.TabIndex = 1;
             // 
-            // contentMenuItemColorAll
+            // lb_color2
             // 
-            this.contentMenuItemColorAll.Name = "contentMenuItemColorAll";
-            this.contentMenuItemColorAll.Size = new System.Drawing.Size(172, 22);
-            this.contentMenuItemColorAll.Text = "修改全部颜色";
-            this.contentMenuItemColorAll.Click += new System.EventHandler(this.contentMenuColorAll_Click);
+            this.lb_color2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lb_color2.Location = new System.Drawing.Point(56, 50);
+            this.lb_color2.MaxLength = 0;
+            this.lb_color2.Name = "lb_color2";
+            this.lb_color2.ReadOnly = true;
+            this.lb_color2.Size = new System.Drawing.Size(72, 21);
+            this.lb_color2.TabIndex = 1;
             // 
-            // contentMenuItemColorClean
+            // lb_color1
             // 
-            this.contentMenuItemColorClean.Name = "contentMenuItemColorClean";
-            this.contentMenuItemColorClean.Size = new System.Drawing.Size(172, 22);
-            this.contentMenuItemColorClean.Text = "清除全部颜色";
-            this.contentMenuItemColorClean.Click += new System.EventHandler(this.contentMenuItemColorClean_Click);
+            this.lb_color1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lb_color1.Location = new System.Drawing.Point(56, 18);
+            this.lb_color1.MaxLength = 0;
+            this.lb_color1.Name = "lb_color1";
+            this.lb_color1.ReadOnly = true;
+            this.lb_color1.Size = new System.Drawing.Size(72, 21);
+            this.lb_color1.TabIndex = 1;
             // 
-            // toolStripSeparator8
+            // label11
             // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(169, 6);
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(15, 90);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(35, 12);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "颜色3";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(15, 55);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(35, 12);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "颜色2";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(15, 23);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(35, 12);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "颜色1";
             // 
             // MainForm
             // 
@@ -1205,7 +1193,6 @@
             this.Controls.Add(this.tb_senditem_count);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lb_search);
-            this.Controls.Add(this.lb_users);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GM工具";
@@ -1244,7 +1231,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label lb_users;
         private System.Windows.Forms.ListView list_users;
         private System.Windows.Forms.ColumnHeader ch_userlist_name;
         private System.Windows.Forms.ColumnHeader ch_userlist_class;
