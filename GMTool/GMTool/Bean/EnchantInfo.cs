@@ -30,7 +30,7 @@ namespace GMTool.Bean
         }
         public override string ToString()
         {
-            return Name+ "\n描述：" + Desc + "\n效果：" + Effect;
+            return Name+ "\n描述：" + Desc + "\n" + Effect;
         }
     }
 }

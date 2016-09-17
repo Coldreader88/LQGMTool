@@ -16,6 +16,7 @@ namespace GMTool
 {
     public partial class MainForm : Form
     {
+        #region Member
         private string DefTitle;
         private ItemClassInfoHelper itemsHelper;
         private ColorDialog colorDialog;
@@ -25,6 +26,7 @@ namespace GMTool
         private int CashCurItem = -1;
 
         private Item CurItem;
+        #endregion
 
         #region 窗体
         public MainForm()
@@ -67,6 +69,8 @@ namespace GMTool
             this.tb_senditem_name.Enabled = false;
             if (this.btn_mssql_open.Text == "断开")
             {
+                CurItem = null;
+                CurUser = null;
                 this.CloseDataBase();
                 this.btn_mssql_open.Text = "连接";
                 this.tb_mssql_server.Enabled = true;
@@ -81,6 +85,8 @@ namespace GMTool
                 AddSearchItemList(new List<ItemClassInfo>());
                 AddItemList(this.list_items_normal, new List<Item>());
                 AddItemList(this.list_items_cash, new List<Item>());
+                AddItemList(this.list_items_other, new List<Item>());
+                AddItemList(this.list_items_quest, new List<Item>());
                 AddUserMails(new List<Mail>());
                 AddSendMails(new List<Mail>());
             }
@@ -201,6 +207,8 @@ namespace GMTool
             if (!CheckUser()) return;
             AddItemList(this.list_items_normal, this.ReadUserItems(CurUser, PackType.Normal));
             AddItemList(this.list_items_cash, this.ReadUserItems(CurUser, PackType.Cash));
+            AddItemList(this.list_items_quest, this.ReadUserItems(CurUser, PackType.Quest));
+            AddItemList(this.list_items_other, this.ReadUserItems(CurUser, PackType.Other));
         }
         private void SetCurItems(Item item)
         {
@@ -278,21 +286,29 @@ namespace GMTool
             this.cb_category.SelectedIndex = 0;
             this.cb_item_type.SelectedIndex = 0;
         }
+
+        #region 添加物品
         private void AddItemList(ListView listview, List<Item> items)
         {
             int count = items.Count;
             //TODO 
             listview.BeginUpdate();
             listview.Items.Clear();
-            bool cash = false;
             if (listview == list_items_normal)
             {
                 this.tab_items_normal.Text = this.tab_items_normal.Text.Split(' ')[0] + " (" + count + ")";
             }
-            else
+            else if (listview == list_items_cash)
             {
-                cash = true;
                 this.tab_items_cash.Text = this.tab_items_cash.Text.Split(' ')[0] + " (" + count + ")";
+            }
+            else if (listview == list_items_quest)
+            {
+                this.tab_items_quest.Text = this.tab_items_quest.Text.Split(' ')[0] + " (" + count + ")";
+            }
+            else if (listview == list_items_other)
+            {
+                this.tab_items_other.Text = this.tab_items_other.Text.Split(' ')[0] + " (" + count + ")";
             }
             int index = -1;
             if (count >= 0)
@@ -304,37 +320,55 @@ namespace GMTool
                     ItemClassInfo info = itemsHelper.Get(t.ItemClass);
                     t.Attach(info);
                     vitems[i] = new ListViewItem();
-                    vitems[i].UseItemStyleForSubItems = false;
                     vitems[i].Tag = t;
                     vitems[i].Text = (t.ItemName == null ? t.ItemClass : t.ItemName);
-                    if (t.Attributes != null)
+                    if ((listview == list_items_normal || listview == list_items_cash )&& t.Attributes != null)
                     {
+                        string head = "";
                         foreach (ItemAttribute attr in t.Attributes)
                         {
                             if (attr.Type == ItemAttributeType.ENHANCE)
                             {
-                                vitems[i].Text += "【+" + attr.Value + "】";
+                                head = "+" + attr.Value;
+                                break;
                             }
-                            else if (attr.Type == ItemAttributeType.PREFIX)
+                        }
+
+                        foreach (ItemAttribute attr in t.Attributes)
+                        {
+                            if (attr.Type == ItemAttributeType.PREFIX)
                             {
                                 EnchantInfo einfo = itemsHelper.GetEnchant(attr.Value);
-                                vitems[i].Text = "【" + (einfo == null ? attr.Value : einfo.Name) + "】" + vitems[i].Text;
+                                head += "【" + (einfo == null ? attr.Value : einfo.Name) + "】";
+                                break;
                             }
-                            else if (attr.Type == ItemAttributeType.SUFFIX)
+                        }
+                        foreach (ItemAttribute attr in t.Attributes)
+                        {
+                            if (attr.Type == ItemAttributeType.SUFFIX)
                             {
                                 EnchantInfo einfo = itemsHelper.GetEnchant(attr.Value);
-                                vitems[i].Text += "【" + (einfo == null ? attr.Value : einfo.Name) + "】";
+                                head += "【" + (einfo == null ? attr.Value : einfo.Name) + "】";
+                                break;
                             }
-                            else if (attr.Type == ItemAttributeType.QUALITY)
+                        }
+                        foreach (ItemAttribute attr in t.Attributes)
+                        {
+                            if (attr.Type == ItemAttributeType.QUALITY)
                             {
-                                vitems[i].Text += "【★" + attr.Arg + "】";
+                                head += "★" + attr.Arg+" ";
+                                break;
                             }
+                        }
+                        if (!string.IsNullOrEmpty(head))
+                        {
+                            vitems[i].Text = head  + vitems[i].Text;
                         }
                     }
                     if (i % 2 == 0)
                         vitems[i].BackColor = Color.GhostWhite;
                     else
-                       vitems[i].BackColor = Color.White;
+                        vitems[i].BackColor = Color.White;
                     if (NormalCurItem == i)
                     {
                         index = i;
@@ -342,26 +376,26 @@ namespace GMTool
                         vitems[i].Selected = true;
                     }
                     vitems[i].SubItems.Add("" + t.Count);
-                    if (!cash)
+                    if (listview == list_items_normal)
                     {
                         vitems[i].SubItems.Add("" + t.ItemType);
                     }
                     vitems[i].SubItems.Add("" + t.Category);
-                    int colorIndex = vitems[i].SubItems.Count;
-                    vitems[i].SubItems.Add("");// + (t.Color1 == 0 ? "" : t.Color1.ToString("x")));
-                    vitems[i].SubItems.Add("");// + (t.Color1 == 0 || t.Color2 == 0 ? "" : t.Color2.ToString("x")));
-                    vitems[i].SubItems.Add("");// + (t.Color1 == 0 || t.Color3 == 0 ? "" : t.Color3.ToString("x")));
-
+                    if (listview == list_items_normal || listview == list_items_cash)
+                    {
+                        vitems[i].UseItemStyleForSubItems = false;
+                        int colorIndex = vitems[i].SubItems.Count;
+                        vitems[i].SubItems.Add("");// + (t.Color1 == 0 ? "" : t.Color1.ToString("x")));
+                        vitems[i].SubItems.Add("");// + (t.Color1 == 0 || t.Color2 == 0 ? "" : t.Color2.ToString("x")));
+                        vitems[i].SubItems.Add("");// + (t.Color1 == 0 || t.Color3 == 0 ? "" : t.Color3.ToString("x")));
+                        vitems[i].SubItems[colorIndex].BackColor = ColorTranslator.FromHtml((t.Color1 == 0 ? "#00ffffff" : "#" + t.Color1.ToString("X")));
+                        vitems[i].SubItems[colorIndex + 1].BackColor = ColorTranslator.FromHtml((t.Color2 == 0 ? "#00ffffff" : "#" + t.Color2.ToString("X")));
+                        vitems[i].SubItems[colorIndex + 2].BackColor = ColorTranslator.FromHtml((t.Color3 == 0 ? "#00ffffff" : "#" + t.Color3.ToString("X")));
+                        vitems[i].SubItems[colorIndex].ForeColor = vitems[i].SubItems[colorIndex].BackColor;
+                        vitems[i].SubItems[colorIndex + 1].ForeColor = vitems[i].SubItems[colorIndex + 1].BackColor;
+                        vitems[i].SubItems[colorIndex + 2].ForeColor = vitems[i].SubItems[colorIndex + 2].BackColor;
+                    }
                     vitems[i].SubItems.Add("" + t.Time);
-
-                    vitems[i].SubItems[colorIndex].BackColor = System.Drawing.ColorTranslator.FromHtml((t.Color1 == 0 ? "#00ffffff" : "#" + t.Color1.ToString("X")));
-                    vitems[i].SubItems[colorIndex + 1].BackColor = System.Drawing.ColorTranslator.FromHtml((t.Color2 == 0 ? "#00ffffff" : "#" + t.Color2.ToString("X")));
-                    vitems[i].SubItems[colorIndex + 2].BackColor = System.Drawing.ColorTranslator.FromHtml((t.Color3 == 0 ? "#00ffffff" : "#" + t.Color3.ToString("X")));
-
-                    vitems[i].SubItems[colorIndex].ForeColor = vitems[i].SubItems[colorIndex].BackColor;
-                    vitems[i].SubItems[colorIndex + 1].ForeColor = vitems[i].SubItems[colorIndex + 1].BackColor;
-                    vitems[i].SubItems[colorIndex + 2].ForeColor = vitems[i].SubItems[colorIndex + 2].BackColor;
-
                     vitems[i].ToolTipText = t.ToString();
                 }
                 listview.Items.AddRange(vitems);
@@ -369,6 +403,7 @@ namespace GMTool
             listview.EndUpdate();
             listview.GoToRow(index);
         }
+        #endregion
 
         private void AddUserList(List<User> users)
         {
@@ -557,7 +592,9 @@ namespace GMTool
         private void contentMenuSendItem1_Click(object sender, EventArgs e)
         {
             if (!CheckUser()) return;
-            int count = this.SendItems(CurUser, 1, list_search.GetSelectItems<ItemClassInfo>());
+            ItemClassInfo[] items = list_search.GetSelectItems<ItemClassInfo>();
+            if (items == null || items.Length == 0) return;
+            int count = this.SendItems(CurUser, 1, items);
             if (count > 0)
             {
                 ReadMails();
@@ -568,7 +605,9 @@ namespace GMTool
         private void contentMenuSendItem10_Click(object sender, EventArgs e)
         {
             if (!CheckUser()) return;
-            int count = this.SendItems(CurUser, 10, list_search.GetSelectItems<ItemClassInfo>());
+            ItemClassInfo[] items = list_search.GetSelectItems<ItemClassInfo>();
+            if (items == null || items.Length == 0) return;
+            int count = this.SendItems(CurUser, 10, items);
             if (count > 0)
             {
                 ReadMails();
@@ -579,7 +618,9 @@ namespace GMTool
         private void contentMenuSendItem100_Click(object sender, EventArgs e)
         {
             if (!CheckUser()) return;
-            int count = this.SendItems(CurUser, 100, list_search.GetSelectItems<ItemClassInfo>());
+            ItemClassInfo[] items = list_search.GetSelectItems<ItemClassInfo>();
+            if (items == null || items.Length == 0) return;
+            int count = this.SendItems(CurUser, 100, items);
             if (count > 0)
             {
                 ReadMails();
@@ -827,6 +868,10 @@ namespace GMTool
         private void btn_senditem_send_Click(object sender, EventArgs e)
         {
             if (!CheckUser()) return;
+            if (string.IsNullOrEmpty(tb_senditem_class.Text) || string.IsNullOrEmpty(tb_senditem_count.Text))
+            {
+                return;
+            }
             try
             {
                 int count = Convert.ToInt32(tb_senditem_count.Text);
@@ -878,6 +923,7 @@ namespace GMTool
             {
                 this.CurUser = user;
                 this.Text = this.DefTitle + "  - " + user.ToString();
+                itemsHelper.ClearCache();
                 ReadMails();
                 ReadItems();
             }
@@ -1038,7 +1084,7 @@ namespace GMTool
             this.CleanItemColor(CurUser, GetSelectItems(sender));
             ReadItems();
         }
-        #endregion
+
 
         private void lb_color1_Click(object sender, EventArgs e)
         {
@@ -1066,5 +1112,6 @@ namespace GMTool
                 lb_color3.BackColor = color;
             }
         }
+        #endregion
     }
 }

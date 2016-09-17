@@ -129,6 +129,18 @@
             this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tab_items_quest = new System.Windows.Forms.TabPage();
+            this.list_items_quest = new System.Windows.Forms.ListView();
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tab_items_other = new System.Windows.Forms.TabPage();
+            this.list_items_other = new System.Windows.Forms.ListView();
+            this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label5 = new System.Windows.Forms.Label();
             this.cb_category = new System.Windows.Forms.ComboBox();
             this.cb_item_type = new System.Windows.Forms.ComboBox();
@@ -156,6 +168,8 @@
             this.tab_items.SuspendLayout();
             this.tab_items_normal.SuspendLayout();
             this.tab_items_cash.SuspendLayout();
+            this.tab_items_quest.SuspendLayout();
+            this.tab_items_other.SuspendLayout();
             this.tab_left.SuspendLayout();
             this.tab_user.SuspendLayout();
             this.tab_color.SuspendLayout();
@@ -405,7 +419,7 @@
             this.list_items_normal.Location = new System.Drawing.Point(3, 3);
             this.list_items_normal.Name = "list_items_normal";
             this.list_items_normal.ShowItemToolTips = true;
-            this.list_items_normal.Size = new System.Drawing.Size(721, 524);
+            this.list_items_normal.Size = new System.Drawing.Size(714, 533);
             this.list_items_normal.TabIndex = 3;
             this.list_items_normal.UseCompatibleStateImageBehavior = false;
             this.list_items_normal.View = System.Windows.Forms.View.Details;
@@ -414,12 +428,12 @@
             // ch_items_name
             // 
             this.ch_items_name.Text = "名字";
-            this.ch_items_name.Width = 270;
+            this.ch_items_name.Width = 276;
             // 
             // columnHeader12
             // 
             this.columnHeader12.Text = "数量";
-            this.columnHeader12.Width = 50;
+            this.columnHeader12.Width = 42;
             // 
             // columnHeader15
             // 
@@ -885,7 +899,7 @@
             this.tab_mail_user.Controls.Add(this.list_mail_user);
             this.tab_mail_user.Location = new System.Drawing.Point(4, 22);
             this.tab_mail_user.Name = "tab_mail_user";
-            this.tab_mail_user.Size = new System.Drawing.Size(231, 219);
+            this.tab_mail_user.Size = new System.Drawing.Size(231, 220);
             this.tab_mail_user.TabIndex = 1;
             this.tab_mail_user.Text = "已收到邮件";
             this.tab_mail_user.UseVisualStyleBackColor = true;
@@ -904,7 +918,7 @@
             this.list_mail_user.Location = new System.Drawing.Point(0, 0);
             this.list_mail_user.Name = "list_mail_user";
             this.list_mail_user.ShowItemToolTips = true;
-            this.list_mail_user.Size = new System.Drawing.Size(231, 219);
+            this.list_mail_user.Size = new System.Drawing.Size(231, 220);
             this.list_mail_user.TabIndex = 4;
             this.list_mail_user.UseCompatibleStateImageBehavior = false;
             this.list_mail_user.View = System.Windows.Forms.View.Details;
@@ -921,6 +935,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tab_items.Controls.Add(this.tab_items_normal);
             this.tab_items.Controls.Add(this.tab_items_cash);
+            this.tab_items.Controls.Add(this.tab_items_quest);
+            this.tab_items.Controls.Add(this.tab_items_other);
             this.tab_items.Enabled = false;
             this.tab_items.Location = new System.Drawing.Point(253, 3);
             this.tab_items.Name = "tab_items";
@@ -934,9 +950,9 @@
             this.tab_items_normal.Location = new System.Drawing.Point(4, 22);
             this.tab_items_normal.Name = "tab_items_normal";
             this.tab_items_normal.Padding = new System.Windows.Forms.Padding(3);
-            this.tab_items_normal.Size = new System.Drawing.Size(727, 530);
+            this.tab_items_normal.Size = new System.Drawing.Size(720, 539);
             this.tab_items_normal.TabIndex = 0;
-            this.tab_items_normal.Text = "普通背包";
+            this.tab_items_normal.Text = "背包";
             this.tab_items_normal.UseVisualStyleBackColor = true;
             // 
             // tab_items_cash
@@ -947,7 +963,7 @@
             this.tab_items_cash.Padding = new System.Windows.Forms.Padding(3);
             this.tab_items_cash.Size = new System.Drawing.Size(720, 539);
             this.tab_items_cash.TabIndex = 1;
-            this.tab_items_cash.Text = "现金背包";
+            this.tab_items_cash.Text = "现金";
             this.tab_items_cash.UseVisualStyleBackColor = true;
             // 
             // list_items_cash
@@ -980,11 +996,12 @@
             // columnHeader5
             // 
             this.columnHeader5.Text = "名字";
-            this.columnHeader5.Width = 320;
+            this.columnHeader5.Width = 330;
             // 
             // columnHeader14
             // 
             this.columnHeader14.Text = "数量";
+            this.columnHeader14.Width = 50;
             // 
             // columnHeader6
             // 
@@ -1010,6 +1027,112 @@
             // 
             this.columnHeader10.Text = "到期时间";
             this.columnHeader10.Width = 75;
+            // 
+            // tab_items_quest
+            // 
+            this.tab_items_quest.Controls.Add(this.list_items_quest);
+            this.tab_items_quest.Location = new System.Drawing.Point(4, 22);
+            this.tab_items_quest.Name = "tab_items_quest";
+            this.tab_items_quest.Size = new System.Drawing.Size(720, 539);
+            this.tab_items_quest.TabIndex = 2;
+            this.tab_items_quest.Text = "任务";
+            this.tab_items_quest.UseVisualStyleBackColor = true;
+            // 
+            // list_items_quest
+            // 
+            this.list_items_quest.BackColor = System.Drawing.SystemColors.Window;
+            this.list_items_quest.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader2,
+            this.columnHeader11,
+            this.columnHeader13,
+            this.columnHeader19});
+            this.list_items_quest.ContextMenuStrip = this.contextMenuItem;
+            this.list_items_quest.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.list_items_quest.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.list_items_quest.FullRowSelect = true;
+            this.list_items_quest.GridLines = true;
+            this.list_items_quest.HideSelection = false;
+            this.list_items_quest.LabelWrap = false;
+            this.list_items_quest.Location = new System.Drawing.Point(0, 0);
+            this.list_items_quest.Name = "list_items_quest";
+            this.list_items_quest.ShowItemToolTips = true;
+            this.list_items_quest.Size = new System.Drawing.Size(720, 539);
+            this.list_items_quest.TabIndex = 5;
+            this.list_items_quest.UseCompatibleStateImageBehavior = false;
+            this.list_items_quest.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "名字";
+            this.columnHeader2.Width = 330;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "数量";
+            this.columnHeader11.Width = 145;
+            // 
+            // columnHeader13
+            // 
+            this.columnHeader13.Text = "类型";
+            this.columnHeader13.Width = 80;
+            // 
+            // columnHeader19
+            // 
+            this.columnHeader19.Text = "到期时间";
+            this.columnHeader19.Width = 130;
+            // 
+            // tab_items_other
+            // 
+            this.tab_items_other.Controls.Add(this.list_items_other);
+            this.tab_items_other.Location = new System.Drawing.Point(4, 22);
+            this.tab_items_other.Name = "tab_items_other";
+            this.tab_items_other.Size = new System.Drawing.Size(720, 539);
+            this.tab_items_other.TabIndex = 3;
+            this.tab_items_other.Text = "隐藏";
+            this.tab_items_other.UseVisualStyleBackColor = true;
+            // 
+            // list_items_other
+            // 
+            this.list_items_other.BackColor = System.Drawing.SystemColors.Window;
+            this.list_items_other.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader20,
+            this.columnHeader21,
+            this.columnHeader22,
+            this.columnHeader26});
+            this.list_items_other.ContextMenuStrip = this.contextMenuItem;
+            this.list_items_other.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.list_items_other.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.list_items_other.FullRowSelect = true;
+            this.list_items_other.GridLines = true;
+            this.list_items_other.HideSelection = false;
+            this.list_items_other.LabelWrap = false;
+            this.list_items_other.Location = new System.Drawing.Point(0, 0);
+            this.list_items_other.Name = "list_items_other";
+            this.list_items_other.ShowItemToolTips = true;
+            this.list_items_other.Size = new System.Drawing.Size(720, 539);
+            this.list_items_other.TabIndex = 5;
+            this.list_items_other.UseCompatibleStateImageBehavior = false;
+            this.list_items_other.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader20
+            // 
+            this.columnHeader20.Text = "名字";
+            this.columnHeader20.Width = 330;
+            // 
+            // columnHeader21
+            // 
+            this.columnHeader21.Text = "数量";
+            this.columnHeader21.Width = 145;
+            // 
+            // columnHeader22
+            // 
+            this.columnHeader22.Text = "类型";
+            this.columnHeader22.Width = 80;
+            // 
+            // columnHeader26
+            // 
+            this.columnHeader26.Text = "到期时间";
+            this.columnHeader26.Width = 150;
             // 
             // label5
             // 
@@ -1078,7 +1201,7 @@
             this.tab_color.Controls.Add(this.label6);
             this.tab_color.Location = new System.Drawing.Point(4, 22);
             this.tab_color.Name = "tab_color";
-            this.tab_color.Size = new System.Drawing.Size(240, 278);
+            this.tab_color.Size = new System.Drawing.Size(240, 287);
             this.tab_color.TabIndex = 2;
             this.tab_color.Text = "物品染色";
             // 
@@ -1213,6 +1336,8 @@
             this.tab_items.ResumeLayout(false);
             this.tab_items_normal.ResumeLayout(false);
             this.tab_items_cash.ResumeLayout(false);
+            this.tab_items_quest.ResumeLayout(false);
+            this.tab_items_other.ResumeLayout(false);
             this.tab_left.ResumeLayout(false);
             this.tab_user.ResumeLayout(false);
             this.tab_color.ResumeLayout(false);
@@ -1336,6 +1461,18 @@
         private System.Windows.Forms.Label lb_color1;
         private System.Windows.Forms.Label lb_color3;
         private System.Windows.Forms.Label lb_color2;
+        private System.Windows.Forms.TabPage tab_items_quest;
+        private System.Windows.Forms.ListView list_items_quest;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader11;
+        private System.Windows.Forms.ColumnHeader columnHeader13;
+        private System.Windows.Forms.ColumnHeader columnHeader19;
+        private System.Windows.Forms.TabPage tab_items_other;
+        private System.Windows.Forms.ListView list_items_other;
+        private System.Windows.Forms.ColumnHeader columnHeader20;
+        private System.Windows.Forms.ColumnHeader columnHeader21;
+        private System.Windows.Forms.ColumnHeader columnHeader22;
+        private System.Windows.Forms.ColumnHeader columnHeader26;
     }
 }
 

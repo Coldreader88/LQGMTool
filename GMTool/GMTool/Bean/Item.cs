@@ -10,7 +10,9 @@ namespace GMTool.Bean
     {
         All = -1,
         Normal = 0,
-        Cash = 100
+        Cash = 100,
+        Quest=103,
+        Other=101,
     }
     public class Item
     {
@@ -57,6 +59,7 @@ namespace GMTool.Bean
         public override string ToString()
         {
             string text = "物品ID：" + ItemClass + "\n物品名：" + ItemName
+                +"\n背包："+ Collection + "，格子："+Slot
                 + "\n类型：" + Category + " [" + ItemType + "]";
             if (Time != "无限期")
             {
@@ -95,7 +98,7 @@ namespace GMTool.Bean
                     }
                     else if (attr.Type == ItemAttributeType.QUALITY)
                     {
-                        text += "\n品质：" + attr.Arg;
+                        text += "\n-----------------------------\n品质：" + attr.Arg;
                     }
                 }
             }

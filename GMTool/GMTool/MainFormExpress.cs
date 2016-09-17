@@ -134,7 +134,19 @@ namespace GMTool
                 {
                     sql = "SELECT i.ID,i.ExpireDateTime,i.ItemClass,i.Collection,i.Count,i.Slot,e.Color1,e.Color2,e.Color3 "
                         + "FROM  Item as i left join Equippable e on e.ID = i.ID "
-                        + "WHERE i.Collection>=100 and i.OwnerID =" + user.CID + " ORDER BY i.Collection,i.Slot";
+                        + "WHERE i.Collection=100 and i.OwnerID =" + user.CID + " ORDER BY i.Collection,i.Slot";
+                }
+                else if (type == PackType.Other)
+                {
+                    sql = "SELECT i.ID,i.ExpireDateTime,i.ItemClass,i.Collection,i.Count,i.Slot,e.Color1,e.Color2,e.Color3 "
+                        + "FROM  Item as i left join Equippable e on e.ID = i.ID "
+                        + "WHERE (i.Collection=101 or i.Collection > 103 )and i.OwnerID =" + user.CID + " ORDER BY i.Collection,i.Slot";
+                }
+                else if (type == PackType.Quest)
+                {
+                    sql = "SELECT i.ID,i.ExpireDateTime,i.ItemClass,i.Collection,i.Count,i.Slot,e.Color1,e.Color2,e.Color3 "
+                        + "FROM  Item as i left join Equippable e on e.ID = i.ID "
+                        + "WHERE i.Collection=103 and i.OwnerID =" + user.CID + " ORDER BY i.Collection,i.Slot";
                 }
                 else
                 {

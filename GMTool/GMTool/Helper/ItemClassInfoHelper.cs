@@ -16,6 +16,10 @@ namespace GMTool.Helper
     {
         private string textFile, dbFile;
         private List<ItemClassInfo> Infos = new List<ItemClassInfo>();
+        private Dictionary<string, EnchantInfo> CacheEnchants = new Dictionary<string, EnchantInfo>();
+        private Dictionary<string, ItemClassInfo> CacheItems = new Dictionary<string, ItemClassInfo>();
+
+
         private Dictionary<string, ItemClassInfo> Items = new Dictionary<string, ItemClassInfo>();
         private Dictionary<string, EnchantInfo> Enchants = new Dictionary<string, EnchantInfo>();
         private Dictionary<string, string> Enchs = new Dictionary<string, string>();
@@ -100,6 +104,10 @@ namespace GMTool.Helper
                 {
                     EnchantInfo info = new EnchantInfo();
                     info.Class = ToString(reader2["EnchantClass"]).ToLower();
+                    if (info.Class != null && info.Class.EndsWith("_100"))
+                    {
+                        continue;
+                    }
                     info.Constraint = ToString(reader2["ItemConstraint"]);
                     info.Desc = ToString(reader2["ItemConstraintDesc"]);
                     info.IsPrefix = Convert.ToBoolean(reader2["IsPrefix"]);
@@ -126,7 +134,7 @@ namespace GMTool.Helper
                         info.Desc = ToCN(var);
                     }
                     info.Effect = "";
-                    for (int i = 0; i < 4; i++)
+                    for (int i = 1; i <= 5; i++)
                     {
                         if (effects.TryGetValue(info.Class+"_"+i, out var))
                         {
@@ -158,6 +166,11 @@ namespace GMTool.Helper
             return true;
         }
 
+        public void ClearCache()
+        {
+            CacheEnchants.Clear();
+            CacheItems.Clear();
+        }
         private string ToCN(string tw)
         {
             if (tw == null)
@@ -177,9 +190,32 @@ namespace GMTool.Helper
             if (itemclass == null) return null;
             itemclass = itemclass.ToLower();
             ItemClassInfo info = new ItemClassInfo();
+            if (CacheItems.TryGetValue(itemclass, out info))
+            {
+                return info;
+            }
             Items.TryGetValue(itemclass, out info);
+            CacheItems.Add(itemclass, info);
             return info;
         }
+        public EnchantInfo GetEnchant(string name)
+        {
+            if (name == null) return null;
+            name = name.ToLower();
+            if (name.EndsWith("_100"))
+            {
+                name = name.Substring(0, name.Length - 4);
+            }
+            EnchantInfo info = new EnchantInfo();
+            if (CacheEnchants.TryGetValue(name, out info))
+            {
+                return info;
+            }
+            Enchants.TryGetValue(name, out info);
+            CacheEnchants.Add(name, info);
+            return info;
+        }
+
         private string ToString(object obj)
         {
             if (obj == DBNull.Value)
@@ -187,14 +223,7 @@ namespace GMTool.Helper
             return Convert.ToString(obj);
         }
 
-        public EnchantInfo GetEnchant(string name)
-        {
-            if (name == null) return null;
-            name = name.ToLower();
-            EnchantInfo info = new EnchantInfo();
-            Enchants.TryGetValue(name, out info);
-            return info;
-        }
+
         //
         public List<ItemClassInfo> SearchItems(string name, string id, string itemtype, string category)
         {
