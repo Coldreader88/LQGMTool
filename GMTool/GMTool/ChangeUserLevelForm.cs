@@ -43,7 +43,6 @@ namespace GMTool
             }
             catch (Exception ex)
             {
-                this.Error(ex.Message);
             }
            
         }

@@ -24,6 +24,9 @@ namespace GMTool.Bean
         /// 强化
         /// </summary>
         ENHANCE,
+        COMBINATION,
+        VARIABLESTAT,
+        SPIRIT_INJECTION,
         /// <summary>
         /// 0;0;1;0;2;0;3;0
         /// </summary>
@@ -38,5 +41,7 @@ namespace GMTool.Bean
         /// Arg
         /// </summary>
         QUALITY,
+        PS_1,PS_0,PS_2,
+        NONE,
     }
 }

@@ -198,9 +198,8 @@ namespace GMTool
                                 attr.Arg2 = ToString(reader2["Arg2"]);
                                 attrs.Add(attr);
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
-                                main.Error("" + ex);
                             }
 
                         }
@@ -210,7 +209,7 @@ namespace GMTool
             }
             catch (Exception exception)
             {
-                main.Error("" + exception);
+                main.Error("读取物品错误\n" + exception);
             }
             return items;
         }
@@ -261,7 +260,7 @@ namespace GMTool
             }
             catch (Exception ex)
             {
-                main.Error(ex.Message);
+                main.Error("副职业满级错误\n"+ex);
             }
         }
         public static void MaxAllSecondClass(this MainForm main, User user)
@@ -283,9 +282,8 @@ namespace GMTool
             {
                 db.ExcuteSQL(string.Concat(new object[] { "update characterInfo set level = ", level, " where id = ", user.CID }));
             }
-            catch (Exception exception)
+            catch (Exception)
             {
-                main.Error(exception.Message);
             }
         }
 
@@ -346,7 +344,7 @@ namespace GMTool
             }
             catch (Exception exception)
             {
-                main.Error(exception.Message);
+                main.Error("最大阵营技能错误\n"+exception);
             }
         }
 
@@ -359,7 +357,7 @@ namespace GMTool
             }
             catch (Exception exception)
             {
-                main.Error(exception.Message);
+                main.Error("重置阵营技能错误\n" + exception);
             }
         }
         #endregion
@@ -436,7 +434,6 @@ namespace GMTool
             }
             catch (Exception exception)
             {
-                main.Error(exception + "");
             }
             return 0;
         }
@@ -446,13 +443,16 @@ namespace GMTool
         /// <summary>
         /// 删除物品
         /// </summary>
-        public static bool DeleteItem(this MainForm main, User user, Item item)
+        public static bool DeleteItem(this MainForm main, User user,params Item[] items)
         {
-            if (item != null)
+            if (items != null)
             {
                 try
                 {
-                    db.ExcuteSQL("DELETE FROM Item Where ID=" + item.ItemID);
+                    foreach (Item item in items)
+                    {
+                        db.ExcuteSQL("DELETE FROM Item Where ID=" + item.ItemID);
+                    }
                     return true;
                 }
                 catch (Exception)
@@ -499,7 +499,7 @@ namespace GMTool
             {
                 foreach (Item item in items)
                 {
-                    db.ExcuteSQL("UPDATE Item SET EXpireDateTime = NULL WHERE OwnerID =" + user.CID +" and ID = "+item.ItemID);
+                    db.ExcuteSQL("UPDATE Item SET EXpireDateTime = NULL WHERE OwnerID =" + user.CID + " and ID = " + item.ItemID);
                 }
             }
             return true;
@@ -522,7 +522,7 @@ namespace GMTool
             }
             return true;
         }
-        private static void MaxStart(this MainForm main,Item item)
+        private static void MaxStart(this MainForm main, Item item)
         {
             long itemID = item.ItemID;
             if (db.ExcuteScalarSQL("select count(*) from ItemAttribute where attribute = 'QUALITY' and ItemID = " + itemID) > 0)
@@ -537,8 +537,58 @@ namespace GMTool
         /// <summary>
         /// 附魔
         /// </summary>
-        public static bool Enchant(this MainForm main, User user, Item item, ItemAttribute attribute)
+        public static bool Enchant(this MainForm main, Item item, EnchantInfo attribute)
         {
+            if (attribute == null || item == null)
+            {
+                return false;
+            }
+            string name = attribute.IsPrefix ? "PREFIX" : "SUFFIX";
+            if (db.ExcuteScalarSQL("SELECT COUNT(*) FROM ItemAttribute ia LEFT JOIN Item i ON i.ID = ia.ItemID"
+                + " WHERE (ia.Attribute = '" + name + "') AND i.ID =" + item.ItemID) == 0)
+            {
+                return db.ExcuteSQL(string.Concat(new object[] {
+                        "INSERT INTO ItemAttribute ([ItemID], [Attribute], [Value], [Arg], [Arg2]) VALUES (",
+                        item.ItemID, ", '"+name+"','", attribute.Class, "', '"+attribute.MaxArg+"', '0')" })) > 0;
+            }
+            else if (db.ExcuteSQL("UPDATE ItemAttribute SET [Value] ='"+ attribute.Class+ " ,[Arg]='"+ attribute.MaxArg +
+                    "' WHERE ItemID =" + item.ItemID+ " AND Attribute = '"+name+"'") > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static bool ModItemColor(this MainForm main, User user, Item item, int color1, int color2, int color3)
+        {
+            try
+            {
+                string str = "UPDATE Equippable SET ";
+                if (color1 != 0)
+                {
+                    str += " Color1 = " + color1 + ",";
+                }
+                if (color2 != 0)
+                {
+                    str += " Color2 = " + color2 + ",";
+                }
+                if (color3 != 0)
+                {
+                    str += " Color3 = " + color3 + ",";
+                }
+                if (str.EndsWith(","))
+                {
+                    str = str.Substring(0, str.Length - 1);
+                }
+                string strSQL = str + " WHERE ID IN (SELECT e.ID FROM Item as i,Equippable as e WHERE i.OwnerID ="
+                    + user.CID + " AND e.ID = " + item.ItemID + " AND e.ID = i.ID)";
+
+                return db.ExcuteSQL(strSQL) > 0;
+            }
+            catch (Exception exception)
+            {
+                main.Error("修改物品颜色失败!\n" + exception);
+            }
             return false;
         }
         #endregion

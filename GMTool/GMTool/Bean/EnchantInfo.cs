@@ -13,21 +13,24 @@ namespace GMTool.Bean
         public string Constraint;
         public string Desc;
         public string Effect;
-
+        public bool IsPrefix = true;
+        public int MinArg;
+        public int MaxArg;
         public string GetValue()
         {
+            /*
             if (Class == null) return "?";
             Regex reg = new Regex("[0-9]+");
             Match m = reg.Match(Class);
             if (m.Groups.Count > 0)
             {
                 return m.Groups[0].Value;
-            }
-            return "?";
+            }*/
+            return MinArg+"-"+MaxArg;
         }
         public override string ToString()
         {
-            return Name+ "["+Class+"]\n描述：" + Desc + "\n效果：" + Effect;
+            return Name+ "\n描述：" + Desc + "\n效果：" + Effect;
         }
     }
 }

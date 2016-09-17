@@ -90,7 +90,8 @@ namespace GMTool.Helper
             }
             using (SQLiteDataReader reader2 = db.GetReader("SELECT * FROM EnchantInfo;"))
             {
-                Dictionary<string, string> names = GetEnchNameDic(textFile);
+                Dictionary<string, string> names1 = GetPrefixNameDic(textFile);
+                Dictionary<string, string> names2 = GetSuffixNameDic(textFile);
                 //说明
                 Dictionary<string, string> descs = GetEnchDescDic(textFile);
                 Dictionary<string, string> effects = GetEnchEffectDic(textFile);
@@ -101,11 +102,25 @@ namespace GMTool.Helper
                     info.Class = ToString(reader2["EnchantClass"]).ToLower();
                     info.Constraint = ToString(reader2["ItemConstraint"]);
                     info.Desc = ToString(reader2["ItemConstraintDesc"]);
+                    info.IsPrefix = Convert.ToBoolean(reader2["IsPrefix"]);
+                    info.MinArg = Convert.ToInt32(reader2["MinArgValue"]);
+                    info.MaxArg = Convert.ToInt32(reader2["MaxArgValue"]);
                     string var;
-                    if (names.TryGetValue(info.Class, out var))
+                    if (info.IsPrefix)
                     {
-                        info.Name = ToCN(var);
+                        if (names1.TryGetValue(info.Class, out var))
+                        {
+                            info.Name = ToCN(var);
+                        }
                     }
+                    else
+                    {
+                        if (names2.TryGetValue(info.Class, out var))
+                        {
+                            info.Name = ToCN(var);
+                        }
+                    }
+                
                     if (descs.TryGetValue(info.Class, out var))
                     {
                         info.Desc = ToCN(var);
@@ -149,10 +164,14 @@ namespace GMTool.Helper
             {
                 return null;
             }
-            tw = tw.Replace("\\n", "\n");
+            tw = tw.Replace("\\n", "\n").Trim();
             return TextHelper.ToSimplified(tw);
         }
 
+        public EnchantInfo[] GetEnchantInfos()
+        {
+            return Enchants.Values.ToArray<EnchantInfo>();
+        }
         public ItemClassInfo Get(string itemclass)
         {
             if (itemclass == null) return null;
@@ -215,7 +234,7 @@ namespace GMTool.Helper
             return rs;
         }
         //HEROES_ATTRIBUTE_PREFIX_
-        private Dictionary<string, string> GetEnchNameDic(string file)
+        private Dictionary<string, string> GetPrefixNameDic(string file)
         {
             Dictionary<string, string> dic = new Dictionary<string, string>();
             using (FileStream fs = new FileStream(file, FileMode.Open))

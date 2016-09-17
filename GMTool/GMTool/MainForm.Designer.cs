@@ -69,7 +69,8 @@
             this.ch_items_color3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ch_items_time = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuItem = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.contentMenuDeleteItems = new System.Windows.Forms.ToolStripMenuItem();
+            this.contentMenuEnchantPrefix = new System.Windows.Forms.ToolStripMenuItem();
+            this.contentMenuEnchantSuffix = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.contentMenuItemPower5 = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMenuItemPower10 = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,6 +81,8 @@
             this.contentMenuItemUnLimitTime = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMennuAllMaxStar = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMenuItemAllUnLimitTime = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.contentMenuDeleteItems = new System.Windows.Forms.ToolStripMenuItem();
             this.list_search = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuSend = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -124,9 +127,8 @@
             this.cb_category = new System.Windows.Forms.ComboBox();
             this.cb_item_type = new System.Windows.Forms.ComboBox();
             this.tab_left = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tab_user = new System.Windows.Forms.TabPage();
+            this.tab_color = new System.Windows.Forms.TabPage();
             this.groupBox1.SuspendLayout();
             this.contextMenuUser.SuspendLayout();
             this.contextMenuItem.SuspendLayout();
@@ -139,7 +141,7 @@
             this.tab_items_normal.SuspendLayout();
             this.tab_items_cash.SuspendLayout();
             this.tab_left.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tab_user.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -395,11 +397,9 @@
             this.list_items_normal.HideSelection = false;
             this.list_items_normal.LabelWrap = false;
             this.list_items_normal.Location = new System.Drawing.Point(3, 3);
-            this.list_items_normal.MultiSelect = false;
             this.list_items_normal.Name = "list_items_normal";
             this.list_items_normal.ShowItemToolTips = true;
             this.list_items_normal.Size = new System.Drawing.Size(747, 519);
-            this.list_items_normal.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.list_items_normal.TabIndex = 3;
             this.list_items_normal.UseCompatibleStateImageBehavior = false;
             this.list_items_normal.View = System.Windows.Forms.View.Details;
@@ -448,7 +448,8 @@
             // contextMenuItem
             // 
             this.contextMenuItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contentMenuDeleteItems,
+            this.contentMenuEnchantPrefix,
+            this.contentMenuEnchantSuffix,
             this.toolStripSeparator1,
             this.contentMenuItemPower5,
             this.contentMenuItemPower10,
@@ -458,16 +459,23 @@
             this.contentMenuItemMaxStar,
             this.contentMenuItemUnLimitTime,
             this.contentMennuAllMaxStar,
-            this.contentMenuItemAllUnLimitTime});
+            this.contentMenuItemAllUnLimitTime,
+            this.toolStripSeparator3,
+            this.contentMenuDeleteItems});
             this.contextMenuItem.Name = "contextMenuItem";
-            this.contextMenuItem.Size = new System.Drawing.Size(173, 236);
+            this.contextMenuItem.Size = new System.Drawing.Size(173, 264);
             // 
-            // contentMenuDeleteItems
+            // contentMenuEnchantPrefix
             // 
-            this.contentMenuDeleteItems.Name = "contentMenuDeleteItems";
-            this.contentMenuDeleteItems.Size = new System.Drawing.Size(172, 22);
-            this.contentMenuDeleteItems.Text = "删除物品";
-            this.contentMenuDeleteItems.Click += new System.EventHandler(this.contentMenuDeleteItems_Click);
+            this.contentMenuEnchantPrefix.Name = "contentMenuEnchantPrefix";
+            this.contentMenuEnchantPrefix.Size = new System.Drawing.Size(172, 22);
+            this.contentMenuEnchantPrefix.Text = "字首附魔";
+            // 
+            // contentMenuEnchantSuffix
+            // 
+            this.contentMenuEnchantSuffix.Name = "contentMenuEnchantSuffix";
+            this.contentMenuEnchantSuffix.Size = new System.Drawing.Size(172, 22);
+            this.contentMenuEnchantSuffix.Text = "字尾附魔";
             // 
             // toolStripSeparator1
             // 
@@ -534,6 +542,18 @@
             this.contentMenuItemAllUnLimitTime.Size = new System.Drawing.Size(172, 22);
             this.contentMenuItemAllUnLimitTime.Text = "全部物品无限时间";
             this.contentMenuItemAllUnLimitTime.Click += new System.EventHandler(this.contentMenuItemAllUnLimitTime_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(169, 6);
+            // 
+            // contentMenuDeleteItems
+            // 
+            this.contentMenuDeleteItems.Name = "contentMenuDeleteItems";
+            this.contentMenuDeleteItems.Size = new System.Drawing.Size(172, 22);
+            this.contentMenuDeleteItems.Text = "删除物品";
+            this.contentMenuDeleteItems.Click += new System.EventHandler(this.contentMenuDeleteItems_Click);
             // 
             // list_search
             // 
@@ -890,11 +910,9 @@
             this.list_items_cash.HideSelection = false;
             this.list_items_cash.LabelWrap = false;
             this.list_items_cash.Location = new System.Drawing.Point(3, 3);
-            this.list_items_cash.MultiSelect = false;
             this.list_items_cash.Name = "list_items_cash";
             this.list_items_cash.ShowItemToolTips = true;
             this.list_items_cash.Size = new System.Drawing.Size(747, 519);
-            this.list_items_cash.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.list_items_cash.TabIndex = 4;
             this.list_items_cash.UseCompatibleStateImageBehavior = false;
             this.list_items_cash.View = System.Windows.Forms.View.Details;
@@ -964,9 +982,8 @@
             // 
             // tab_left
             // 
-            this.tab_left.Controls.Add(this.tabPage1);
-            this.tab_left.Controls.Add(this.tabPage2);
-            this.tab_left.Controls.Add(this.tabPage3);
+            this.tab_left.Controls.Add(this.tab_user);
+            this.tab_left.Controls.Add(this.tab_color);
             this.tab_left.Enabled = false;
             this.tab_left.Location = new System.Drawing.Point(7, 32);
             this.tab_left.Name = "tab_left";
@@ -974,35 +991,25 @@
             this.tab_left.Size = new System.Drawing.Size(248, 284);
             this.tab_left.TabIndex = 10;
             // 
-            // tabPage1
+            // tab_user
             // 
-            this.tabPage1.Controls.Add(this.list_users);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(240, 258);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "角色列表";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tab_user.Controls.Add(this.list_users);
+            this.tab_user.Location = new System.Drawing.Point(4, 22);
+            this.tab_user.Name = "tab_user";
+            this.tab_user.Padding = new System.Windows.Forms.Padding(3);
+            this.tab_user.Size = new System.Drawing.Size(240, 258);
+            this.tab_user.TabIndex = 0;
+            this.tab_user.Text = "角色列表";
+            this.tab_user.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // tab_color
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(231, 223);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "物品附魔";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(231, 223);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "物品染色";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tab_color.BackColor = System.Drawing.SystemColors.Control;
+            this.tab_color.Location = new System.Drawing.Point(4, 22);
+            this.tab_color.Name = "tab_color";
+            this.tab_color.Size = new System.Drawing.Size(240, 258);
+            this.tab_color.TabIndex = 2;
+            this.tab_color.Text = "物品染色";
             // 
             // MainForm
             // 
@@ -1047,7 +1054,7 @@
             this.tab_items_normal.ResumeLayout(false);
             this.tab_items_cash.ResumeLayout(false);
             this.tab_left.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.tab_user.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1146,9 +1153,11 @@
         private System.Windows.Forms.ComboBox cb_item_type;
         private System.Windows.Forms.ColumnHeader columnHeader15;
         private System.Windows.Forms.TabControl tab_left;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tab_user;
+        private System.Windows.Forms.TabPage tab_color;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem contentMenuEnchantPrefix;
+        private System.Windows.Forms.ToolStripMenuItem contentMenuEnchantSuffix;
     }
 }
 

@@ -57,7 +57,6 @@ namespace GMTool
             }
             catch (Exception ex)
             {
-                this.Error(ex.Message);
             }
             this.DialogResult = DialogResult.OK;
         }

@@ -23,6 +23,8 @@ namespace GMTool
         private int NormalCurItem = -1;
         private int CashCurItem = -1;
 
+        private Item CurItem;
+
         #region 窗体
         public MainForm()
         {
@@ -90,6 +92,8 @@ namespace GMTool
                         this.Error("物品文本读取错误。\n请确保heroes_text_taiwan.txt和heroes.db3在程序目录下面");
                         return;
                     }
+                    //初始化菜单
+                    InitEnchantMenu();
                 }
                 if (this.connectDataBase(this.tb_mssql_server.Text, this.tb_mssql_user.Text, this.tb_mssql_pwd.Text, this.tb_mssql_db.Text))
                 {
@@ -121,6 +125,76 @@ namespace GMTool
                 }
             }
         }
+
+        private void InitEnchantMenu()
+        {
+            this.contentMenuEnchantPrefix.DropDownItems.Clear();
+            this.contentMenuEnchantSuffix.DropDownItems.Clear();
+            EnchantInfo[] enchantinfos = itemsHelper.GetEnchantInfos();
+            int i = 0, j = 0;
+            int max = 20;
+            ToolStripMenuItem prelist = null;
+            ToolStripMenuItem suflist = null;
+            foreach (EnchantInfo info in enchantinfos)
+            {
+                if (info.IsPrefix)
+                {
+                    if (prelist == null || i % max==0)
+                    {
+                        prelist = new ToolStripMenuItem(i+"-"+(i+ max));
+                        this.contentMenuEnchantPrefix.DropDownItems.Add(prelist);
+                    }
+                    i++;
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(info.Name);
+                    tsmi.Tag = info;
+                    tsmi.ToolTipText = info.ToString();//提示文字为真实路径
+                    tsmi.Click += Tsmi_Click;
+                    prelist.DropDownItems.Add(tsmi);
+                }
+                else
+                {
+                    if (suflist == null || j % max == 0)
+                    {
+                        suflist = new ToolStripMenuItem(j + "-" + (j + max));
+                        this.contentMenuEnchantSuffix.DropDownItems.Add(suflist);
+                    }
+                    j++;
+                    ToolStripMenuItem tsmi = new ToolStripMenuItem(info.Name);
+                    tsmi.Tag = info;
+                    tsmi.ToolTipText = info.ToString();//提示文字为真实路径
+                    tsmi.Click += Tsmi_Click;
+                    suflist.DropDownItems.Add(tsmi);
+                }
+            }
+
+        }
+
+        private void Tsmi_Click(object sender, EventArgs e)
+        {
+            if (CurItem == null)
+            {
+                this.Warnning("没选中物品，无法附魔");
+                return;
+            }
+            ToolStripMenuItem menu = sender as ToolStripMenuItem;
+            if (menu != null && menu.Tag != null)
+            {
+                EnchantInfo info = menu.Tag as EnchantInfo;
+                if (info != null)
+                {
+                    //附魔
+                    if (this.Enchant(CurItem, info))
+                    {
+                        log(CurItem.ItemName + " 附魔【" + info.Name + "】成功。");
+                        ReadItems();
+                    }
+                    else{
+                        this.Warnning(CurItem.ItemName+" 附魔【"+info.Name+"】失败。");
+                        log(CurItem.ItemName + " 附魔【" + info.Name + "】失败。");
+                    }
+                }
+            }
+        }
         #endregion
 
         #region 数据读取和添加
@@ -134,6 +208,10 @@ namespace GMTool
         {
             if (item != null)
             {
+                if (item.Color1 != 0)
+                {
+                    this.tab_left.SelectedIndex = 1;
+                }
                 this.tb_senditem_name.Text = item.ItemName;
                 this.tb_senditem_class.Text = item.ItemClass;
             }
@@ -218,6 +296,11 @@ namespace GMTool
                                 vitems[i].Text += "【+" + attr.Value + "】";
                             }
                             else if (attr.Type == ItemAttributeType.PREFIX)
+                            {
+                                EnchantInfo einfo = itemsHelper.GetEnchant(attr.Value);
+                                vitems[i].Text = "【" + (einfo == null ? attr.Value : einfo.Name) + "】" + vitems[i].Text;
+                            }
+                            else if (attr.Type == ItemAttributeType.SUFFIX)
                             {
                                 EnchantInfo einfo = itemsHelper.GetEnchant(attr.Value);
                                 vitems[i].Text += "【" + (einfo == null ? attr.Value : einfo.Name) + "】";
@@ -555,6 +638,29 @@ namespace GMTool
             }
             return listview.GetSelectItem<Item>();
         }
+        private Item[] GetSelectItems(object sender)
+        {
+            ToolStripMenuItem menu = sender as ToolStripMenuItem;
+            Control parent = null;
+            if (menu != null)
+            {
+                parent = menu.GetMenuConrtol();
+            }
+            ListView listview = null;
+            if (parent == this.list_items_cash)
+            {
+                listview = this.list_items_cash;
+            }
+            else if (parent == this.list_items_normal)
+            {
+                listview = this.list_items_normal;
+            }
+            else
+            {
+                return null;
+            }
+            return listview.GetSelectItems<Item>();
+        }
         private Item[] GetItems(object sender)
         {
             ToolStripMenuItem menu = sender as ToolStripMenuItem;
@@ -580,7 +686,7 @@ namespace GMTool
         }
         private void contentMenuDeleteItems_Click(object sender, EventArgs e)
         {
-            if (this.DeleteItem(CurUser, GetSelectItem(sender)))
+            if (this.DeleteItem(CurUser, GetSelectItems(sender)))
             {
                 ReadItems();
             }
@@ -673,11 +779,11 @@ namespace GMTool
                 if (this.SendItem(CurUser, count, tb_senditem_class.Text, tb_senditem_name.Text) > 0)
                 {
                     ReadMails();
-                    log("发送成功:"+ tb_senditem_name.Text);
+                    log("发送成功:" + tb_senditem_name.Text);
                 }
                 else
                 {
-                    log("发送失败:"+ tb_senditem_name.Text);
+                    log("发送失败:" + tb_senditem_name.Text);
                 }
             }
             catch (Exception)
@@ -730,6 +836,10 @@ namespace GMTool
                 NormalCurItem = index;
             }
             Item item = this.list_items_normal.GetSelectItem<Item>();
+            if (item != null)
+            {
+                CurItem = item;
+            }
             SetCurItems(item);
         }
 
@@ -741,6 +851,10 @@ namespace GMTool
                 CashCurItem = index;
             }
             Item item = this.list_items_cash.GetSelectItem<Item>();
+            if (item != null)
+            {
+                CurItem = item;
+            }
             SetCurItems(item);
         }
 

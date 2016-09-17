@@ -86,7 +86,12 @@ namespace GMTool.Bean
                     else if (attr.Type == ItemAttributeType.PREFIX)
                     {
                         EnchantInfo einfo = ItemClassInfoHelper.Get().GetEnchant(attr.Value);
-                        text += "\n-----------------------------\n附魔属性：" + (einfo == null ? attr.Value : einfo.ToString());
+                        text += "\n-----------------------------\n【首】附魔：" + (einfo == null ? attr.Value : einfo.ToString());
+                    }
+                    else if (attr.Type == ItemAttributeType.SUFFIX)
+                    {
+                        EnchantInfo einfo = ItemClassInfoHelper.Get().GetEnchant(attr.Value);
+                        text += "\n-----------------------------\n【尾】附魔：" + (einfo == null ? attr.Value : einfo.ToString());
                     }
                     else if (attr.Type == ItemAttributeType.QUALITY)
                     {
