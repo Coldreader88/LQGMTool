@@ -1079,13 +1079,6 @@ namespace GMTool
         }
 
 
-        private void contentMenuItemColorClean_Click(object sender, EventArgs e)
-        {
-            this.CleanItemColor(CurUser, GetSelectItems(sender));
-            ReadItems();
-        }
-
-
         private void lb_color1_Click(object sender, EventArgs e)
         {
             Color color = SelectColor(lb_color1.BackColor, lb_color2.BackColor, lb_color3.BackColor, lb_color1.BackColor);

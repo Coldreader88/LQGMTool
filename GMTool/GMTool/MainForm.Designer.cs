@@ -81,7 +81,6 @@
             this.contentMenuItemColor2 = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMenuItemColor3 = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMenuItemColorAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.contentMenuItemColorClean = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.contentMenuItemUnLimitTime = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMenuItemMaxStar = new System.Windows.Forms.ToolStripMenuItem();
@@ -480,7 +479,6 @@
             this.contentMenuItemColor2,
             this.contentMenuItemColor3,
             this.contentMenuItemColorAll,
-            this.contentMenuItemColorClean,
             this.toolStripSeparator8,
             this.contentMenuItemUnLimitTime,
             this.contentMenuItemMaxStar,
@@ -489,7 +487,7 @@
             this.toolStripSeparator3,
             this.contentMenuDeleteItems});
             this.contextMenuItem.Name = "contextMenuItem";
-            this.contextMenuItem.Size = new System.Drawing.Size(173, 402);
+            this.contextMenuItem.Size = new System.Drawing.Size(173, 380);
             // 
             // contentMenuEnchantPrefix
             // 
@@ -575,13 +573,6 @@
             this.contentMenuItemColorAll.Size = new System.Drawing.Size(172, 22);
             this.contentMenuItemColorAll.Text = "修改全部颜色";
             this.contentMenuItemColorAll.Click += new System.EventHandler(this.contentMenuColorAll_Click);
-            // 
-            // contentMenuItemColorClean
-            // 
-            this.contentMenuItemColorClean.Name = "contentMenuItemColorClean";
-            this.contentMenuItemColorClean.Size = new System.Drawing.Size(172, 22);
-            this.contentMenuItemColorClean.Text = "清除全部颜色";
-            this.contentMenuItemColorClean.Click += new System.EventHandler(this.contentMenuItemColorClean_Click);
             // 
             // toolStripSeparator8
             // 
@@ -1456,7 +1447,6 @@
         private System.Windows.Forms.ToolStripMenuItem contentMenuItemColor2;
         private System.Windows.Forms.ToolStripMenuItem contentMenuItemColor3;
         private System.Windows.Forms.ToolStripMenuItem contentMenuItemColorAll;
-        private System.Windows.Forms.ToolStripMenuItem contentMenuItemColorClean;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.Label lb_color1;
         private System.Windows.Forms.Label lb_color3;
