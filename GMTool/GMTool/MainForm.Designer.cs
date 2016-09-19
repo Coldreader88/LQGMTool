@@ -330,69 +330,69 @@
             this.toolStripSeparator6,
             this.contentMenuUserRefresh});
             this.contextMenuUser.Name = "contextMenuUser";
-            this.contextMenuUser.Size = new System.Drawing.Size(149, 176);
+            this.contextMenuUser.Size = new System.Drawing.Size(169, 198);
             // 
             // contentMenuUserModName
             // 
             this.contentMenuUserModName.Name = "contentMenuUserModName";
-            this.contentMenuUserModName.Size = new System.Drawing.Size(148, 22);
+            this.contentMenuUserModName.Size = new System.Drawing.Size(168, 22);
             this.contentMenuUserModName.Text = "修改名字";
             this.contentMenuUserModName.Click += new System.EventHandler(this.contentMenuUserModName_Click);
             // 
             // contentMenuUserModLevel
             // 
             this.contentMenuUserModLevel.Name = "contentMenuUserModLevel";
-            this.contentMenuUserModLevel.Size = new System.Drawing.Size(148, 22);
+            this.contentMenuUserModLevel.Size = new System.Drawing.Size(168, 22);
             this.contentMenuUserModLevel.Text = "修改等级";
             this.contentMenuUserModLevel.Click += new System.EventHandler(this.contentMenuUserModLevel_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(165, 6);
             // 
             // contentMenuUserMaxSecondClass
             // 
             this.contentMenuUserMaxSecondClass.Name = "contentMenuUserMaxSecondClass";
-            this.contentMenuUserMaxSecondClass.Size = new System.Drawing.Size(148, 22);
+            this.contentMenuUserMaxSecondClass.Size = new System.Drawing.Size(168, 22);
             this.contentMenuUserMaxSecondClass.Text = "副职业满级";
             this.contentMenuUserMaxSecondClass.Click += new System.EventHandler(this.contentMenuUserMaxSecondClass_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(165, 6);
             // 
             // contentMenuUserMaxLight
             // 
             this.contentMenuUserMaxLight.Name = "contentMenuUserMaxLight";
-            this.contentMenuUserMaxLight.Size = new System.Drawing.Size(148, 22);
-            this.contentMenuUserMaxLight.Text = "光明阵营满级";
+            this.contentMenuUserMaxLight.Size = new System.Drawing.Size(168, 22);
+            this.contentMenuUserMaxLight.Text = "转光明阵营(满级)";
             this.contentMenuUserMaxLight.Click += new System.EventHandler(this.contentMenuUserMaxLight_Click);
             // 
             // contentMenuUserMaxDark
             // 
             this.contentMenuUserMaxDark.Name = "contentMenuUserMaxDark";
-            this.contentMenuUserMaxDark.Size = new System.Drawing.Size(148, 22);
-            this.contentMenuUserMaxDark.Text = "黑暗阵营满级";
+            this.contentMenuUserMaxDark.Size = new System.Drawing.Size(168, 22);
+            this.contentMenuUserMaxDark.Text = "转黑暗阵营(满级)";
             this.contentMenuUserMaxDark.Click += new System.EventHandler(this.contentMenuUserMaxDark_Click);
             // 
             // contentMenuUserResetGroup
             // 
             this.contentMenuUserResetGroup.Name = "contentMenuUserResetGroup";
-            this.contentMenuUserResetGroup.Size = new System.Drawing.Size(148, 22);
+            this.contentMenuUserResetGroup.Size = new System.Drawing.Size(168, 22);
             this.contentMenuUserResetGroup.Text = "重置阵营技能";
             this.contentMenuUserResetGroup.Click += new System.EventHandler(this.contentMenuUserResetGroup_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(165, 6);
             // 
             // contentMenuUserRefresh
             // 
             this.contentMenuUserRefresh.Name = "contentMenuUserRefresh";
-            this.contentMenuUserRefresh.Size = new System.Drawing.Size(148, 22);
+            this.contentMenuUserRefresh.Size = new System.Drawing.Size(168, 22);
             this.contentMenuUserRefresh.Text = "刷新角色";
             this.contentMenuUserRefresh.Click += new System.EventHandler(this.menuRefreshUsers_Click);
             // 

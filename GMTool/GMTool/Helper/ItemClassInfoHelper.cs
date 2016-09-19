@@ -9,12 +9,14 @@ using System.Text.RegularExpressions;
 using GMTool.Helper;
 using System.Data.SQLite;
 using GMTool.Bean;
+using LY;
 
 namespace GMTool.Helper
 {
     public class ItemClassInfoHelper
     {
         private string textFile, dbFile;
+        private bool TW2CN = true;
         private List<ItemClassInfo> Infos = new List<ItemClassInfo>();
         private Dictionary<string, EnchantInfo> CacheEnchants = new Dictionary<string, EnchantInfo>();
         private Dictionary<string, ItemClassInfo> CacheItems = new Dictionary<string, ItemClassInfo>();
@@ -29,11 +31,22 @@ namespace GMTool.Helper
         {
             return sItemClassInfoHelper;
         }
-        public ItemClassInfoHelper(string textFile, string dbFile)
+        public ItemClassInfoHelper()
         {
+            IniHelper helper = new IniHelper(Program.INT_FILE);
+            TW2CN = "开" == helper.ReadValue("数据", "强制简体");
+
             sItemClassInfoHelper = this;
-            this.textFile = textFile;
-            this.dbFile = dbFile;
+            this.textFile = helper.ReadValue("数据", "翻译");
+            if (!File.Exists(textFile))
+            {
+                textFile = "./heroes_text_taiwan.txt";
+            }
+            this.dbFile = helper.ReadValue("数据", "数据库");
+            if (!File.Exists(dbFile))
+            {
+                textFile = "./heroes.db3";
+            }
         }
 
         public bool IsOpen
@@ -48,7 +61,7 @@ namespace GMTool.Helper
             }
             SQLiteHelper db = new SQLiteHelper(dbFile);
             db.Open();
-            using (SQLiteDataReader reader = db.GetReader("SELECT * FROM ItemClassInfo;"))
+            using (SQLiteDataReader reader = db.GetReader("SELECT * FROM ItemClassInfo"))
             {
                 Dictionary<string, string> names = GetNameDic(textFile);
                 Dictionary<string, string> descs = GetDescDic(textFile);
@@ -82,7 +95,7 @@ namespace GMTool.Helper
                     ItemClassInfo tmp = new ItemClassInfo();
                     if (Items.TryGetValue(info.ItemClass, out tmp))
                     {
-                      //  Items[info.ItemClass] = info;
+                        //  Items[info.ItemClass] = info;
                     }
                     else
                     {
@@ -92,7 +105,7 @@ namespace GMTool.Helper
 
                 }
             }
-            using (SQLiteDataReader reader2 = db.GetReader("SELECT * FROM EnchantInfo;"))
+            using (SQLiteDataReader reader2 = db.GetReader("SELECT * FROM EnchantInfo ORDER BY EnchantLevel;"))
             {
                 Dictionary<string, string> names1 = GetPrefixNameDic(textFile);
                 Dictionary<string, string> names2 = GetSuffixNameDic(textFile);
@@ -128,7 +141,7 @@ namespace GMTool.Helper
                             info.Name = ToCN(var);
                         }
                     }
-                
+
                     if (descs.TryGetValue(info.Class, out var))
                     {
                         info.Desc = ToCN(var);
@@ -136,9 +149,9 @@ namespace GMTool.Helper
                     info.Effect = "";
                     for (int i = 1; i <= 5; i++)
                     {
-                        if (effects.TryGetValue(info.Class+"_"+i, out var))
+                        if (effects.TryGetValue(info.Class + "_" + i, out var))
                         {
-                            info.Effect += i+"."+ ToCN(var);
+                            info.Effect += i + "." + ToCN(var);
                         }
                         if (effectIfs.TryGetValue(info.Class + "_" + i, out var))
                         {
@@ -153,7 +166,7 @@ namespace GMTool.Helper
                     EnchantInfo tmp = new EnchantInfo();
                     if (Enchants.TryGetValue(info.Class, out tmp))
                     {
-                      //  Enchants[info.ItemClass] = info;
+                        //  Enchants[info.ItemClass] = info;
                     }
                     else
                     {
@@ -177,8 +190,12 @@ namespace GMTool.Helper
             {
                 return null;
             }
-            tw = tw.Replace("\\n", "\n").Trim();
-            return TextHelper.ToSimplified(tw);
+            if (TW2CN)
+            {
+                tw = tw.Replace("\\n", "\n").Trim();
+                return TextHelper.ToSimplified(tw);
+            }
+            return tw;
         }
 
         public EnchantInfo[] GetEnchantInfos()

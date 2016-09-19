@@ -25,7 +25,7 @@ namespace GMTool
 
         public static void ReadSettings(this MainForm main)
         {
-            IniHelper helper = new IniHelper(Application.StartupPath + "/DBIni.ini");
+            IniHelper helper = new IniHelper(Program.INT_FILE);
             main.tb_mssql_server.Text = helper.ReadValue("连接信息", "IP");
             main.tb_mssql_db.Text = helper.ReadValue("连接信息", "数据库名");
             main.tb_mssql_user.Text = helper.ReadValue("连接信息", "用户名");
@@ -350,7 +350,8 @@ namespace GMTool
                 }
                 else
                 {
-                    db.ExcuteSQL("update vocation set vocationClass = 0,VocationLevel = 40 where cid =" + user.CID);
+                    ResetGroupSkill(main, user);
+                    db.ExcuteSQL("update vocation set vocationClass = "+ group + ",VocationLevel = 40 where cid =" + user.CID);
                 }
                 //this.output("角色 [" + this.userList[this.userIndex].name + "] 光明骑士等级修改成功!");
             }

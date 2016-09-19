@@ -8,6 +8,7 @@ namespace GMTool
 {
     static class Program
     {
+        public static String INT_FILE =　Application.StartupPath + "/DBIni.ini";
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>

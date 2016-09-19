@@ -32,7 +32,7 @@ namespace GMTool
         public MainForm()
         {
             CurUser = new User(0, 0, 0, "", 0, 1);
-            itemsHelper = new ItemClassInfoHelper("./heroes_text_taiwan.txt", "./heroes.db3");
+            itemsHelper = new ItemClassInfoHelper();
             InitializeComponent();
             this.Text += " " + Application.ProductVersion.ToString();
             this.DefTitle = this.Text;
@@ -139,7 +139,7 @@ namespace GMTool
             this.contentMenuEnchantSuffix.DropDownItems.Clear();
             EnchantInfo[] enchantinfos = itemsHelper.GetEnchantInfos();
             int i = 0, j = 0;
-            int max = 20;
+            int max = 10;
             ToolStripMenuItem prelist = null;
             ToolStripMenuItem suflist = null;
             foreach (EnchantInfo info in enchantinfos)
