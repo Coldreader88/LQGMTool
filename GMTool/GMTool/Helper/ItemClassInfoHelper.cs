@@ -34,15 +34,19 @@ namespace GMTool.Helper
         public ItemClassInfoHelper()
         {
             IniHelper helper = new IniHelper(Program.INT_FILE);
-            TW2CN = "开" == helper.ReadValue("数据", "强制简体");
+            string val  =helper.ReadValue("data", "forceZhCN");
+            if(val!=null){
+            	val  = val.ToLower();
+            }
+            TW2CN = "开" == val ||"true" == val;
 
             sItemClassInfoHelper = this;
-            this.textFile = helper.ReadValue("数据", "翻译");
+            this.textFile = helper.ReadValue("data", "text");
             if (!File.Exists(textFile))
             {
                 textFile = "./heroes_text_taiwan.txt";
             }
-            this.dbFile = helper.ReadValue("数据", "数据库");
+            this.dbFile = helper.ReadValue("data", "heroes");
             if (!File.Exists(dbFile))
             {
                 textFile = "./heroes.db3";
