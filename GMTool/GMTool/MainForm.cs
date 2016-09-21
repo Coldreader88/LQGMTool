@@ -1,6 +1,6 @@
 ﻿using GMTool.Bean;
 using GMTool.Helper;
-using LY;
+using GMTool.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,6 +11,8 @@ using System.Data.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GMTool.Enums;
+using GMTool.Extensions;
 
 namespace GMTool
 {
@@ -138,13 +140,15 @@ namespace GMTool
 		#region 菜单初始化
 		private void AddClasses(){
 			this.contentMenuUserClasses.DropDownItems.Clear();
-			Array classes = Enum.GetValues(typeof(GameClass));
-			foreach(GameClass cls in classes){
-				ToolStripMenuItem tsmi = new ToolStripMenuItem(cls.Name());
-				tsmi.Tag = cls;
-				tsmi.ToolTipText = cls.ToString();
-				tsmi.Click +=Classes_Click;
-				this.contentMenuUserClasses.DropDownItems.Add(tsmi);
+			Array classes = Enum.GetValues(typeof(ClassInfo));
+			foreach(ClassInfo cls in classes){
+				if(cls != ClassInfo.UnKnown){
+					ToolStripMenuItem tsmi = new ToolStripMenuItem(cls.Name());
+					tsmi.Tag = cls;
+					tsmi.ToolTipText = cls.ToString()+" "+cls.Index();
+					tsmi.Click +=Classes_Click;
+					this.contentMenuUserClasses.DropDownItems.Add(tsmi);
+				}
 			}
 		}
 		private void Classes_Click(object sender, EventArgs e)
@@ -153,7 +157,7 @@ namespace GMTool
 			ToolStripMenuItem menu = sender as ToolStripMenuItem;
 			if (menu != null && menu.Tag != null)
 			{
-				GameClass info = (GameClass)menu.Tag;
+				ClassInfo info = (ClassInfo)menu.Tag;
 				//
 				if(this.ModUserClass(CurUser, info)){
 					AddUserList(this.ReadUserList());
@@ -240,10 +244,10 @@ namespace GMTool
 		private void ReadItems()
 		{
 			if (!CheckUser()) return;
-			AddItemList(this.list_items_normal, this.ReadUserItems(CurUser, PackType.Normal));
-			AddItemList(this.list_items_cash, this.ReadUserItems(CurUser, PackType.Cash));
-			AddItemList(this.list_items_quest, this.ReadUserItems(CurUser, PackType.Quest));
-			AddItemList(this.list_items_other, this.ReadUserItems(CurUser, PackType.Other));
+			AddItemList(this.list_items_normal, this.ReadUserItems(CurUser, PackageType.Normal));
+			AddItemList(this.list_items_cash, this.ReadUserItems(CurUser, PackageType.Cash));
+			AddItemList(this.list_items_quest, this.ReadUserItems(CurUser, PackageType.Quest));
+			AddItemList(this.list_items_other, this.ReadUserItems(CurUser, PackageType.Other));
 		}
 		private void SetCurItems(Item item)
 		{

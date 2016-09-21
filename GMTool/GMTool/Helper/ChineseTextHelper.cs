@@ -6,7 +6,7 @@ using System.Text;
 
 namespace GMTool.Helper
 {
-    public class TextHelper
+    public class ChineseTextHelper
     {
         /// <summary>
         /// 将字符转换成简体中文

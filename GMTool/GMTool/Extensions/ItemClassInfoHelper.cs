@@ -9,7 +9,10 @@ using System.Text.RegularExpressions;
 using GMTool.Helper;
 using System.Data.SQLite;
 using GMTool.Bean;
-using LY;
+using GMTool.Helpers;
+using System.Data.Common;
+using GMTool.Enums;
+using GMTool.Extensions;
 
 namespace GMTool.Helper
 {
@@ -65,7 +68,7 @@ namespace GMTool.Helper
             }
             SQLiteHelper db = new SQLiteHelper(dbFile);
             db.Open();
-            using (SQLiteDataReader reader = db.GetReader("SELECT * FROM ItemClassInfo"))
+            using (DbDataReader reader = db.GetReader("SELECT * FROM ItemClassInfo"))
             {
                 Dictionary<string, string> names = GetNameDic(textFile);
                 Dictionary<string, string> descs = GetDescDic(textFile);
@@ -75,19 +78,19 @@ namespace GMTool.Helper
                     info.ItemClass = ToString(reader["ItemClass"]).ToLower();
                     try
                     {
-                        info.Category = (ItemCategory)Enum.Parse(typeof(ItemCategory), ToString(reader["Category"]));
+                        info.Category = (SubCategory)Enum.Parse(typeof(SubCategory), ToString(reader["Category"]));
                     }
                     catch (Exception)
                     {
-                        info.Category = ItemCategory.NONE;
+                        info.Category = SubCategory.NONE;
                     }
                     try
                     {
-                        info.TradeCategory = (ItemTradeCategory)Enum.Parse(typeof(ItemTradeCategory), ToString(reader["TradeCategory"]));
+                        info.TradeCategory = (MainCategory)Enum.Parse(typeof(MainCategory), ToString(reader["TradeCategory"]));
                     }
                     catch (Exception)
                     {
-                        info.TradeCategory = ItemTradeCategory.NONE;
+                        info.TradeCategory = MainCategory.NONE;
                     }
                     info.RequiredLevel = Convert.ToInt32(reader["RequiredLevel"]);
                     info.ClassRestriction = Convert.ToInt32(reader["ClassRestriction"]);
@@ -109,7 +112,7 @@ namespace GMTool.Helper
 
                 }
             }
-            using (SQLiteDataReader reader2 = db.GetReader("SELECT * FROM EnchantInfo ORDER BY EnchantLevel;"))
+            using (DbDataReader reader2 = db.GetReader("SELECT * FROM EnchantInfo ORDER BY EnchantLevel;"))
             {
                 Dictionary<string, string> names1 = GetPrefixNameDic(textFile);
                 Dictionary<string, string> names2 = GetSuffixNameDic(textFile);
@@ -197,7 +200,7 @@ namespace GMTool.Helper
             if (TW2CN)
             {
                 tw = tw.Replace("\\n", "\n").Trim();
-                return TextHelper.ToSimplified(tw);
+                return ChineseTextHelper.ToSimplified(tw);
             }
             return tw;
         }
@@ -248,7 +251,7 @@ namespace GMTool.Helper
         //
         public List<ItemClassInfo> SearchItems(string name, string id, string itemtype, string category, User user)
         {
-        	int _class = user==null?0:user.Class.Info().Value();
+        	int _class = user==null?0:(int)user.Class;
             List<ItemClassInfo> rs = new List<ItemClassInfo>();
             foreach (ItemClassInfo info in Infos)
             {
@@ -266,14 +269,14 @@ namespace GMTool.Helper
                         continue;
                     }
                 }
-                if (!string.IsNullOrEmpty(category) && category != ItemCategory.NONE.Name())
+                if (!string.IsNullOrEmpty(category) && category != SubCategory.NONE.Name())
                 {
                     if (info.Category.Name() != category)
                     {
                         continue;
                     }
                 }
-                if (!string.IsNullOrEmpty(itemtype) && itemtype != ItemTradeCategory.NONE.Name())
+                if (!string.IsNullOrEmpty(itemtype) && itemtype != MainCategory.NONE.Name())
                 {
                     if (info.TradeCategory.Name() != itemtype)
                     {

@@ -33,7 +33,7 @@ namespace GMTool
                 this.Error("没有选择角色");
                 return;
             }
-            tb_name.Text = TextHelper.ToTraditional(tb_name.Text);
+            tb_name.Text = ChineseTextHelper.ToTraditional(tb_name.Text);
             NewName = tb_name.Text;
             if (mainForm.CheckName(NewName))
             {

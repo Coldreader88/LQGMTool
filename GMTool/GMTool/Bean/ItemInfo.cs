@@ -3,17 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using GMTool.Enums;
+using GMTool.Extensions;
 namespace GMTool.Bean
 {
-    public enum PackType
-    {
-        All = -1,
-        Normal = 0,
-        Cash = 100,
-        Quest=103,
-        Other=101,
-    }
     public class Item
     {
         public string ItemName { get; set; }
@@ -75,7 +68,7 @@ namespace GMTool.Bean
                       + "，" + (Color3 == 0 ? "无" : "#" + Color3.ToString("X"));
                 text += "\n-----------------------------";
             }
-            text += "\n职业限制：" + ClassInfoEx.GetText(this.RequiredClass);
+            text += "\n职业限制：" + ClassInfoEx.GetClassText(this.RequiredClass);
             text += "\n物品描述：\n    " + ItemDesc;
 
             if (Attributes != null)

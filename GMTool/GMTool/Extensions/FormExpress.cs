@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace GMTool
+namespace System.Windows.Forms
 {
     public static class FormExpress
     {
@@ -119,13 +119,7 @@ namespace GMTool
                 //MessageBox.Show("" + menu.OwnerItem.Text);
                 return GetMenuConrtol(menu.OwnerItem);
             }
-            else if (menu.GetCurrentParent() is ContextMenuStripEx)
-            {
-                //一级菜单
-                ContextMenuStripEx cm = (ContextMenuStripEx)menu.GetCurrentParent();
-                return cm.SourceConrolEx;
-            }
-            else if (menu.GetCurrentParent() is ContextMenuStrip)
+            if (menu.GetCurrentParent() is ContextMenuStrip)
             {
                 //一级菜单
                 ContextMenuStrip cm = (ContextMenuStrip)menu.GetCurrentParent();

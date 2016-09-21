@@ -1,6 +1,6 @@
 ﻿using GMTool.Bean;
 using GMTool.Helper;
-using LY;
+using GMTool.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,11 +8,14 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using GMTool.Enums;
+using System.Data.Common;
 using System.Windows.Forms;
+using GMTool.Extensions;
 
 namespace GMTool
 {
-	static class MainFormExpress
+	public static class MainFormExpress
 	{
 		#region 数据库
 		private static MSSqlHelper db = new MSSqlHelper();
@@ -57,7 +60,7 @@ namespace GMTool
 		public static List<User> ReadUserList(this MainForm main)
 		{
 			List<User> userList = new List<User>();
-			using (SqlDataReader reader = db.GetReader(SQL_QUERY_USERS))
+			using (DbDataReader reader = db.GetReader(SQL_QUERY_USERS))
 			{
 				while (reader != null && reader.Read())
 				{
@@ -81,7 +84,7 @@ namespace GMTool
 			{
 				return mails;
 			}
-			using (SqlDataReader reader = db.GetReader("SELECT * FROM QueuedItem WHERE CID =" + user.CID))
+			using (DbDataReader reader = db.GetReader("SELECT * FROM QueuedItem WHERE CID =" + user.CID))
 			{
 				while (reader != null && reader.Read())
 				{
@@ -103,7 +106,7 @@ namespace GMTool
 			{
 				return mails;
 			}
-			using (SqlDataReader reader = db.GetReader("select mi.itemCount,m.* from Mail as m LEFT JOIN MailItem as mi ON mi.MailID = m.MailID"
+			using (DbDataReader reader = db.GetReader("select mi.itemCount,m.* from Mail as m LEFT JOIN MailItem as mi ON mi.MailID = m.MailID"
 			                                           + " where m.ToCID =" + user.CID))
 			{
 				while (reader != null && reader.Read())
@@ -118,31 +121,31 @@ namespace GMTool
 			}
 			return mails;
 		}
-		public static List<Item> ReadUserItems(this MainForm main, User user, PackType type)
+		public static List<Item> ReadUserItems(this MainForm main, User user, PackageType type)
 		{
 			List<Item> items = new List<Item>();
 			try
 			{
 				string sql;
-				if (type == PackType.Normal)
+				if (type == PackageType.Normal)
 				{
 					sql = "SELECT i.ID,i.ExpireDateTime,i.ItemClass,i.Collection,i.Count,i.Slot,e.Color1,e.Color2,e.Color3 "
 						+ "FROM  Item as i left join Equippable e on e.ID = i.ID "
 						+ "WHERE i.Collection<100 and i.OwnerID =" + user.CID + " ORDER BY i.Collection,i.Slot";
 				}
-				else if (type == PackType.Cash)
+				else if (type == PackageType.Cash)
 				{
 					sql = "SELECT i.ID,i.ExpireDateTime,i.ItemClass,i.Collection,i.Count,i.Slot,e.Color1,e.Color2,e.Color3 "
 						+ "FROM  Item as i left join Equippable e on e.ID = i.ID "
 						+ "WHERE i.Collection=100 and i.OwnerID =" + user.CID + " ORDER BY i.Collection,i.Slot";
 				}
-				else if (type == PackType.Other)
+				else if (type == PackageType.Other)
 				{
 					sql = "SELECT i.ID,i.ExpireDateTime,i.ItemClass,i.Collection,i.Count,i.Slot,e.Color1,e.Color2,e.Color3 "
 						+ "FROM  Item as i left join Equippable e on e.ID = i.ID "
 						+ "WHERE (i.Collection=101 or i.Collection > 103 )and i.OwnerID =" + user.CID + " ORDER BY i.Collection,i.Slot";
 				}
-				else if (type == PackType.Quest)
+				else if (type == PackageType.Quest)
 				{
 					sql = "SELECT i.ID,i.ExpireDateTime,i.ItemClass,i.Collection,i.Count,i.Slot,e.Color1,e.Color2,e.Color3 "
 						+ "FROM  Item as i left join Equippable e on e.ID = i.ID "
@@ -154,7 +157,7 @@ namespace GMTool
 						+ "FROM  Item as i left join Equippable e on e.ID = i.ID "
 						+ "WHERE i.OwnerID =" + user.CID + " ORDER BY i.Collection,i.Slot";
 				}
-				using (SqlDataReader reader = db.GetReader(sql))
+				using (DbDataReader reader = db.GetReader(sql))
 				{
 					while (reader != null && reader.Read())
 					{
@@ -196,7 +199,7 @@ namespace GMTool
 				}
 				foreach (Item item in items)
 				{
-					using (SqlDataReader reader2 = db.GetReader("SELECT * FROM ItemAttribute WHERE ItemID = " + item.ItemID))
+					using (DbDataReader reader2 = db.GetReader("SELECT * FROM ItemAttribute WHERE ItemID = " + item.ItemID))
 					{
 						List<ItemAttribute> attrs = new List<ItemAttribute>();
 						while (reader2 != null && reader2.Read())
@@ -300,15 +303,15 @@ namespace GMTool
 			}
 			return true;
 		}
-		public static bool ModUserClass(this MainForm main, User user, GameClass cls)
+		public static bool ModUserClass(this MainForm main, User user, ClassInfo cls)
 		{
-			if (user.Class.Value() == cls.Value())
+			if (user.Class.Index() == cls.Index())
 			{
 				return true;
 			}
 			try
 			{
-				db.ExcuteSQL(string.Concat(new object[] { "update characterInfo set Class = ", cls.Value(), " where id = ", user.CID }));
+				db.ExcuteSQL(string.Concat(new object[] { "update characterInfo set Class = ", cls.Index(), " where id = ", user.CID }));
 			}
 			catch (Exception)
 			{
@@ -467,17 +470,17 @@ namespace GMTool
 				paras[3].Value = 0;
 				paras[4] = new SqlParameter("@MailTitle", SqlDbType.NVarChar);
 				paras[4].Direction = ParameterDirection.Input;
-				paras[4].Value = TextHelper.ToTraditional(title);
+				paras[4].Value = ChineseTextHelper.ToTraditional(title);
 				paras[5] = new SqlParameter("@MailContent", SqlDbType.NVarChar);
 				paras[5].Direction = ParameterDirection.Input;
-				paras[5].Value = TextHelper.ToTraditional(content);
+				paras[5].Value = ChineseTextHelper.ToTraditional(content);
 				paras[6] = new SqlParameter("@Result", SqlDbType.Int);
 				paras[6].Direction = ParameterDirection.Output;
 				paras[6].Value = 0;
 				paras[7] = new SqlParameter("@CharacterName", SqlDbType.NVarChar);
 				paras[7].Direction = ParameterDirection.Output;
 				paras[7].Value = "";
-				db.ExcuteSQL(strSQL, paras, CommandType.StoredProcedure);
+				db.ExcuteSQL(strSQL, CommandType.StoredProcedure, paras);
 				return 1;
 			}
 			catch (Exception)

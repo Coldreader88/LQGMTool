@@ -18,14 +18,6 @@ namespace GMTool.Bean
         public int MaxArg;
         public string GetValue()
         {
-            /*
-            if (Class == null) return "?";
-            Regex reg = new Regex("[0-9]+");
-            Match m = reg.Match(Class);
-            if (m.Groups.Count > 0)
-            {
-                return m.Groups[0].Value;
-            }*/
             return MinArg+"-"+MaxArg;
         }
         public override string ToString()

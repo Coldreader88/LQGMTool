@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GMTool.Enums;
+using GMTool.Extensions;
 
 namespace GMTool.Bean
 {
     public class ItemClassInfo
     {
         public string ItemClass;
-        public ItemCategory Category;
-        public ItemTradeCategory TradeCategory;
+        public SubCategory Category;
+        public MainCategory TradeCategory;
         /// <summary>
         /// 等级需求
         /// </summary>
@@ -26,7 +28,7 @@ namespace GMTool.Bean
         public override string ToString()
         {
             return "物品ID："+ ItemClass+"\n物品名字："+Name+" \n需求等级： "+ RequiredLevel +"\n分类："+ Category.Name()+ "  "+TradeCategory.Name()
-                + "\n职业限制："+ClassInfoEx.GetText(ClassRestriction) + "\n物品描述" + Desc;
+                + "\n职业限制："+ClassInfoEx.GetClassText(ClassRestriction) + "\n物品描述" + Desc;
         }
     }
 }
