@@ -93,10 +93,10 @@
         	this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
         	this.contextMenuSend = new System.Windows.Forms.ContextMenuStrip(this.components);
         	this.contentMenuSendItem1 = new System.Windows.Forms.ToolStripMenuItem();
-        	this.contentMenuSendItem10 = new System.Windows.Forms.ToolStripMenuItem();
-        	this.contentMenuSendItem100 = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuSendItem5 = new System.Windows.Forms.ToolStripMenuItem();
+        	this.contentMenuSendItem10 = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuSendItem20 = new System.Windows.Forms.ToolStripMenuItem();
+        	this.contentMenuSendItem100 = new System.Windows.Forms.ToolStripMenuItem();
         	this.label7 = new System.Windows.Forms.Label();
         	this.tb_senditem_count = new System.Windows.Forms.TextBox();
         	this.btn_senditem_send = new System.Windows.Forms.Button();
@@ -334,76 +334,76 @@
         	        	        	this.toolStripSeparator6,
         	        	        	this.contentMenuUserRefresh});
         	this.contextMenuUser.Name = "contextMenuUser";
-        	this.contextMenuUser.Size = new System.Drawing.Size(173, 198);
+        	this.contextMenuUser.Size = new System.Drawing.Size(169, 198);
         	// 
         	// contentMenuUserModName
         	// 
         	this.contentMenuUserModName.Name = "contentMenuUserModName";
-        	this.contentMenuUserModName.Size = new System.Drawing.Size(172, 22);
+        	this.contentMenuUserModName.Size = new System.Drawing.Size(168, 22);
         	this.contentMenuUserModName.Text = "修改名字";
         	this.contentMenuUserModName.Click += new System.EventHandler(this.contentMenuUserModName_Click);
         	// 
         	// contentMenuUserModLevel
         	// 
         	this.contentMenuUserModLevel.Name = "contentMenuUserModLevel";
-        	this.contentMenuUserModLevel.Size = new System.Drawing.Size(172, 22);
+        	this.contentMenuUserModLevel.Size = new System.Drawing.Size(168, 22);
         	this.contentMenuUserModLevel.Text = "修改等级";
         	this.contentMenuUserModLevel.Click += new System.EventHandler(this.contentMenuUserModLevel_Click);
         	// 
         	// toolStripSeparator4
         	// 
         	this.toolStripSeparator4.Name = "toolStripSeparator4";
-        	this.toolStripSeparator4.Size = new System.Drawing.Size(169, 6);
+        	this.toolStripSeparator4.Size = new System.Drawing.Size(165, 6);
         	// 
         	// contentMenuUserMaxSecondClass
         	// 
         	this.contentMenuUserMaxSecondClass.Name = "contentMenuUserMaxSecondClass";
-        	this.contentMenuUserMaxSecondClass.Size = new System.Drawing.Size(172, 22);
+        	this.contentMenuUserMaxSecondClass.Size = new System.Drawing.Size(168, 22);
         	this.contentMenuUserMaxSecondClass.Text = "副职业满级";
         	this.contentMenuUserMaxSecondClass.Click += new System.EventHandler(this.contentMenuUserMaxSecondClass_Click);
         	// 
         	// contentMenuUserTitles
         	// 
         	this.contentMenuUserTitles.Name = "contentMenuUserTitles";
-        	this.contentMenuUserTitles.Size = new System.Drawing.Size(172, 22);
-        	this.contentMenuUserTitles.Text = "完成当前已经头衔";
+        	this.contentMenuUserTitles.Size = new System.Drawing.Size(168, 22);
+        	this.contentMenuUserTitles.Text = "获取全部头衔";
         	this.contentMenuUserTitles.Click += new System.EventHandler(this.ContentMenuUserTitlesClick);
         	// 
         	// toolStripSeparator5
         	// 
         	this.toolStripSeparator5.Name = "toolStripSeparator5";
-        	this.toolStripSeparator5.Size = new System.Drawing.Size(169, 6);
+        	this.toolStripSeparator5.Size = new System.Drawing.Size(165, 6);
         	// 
         	// contentMenuUserMaxLight
         	// 
         	this.contentMenuUserMaxLight.Name = "contentMenuUserMaxLight";
-        	this.contentMenuUserMaxLight.Size = new System.Drawing.Size(172, 22);
+        	this.contentMenuUserMaxLight.Size = new System.Drawing.Size(168, 22);
         	this.contentMenuUserMaxLight.Text = "转光明阵营(满级)";
         	this.contentMenuUserMaxLight.Click += new System.EventHandler(this.contentMenuUserMaxLight_Click);
         	// 
         	// contentMenuUserMaxDark
         	// 
         	this.contentMenuUserMaxDark.Name = "contentMenuUserMaxDark";
-        	this.contentMenuUserMaxDark.Size = new System.Drawing.Size(172, 22);
+        	this.contentMenuUserMaxDark.Size = new System.Drawing.Size(168, 22);
         	this.contentMenuUserMaxDark.Text = "转黑暗阵营(满级)";
         	this.contentMenuUserMaxDark.Click += new System.EventHandler(this.contentMenuUserMaxDark_Click);
         	// 
         	// contentMenuUserResetGroup
         	// 
         	this.contentMenuUserResetGroup.Name = "contentMenuUserResetGroup";
-        	this.contentMenuUserResetGroup.Size = new System.Drawing.Size(172, 22);
+        	this.contentMenuUserResetGroup.Size = new System.Drawing.Size(168, 22);
         	this.contentMenuUserResetGroup.Text = "重置阵营技能";
         	this.contentMenuUserResetGroup.Click += new System.EventHandler(this.contentMenuUserResetGroup_Click);
         	// 
         	// toolStripSeparator6
         	// 
         	this.toolStripSeparator6.Name = "toolStripSeparator6";
-        	this.toolStripSeparator6.Size = new System.Drawing.Size(169, 6);
+        	this.toolStripSeparator6.Size = new System.Drawing.Size(165, 6);
         	// 
         	// contentMenuUserRefresh
         	// 
         	this.contentMenuUserRefresh.Name = "contentMenuUserRefresh";
-        	this.contentMenuUserRefresh.Size = new System.Drawing.Size(172, 22);
+        	this.contentMenuUserRefresh.Size = new System.Drawing.Size(168, 22);
         	this.contentMenuUserRefresh.Text = "刷新角色";
         	this.contentMenuUserRefresh.Click += new System.EventHandler(this.menuRefreshUsers_Click);
         	// 
@@ -666,42 +666,42 @@
         	        	        	this.contentMenuSendItem20,
         	        	        	this.contentMenuSendItem100});
         	this.contextMenuSend.Name = "contextMenuSend";
-        	this.contextMenuSend.Size = new System.Drawing.Size(153, 136);
+        	this.contextMenuSend.Size = new System.Drawing.Size(134, 114);
         	// 
         	// contentMenuSendItem1
         	// 
         	this.contentMenuSendItem1.Name = "contentMenuSendItem1";
-        	this.contentMenuSendItem1.Size = new System.Drawing.Size(152, 22);
+        	this.contentMenuSendItem1.Size = new System.Drawing.Size(133, 22);
         	this.contentMenuSendItem1.Text = "发送1个";
         	this.contentMenuSendItem1.Click += new System.EventHandler(this.contentMenuSendItem1_Click);
-        	// 
-        	// contentMenuSendItem10
-        	// 
-        	this.contentMenuSendItem10.Name = "contentMenuSendItem10";
-        	this.contentMenuSendItem10.Size = new System.Drawing.Size(152, 22);
-        	this.contentMenuSendItem10.Text = "发送10个";
-        	this.contentMenuSendItem10.Click += new System.EventHandler(this.contentMenuSendItem10_Click);
-        	// 
-        	// contentMenuSendItem100
-        	// 
-        	this.contentMenuSendItem100.Name = "contentMenuSendItem100";
-        	this.contentMenuSendItem100.Size = new System.Drawing.Size(152, 22);
-        	this.contentMenuSendItem100.Text = "发送100个";
-        	this.contentMenuSendItem100.Click += new System.EventHandler(this.contentMenuSendItem100_Click);
         	// 
         	// contentMenuSendItem5
         	// 
         	this.contentMenuSendItem5.Name = "contentMenuSendItem5";
-        	this.contentMenuSendItem5.Size = new System.Drawing.Size(152, 22);
+        	this.contentMenuSendItem5.Size = new System.Drawing.Size(133, 22);
         	this.contentMenuSendItem5.Text = "发送5个";
         	this.contentMenuSendItem5.Click += new System.EventHandler(this.ContentMenuSendItem5Click);
+        	// 
+        	// contentMenuSendItem10
+        	// 
+        	this.contentMenuSendItem10.Name = "contentMenuSendItem10";
+        	this.contentMenuSendItem10.Size = new System.Drawing.Size(133, 22);
+        	this.contentMenuSendItem10.Text = "发送10个";
+        	this.contentMenuSendItem10.Click += new System.EventHandler(this.contentMenuSendItem10_Click);
         	// 
         	// contentMenuSendItem20
         	// 
         	this.contentMenuSendItem20.Name = "contentMenuSendItem20";
-        	this.contentMenuSendItem20.Size = new System.Drawing.Size(152, 22);
+        	this.contentMenuSendItem20.Size = new System.Drawing.Size(133, 22);
         	this.contentMenuSendItem20.Text = "发送20个";
         	this.contentMenuSendItem20.Click += new System.EventHandler(this.ContentMenuSendItem20Click);
+        	// 
+        	// contentMenuSendItem100
+        	// 
+        	this.contentMenuSendItem100.Name = "contentMenuSendItem100";
+        	this.contentMenuSendItem100.Size = new System.Drawing.Size(133, 22);
+        	this.contentMenuSendItem100.Text = "发送100个";
+        	this.contentMenuSendItem100.Click += new System.EventHandler(this.contentMenuSendItem100_Click);
         	// 
         	// label7
         	// 

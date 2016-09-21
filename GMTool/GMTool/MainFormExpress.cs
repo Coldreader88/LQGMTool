@@ -376,14 +376,18 @@ namespace GMTool
 		
 		public static int GetCurTitles(this MainForm main,User user){
 			//[Title]
-			string strSQL = "update Title set Acquired = 1 ,set AcquiredTime="+DateTime.Now.ToString()+" WHERE Acquired = 0 and  CID =" + user.CID;
+			string strSQL = "update Title set Acquired = 1 , AcquiredTime='"+DateTime.Now.ToString()+"'"
+				+" WHERE Acquired = 0 and  CID =" + user.CID+";";
 			try
 			{
-				return db.ExcuteSQL(strSQL);
+				int count = db.ExcuteSQL(strSQL);
+				//清空记录
+				db.ExcuteSQL("delete from TitleGoalProgress WHERE CID =" + user.CID);
+				return count;
 			}
 			catch (Exception exception)
 			{
-				main.Error("获取当前已经头衔\n" + exception);
+				main.Error("获取全部头衔\n" + exception);
 			}
 			return 0;
 		}
