@@ -231,12 +231,12 @@ namespace GMTool
 		}
 		private void AddTypes()
 		{
-			this.cb_category.Items.Clear();
-			this.cb_item_type.Items.Clear();
-			this.cb_category.Items.AddRange(ItemTradeCategoryEx.Values);
-			this.cb_item_type.Items.AddRange(CategoryEx.Values);
-			this.cb_category.SelectedIndex = 0;
-			this.cb_item_type.SelectedIndex = 0;
+			this.cb_maincategory.Items.Clear();
+			this.cb_subcategory.Items.Clear();
+			this.cb_maincategory.Items.AddRange(CategoryEx.Values);
+			this.cb_subcategory.Items.AddRange(ItemTradeCategoryEx.Values);
+			this.cb_maincategory.SelectedIndex = 0;
+			this.cb_subcategory.SelectedIndex = 0;
 		}
 		#endregion
 		
@@ -408,9 +408,9 @@ namespace GMTool
 					vitems[i].SubItems.Add("" + t.Count);
 					if (listview == list_items_normal)
 					{
-						vitems[i].SubItems.Add("" + t.ItemType);
+						vitems[i].SubItems.Add("" + t.MainCategory);
 					}
-					vitems[i].SubItems.Add("" + t.Category);
+					vitems[i].SubItems.Add("" + t.SubCategory);
 					if (listview == list_items_normal || listview == list_items_cash)
 					{
 						vitems[i].UseItemStyleForSubItems = false;
@@ -889,12 +889,12 @@ namespace GMTool
 
 		private void btn_search_id_Click(object sender, EventArgs e)
 		{
-			AddSearchItemList(itemsHelper.SearchItems(null, tb_senditem_class.Text, cb_category.Text, cb_item_type.Text, CurUser));
+			AddSearchItemList(itemsHelper.Searcher.SearchItems(null, tb_senditem_class.Text, cb_maincategory.Text, cb_subcategory.Text, CurUser));
 		}
 
 		private void btn_search_name_Click(object sender, EventArgs e)
 		{
-			AddSearchItemList(itemsHelper.SearchItems(tb_senditem_name.Text, null, cb_category.Text, cb_item_type.Text, CurUser));
+			AddSearchItemList(itemsHelper.Searcher.SearchItems(tb_senditem_name.Text, null, cb_maincategory.Text, cb_subcategory.Text, CurUser));
 		}
 
 		private void btn_senditem_send_Click(object sender, EventArgs e)
@@ -929,7 +929,7 @@ namespace GMTool
 			{
 				if (tb_senditem_class.Enabled)
 				{
-					AddSearchItemList(itemsHelper.SearchItems(null, tb_senditem_class.Text, cb_category.Text, cb_item_type.Text, CurUser));
+					AddSearchItemList(itemsHelper.Searcher.SearchItems(null, tb_senditem_class.Text, cb_maincategory.Text, cb_subcategory.Text, CurUser));
 				}
 			}
 		}
@@ -940,7 +940,7 @@ namespace GMTool
 			{
 				if (tb_senditem_name.Enabled)
 				{
-					AddSearchItemList(itemsHelper.SearchItems(tb_senditem_name.Text, null, cb_category.Text, cb_item_type.Text, CurUser));
+					AddSearchItemList(itemsHelper.Searcher.SearchItems(tb_senditem_name.Text, null, cb_maincategory.Text, cb_subcategory.Text, CurUser));
 				}
 			}
 		}

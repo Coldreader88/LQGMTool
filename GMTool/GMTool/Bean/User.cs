@@ -28,7 +28,7 @@ namespace GMTool.Bean
 
         public override string ToString()
         {
-        	return  "角色："+Name + " 职业：" + Class+"["+Class.Index()+"] 等级:"+level;
+        	return  "角色："+Name + " 职业：" + Class+"["+Class.Index()+"] lv."+level;
         }
     }
 }

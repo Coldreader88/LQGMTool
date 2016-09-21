@@ -20,11 +20,12 @@ namespace GMTool.Bean
         }
         public override string ToString()
         {
-            string txt="标题："+Title+"\n内容："+Text;
+            string txt="【"+Title+"】";
             if (Count > 0)
             {
-                txt += "\n数量：" + Count;
+                txt +=  Count;
             }
+            txt +="\n------------------------"+Text;
             return txt;
         }
     }

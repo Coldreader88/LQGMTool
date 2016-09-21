@@ -95,12 +95,14 @@
     <Compile Include="Extensions\CategoryEx.cs" />
     <Compile Include="Extensions\ClassInfoEx.cs" />
     <Compile Include="Extensions\FormExpress.cs" />
-    <Compile Include="Extensions\ItemClassInfoHelper.cs" />
     <Compile Include="Extensions\ItemTradeCategoryEx.cs" />
     <Compile Include="Extensions\MainFormExpress.cs" />
     <Compile Include="Helper\DbHelper.cs" />
+    <Compile Include="Helper\HeroesTextHelper.cs" />
     <Compile Include="Helper\IniHelper.cs" />
+    <Compile Include="Helper\ItemClassInfoHelper.cs" />
     <Compile Include="Helper\MSSqlHelper.cs" />
+    <Compile Include="Helper\SearchHelper.cs" />
     <Compile Include="Helper\SQLiteHelper.cs" />
     <Compile Include="Helper\ChineseTextHelper.cs" />
     <Compile Include="MainForm.cs">

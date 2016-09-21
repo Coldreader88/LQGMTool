@@ -8,6 +8,7 @@
  */
 using System;
 using GMTool.Enums;
+using GMTool.Helper;
 
 namespace GMTool.Bean
 {
@@ -20,12 +21,38 @@ namespace GMTool.Bean
 		public string Value{get;set;}
 		public string Arg{get;set;}
 		public string Arg2{get;set;}
+		
+		private string _Desc;
+		
 		public ItemAttribute()
 		{
 		}
 		public override string ToString()
 		{
-			return base.ToString();
+			if(!string.IsNullOrEmpty(_Desc)){
+				return _Desc;
+			}
+			if (Type == ItemAttributeType.ENHANCE)
+			{
+				_Desc= "强化：" + Value;
+			}
+			else if (Type == ItemAttributeType.PREFIX)
+			{
+				EnchantInfo einfo = ItemClassInfoHelper.Get().GetEnchant(Value);
+				_Desc= "【字首】附魔：" + (einfo == null ? Value : einfo.ToString());
+			}
+			else if (Type == ItemAttributeType.SUFFIX)
+			{
+				EnchantInfo einfo = ItemClassInfoHelper.Get().GetEnchant(Value);
+				_Desc= "【字尾】附魔：" + (einfo == null ? Value : einfo.ToString());
+			}
+			else if (Type == ItemAttributeType.QUALITY)
+			{
+				_Desc= "品质：" + Arg;
+			}else{
+				_Desc= Type+":"+Value;
+			}
+			return _Desc;
 		}
 	}
 }

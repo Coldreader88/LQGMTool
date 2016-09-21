@@ -17,7 +17,7 @@ namespace GMTool.Helper
 		
 		protected override SQLiteConnection ConnectDataBase(string connStr)
 		{
-			if(!connStr.StartsWith("")){
+			if(!connStr.StartsWith("Data Source =")){
 				connStr = "Data Source =" + connStr;
 			}
 			SQLiteConnection conn = new SQLiteConnection(connStr);

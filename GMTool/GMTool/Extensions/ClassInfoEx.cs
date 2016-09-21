@@ -104,9 +104,11 @@ namespace GMTool.Extensions
 			StringBuilder sb = new StringBuilder();
 			foreach(ClassInfo c in arr)
 			{
-				if((cls & (int)c) != 0)
-				{
-					sb.Append("" + c + ",");
+				if(c!=ClassInfo.UnKnown){
+					if((cls & (int)c) != 0)
+					{
+						sb.Append("" + c + ",");
+					}
 				}
 			}
 			string txt= sb.ToString();

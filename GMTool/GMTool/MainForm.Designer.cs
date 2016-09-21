@@ -50,6 +50,7 @@
         	this.contextMenuUser = new System.Windows.Forms.ContextMenuStrip(this.components);
         	this.contentMenuUserModName = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuUserModLevel = new System.Windows.Forms.ToolStripMenuItem();
+        	this.contentMenuUserClasses = new System.Windows.Forms.ToolStripMenuItem();
         	this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
         	this.contentMenuUserMaxSecondClass = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuUserTitles = new System.Windows.Forms.ToolStripMenuItem();
@@ -144,8 +145,8 @@
         	this.columnHeader22 = new System.Windows.Forms.ColumnHeader();
         	this.columnHeader26 = new System.Windows.Forms.ColumnHeader();
         	this.label5 = new System.Windows.Forms.Label();
-        	this.cb_category = new System.Windows.Forms.ComboBox();
-        	this.cb_item_type = new System.Windows.Forms.ComboBox();
+        	this.cb_maincategory = new System.Windows.Forms.ComboBox();
+        	this.cb_subcategory = new System.Windows.Forms.ComboBox();
         	this.tab_left = new System.Windows.Forms.TabControl();
         	this.tab_user = new System.Windows.Forms.TabPage();
         	this.tab_color = new System.Windows.Forms.TabPage();
@@ -159,7 +160,6 @@
         	this.label11 = new System.Windows.Forms.Label();
         	this.label9 = new System.Windows.Forms.Label();
         	this.label6 = new System.Windows.Forms.Label();
-        	this.contentMenuUserClasses = new System.Windows.Forms.ToolStripMenuItem();
         	this.groupBox1.SuspendLayout();
         	this.contextMenuUser.SuspendLayout();
         	this.contextMenuItem.SuspendLayout();
@@ -336,7 +336,7 @@
         	        	        	this.toolStripSeparator6,
         	        	        	this.contentMenuUserRefresh});
         	this.contextMenuUser.Name = "contextMenuUser";
-        	this.contextMenuUser.Size = new System.Drawing.Size(169, 242);
+        	this.contextMenuUser.Size = new System.Drawing.Size(169, 220);
         	// 
         	// contentMenuUserModName
         	// 
@@ -351,6 +351,12 @@
         	this.contentMenuUserModLevel.Size = new System.Drawing.Size(168, 22);
         	this.contentMenuUserModLevel.Text = "修改等级";
         	this.contentMenuUserModLevel.Click += new System.EventHandler(this.contentMenuUserModLevel_Click);
+        	// 
+        	// contentMenuUserClasses
+        	// 
+        	this.contentMenuUserClasses.Name = "contentMenuUserClasses";
+        	this.contentMenuUserClasses.Size = new System.Drawing.Size(168, 22);
+        	this.contentMenuUserClasses.Text = "修改职业";
         	// 
         	// toolStripSeparator4
         	// 
@@ -1164,25 +1170,25 @@
         	this.label5.TabIndex = 4;
         	this.label5.Text = "物品分类";
         	// 
-        	// cb_category
+        	// cb_maincategory
         	// 
-        	this.cb_category.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-        	this.cb_category.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-        	this.cb_category.FormattingEnabled = true;
-        	this.cb_category.Location = new System.Drawing.Point(1040, 544);
-        	this.cb_category.Name = "cb_category";
-        	this.cb_category.Size = new System.Drawing.Size(72, 20);
-        	this.cb_category.TabIndex = 9;
+        	this.cb_maincategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+        	this.cb_maincategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+        	this.cb_maincategory.FormattingEnabled = true;
+        	this.cb_maincategory.Location = new System.Drawing.Point(1132, 544);
+        	this.cb_maincategory.Name = "cb_maincategory";
+        	this.cb_maincategory.Size = new System.Drawing.Size(83, 20);
+        	this.cb_maincategory.TabIndex = 9;
         	// 
-        	// cb_item_type
+        	// cb_subcategory
         	// 
-        	this.cb_item_type.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-        	this.cb_item_type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-        	this.cb_item_type.FormattingEnabled = true;
-        	this.cb_item_type.Location = new System.Drawing.Point(1118, 545);
-        	this.cb_item_type.Name = "cb_item_type";
-        	this.cb_item_type.Size = new System.Drawing.Size(95, 20);
-        	this.cb_item_type.TabIndex = 9;
+        	this.cb_subcategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+        	this.cb_subcategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+        	this.cb_subcategory.FormattingEnabled = true;
+        	this.cb_subcategory.Location = new System.Drawing.Point(1042, 544);
+        	this.cb_subcategory.Name = "cb_subcategory";
+        	this.cb_subcategory.Size = new System.Drawing.Size(84, 20);
+        	this.cb_subcategory.TabIndex = 9;
         	// 
         	// tab_left
         	// 
@@ -1315,20 +1321,14 @@
         	this.label6.TabIndex = 0;
         	this.label6.Text = "颜色1";
         	// 
-        	// contentMenuUserClasses
-        	// 
-        	this.contentMenuUserClasses.Name = "contentMenuUserClasses";
-        	this.contentMenuUserClasses.Size = new System.Drawing.Size(168, 22);
-        	this.contentMenuUserClasses.Text = "修改职业";
-        	// 
         	// MainForm
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         	this.ClientSize = new System.Drawing.Size(1227, 661);
         	this.Controls.Add(this.tab_left);
-        	this.Controls.Add(this.cb_item_type);
-        	this.Controls.Add(this.cb_category);
+        	this.Controls.Add(this.cb_subcategory);
+        	this.Controls.Add(this.cb_maincategory);
         	this.Controls.Add(this.tab_items);
         	this.Controls.Add(this.tab_mail);
         	this.Controls.Add(this.tb_logcat);
@@ -1464,8 +1464,8 @@
         private System.Windows.Forms.ColumnHeader columnHeader12;
         private System.Windows.Forms.ColumnHeader columnHeader14;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox cb_category;
-        private System.Windows.Forms.ComboBox cb_item_type;
+        private System.Windows.Forms.ComboBox cb_maincategory;
+        private System.Windows.Forms.ComboBox cb_subcategory;
         private System.Windows.Forms.ColumnHeader columnHeader15;
         private System.Windows.Forms.TabControl tab_left;
         private System.Windows.Forms.TabPage tab_user;

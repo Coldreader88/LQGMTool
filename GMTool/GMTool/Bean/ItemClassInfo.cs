@@ -10,8 +10,14 @@ namespace GMTool.Bean
     public class ItemClassInfo
     {
         public string ItemClass;
-        public SubCategory Category;
-        public MainCategory TradeCategory;
+        /// <summary>
+        /// 子目录
+        /// </summary>
+        public SubCategory SubCategory;
+        /// <summary>
+        /// 主分类
+        /// </summary>
+        public MainCategory MainCategory;
         /// <summary>
         /// 等级需求
         /// </summary>
@@ -27,7 +33,7 @@ namespace GMTool.Bean
 
         public override string ToString()
         {
-            return "物品ID："+ ItemClass+"\n物品名字："+Name+" \n需求等级： "+ RequiredLevel +"\n分类："+ Category.Name()+ "  "+TradeCategory.Name()
+            return "物品ID："+ ItemClass+"\n物品名字："+Name+" \n需求等级： "+ RequiredLevel +"\n分类："+ SubCategory.Name()+ "  "+MainCategory.Name()
                 + "\n职业限制："+ClassInfoEx.GetClassText(ClassRestriction) + "\n物品描述" + Desc;
         }
     }

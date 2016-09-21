@@ -12,8 +12,8 @@ namespace GMTool.Bean
         public string ItemName { get; set; }
         public string ItemDesc { get; set; }
         public string ItemClass { get; private set; }
-        public string Category { get; private set; }
-        public string ItemType { get; private set; }
+        public string SubCategory { get; private set; }
+        public string MainCategory { get; private set; }
         public long ItemID { get; private set; }
 
         public int RequiredClass { get; set; }
@@ -35,7 +35,7 @@ namespace GMTool.Bean
         {
             this.ItemID = ItemID;
             this.ItemClass = ItemClass;
-            this.ItemType = ItemType;
+            this.MainCategory = ItemType;
         }
 
         public void Attach(ItemClassInfo info)
@@ -44,8 +44,8 @@ namespace GMTool.Bean
             {
                 this.ItemDesc = info.Desc;
                 this.ItemName = info.Name;
-                this.ItemType = info.TradeCategory.Name();
-                this.Category = info.Category.Name();
+                this.MainCategory = info.MainCategory.Name();
+                this.SubCategory = info.SubCategory.Name();
                 this.RequiredClass = info.ClassRestriction;
             }
         }
@@ -53,7 +53,7 @@ namespace GMTool.Bean
         {
             string text = "物品ID：" + ItemClass + "\n物品名：" + ItemName
                 +"\n背包："+ Collection + "，格子："+Slot
-                + "\n类型：" + Category + " [" + ItemType + "]";
+                + "\n类型：" +MainCategory + " [" +  SubCategory + "]";
             if (Time != "无限期")
             {
                 text += "\n到期时间：" + Time;
@@ -75,24 +75,7 @@ namespace GMTool.Bean
             {
                 foreach (ItemAttribute attr in Attributes)
                 {
-                    if (attr.Type == ItemAttributeType.ENHANCE)
-                    {
-                        text += "\n-----------------------------\n强化：" + attr.Value;
-                    }
-                    else if (attr.Type == ItemAttributeType.PREFIX)
-                    {
-                        EnchantInfo einfo = ItemClassInfoHelper.Get().GetEnchant(attr.Value);
-                        text += "\n-----------------------------\n【首】附魔：" + (einfo == null ? attr.Value : einfo.ToString());
-                    }
-                    else if (attr.Type == ItemAttributeType.SUFFIX)
-                    {
-                        EnchantInfo einfo = ItemClassInfoHelper.Get().GetEnchant(attr.Value);
-                        text += "\n-----------------------------\n【尾】附魔：" + (einfo == null ? attr.Value : einfo.ToString());
-                    }
-                    else if (attr.Type == ItemAttributeType.QUALITY)
-                    {
-                        text += "\n-----------------------------\n品质：" + attr.Arg;
-                    }
+                	text += "\n-----------------------------\n"+attr.ToString();
                 }
             }
             return text;
