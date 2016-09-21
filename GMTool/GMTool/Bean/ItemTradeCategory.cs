@@ -28,17 +28,17 @@ namespace GMTool.Bean
     }
     public static class ItemTradeCategoryEx
     {
-        public static string[] Values = new string[] { "无","首饰","时装","衣服","碎片","沙龙","技能书",
+        public static string[] Values = new string[] { "-","首饰","时装","衣服","碎片","沙龙","技能书",
             "活动","商品","重甲","轻甲","材料","板甲","任务","背部","尾巴","Tir硬币","武器"
             };
-        public static string GetName(this ItemTradeCategory category)
+        public static string Name(this ItemTradeCategory category)
         {
             int index = (int)category;
             if (index >= 0 && index < Values.Length)
             {
                 return Values[index];
             }
-            return "未知";
+            return Values[0];
         }
     }
 }

@@ -36,6 +36,16 @@ namespace GMTool.Bean
 
     public static class ClassInfoEx
     {
+    	public static ClassInfo Info(this GameClass cls){
+    		string name = cls.ToString();
+    		return (ClassInfo)Enum.Parse(typeof(ClassInfo), name);
+    	}
+    		public static int Value(this ClassInfo cls){
+    		return (int)cls;
+    	}
+    	public static int Value(this GameClass cls){
+    		return (int)cls;
+    	}
         public const int ALL1 = 
             (int)ClassInfo.Lethita 
             | (int)ClassInfo.Fiona 

@@ -248,7 +248,7 @@ namespace GMTool.Helper
         //
         public List<ItemClassInfo> SearchItems(string name, string id, string itemtype, string category, User user)
         {
-        	int _class = user==null?0:(int)user.Class;
+        	int _class = user==null?0:user.Class.Info().Value();
             List<ItemClassInfo> rs = new List<ItemClassInfo>();
             foreach (ItemClassInfo info in Infos)
             {
@@ -266,16 +266,16 @@ namespace GMTool.Helper
                         continue;
                     }
                 }
-                if (!string.IsNullOrEmpty(category) && category != "无")
+                if (!string.IsNullOrEmpty(category) && category != ItemCategory.NONE.Name())
                 {
-                    if (info.Category.GetName() != category)
+                    if (info.Category.Name() != category)
                     {
                         continue;
                     }
                 }
-                if (!string.IsNullOrEmpty(itemtype) && itemtype != "无")
+                if (!string.IsNullOrEmpty(itemtype) && itemtype != ItemTradeCategory.NONE.Name())
                 {
-                    if (info.TradeCategory.GetName() != itemtype)
+                    if (info.TradeCategory.Name() != itemtype)
                     {
                         continue;
                     }

@@ -25,7 +25,7 @@ namespace GMTool.Bean
 
         public override string ToString()
         {
-            return "物品ID："+ ItemClass+"\n物品名字："+Name+" \n需求等级： "+ RequiredLevel +"\n分类："+ Category.GetName()+ "  "+TradeCategory.GetName()
+            return "物品ID："+ ItemClass+"\n物品名字："+Name+" \n需求等级： "+ RequiredLevel +"\n分类："+ Category.Name()+ "  "+TradeCategory.Name()
                 + "\n职业限制："+ClassInfoEx.GetText(ClassRestriction) + "\n物品描述" + Desc;
         }
     }

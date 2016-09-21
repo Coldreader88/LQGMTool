@@ -26,7 +26,7 @@ namespace GMTool
         public static void ReadSettings(this MainForm main)
         {
             IniHelper helper = new IniHelper(Program.INT_FILE);
-            main.tb_mssql_server.Text = helper.ReadValue("mssql", "IP");
+            main.tb_mssql_server.Text = helper.ReadValue("mssql", "server");
             main.tb_mssql_db.Text = helper.ReadValue("mssql", "database");
             main.tb_mssql_user.Text = helper.ReadValue("mssql", "user");
             main.tb_mssql_pwd.Text = helper.ReadValue("mssql", "password");
@@ -39,7 +39,7 @@ namespace GMTool
             if (rs)
             {
                 IniHelper helper = new IniHelper(Environment.CurrentDirectory + "/DBIni.ini");
-                helper.WriteValue("mssql", "IP", server.Trim());
+                helper.WriteValue("mssql", "server", server.Trim());
                 helper.WriteValue("mssql", "database", dbname.Trim());
                 helper.WriteValue("mssql", "user", user.Trim());
                 helper.WriteValue("mssql", "password", pwd.Trim());

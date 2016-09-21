@@ -79,18 +79,18 @@ namespace GMTool.Bean
     public static class CategoryEx
     {
 
-        public static string GetName(this ItemCategory category)
+        public static string Name(this ItemCategory category)
         {
             int index = (int)category;
             if (index >= 0 && index < Values.Length)
             {
                 return Values[index];
             }
-            return "未知";
+            return Values[0];
         }
 
         public static string[] Values=new string[] {
-            "无", "炼金术士盒子","炼金工具","外观","神器","时装鞋子",
+            "-", "炼金术士盒子","炼金工具","外观","神器","时装鞋子",
             "时装手套","时装帽子","活动礼包","时装礼包",
             "时装裤子","时装套装", "外衣","徽章",
             "胡子","腰带","人体彩绘","鞋子", "手镯",

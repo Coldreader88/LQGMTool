@@ -51,8 +51,8 @@ namespace GMTool.Bean
             {
                 this.ItemDesc = info.Desc;
                 this.ItemName = info.Name;
-                this.ItemType = info.TradeCategory.GetName();
-                this.Category = info.Category.GetName();
+                this.ItemType = info.TradeCategory.Name();
+                this.Category = info.Category.Name();
                 this.RequiredClass = info.ClassRestriction;
             }
         }
