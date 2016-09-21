@@ -262,12 +262,12 @@ namespace GMTool
 				                                     	"select count(*) from Manufacture where ManufacturelID = N'", className, "' AND CID=", user.CID })) == 0)
 				{
 					db.ExcuteSQL(string.Concat(new object[] {
-					                           	"insert into Manufacture(CID, ManufacturelID, Grade, [ExperiencePoint]) values(", user.CID, ",N'", className, "',4,100000000)" }));
+					                           	"insert into Manufacture(CID, ManufacturelID, Grade, [ExperiencePoint]) values(", user.CID, ",N'", className, "',4,3990000)" }));
 				}
 				else
 				{
 					db.ExcuteSQL(string.Concat(new object[] {
-					                           	"update Manufacture set Grade = 4,ExperiencePoint = 100000000 where ManufacturelID = N'", className, "' and CID = ", user.CID }));
+					                           	"update Manufacture set Grade = 4,ExperiencePoint = 3990000 where ManufacturelID = N'", className, "' and CID = ", user.CID }));
 				}
 			}
 			catch (Exception ex)
@@ -284,11 +284,11 @@ namespace GMTool
 			}
 		}
 
-		public static void ModUserLevel(this MainForm main, User user, int level)
+		public static bool ModUserLevel(this MainForm main, User user, int level)
 		{
 			if (user.level == level)
 			{
-				return;
+				return true;
 			}
 			try
 			{
@@ -296,9 +296,26 @@ namespace GMTool
 			}
 			catch (Exception)
 			{
+				return false;
 			}
+			return true;
 		}
-
+		public static bool ModUserClass(this MainForm main, User user, GameClass cls)
+		{
+			if (user.Class.Value() == cls.Value())
+			{
+				return true;
+			}
+			try
+			{
+				db.ExcuteSQL(string.Concat(new object[] { "update characterInfo set Class = ", cls.Value(), " where id = ", user.CID }));
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+			return true;
+		}
 		public static bool ModUserName(this MainForm main, User user, string name)
 		{
 			if (db.ExcuteScalarSQL("select count(*) from characterInfo where Name = N'" + name + "'") == 0)

@@ -47,6 +47,7 @@ namespace GMTool
 			this.list_search.Items.Clear();
 			this.tb_logcat.Text = "";
 			AddTypes();
+			AddClasses();
 		}
 
 		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -132,7 +133,33 @@ namespace GMTool
 				}
 			}
 		}
+		#endregion
 
+		#region 菜单初始化
+		private void AddClasses(){
+			this.contentMenuUserClasses.DropDownItems.Clear();
+			Array classes = Enum.GetValues(typeof(GameClass));
+			foreach(GameClass cls in classes){
+				ToolStripMenuItem tsmi = new ToolStripMenuItem(cls.Name());
+				tsmi.Tag = cls;
+				tsmi.ToolTipText = cls.ToString();
+				tsmi.Click +=Classes_Click;
+				this.contentMenuUserClasses.DropDownItems.Add(tsmi);
+			}
+		}
+		private void Classes_Click(object sender, EventArgs e)
+		{
+			if (!CheckUser()) return;
+			ToolStripMenuItem menu = sender as ToolStripMenuItem;
+			if (menu != null && menu.Tag != null)
+			{
+				GameClass info = (GameClass)menu.Tag;
+				//
+				if(this.ModUserClass(CurUser, info)){
+					AddUserList(this.ReadUserList());
+				}
+			}
+		}
 		private void InitEnchantMenu()
 		{
 			this.contentMenuEnchantPrefix.DropDownItems.Clear();
@@ -155,7 +182,7 @@ namespace GMTool
 					ToolStripMenuItem tsmi = new ToolStripMenuItem(info.Name);
 					tsmi.Tag = info;
 					tsmi.ToolTipText = info.ToString();//提示文字为真实路径
-					tsmi.Click += Tsmi_Click;
+					tsmi.Click += Enchant_Click;
 					prelist.DropDownItems.Add(tsmi);
 				}
 				else
@@ -169,14 +196,13 @@ namespace GMTool
 					ToolStripMenuItem tsmi = new ToolStripMenuItem(info.Name);
 					tsmi.Tag = info;
 					tsmi.ToolTipText = info.ToString();//提示文字为真实路径
-					tsmi.Click += Tsmi_Click;
+					tsmi.Click += Enchant_Click;
 					suflist.DropDownItems.Add(tsmi);
 				}
 			}
 
 		}
-
-		private void Tsmi_Click(object sender, EventArgs e)
+		private void Enchant_Click(object sender, EventArgs e)
 		{
 			if (!CheckItem()) return;
 			ToolStripMenuItem menu = sender as ToolStripMenuItem;
@@ -199,8 +225,17 @@ namespace GMTool
 				}
 			}
 		}
+		private void AddTypes()
+		{
+			this.cb_category.Items.Clear();
+			this.cb_item_type.Items.Clear();
+			this.cb_category.Items.AddRange(ItemTradeCategoryEx.Values);
+			this.cb_item_type.Items.AddRange(CategoryEx.Values);
+			this.cb_category.SelectedIndex = 0;
+			this.cb_item_type.SelectedIndex = 0;
+		}
 		#endregion
-
+		
 		#region 数据读取和添加
 		private void ReadItems()
 		{
@@ -276,15 +311,6 @@ namespace GMTool
 			}
 			this.list_search.EndUpdate();
 			this.list_search.GoToRow(index);
-		}
-		private void AddTypes()
-		{
-			this.cb_category.Items.Clear();
-			this.cb_item_type.Items.Clear();
-			this.cb_category.Items.AddRange(ItemTradeCategoryEx.Values);
-			this.cb_item_type.Items.AddRange(CategoryEx.Values);
-			this.cb_category.SelectedIndex = 0;
-			this.cb_item_type.SelectedIndex = 0;
 		}
 
 		#region 添加物品
@@ -432,7 +458,7 @@ namespace GMTool
 						items[i].BackColor = Color.GhostWhite;
 					else
 						items[i].BackColor = Color.White;
-					items[i].SubItems.Add("" + u.Class);
+					items[i].SubItems.Add("" + u.Class.Name());
 					items[i].SubItems.Add("" + u.level);
 					items[i].ToolTipText = "CID:" + u.CID + "\n" + u.ToString();
 				}

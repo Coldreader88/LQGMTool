@@ -159,6 +159,7 @@
         	this.label11 = new System.Windows.Forms.Label();
         	this.label9 = new System.Windows.Forms.Label();
         	this.label6 = new System.Windows.Forms.Label();
+        	this.contentMenuUserClasses = new System.Windows.Forms.ToolStripMenuItem();
         	this.groupBox1.SuspendLayout();
         	this.contextMenuUser.SuspendLayout();
         	this.contextMenuItem.SuspendLayout();
@@ -324,6 +325,7 @@
         	this.contextMenuUser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
         	        	        	this.contentMenuUserModName,
         	        	        	this.contentMenuUserModLevel,
+        	        	        	this.contentMenuUserClasses,
         	        	        	this.toolStripSeparator4,
         	        	        	this.contentMenuUserMaxSecondClass,
         	        	        	this.contentMenuUserTitles,
@@ -334,7 +336,7 @@
         	        	        	this.toolStripSeparator6,
         	        	        	this.contentMenuUserRefresh});
         	this.contextMenuUser.Name = "contextMenuUser";
-        	this.contextMenuUser.Size = new System.Drawing.Size(169, 198);
+        	this.contextMenuUser.Size = new System.Drawing.Size(169, 242);
         	// 
         	// contentMenuUserModName
         	// 
@@ -1313,6 +1315,12 @@
         	this.label6.TabIndex = 0;
         	this.label6.Text = "颜色1";
         	// 
+        	// contentMenuUserClasses
+        	// 
+        	this.contentMenuUserClasses.Name = "contentMenuUserClasses";
+        	this.contentMenuUserClasses.Size = new System.Drawing.Size(168, 22);
+        	this.contentMenuUserClasses.Text = "修改职业";
+        	// 
         	// MainForm
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1363,6 +1371,7 @@
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.ToolStripMenuItem contentMenuUserClasses;
         private System.Windows.Forms.ToolStripMenuItem contentMenuSendItem20;
         private System.Windows.Forms.ToolStripMenuItem contentMenuSendItem5;
         private System.Windows.Forms.ToolStripMenuItem contentMenuUserTitles;
