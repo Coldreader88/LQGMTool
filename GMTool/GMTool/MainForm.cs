@@ -713,21 +713,33 @@ namespace GMTool
 			log("[" + CurUser.Name + "]阵营技能重置");
 			this.ResetGroupSkill(CurUser);
 		}
-
 		private void contentMenuUserMaxDark_Click(object sender, EventArgs e)
 		{
 			if (!CheckUser()) return;
 			log("[" + CurUser.Name + "]黑暗阵营满级");
-			this.MaxDarkLevel(CurUser);
+			this.SetGroupLevel(CurUser, GroupInfo.Dark, 40);
 		}
 
 		private void contentMenuUserMaxLight_Click(object sender, EventArgs e)
 		{
 			if (!CheckUser()) return;
 			log("[" + CurUser.Name + "]光明阵营满级");
-			this.MaxLightLevel(CurUser);
+			this.SetGroupLevel(CurUser,GroupInfo.Light,40);
 		}
-
+		
+		private void ContentMenuUserResetLightGroupClick(object sender, EventArgs e)
+		{
+			if (!CheckUser()) return;
+			log("[" + CurUser.Name + "]转光明阵营，技能初始化为1");
+			this.SetGroupLevel(CurUser, GroupInfo.Light, 1);
+		}
+		
+		private void ContentMenuUserResetDarkGroupClick(object sender, EventArgs e)
+		{
+			if (!CheckUser()) return;
+			log("[" + CurUser.Name + "]转黑暗阵营，技能初始化为1");
+			this.SetGroupLevel(CurUser, GroupInfo.Dark, 1);
+		}
 		private void contentMenuUserMaxSecondClass_Click(object sender, EventArgs e)
 		{
 			if (!CheckUser()) return;

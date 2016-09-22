@@ -52,12 +52,14 @@
         	this.contentMenuUserModLevel = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuUserClasses = new System.Windows.Forms.ToolStripMenuItem();
         	this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+        	this.contentMenuUserAddTitle = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuUserMaxSecondClass = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuUserTitles = new System.Windows.Forms.ToolStripMenuItem();
         	this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
         	this.contentMenuUserMaxLight = new System.Windows.Forms.ToolStripMenuItem();
+        	this.contentMenuUserResetLightGroup = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuUserMaxDark = new System.Windows.Forms.ToolStripMenuItem();
-        	this.contentMenuUserResetGroup = new System.Windows.Forms.ToolStripMenuItem();
+        	this.contentMenuUserResetDarkGroup = new System.Windows.Forms.ToolStripMenuItem();
         	this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
         	this.contentMenuUserRefresh = new System.Windows.Forms.ToolStripMenuItem();
         	this.list_items_normal = new System.Windows.Forms.ListView();
@@ -160,7 +162,6 @@
         	this.label11 = new System.Windows.Forms.Label();
         	this.label9 = new System.Windows.Forms.Label();
         	this.label6 = new System.Windows.Forms.Label();
-        	this.contentMenuUserAddTitle = new System.Windows.Forms.ToolStripMenuItem();
         	this.groupBox1.SuspendLayout();
         	this.contextMenuUser.SuspendLayout();
         	this.contextMenuItem.SuspendLayout();
@@ -333,87 +334,101 @@
         	        	        	this.contentMenuUserTitles,
         	        	        	this.toolStripSeparator5,
         	        	        	this.contentMenuUserMaxLight,
+        	        	        	this.contentMenuUserResetLightGroup,
         	        	        	this.contentMenuUserMaxDark,
-        	        	        	this.contentMenuUserResetGroup,
+        	        	        	this.contentMenuUserResetDarkGroup,
         	        	        	this.toolStripSeparator6,
         	        	        	this.contentMenuUserRefresh});
         	this.contextMenuUser.Name = "contextMenuUser";
-        	this.contextMenuUser.Size = new System.Drawing.Size(169, 242);
+        	this.contextMenuUser.Size = new System.Drawing.Size(193, 286);
         	// 
         	// contentMenuUserModName
         	// 
         	this.contentMenuUserModName.Name = "contentMenuUserModName";
-        	this.contentMenuUserModName.Size = new System.Drawing.Size(168, 22);
+        	this.contentMenuUserModName.Size = new System.Drawing.Size(192, 22);
         	this.contentMenuUserModName.Text = "修改名字";
         	this.contentMenuUserModName.Click += new System.EventHandler(this.contentMenuUserModName_Click);
         	// 
         	// contentMenuUserModLevel
         	// 
         	this.contentMenuUserModLevel.Name = "contentMenuUserModLevel";
-        	this.contentMenuUserModLevel.Size = new System.Drawing.Size(168, 22);
+        	this.contentMenuUserModLevel.Size = new System.Drawing.Size(192, 22);
         	this.contentMenuUserModLevel.Text = "修改等级";
         	this.contentMenuUserModLevel.Click += new System.EventHandler(this.contentMenuUserModLevel_Click);
         	// 
         	// contentMenuUserClasses
         	// 
         	this.contentMenuUserClasses.Name = "contentMenuUserClasses";
-        	this.contentMenuUserClasses.Size = new System.Drawing.Size(168, 22);
+        	this.contentMenuUserClasses.Size = new System.Drawing.Size(192, 22);
         	this.contentMenuUserClasses.Text = "修改职业";
         	// 
         	// toolStripSeparator4
         	// 
         	this.toolStripSeparator4.Name = "toolStripSeparator4";
-        	this.toolStripSeparator4.Size = new System.Drawing.Size(165, 6);
+        	this.toolStripSeparator4.Size = new System.Drawing.Size(189, 6);
+        	// 
+        	// contentMenuUserAddTitle
+        	// 
+        	this.contentMenuUserAddTitle.Name = "contentMenuUserAddTitle";
+        	this.contentMenuUserAddTitle.Size = new System.Drawing.Size(192, 22);
+        	this.contentMenuUserAddTitle.Text = "添加头衔";
         	// 
         	// contentMenuUserMaxSecondClass
         	// 
         	this.contentMenuUserMaxSecondClass.Name = "contentMenuUserMaxSecondClass";
-        	this.contentMenuUserMaxSecondClass.Size = new System.Drawing.Size(168, 22);
+        	this.contentMenuUserMaxSecondClass.Size = new System.Drawing.Size(192, 22);
         	this.contentMenuUserMaxSecondClass.Text = "副职业满级";
         	this.contentMenuUserMaxSecondClass.Click += new System.EventHandler(this.contentMenuUserMaxSecondClass_Click);
         	// 
         	// contentMenuUserTitles
         	// 
         	this.contentMenuUserTitles.Name = "contentMenuUserTitles";
-        	this.contentMenuUserTitles.Size = new System.Drawing.Size(168, 22);
+        	this.contentMenuUserTitles.Size = new System.Drawing.Size(192, 22);
         	this.contentMenuUserTitles.Text = "获取全部头衔";
         	this.contentMenuUserTitles.Click += new System.EventHandler(this.ContentMenuUserTitlesClick);
         	// 
         	// toolStripSeparator5
         	// 
         	this.toolStripSeparator5.Name = "toolStripSeparator5";
-        	this.toolStripSeparator5.Size = new System.Drawing.Size(165, 6);
+        	this.toolStripSeparator5.Size = new System.Drawing.Size(189, 6);
         	// 
         	// contentMenuUserMaxLight
         	// 
         	this.contentMenuUserMaxLight.Name = "contentMenuUserMaxLight";
-        	this.contentMenuUserMaxLight.Size = new System.Drawing.Size(168, 22);
-        	this.contentMenuUserMaxLight.Text = "转光明阵营(满级)";
+        	this.contentMenuUserMaxLight.Size = new System.Drawing.Size(192, 22);
+        	this.contentMenuUserMaxLight.Text = "光明阵营(满级)";
         	this.contentMenuUserMaxLight.Click += new System.EventHandler(this.contentMenuUserMaxLight_Click);
+        	// 
+        	// contentMenuUserResetLightGroup
+        	// 
+        	this.contentMenuUserResetLightGroup.Name = "contentMenuUserResetLightGroup";
+        	this.contentMenuUserResetLightGroup.Size = new System.Drawing.Size(192, 22);
+        	this.contentMenuUserResetLightGroup.Text = "转光明阵营(重置技能)";
+        	this.contentMenuUserResetLightGroup.Click += new System.EventHandler(this.ContentMenuUserResetLightGroupClick);
         	// 
         	// contentMenuUserMaxDark
         	// 
         	this.contentMenuUserMaxDark.Name = "contentMenuUserMaxDark";
-        	this.contentMenuUserMaxDark.Size = new System.Drawing.Size(168, 22);
-        	this.contentMenuUserMaxDark.Text = "转黑暗阵营(满级)";
+        	this.contentMenuUserMaxDark.Size = new System.Drawing.Size(192, 22);
+        	this.contentMenuUserMaxDark.Text = "黑暗阵营(满级)";
         	this.contentMenuUserMaxDark.Click += new System.EventHandler(this.contentMenuUserMaxDark_Click);
         	// 
-        	// contentMenuUserResetGroup
+        	// contentMenuUserResetDarkGroup
         	// 
-        	this.contentMenuUserResetGroup.Name = "contentMenuUserResetGroup";
-        	this.contentMenuUserResetGroup.Size = new System.Drawing.Size(168, 22);
-        	this.contentMenuUserResetGroup.Text = "重置阵营技能";
-        	this.contentMenuUserResetGroup.Click += new System.EventHandler(this.contentMenuUserResetGroup_Click);
+        	this.contentMenuUserResetDarkGroup.Name = "contentMenuUserResetDarkGroup";
+        	this.contentMenuUserResetDarkGroup.Size = new System.Drawing.Size(192, 22);
+        	this.contentMenuUserResetDarkGroup.Text = "转黑暗阵营(重置技能)";
+        	this.contentMenuUserResetDarkGroup.Click += new System.EventHandler(this.ContentMenuUserResetDarkGroupClick);
         	// 
         	// toolStripSeparator6
         	// 
         	this.toolStripSeparator6.Name = "toolStripSeparator6";
-        	this.toolStripSeparator6.Size = new System.Drawing.Size(165, 6);
+        	this.toolStripSeparator6.Size = new System.Drawing.Size(189, 6);
         	// 
         	// contentMenuUserRefresh
         	// 
         	this.contentMenuUserRefresh.Name = "contentMenuUserRefresh";
-        	this.contentMenuUserRefresh.Size = new System.Drawing.Size(168, 22);
+        	this.contentMenuUserRefresh.Size = new System.Drawing.Size(192, 22);
         	this.contentMenuUserRefresh.Text = "刷新角色";
         	this.contentMenuUserRefresh.Click += new System.EventHandler(this.menuRefreshUsers_Click);
         	// 
@@ -508,7 +523,7 @@
         	        	        	this.toolStripSeparator3,
         	        	        	this.contentMenuDeleteItems});
         	this.contextMenuItem.Name = "contextMenuItem";
-        	this.contextMenuItem.Size = new System.Drawing.Size(173, 402);
+        	this.contextMenuItem.Size = new System.Drawing.Size(173, 380);
         	// 
         	// contentMenuEnchantPrefix
         	// 
@@ -1323,12 +1338,6 @@
         	this.label6.TabIndex = 0;
         	this.label6.Text = "颜色1";
         	// 
-        	// contentMenuUserAddTitle
-        	// 
-        	this.contentMenuUserAddTitle.Name = "contentMenuUserAddTitle";
-        	this.contentMenuUserAddTitle.Size = new System.Drawing.Size(168, 22);
-        	this.contentMenuUserAddTitle.Text = "添加头衔";
-        	// 
         	// MainForm
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1379,6 +1388,8 @@
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.ToolStripMenuItem contentMenuUserResetDarkGroup;
+        private System.Windows.Forms.ToolStripMenuItem contentMenuUserResetLightGroup;
         private System.Windows.Forms.ToolStripMenuItem contentMenuUserAddTitle;
         private System.Windows.Forms.ToolStripMenuItem contentMenuUserClasses;
         private System.Windows.Forms.ToolStripMenuItem contentMenuSendItem20;
@@ -1447,7 +1458,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem contentMenuUserMaxLight;
         private System.Windows.Forms.ToolStripMenuItem contentMenuUserMaxDark;
-        private System.Windows.Forms.ToolStripMenuItem contentMenuUserResetGroup;
         private System.Windows.Forms.ContextMenuStrip contextMenuMail;
         private System.Windows.Forms.ToolStripMenuItem contentMenuDeleteMail;
         private System.Windows.Forms.ToolStripMenuItem contentMenuDeleteAllMails;

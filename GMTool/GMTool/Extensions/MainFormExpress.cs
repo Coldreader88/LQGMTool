@@ -245,6 +245,20 @@ namespace GMTool
 		#endregion
 
 		#region 角色修改
+		
+		public static List<long> GetTitles(this MainForm main,User user){
+			List<long> titles=new List<long>();
+			using(DbDataReader reader=db.GetReader("select TitleID from Title where Acquired =1 and CID="+user.CID)){
+				while(reader!=null&&reader.Read()){
+					titles.Add(reader.ReadInt64("TitleID"));
+				}
+			}
+			return titles;
+		}
+		
+		public static bool AddTitle(this MainForm main,User user,TitleInfo title){
+			return GetCurTitles(main, user, title.TitleID)>0;
+		}
 		public static void MaxSecondClass(this MainForm main, User user, string className)
 		{
 			try
@@ -332,34 +346,25 @@ namespace GMTool
 			return db.ExcuteScalarSQL("select count(*) from characterInfo where Name = N'" + name + "'") == 0;
 		}
 
-		public static void MaxLightLevel(this MainForm main, User user)
-		{
-			MaxGroupLevel(main, user, 0);
-		}
-		public static void MaxDarkLevel(this MainForm main, User user)
-		{
-			MaxGroupLevel(main, user, 1);
-		}
 		/// <summary>
 		/// 
 		/// 0 light
 		/// 1 dark
 		/// </summary>
-		/// <param name="main"></param>
-		/// <param name="user"></param>
-		/// <param name="group"></param>
-		public static void MaxGroupLevel(this MainForm main, User user, int group)
+		public static void SetGroupLevel(this MainForm main, User user, GroupInfo group,int level)
 		{
 			try
 			{
 				if (db.ExcuteScalarSQL("select count(*) from vocation where cid=" + user.CID) == 0)
 				{
-					db.ExcuteSQL(string.Concat(new object[] { "insert into vocation(CID,vocationClass,VocationLevel,VocationEXP,LastTransform) values(", user.CID, ",", group, ",40,0,'", DateTime.Now.ToString(), "')" }));
+					db.ExcuteSQL(string.Concat(new object[] { "insert into vocation(CID,vocationClass,VocationLevel,VocationEXP,LastTransform) values(", user.CID, ",", (int)group, ","+level+",0,'", DateTime.Now.ToString(), "')" }));
 				}
 				else
 				{
+					db.ExcuteSQL("update vocation set vocationClass = "+ (int)group + ",VocationLevel = "+level+" where cid =" + user.CID);
+				}
+				if(level <=1){
 					ResetGroupSkill(main, user);
-					db.ExcuteSQL("update vocation set vocationClass = "+ group + ",VocationLevel = 40 where cid =" + user.CID);
 				}
 				//this.output("角色 [" + this.userList[this.userIndex].name + "] 光明骑士等级修改成功!");
 			}
@@ -397,14 +402,14 @@ namespace GMTool
 				if(count==0 && id>0){
 					//插入
 					count = db.ExcuteSQL("INSERT INTO Title"+
-					             "(CID,TitleID,Acquired,"+
-					             "AcquiredTime,AcquiredQuest,ExpireDateTime)"+
-					             " VALUES(" +
-					             user.CID+","+
-					             id+","+
-					             "1,'"+
-					             DateTime.Now.ToString()+"',NULL,NULL"+
-					            ")");
+					                     "(CID,TitleID,Acquired,"+
+					                     "AcquiredTime,AcquiredQuest,ExpireDateTime)"+
+					                     " VALUES(" +
+					                     user.CID+","+
+					                     id+","+
+					                     "1,'"+
+					                     DateTime.Now.ToString()+"',NULL,NULL"+
+					                     ")");
 				}
 				//清空记录
 				strSQL = "delete from TitleGoalProgress WHERE CID =" + user.CID;
@@ -479,10 +484,10 @@ namespace GMTool
 				paras[3].Value = 0;
 				paras[4] = new SqlParameter("@MailTitle", SqlDbType.NVarChar);
 				paras[4].Direction = ParameterDirection.Input;
-				paras[4].Value = ChineseTextHelper.ToTraditional(title);
+				paras[4].Value = title;
 				paras[5] = new SqlParameter("@MailContent", SqlDbType.NVarChar);
 				paras[5].Direction = ParameterDirection.Input;
-				paras[5].Value = ChineseTextHelper.ToTraditional(content);
+				paras[5].Value = content;
 				paras[6] = new SqlParameter("@Result", SqlDbType.Int);
 				paras[6].Direction = ParameterDirection.Output;
 				paras[6].Value = 0;
@@ -689,18 +694,5 @@ namespace GMTool
 		}
 		#endregion
 
-		public static List<long> GetTitles(this MainForm main,User user){
-			List<long> titles=new List<long>();
-			using(DbDataReader reader=db.GetReader("select TitleID from Title where Acquired =1 and CID="+user.CID)){
-				while(reader!=null&&reader.Read()){
-					titles.Add(reader.ReadInt64("TitleID"));
-				}
-			}
-			return titles;
-		}
-		
-		public static bool AddTitle(this MainForm main,User user,TitleInfo title){
-			return GetCurTitles(main, user, title.TitleID)>0;
-		}
 	}
 }

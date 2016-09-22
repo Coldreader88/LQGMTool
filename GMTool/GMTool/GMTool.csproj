@@ -91,6 +91,7 @@
     <Compile Include="Enums\AttributeType.cs" />
     <Compile Include="Enums\Category.cs" />
     <Compile Include="Enums\ClassInfo.cs" />
+    <Compile Include="Enums\GroupInfo.cs" />
     <Compile Include="Enums\SubCategory.cs" />
     <Compile Include="Enums\PackageType.cs" />
     <Compile Include="Extensions\ArrayList.cs" />

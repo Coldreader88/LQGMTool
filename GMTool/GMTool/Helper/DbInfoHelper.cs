@@ -222,7 +222,6 @@ namespace GMTool.Helper
 		#endregion
 		
 		#region Cache/Get
-
 		public TitleInfo GetTitle(int id){
 			TitleInfo info = new TitleInfo();
 			Titles.TryGetValue(id, out info);
