@@ -54,7 +54,6 @@ namespace GMTool.Helper
 		public List<ItemClassInfo> SearchItems(string name, string id,
 		                                       string maincategory, string subcategory, User user)
 		{
-			int _class = user==null?0:(int)user.Class;
 			List<ItemClassInfo> rs = new List<ItemClassInfo>();
 			foreach (ItemClassInfo info in Infos)
 			{
@@ -88,11 +87,8 @@ namespace GMTool.Helper
 						continue;
 					}
 				}
-				if(_class!=0 && info.ClassRestriction !=0){
-					if((_class & info.ClassRestriction)==0){
-						continue;
-					}
-					
+				if(info.ClassRestriction !=0 && user.IsEnable(info.ClassRestriction)){
+					continue;
 				}
 				rs.Add(info);
 			}

@@ -9,6 +9,7 @@
 using System;
 using System.Text;
 using GMTool.Enums;
+using GMTool.Bean;
 
 namespace GMTool.Extensions
 {
@@ -91,6 +92,10 @@ namespace GMTool.Extensions
 		public const int ALL_20150922 = ALL | (int)ClassInfo.Hagie;
 		public const int ALL_20160203 = ALL_20150922 | (int)ClassInfo.Delia;
 		
+		public static bool IsEnable(this User user,int ClassRestriction){
+			int cls = (int)user.Class;
+			return (cls & ClassRestriction) == cls;
+		}
 		/// <summary>
 		/// 职业限制
 		/// </summary>
@@ -107,7 +112,7 @@ namespace GMTool.Extensions
 				if(c!=ClassInfo.UnKnown){
 					if((cls & (int)c) != 0)
 					{
-						sb.Append("" + c + ",");
+						sb.Append("" + c.Name() + ",");
 					}
 				}
 			}

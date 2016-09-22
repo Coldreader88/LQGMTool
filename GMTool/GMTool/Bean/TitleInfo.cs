@@ -8,6 +8,7 @@
  */
 using System;
 using System.Collections.Generic;
+using GMTool.Extensions;
 
 namespace GMTool.Bean
 {
@@ -17,7 +18,8 @@ namespace GMTool.Bean
 		/// <summary>
 		/// 名字
 		/// </summary>
-		public string  Description;
+		public string Name;
+		public string Description;
 		public int TargetCount;
 		public bool IsParty;
 		public string Category;
@@ -29,13 +31,15 @@ namespace GMTool.Bean
 		/// </summary>
 		public Dictionary<string, int> Stats;
 		
+		public string Effect;
+		
 		public TitleInfo()
 		{
 			Stats=new Dictionary<string, int>();
 		}
 		public override string ToString()
 		{
-			return Description;
+			return Name+"\n"+Description+"("+TargetCount+")\n等级限制："+RequiredLevel+"\n职业限制："+ClassInfoEx.GetClassText(ClassRestriction)+"\n"+Effect;
 		}
 
 	}

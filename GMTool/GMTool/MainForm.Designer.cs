@@ -160,6 +160,7 @@
         	this.label11 = new System.Windows.Forms.Label();
         	this.label9 = new System.Windows.Forms.Label();
         	this.label6 = new System.Windows.Forms.Label();
+        	this.contentMenuUserAddTitle = new System.Windows.Forms.ToolStripMenuItem();
         	this.groupBox1.SuspendLayout();
         	this.contextMenuUser.SuspendLayout();
         	this.contextMenuItem.SuspendLayout();
@@ -327,6 +328,7 @@
         	        	        	this.contentMenuUserModLevel,
         	        	        	this.contentMenuUserClasses,
         	        	        	this.toolStripSeparator4,
+        	        	        	this.contentMenuUserAddTitle,
         	        	        	this.contentMenuUserMaxSecondClass,
         	        	        	this.contentMenuUserTitles,
         	        	        	this.toolStripSeparator5,
@@ -336,7 +338,7 @@
         	        	        	this.toolStripSeparator6,
         	        	        	this.contentMenuUserRefresh});
         	this.contextMenuUser.Name = "contextMenuUser";
-        	this.contextMenuUser.Size = new System.Drawing.Size(169, 220);
+        	this.contextMenuUser.Size = new System.Drawing.Size(169, 242);
         	// 
         	// contentMenuUserModName
         	// 
@@ -506,7 +508,7 @@
         	        	        	this.toolStripSeparator3,
         	        	        	this.contentMenuDeleteItems});
         	this.contextMenuItem.Name = "contextMenuItem";
-        	this.contextMenuItem.Size = new System.Drawing.Size(173, 380);
+        	this.contextMenuItem.Size = new System.Drawing.Size(173, 402);
         	// 
         	// contentMenuEnchantPrefix
         	// 
@@ -1321,6 +1323,12 @@
         	this.label6.TabIndex = 0;
         	this.label6.Text = "颜色1";
         	// 
+        	// contentMenuUserAddTitle
+        	// 
+        	this.contentMenuUserAddTitle.Name = "contentMenuUserAddTitle";
+        	this.contentMenuUserAddTitle.Size = new System.Drawing.Size(168, 22);
+        	this.contentMenuUserAddTitle.Text = "添加头衔";
+        	// 
         	// MainForm
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1371,6 +1379,7 @@
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.ToolStripMenuItem contentMenuUserAddTitle;
         private System.Windows.Forms.ToolStripMenuItem contentMenuUserClasses;
         private System.Windows.Forms.ToolStripMenuItem contentMenuSendItem20;
         private System.Windows.Forms.ToolStripMenuItem contentMenuSendItem5;

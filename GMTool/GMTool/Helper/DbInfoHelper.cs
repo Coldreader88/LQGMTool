@@ -78,8 +78,10 @@ namespace GMTool.Helper
 		//select titleid,ts.description,targetcount,ispositive,isparty,category,autogivelevel,requiredlevel,classrestriction from ( titlegoalinfo as ts left join  titleinfo as ti on  ti.id=ts.titleid) order by requiredlevel;
 		
 		private void ReadTitles(SQLiteHelper db,HeroesTextHelper HeroesText){
+			List<TitleInfo> titles=new List<TitleInfo>();
 			using (DbDataReader reader = db.GetReader(
-				"select  titleid,ti.description,targetcount,isparty,category," +
+				"select  titleid,ti.description as name,ts.description " +
+				",targetcount,isparty,category," +
 				"autogivelevel,requiredlevel,classrestriction"+
 				" from ( titlegoalinfo as ts left join  titleinfo as ti on  ti.id=ts.titleid)"+
 				" order by requiredlevel"))
@@ -88,18 +90,43 @@ namespace GMTool.Helper
 				{
 					TitleInfo info = new TitleInfo();
 					info.TitleID = reader.ReadInt64("titleid");// Convert.ToInt64(ToString(reader["titleid"]));
-					info.Description = reader.ReadString("description");
-					HeroesText.TitleNames.TryGetValue(info.Description, out info.Description);
+					info.Name = reader.ReadString("name","");
+					HeroesText.TitleNames.TryGetValue(info.Name.ToLower(), out info.Name);
+					info.Description = reader.ReadString("description","");
+					HeroesText.TitleDescs.TryGetValue(info.Description.ToLower(), out info.Description);
 					info.TargetCount = reader.ReadInt32("TargetCount");
 					info.IsParty = reader.ReadBoolean("IsParty");
 					info.Category = reader.ReadString("Category");
 					info.AutoGiveLevel = reader.ReadInt32("AutoGiveLevel");
 					info.RequiredLevel = reader.ReadInt32("RequiredLevel");
 					info.ClassRestriction = reader.ReadInt32("ClassRestriction");
-					TitleInfo tmp =new TitleInfo();
-					if(!Titles.TryGetValue(info.TitleID, out tmp)){
-						Titles.Add(info.TitleID, info);
+					titles.Add(info);
+				}
+			}
+			foreach(TitleInfo info in titles){
+				using(DbDataReader reader = db.GetReader("select * from titlestatinfo where titleID = "+info.TitleID)){
+					info.Effect = "";
+					while (reader != null && reader.Read())
+					{
+						string stat = reader.ReadString("Stat","");
+						int val = reader.ReadInt32("Amount");
+						int tmp = 0;
+						if(!info.Stats.TryGetValue(stat, out tmp)){
+							info.Stats.Add(stat, val);
+							string name =stat;
+							HeroesText.StatNames.TryGetValue(stat.ToLower(), out name);
+							info.Effect +=name+"+"+val+",";
+						}
 					}
+					if(string.IsNullOrEmpty(info.Effect))
+						continue;
+				}
+				if(info.Effect.EndsWith(",")){
+					info.Effect = info.Effect.Substring(0, info.Effect.Length-1);
+				}
+				TitleInfo tmpinfo =new TitleInfo();
+				if(!Titles.TryGetValue(info.TitleID, out tmpinfo)){
+					Titles.Add(info.TitleID, info);
 				}
 			}
 		}
@@ -115,7 +142,7 @@ namespace GMTool.Helper
 					info.ItemClass = reader.ReadString("ItemClass", "").ToLower();
 					info.SubCategory = reader.ReadEnum<SubCategory>("Category", SubCategory.NONE);
 					info.MainCategory= reader.ReadEnum<MainCategory>("TradeCategory", MainCategory.NONE);
-			
+					
 					info.RequiredLevel = reader.ReadInt32("RequiredLevel");
 					info.ClassRestriction = reader.ReadInt32("ClassRestriction");
 					HeroesText.ItemNames.TryGetValue(info.ItemClass, out info.Name);
@@ -202,7 +229,7 @@ namespace GMTool.Helper
 			return info;
 		}
 		
-		public TitleInfo[] GetTitles(int cls){
+		public TitleInfo[] GetTitles(){
 			return Titles.Values.ToArray<TitleInfo>();
 		}
 		public EnchantInfo[] GetEnchantInfos()

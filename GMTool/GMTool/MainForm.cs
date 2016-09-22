@@ -138,6 +138,51 @@ namespace GMTool
 		#endregion
 
 		#region 菜单初始化
+		private void AddTitles(List<long> titleIds){
+			this.contentMenuUserAddTitle.DropDownItems.Clear();
+			TitleInfo[] titles = itemsHelper.GetTitles();
+			int k = 0;
+			User user = CurUser;
+			if(user==null)return;
+			ToolStripMenuItem level= new ToolStripMenuItem("lv."+(k*10+1)+"-"+((k+1)*10-1));
+			foreach(TitleInfo cls in titles){
+				if(cls.RequiredLevel / 10 == k){
+					if(!user.IsEnable(cls.ClassRestriction)){
+						continue;
+					}
+					ToolStripMenuItem tsmi = new ToolStripMenuItem("lv."+cls.RequiredLevel+" "+cls.Name);
+					tsmi.Tag = cls;
+					tsmi.ToolTipText = cls.ToString();
+					
+					if(titleIds.Contains(cls.TitleID)){
+						tsmi.Checked = true;
+					}else{
+						tsmi.Click +=Titles_Click;
+					}
+					level.DropDownItems.Add(tsmi);
+				}else{
+					k++;
+					level = new ToolStripMenuItem("lv."+(k*10+1)+"-"+((k+1)*10-1));
+					this.contentMenuUserAddTitle.DropDownItems.Add(level);
+				}
+			}
+		}
+		private void Titles_Click(object sender, EventArgs e)
+		{
+			if (!CheckUser()) return;
+			ToolStripMenuItem menu = sender as ToolStripMenuItem;
+			if (menu != null && menu.Tag != null)
+			{
+				TitleInfo info = (TitleInfo)menu.Tag;
+				if(!CurUser.IsEnable(info.ClassRestriction)){
+					this.Info("该头衔不适合当前职业");
+					return;
+				}
+				//
+				this.AddTitle(CurUser, info);
+				AddUserList(this.ReadUserList());
+			}
+		}
 		private void AddClasses(){
 			this.contentMenuUserClasses.DropDownItems.Clear();
 			Array classes = Enum.GetValues(typeof(ClassInfo));
@@ -659,7 +704,7 @@ namespace GMTool
 		
 		private void ContentMenuUserTitlesClick(object sender, EventArgs e)
 		{
-			int count  = this.GetCurTitles(CurUser);
+			int count  = this.GetCurTitles(CurUser, -1);
 			this.Info("完成"+count+"个头衔");
 		}
 		private void contentMenuUserResetGroup_Click(object sender, EventArgs e)
@@ -957,6 +1002,7 @@ namespace GMTool
 				this.Text = this.DefTitle + "  - " + user.ToString();
 				ReadMails();
 				ReadItems();
+				AddTitles(this.GetTitles(CurUser));
 			}
 		}
 		private void list_items_normal_SelectedIndexChanged(object sender, EventArgs e)

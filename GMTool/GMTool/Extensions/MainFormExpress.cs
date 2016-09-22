@@ -107,7 +107,7 @@ namespace GMTool
 				return mails;
 			}
 			using (DbDataReader reader = db.GetReader("select mi.itemCount,m.* from Mail as m LEFT JOIN MailItem as mi ON mi.MailID = m.MailID"
-			                                           + " where m.ToCID =" + user.CID))
+			                                          + " where m.ToCID =" + user.CID))
 			{
 				while (reader != null && reader.Read())
 				{
@@ -195,7 +195,7 @@ namespace GMTool
 							ItemAttribute attr = new ItemAttribute();
 							try
 							{
-								attr.Type = reader2.ReadEnum<ItemAttributeType>("Attribute",ItemAttributeType.NONE); 
+								attr.Type = reader2.ReadEnum<ItemAttributeType>("Attribute",ItemAttributeType.NONE);
 								attr.Value = reader2.ReadString("Value");
 								attr.Arg = reader2.ReadString("Arg");
 								attr.Arg2 = reader2.ReadString("Arg2");
@@ -382,15 +382,36 @@ namespace GMTool
 			}
 		}
 		
-		public static int GetCurTitles(this MainForm main,User user){
+		public static int GetCurTitles(this MainForm main,User user,long id){
 			//[Title]
 			string strSQL = "update Title set Acquired = 1 , AcquiredTime='"+DateTime.Now.ToString()+"'"
-				+" WHERE Acquired = 0 and  CID =" + user.CID+";";
+				+" WHERE CID =" + user.CID;
+			if(id > 0){
+				strSQL += " and TitleID="+id;
+			}else{
+				strSQL += " and Acquired = 0";
+			}
 			try
 			{
 				int count = db.ExcuteSQL(strSQL);
+				if(count==0 && id>0){
+					//插入
+					count = db.ExcuteSQL("INSERT INTO Title"+
+					             "(CID,TitleID,Acquired,"+
+					             "AcquiredTime,AcquiredQuest,ExpireDateTime)"+
+					             " VALUES(" +
+					             user.CID+","+
+					             id+","+
+					             "1,'"+
+					             DateTime.Now.ToString()+"',NULL,NULL"+
+					            ")");
+				}
 				//清空记录
-				db.ExcuteSQL("delete from TitleGoalProgress WHERE CID =" + user.CID);
+				strSQL = "delete from TitleGoalProgress WHERE CID =" + user.CID;
+				if(id > 0){
+					strSQL += " and TitleGoalID="+id;
+				}
+				db.ExcuteSQL(strSQL);
 				return count;
 			}
 			catch (Exception exception)
@@ -668,5 +689,18 @@ namespace GMTool
 		}
 		#endregion
 
+		public static List<long> GetTitles(this MainForm main,User user){
+			List<long> titles=new List<long>();
+			using(DbDataReader reader=db.GetReader("select TitleID from Title where Acquired =1 and CID="+user.CID)){
+				while(reader!=null&&reader.Read()){
+					titles.Add(reader.ReadInt64("TitleID"));
+				}
+			}
+			return titles;
+		}
+		
+		public static bool AddTitle(this MainForm main,User user,TitleInfo title){
+			return GetCurTitles(main, user, title.TitleID)>0;
+		}
 	}
 }

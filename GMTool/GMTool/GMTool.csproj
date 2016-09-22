@@ -93,6 +93,7 @@
     <Compile Include="Enums\ClassInfo.cs" />
     <Compile Include="Enums\SubCategory.cs" />
     <Compile Include="Enums\PackageType.cs" />
+    <Compile Include="Extensions\ArrayList.cs" />
     <Compile Include="Extensions\CategoryEx.cs" />
     <Compile Include="Extensions\ClassInfoEx.cs" />
     <Compile Include="Extensions\FormExpress.cs" />
