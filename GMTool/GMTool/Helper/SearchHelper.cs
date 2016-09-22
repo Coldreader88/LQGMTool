@@ -87,7 +87,7 @@ namespace GMTool.Helper
 						continue;
 					}
 				}
-				if(info.ClassRestriction !=0 && user.IsEnable(info.ClassRestriction)){
+				if(user!=null && info.ClassRestriction !=0 && !user.IsEnable(info.ClassRestriction)){
 					continue;
 				}
 				rs.Add(info);
