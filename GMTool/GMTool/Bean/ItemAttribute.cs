@@ -38,12 +38,12 @@ namespace GMTool.Bean
 			}
 			else if (Type == ItemAttributeType.PREFIX)
 			{
-				EnchantInfo einfo = ItemClassInfoHelper.Get().GetEnchant(Value);
+				EnchantInfo einfo = DbInfoHelper.Get().GetEnchant(Value);
 				_Desc= "【字首】附魔：" + (einfo == null ? Value : einfo.ToString());
 			}
 			else if (Type == ItemAttributeType.SUFFIX)
 			{
-				EnchantInfo einfo = ItemClassInfoHelper.Get().GetEnchant(Value);
+				EnchantInfo einfo = DbInfoHelper.Get().GetEnchant(Value);
 				_Desc= "【字尾】附魔：" + (einfo == null ? Value : einfo.ToString());
 			}
 			else if (Type == ItemAttributeType.QUALITY)

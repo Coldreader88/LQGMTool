@@ -74,6 +74,7 @@
     <Compile Include="Bean\ItemInfo.cs" />
     <Compile Include="Bean\ItemClassInfo.cs" />
     <Compile Include="Bean\Mail.cs" />
+    <Compile Include="Bean\TitleInfo.cs" />
     <Compile Include="Bean\User.cs" />
     <Compile Include="ChangeNameForm.cs">
       <SubType>Form</SubType>
@@ -100,7 +101,7 @@
     <Compile Include="Helper\DbHelper.cs" />
     <Compile Include="Helper\HeroesTextHelper.cs" />
     <Compile Include="Helper\IniHelper.cs" />
-    <Compile Include="Helper\ItemClassInfoHelper.cs" />
+    <Compile Include="Helper\DbInfoHelper.cs" />
     <Compile Include="Helper\MSSqlHelper.cs" />
     <Compile Include="Helper\SearchHelper.cs" />
     <Compile Include="Helper\SQLiteHelper.cs" />

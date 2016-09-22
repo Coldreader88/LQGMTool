@@ -17,10 +17,11 @@ using System.Windows.Forms;
 
 namespace GMTool.Helper
 {
-	public class ItemClassInfoHelper
+	public class DbInfoHelper
 	{
-		static ItemClassInfoHelper sItemClassInfoHelper = null;
-		public static ItemClassInfoHelper Get()
+		#region
+		static DbInfoHelper sItemClassInfoHelper = null;
+		public static DbInfoHelper Get()
 		{
 			return sItemClassInfoHelper;
 		}
@@ -31,17 +32,12 @@ namespace GMTool.Helper
 		}
 		private string textFile, dbFile;
 		private bool mInit = false;
-		public HeroesTextHelper HeroesText{get;private set;}
 		public SearchHelper Searcher{get;private set;}
 		private Dictionary<string, EnchantInfo> Enchants = new Dictionary<string, EnchantInfo>();
-
-		private Dictionary<string, EnchantInfo> CacheEnchants = new Dictionary<string, EnchantInfo>();
-		private Dictionary<string, ItemClassInfo> CacheItems = new Dictionary<string, ItemClassInfo>();
-
-		public ItemClassInfoHelper()
+		private Dictionary<long, TitleInfo> Titles=new Dictionary<long, TitleInfo>();
+		public DbInfoHelper()
 		{
 			sItemClassInfoHelper = this;
-			HeroesText = new HeroesTextHelper();
 			Searcher = new SearchHelper();
 			IniHelper helper = new IniHelper(Program.INT_FILE);
 			this.textFile = helper.ReadValue("data", "text");
@@ -66,64 +62,88 @@ namespace GMTool.Helper
 			{
 				return false;
 			}
+			HeroesTextHelper HeroesText  = new HeroesTextHelper();
 			HeroesText.Read(textFile);
 			SQLiteHelper db = new SQLiteHelper(dbFile);
 			db.Open();
-			ReadItems(db);
-			ReadEnchants(db);
+			ReadItems(db,HeroesText );
+			ReadEnchants(db,HeroesText);
+			ReadTitles(db, HeroesText);
 			db.Close();
 			return true;
 		}
+		#endregion
 		
-		private void ReadItems(SQLiteHelper db){
+		#region title
+		//select titleid,ts.description,targetcount,ispositive,isparty,category,autogivelevel,requiredlevel,classrestriction from ( titlegoalinfo as ts left join  titleinfo as ti on  ti.id=ts.titleid) order by requiredlevel;
+		
+		private void ReadTitles(SQLiteHelper db,HeroesTextHelper HeroesText){
+			using (DbDataReader reader = db.GetReader(
+				"select  titleid,ti.description,targetcount,isparty,category," +
+				"autogivelevel,requiredlevel,classrestriction"+
+				" from ( titlegoalinfo as ts left join  titleinfo as ti on  ti.id=ts.titleid)"+
+				" order by requiredlevel"))
+			{
+				while (reader != null && reader.Read())
+				{
+					TitleInfo info = new TitleInfo();
+					info.TitleID = reader.ReadInt64("titleid");// Convert.ToInt64(ToString(reader["titleid"]));
+					info.Description = reader.ReadString("description");
+					HeroesText.TitleNames.TryGetValue(info.Description, out info.Description);
+					info.TargetCount = reader.ReadInt32("TargetCount");
+					info.IsParty = reader.ReadBoolean("IsParty");
+					info.Category = reader.ReadString("Category");
+					info.AutoGiveLevel = reader.ReadInt32("AutoGiveLevel");
+					info.RequiredLevel = reader.ReadInt32("RequiredLevel");
+					info.ClassRestriction = reader.ReadInt32("ClassRestriction");
+					TitleInfo tmp =new TitleInfo();
+					if(!Titles.TryGetValue(info.TitleID, out tmp)){
+						Titles.Add(info.TitleID, info);
+					}
+				}
+			}
+		}
+		#endregion
+		
+		#region items
+		private void ReadItems(SQLiteHelper db,HeroesTextHelper HeroesText){
 			using (DbDataReader reader = db.GetReader("SELECT * FROM ItemClassInfo"))
 			{
 				while (reader != null && reader.Read())
 				{
 					ItemClassInfo info = new ItemClassInfo();
-					info.ItemClass = ToString(reader["ItemClass"]).ToLower();
-					try
-					{
-						info.SubCategory = (SubCategory)Enum.Parse(typeof(SubCategory), ToString(reader["Category"]));
-					}
-					catch (Exception)
-					{
-						info.SubCategory = SubCategory.NONE;
-					}
-					try
-					{
-						info.MainCategory = (MainCategory)Enum.Parse(typeof(MainCategory), ToString(reader["TradeCategory"]));
-					}
-					catch (Exception)
-					{
-						info.MainCategory = MainCategory.NONE;
-					}
-					info.RequiredLevel = Convert.ToInt32(reader["RequiredLevel"]);
-					info.ClassRestriction = Convert.ToInt32(reader["ClassRestriction"]);
+					info.ItemClass = reader.ReadString("ItemClass", "").ToLower();
+					info.SubCategory = reader.ReadEnum<SubCategory>("Category", SubCategory.NONE);
+					info.MainCategory= reader.ReadEnum<MainCategory>("TradeCategory", MainCategory.NONE);
+			
+					info.RequiredLevel = reader.ReadInt32("RequiredLevel");
+					info.ClassRestriction = reader.ReadInt32("ClassRestriction");
 					HeroesText.ItemNames.TryGetValue(info.ItemClass, out info.Name);
 					HeroesText.ItemDescs.TryGetValue(info.ItemClass, out info.Desc);
 					Searcher.Add(info);
 				}
 			}
 		}
+		#endregion
 		
-		private void ReadEnchants(SQLiteHelper db){
+		#region enchant
+		private void ReadEnchants(SQLiteHelper db,HeroesTextHelper HeroesText){
 			
 			using (DbDataReader reader2 = db.GetReader("SELECT * FROM EnchantInfo ORDER BY EnchantLevel;"))
 			{
 				while (reader2 != null && reader2.Read())
 				{
 					EnchantInfo info = new EnchantInfo();
-					info.Class = ToString(reader2["EnchantClass"]).ToLower();
-					if (info.Class != null && info.Class.EndsWith("_100"))
+					info.Class =reader2.ReadString("EnchantClass","").ToLower();
+					if (info.Class.EndsWith("_100"))
 					{
 						continue;
 					}
-					info.Constraint = ToString(reader2["ItemConstraint"]);
-					info.Desc = ToString(reader2["ItemConstraintDesc"]);
-					info.IsPrefix = Convert.ToBoolean(reader2["IsPrefix"]);
-					info.MinArg = Convert.ToInt32(reader2["MinArgValue"]);
-					info.MaxArg = Convert.ToInt32(reader2["MaxArgValue"]);
+					info.Constraint = reader2.ReadString("ItemConstraint");
+					info.Desc = reader2.ReadString("ItemConstraintDesc");
+					info.IsPrefix = reader2.ReadBoolean("IsPrefix");
+					info.MinArg = reader2.ReadInt32("MinArgValue");
+					info.MaxArg = reader2.ReadInt32("MaxArgValue");
 					string var;
 					if (info.IsPrefix)
 					{
@@ -172,14 +192,19 @@ namespace GMTool.Helper
 				}
 			}
 		}
+		#endregion
 		
 		#region Cache/Get
-		public void ClearCache()
-		{
-			CacheEnchants.Clear();
-			CacheItems.Clear();
-		}
 
+		public TitleInfo GetTitle(int id){
+			TitleInfo info = new TitleInfo();
+			Titles.TryGetValue(id, out info);
+			return info;
+		}
+		
+		public TitleInfo[] GetTitles(int cls){
+			return Titles.Values.ToArray<TitleInfo>();
+		}
 		public EnchantInfo[] GetEnchantInfos()
 		{
 			return Enchants.Values.ToArray<EnchantInfo>();
@@ -189,12 +214,7 @@ namespace GMTool.Helper
 			if (itemclass == null) return null;
 			itemclass = itemclass.ToLower();
 			ItemClassInfo info = new ItemClassInfo();
-			if (CacheItems.TryGetValue(itemclass, out info))
-			{
-				return info;
-			}
 			Searcher.Items.TryGetValue(itemclass, out info);
-			CacheItems.Add(itemclass, info);
 			return info;
 		}
 		public EnchantInfo GetEnchant(string name)
@@ -206,12 +226,7 @@ namespace GMTool.Helper
 				name = name.Substring(0, name.Length - 4);
 			}
 			EnchantInfo info = new EnchantInfo();
-			if (CacheEnchants.TryGetValue(name, out info))
-			{
-				return info;
-			}
 			Enchants.TryGetValue(name, out info);
-			CacheEnchants.Add(name, info);
 			return info;
 		}
 

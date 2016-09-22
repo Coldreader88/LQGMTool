@@ -13,10 +13,10 @@ namespace GMTool.Helper
 	using System;
 	using System.Data;
 	using System.Data.Common;
-	
+
 	public abstract class DbHelper<T> where T :DbConnection
 	{
-		
+		#region
 		protected T conn;
 		protected string connStr;
 		public bool IsOpen
@@ -85,6 +85,9 @@ namespace GMTool.Helper
 				}
 			}
 		}
+		#endregion
+		
+		#region reader
 		public DbDataReader GetReader(string strSQL)
 		{
 			return GetReader(strSQL, null);
@@ -106,7 +109,9 @@ namespace GMTool.Helper
 				return command.ExecuteReader(CommandBehavior.SingleResult);
 			}
 		}
+		#endregion
 
+		#region exec
 		public int ExcuteSQL(string strSQL)
 		{
 			return ExcuteSQL(strSQL, null);
@@ -154,6 +159,63 @@ namespace GMTool.Helper
 				num = Convert.ToInt32(command.ExecuteScalar());
 			}
 			return num;
+		}
+		#endregion
+	}
+	
+	public static class DbExtension{
+		public static string ReadString(this DbDataReader reader,string col){
+			return ReadString(reader, col, null);
+		}
+		public static string ReadString(this DbDataReader reader,string col,string def){
+			object obj = reader[col];
+			if (obj == DBNull.Value)
+				return def;
+			return Convert.ToString(obj);
+		}
+		public static short ReadInt16(this DbDataReader reader,string col){
+			object obj = reader[col];
+			if (obj == DBNull.Value)
+				return 0;
+			return Convert.ToInt16(obj);
+		}
+		public static int ReadInt32(this DbDataReader reader,string col){
+
+			return ReadInt32(reader, col, 0);
+		}
+		public static int ReadInt32(this DbDataReader reader,string col,int def){
+			object obj = reader[col];
+			if (obj == DBNull.Value)
+				return def;
+			return Convert.ToInt32(obj);
+		}
+		public static bool ReadBoolean(this DbDataReader reader,string col){
+			object obj = reader[col];
+			if (obj == DBNull.Value)
+				return false;
+			string val = Convert.ToString(obj).ToLower();
+			return "1" == val || "true"==val;
+		}
+		public static long ReadInt64(this DbDataReader reader,string col){
+			object obj = reader[col];
+			if (obj == DBNull.Value)
+				return 0;
+			return Convert.ToInt64(obj);
+		}
+
+		public static T ReadEnum<T>(this DbDataReader reader,string col,T def){
+			object obj = reader[col];
+			string val  ="";
+			if (obj != DBNull.Value){
+				val = Convert.ToString(obj);
+			}
+			T e= def;
+			try{
+				e = (T)Enum.Parse(typeof(T), val);
+			}catch(Exception){
+				e = def;
+			}
+			return e;
 		}
 	}
 }

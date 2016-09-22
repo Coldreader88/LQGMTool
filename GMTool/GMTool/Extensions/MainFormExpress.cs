@@ -64,12 +64,12 @@ namespace GMTool
 			{
 				while (reader != null && reader.Read())
 				{
-					User item = new User(Convert.ToInt64(reader["ID"]),
-					                     Convert.ToInt32(reader["UID"]),
-					                     Convert.ToInt32(reader["CharacterSN"]),
-					                     Convert.ToString(reader["Name"]),
-					                     Convert.ToInt32(reader["Class"]),
-					                     Convert.ToInt32(reader["Level"])
+					User item = new User(reader.ReadInt64("ID"),
+					                     reader.ReadInt32("UID"),
+					                     reader.ReadInt32("CharacterSN"),
+					                     reader.ReadString("Name"),
+					                     reader.ReadInt32("Class"),
+					                     reader.ReadInt32("Level")
 					                    );
 					userList.Add(item);
 				}
@@ -89,11 +89,11 @@ namespace GMTool
 				while (reader != null && reader.Read())
 				{
 					Mail item = new Mail(
-						Convert.ToInt64(reader["RowID"]),
-						Convert.ToString(reader["MailTitle"]),
-						Convert.ToString(reader["MailContent"])
+						reader.ReadInt64("RowID"),
+						reader.ReadString("MailTitle"),
+						reader.ReadString("MailContent")
 					);
-					item.Count = Convert.ToInt32(reader["Count"]);
+					item.Count = reader.ReadInt32("Count");
 					mails.Add(item);
 				}
 			}
@@ -112,9 +112,9 @@ namespace GMTool
 				while (reader != null && reader.Read())
 				{
 					Mail item = new Mail(
-						Convert.ToInt64(reader["mailID"]),
-						Convert.ToString(reader["title"]),
-						Convert.ToString(reader["content"])
+						reader.ReadInt64("mailID"),
+						reader.ReadString("title"),
+						reader.ReadString("content")
 					);
 					mails.Add(item);
 				}
@@ -161,39 +161,27 @@ namespace GMTool
 				{
 					while (reader != null && reader.Read())
 					{
-						Item item = new Item(Convert.ToInt64(reader[0]),
-						                     Convert.ToString(reader["itemClass"]),
+						Item item = new Item(reader.ReadInt64("ID"),
+						                     reader.ReadString("itemClass"),
 						                     ""// Convert.ToString(reader["itemType"])
 						                    );
-
-						if (reader[1] != DBNull.Value)
+						string time = reader.ReadString("ExpireDateTime", null);
+						if (time != null)
 						{
-							item.Time = Convert.ToString(reader[1]).Split(' ')[0];
+							item.Time = time.Split(' ')[0];
 						}
 						else
 						{
 							item.Time = "无限期";
 						}
-						item.Collection = Convert.ToInt32(reader["Collection"]);
-						item.Slot = Convert.ToInt32(reader["Slot"]);
+						item.Collection = reader.ReadInt32("Collection");
+						item.Slot = reader.ReadInt32("Slot");
 						//  item.attrName = reader["Attribute"] == DBNull.Value ? null : Convert.ToString(reader["Attribute"]);
 						//  item.attrValue = reader["Value"] == DBNull.Value ? null : Convert.ToString(reader["Value"]);
-						item.Count = reader["Count"] == DBNull.Value ? 1 : Convert.ToInt32(reader["Count"]);
-						object o = reader["Color1"];
-						if (o != DBNull.Value)
-						{
-							item.Color1 = Convert.ToInt32(o);
-						}
-						o = reader["Color2"];
-						if (o != DBNull.Value)
-						{
-							item.Color2 = Convert.ToInt32(o);
-						}
-						o = reader["Color3"];
-						if (o != DBNull.Value)
-						{
-							item.Color3 = Convert.ToInt32(o);
-						}
+						item.Count = reader.ReadInt32("Count", 1);
+						item.Color1  = reader.ReadInt32("Color1",0);
+						item.Color2  = reader.ReadInt32("Color2",0);
+						item.Color3  = reader.ReadInt32("Color3",0);
 						items.Add(item);
 					}
 				}
@@ -207,10 +195,10 @@ namespace GMTool
 							ItemAttribute attr = new ItemAttribute();
 							try
 							{
-								attr.Type = (ItemAttributeType)Enum.Parse(typeof(ItemAttributeType), ToString(reader2["Attribute"]));
-								attr.Value = ToString(reader2["Value"]);
-								attr.Arg = ToString(reader2["Arg"]);
-								attr.Arg2 = ToString(reader2["Arg2"]);
+								attr.Type = reader2.ReadEnum<ItemAttributeType>("Attribute",ItemAttributeType.NONE); 
+								attr.Value = reader2.ReadString("Value");
+								attr.Arg = reader2.ReadString("Arg");
+								attr.Arg2 = reader2.ReadString("Arg2");
 								attrs.Add(attr);
 							}
 							catch (Exception)

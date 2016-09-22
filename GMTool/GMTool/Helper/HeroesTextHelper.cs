@@ -28,6 +28,8 @@ namespace GMTool.Helper
 		public Dictionary<string, string> EnchantEffectIfs{get; private set;}
 		public Dictionary<string, string> ItemNames{get; private set;}
 		public Dictionary<string, string> ItemDescs{get; private set;}
+		public Dictionary<string, string> TitleNames{get; private set;}
+		public Dictionary<string, string> StatNames{get; private set;}
 		private bool TW2CN = true;
 		private Dictionary<Regex, Dictionary<string, string>> Regexs
 			=new Dictionary<Regex, Dictionary<string, string>>();
@@ -47,6 +49,8 @@ namespace GMTool.Helper
 			EnchantEffectIfs =new Dictionary<string, string>();
 			ItemNames =new Dictionary<string, string>();
 			ItemDescs =new Dictionary<string, string>();
+			TitleNames = new Dictionary<string, string>();
+			StatNames=new Dictionary<string, string>();
 			Regexs.Add(new Regex("HEROES_ATTRIBUTE_PREFIX_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), PrefixNames);
 			Regexs.Add(new Regex("HEROES_ATTRIBUTE_SUFFIX_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), SuffixNames);
 			Regexs.Add(new Regex("HEROES_ITEMCONSTRAINT_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), EnchantDescs);
@@ -54,6 +58,8 @@ namespace GMTool.Helper
 			Regexs.Add(new Regex("HEROES_ENCHANTCONDITION_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), EnchantEffectIfs);
 			Regexs.Add(new Regex("HEROES_ITEM_NAME_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), ItemNames);
 			Regexs.Add(new Regex("HEROES_ITEM_DESC_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), ItemDescs);
+			Regexs.Add(new Regex("(HEROES_TITLE_NAME_\\S+?)\"\\s+\"([\\s\\S]+?)\""), TitleNames);
+			Regexs.Add(new Regex("HEROES_MARKETDIALOG_DETAILOPTION_TITLE_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), StatNames);
 		}
 		
 		public void Read(string file){

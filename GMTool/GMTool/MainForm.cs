@@ -20,7 +20,7 @@ namespace GMTool
 	{
 		#region Member
 		private string DefTitle;
-		private ItemClassInfoHelper itemsHelper;
+		private DbInfoHelper itemsHelper;
 		private ColorDialog colorDialog;
 		public User CurUser { get; private set; }
 
@@ -34,7 +34,7 @@ namespace GMTool
 		public MainForm()
 		{
 			CurUser = new User(0, 0, 0, "", 0, 1);
-			itemsHelper = new ItemClassInfoHelper();
+			itemsHelper = new DbInfoHelper();
 			InitializeComponent();
 			this.Text += " " + Application.ProductVersion.ToString();
 			this.DefTitle = this.Text;
@@ -955,7 +955,6 @@ namespace GMTool
 			{
 				this.CurUser = user;
 				this.Text = this.DefTitle + "  - " + user.ToString();
-				itemsHelper.ClearCache();
 				ReadMails();
 				ReadItems();
 			}
