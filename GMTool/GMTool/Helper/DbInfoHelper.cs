@@ -48,7 +48,7 @@ namespace GMTool.Helper
 			this.dbFile = helper.ReadValue("data", "heroes");
 			if (!File.Exists(dbFile))
 			{
-				textFile = "./heroes.db3";
+				dbFile = "./heroes.db3";
 			}
 		}
 
@@ -58,7 +58,7 @@ namespace GMTool.Helper
 				return true;
 			}
 			mInit = true;
-			if (!File.Exists(textFile) || !File.Exists(dbFile))
+			if (!File.Exists(dbFile))
 			{
 				return false;
 			}
