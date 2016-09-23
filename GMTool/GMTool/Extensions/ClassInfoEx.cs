@@ -46,10 +46,21 @@ namespace GMTool.Extensions
 				return (ClassInfo)Indexs[i];
 			return ClassInfo.UnKnown;
 		}
-		/// <summary>
-		/// 索引集合
-		/// </summary>
-		public static int[] Indexs=new int[]{
+        public static ClassInfo GetClass(this string name)
+        {
+            try
+            {
+                return (ClassInfo)Enum.Parse(typeof(ClassInfo), name);
+            }
+            catch (Exception)
+            {
+                return ClassInfo.UnKnown;
+            }
+        }
+        /// <summary>
+        /// 索引集合
+        /// </summary>
+        public static int[] Indexs=new int[]{
 			0x1,
 			0x2,
 			0x4,
@@ -93,7 +104,8 @@ namespace GMTool.Extensions
 		public const int ALL_20160203 = ALL_20150922 | (int)ClassInfo.Delia;
 		
 		public static bool IsEnable(this User user,int ClassRestriction){
-			int cls = (int)user.Class;
+            if (ClassRestriction == 0) return true;
+            int cls = (int)user.Class;
 			return (cls & ClassRestriction) == cls;
 		}
 		/// <summary>

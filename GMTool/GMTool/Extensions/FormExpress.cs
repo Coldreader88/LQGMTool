@@ -22,6 +22,11 @@ namespace System.Windows.Forms
             MessageBox.Show( text, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
+        public static bool Question(this Form form, string text)
+        {
+           return MessageBox.Show(text, "询问", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)==DialogResult.OK;
+        }
+
         public static int GetSelectIndex(this ListView listView)
         {
             if (listView.SelectedItems != null)

@@ -150,6 +150,13 @@ namespace GMTool
 					if(!user.IsEnable(cls.ClassRestriction)){
 						continue;
 					}
+                    if (cls.OnlyClass != ClassInfo.UnKnown)
+                    {
+                        if (user.Class != cls.OnlyClass)
+                        {
+                            continue;
+                        }
+                    }
 					ToolStripMenuItem tsmi = new ToolStripMenuItem("lv."+cls.RequiredLevel+" "+cls.Name);
 					tsmi.Tag = cls;
 					tsmi.ToolTipText = cls.ToString();
@@ -704,8 +711,11 @@ namespace GMTool
 		
 		private void ContentMenuUserTitlesClick(object sender, EventArgs e)
 		{
-			int count  = this.GetCurTitles(CurUser, -1);
-			this.Info("完成"+count+"个头衔");
+            if (this.Question("是否获取全部头衔？"))
+            {
+                int count = this.GetCurTitles(CurUser, -1);
+                this.Info("完成" + count + "个头衔");
+            }
 		}
 		private void contentMenuUserResetGroup_Click(object sender, EventArgs e)
 		{

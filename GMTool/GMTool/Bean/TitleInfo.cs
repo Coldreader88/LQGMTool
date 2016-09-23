@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using GMTool.Extensions;
+using GMTool.Enums;
 
 namespace GMTool.Bean
 {
@@ -20,12 +21,12 @@ namespace GMTool.Bean
 		/// </summary>
 		public string Name;
 		public string Description;
-		public int TargetCount;
-		public bool IsParty;
 		public string Category;
 		public int AutoGiveLevel;
 		public int RequiredLevel;
 		public int ClassRestriction;
+        public string Feature;
+        public ClassInfo OnlyClass;
 		/// <summary>
 		/// 属性
 		/// </summary>
@@ -39,7 +40,8 @@ namespace GMTool.Bean
 		}
 		public override string ToString()
 		{
-			return Name+"\n"+Description+"("+TargetCount+")\n等级限制："+RequiredLevel+"\n职业限制："+ClassInfoEx.GetClassText(ClassRestriction)+"\n"+Effect;
+			return Name+(OnlyClass!=ClassInfo.UnKnown? OnlyClass.Name()+"[专属]":"")+
+                "\n"+Description+"\n等级限制："+RequiredLevel+"\n职业限制："+ClassInfoEx.GetClassText(ClassRestriction)+"\n"+Effect;
 		}
 
 	}
