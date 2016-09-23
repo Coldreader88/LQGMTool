@@ -26,6 +26,7 @@ namespace TextConvert
 			this.file=file;
 		}
 		
+		#region list
 		public void GetList(string outfile){
 			Dictionary<string, string> lines=new Dictionary<string, string>();
 			using (FileStream fs = new FileStream(file, FileMode.Open))
@@ -61,7 +62,51 @@ namespace TextConvert
 				}
 			}
 		}
+		#endregion
 		
+		
+		public void Start(string list,string checkfile,string outfile){
+			List<string> keys=new List<string>();
+			using (FileStream fs = new FileStream(list, FileMode.Open))
+			{
+				using (StreamReader sr = new StreamReader(fs, Encoding.Unicode))
+				{
+					string line = null;
+					while ((line = sr.ReadLine()) != null)
+					{
+						string key = GetKey(line);
+						if(!keys.Contains(key)){
+							keys.Add(key);
+						}
+					}
+				}
+			}
+			using (FileStream fs = new FileStream(file, FileMode.Open))
+			{
+				using (StreamReader sr = new StreamReader(fs, Encoding.Unicode))
+				{
+					string line = null;
+					Regex regex = new Regex("\"(\\S*?_HEROES_\\S+?)\"\\s+\"([\\s\\S]+?)\"");
+					while ((line = sr.ReadLine()) != null)
+					{
+						Match m = regex.Match(line);
+						if(m.Groups.Count>2){
+							string name = m.Groups[1].Value;
+							string oldname = name;
+							name = GetName(name);
+							if(keys.Contains(name)){
+								//从checkfile复制该行，用oldname去找
+								continue;
+							}
+						}
+						File.AppendText(line+"\r\n");
+					}
+				}
+			}
+		}
+		private string GetKey(string line){
+			return line.Split('\t')[0];
+		}
 		private string GetName(string name){
 			int i = name.IndexOf("HEROES_");
 			if(i>=0){
