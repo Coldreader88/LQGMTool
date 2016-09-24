@@ -146,23 +146,30 @@ namespace TextConvert
 		/// <param name="outfile">输出文本</param>
 		/// <param name="listfile">规则文本，不转简体</param>
 		public void TW2CN(string outfile,string listfile){
+			if(!File.Exists(file)){
+				Console.WriteLine("文件不存在："+file);
+				return;
+			}
 			Console.WriteLine("规则：");
 			Dictionary<string, bool> rules=new Dictionary<string, bool>();
-			using (FileStream fs = new FileStream(listfile, FileMode.Open))
-			{
-				using (StreamReader sr = new StreamReader(fs, Encoding.Unicode))
+			if(File.Exists(listfile)){
+				
+				using (FileStream fs = new FileStream(listfile, FileMode.Open))
 				{
-					string line = null;
-					while ((line = sr.ReadLine()) != null)
+					using (StreamReader sr = new StreamReader(fs, Encoding.Unicode))
 					{
-						string name = line.Split(' ')[0].Trim();
-						bool isall = name.StartsWith("@");
-						if(isall){
-							name = name.Substring(1);
-						}
-						if(!rules.ContainsKey(name)){
-							Console.WriteLine("完全匹配="+isall+"，开头="+name);
-							rules.Add(name, isall);
+						string line = null;
+						while ((line = sr.ReadLine()) != null)
+						{
+							string name = line.Split(' ')[0].Trim();
+							bool isall = name.StartsWith("@");
+							if(isall){
+								name = name.Substring(1);
+							}
+							if(!rules.ContainsKey(name)){
+								Console.WriteLine("完全匹配="+isall+"，开头="+name);
+								rules.Add(name, isall);
+							}
 						}
 					}
 				}
