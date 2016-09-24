@@ -46,7 +46,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChineseTextHelper.cs" />
     <Compile Include="Converter.cs" />
+    <Compile Include="Kernel32.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
