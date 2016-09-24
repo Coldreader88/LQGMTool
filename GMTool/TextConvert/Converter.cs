@@ -154,11 +154,13 @@ namespace TextConvert
 					string line = null;
 					while ((line = sr.ReadLine()) != null)
 					{
-						string[] keys = line.Split(' ');
-						string name = keys[0];
-						bool isall = (keys.Length>1&&"all".Equals(keys[1]));
+						string name = line.Split(' ')[0].Trim();
+						bool isall = name.StartsWith("@");
+						if(isall){
+							name = name.Substring(1);
+						}
 						if(!rules.ContainsKey(name)){
-							Console.WriteLine("rule:"+isall+":"+name);
+							Console.WriteLine("完全匹配="+isall+"，开头="+name);
 							rules.Add(name, isall);
 						}
 					}
@@ -187,17 +189,16 @@ namespace TextConvert
 										if(all){
 											if(name.Equals(key)){
 												ignore=true;
-												Console.WriteLine("ignore:"+name);
+												Console.WriteLine("忽略:"+name);
 												break;
 											}
 										}else{
 											if(name.StartsWith(key)){
 												ignore=true;
-												Console.WriteLine("ignore:"+name);
+												Console.WriteLine("忽略:"+name);
 												break;
 											}
 										}
-										
 									}
 								}
 								if(!ignore){
