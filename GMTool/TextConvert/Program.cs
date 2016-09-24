@@ -7,7 +7,9 @@ namespace TextConvert
 	{
 		public static void Main(string[] args)
 		{
+			#if DEBUG
 			args = new string[]{"-s","heroes_text_taiwan.txt","heroes_text_taiwan_out.txt","ignore.txt"};
+			#endif
 			if(args.Length > 0){
 				switch(args[0]){
 						case "-l":{
