@@ -68,7 +68,7 @@ namespace TextConvert
 				Console.WriteLine("替换文本:-c 台服文本 国服文本 规则文本 输出文本");
 				Console.WriteLine("繁体转简体:-s 台服文本  输出文本 规则文本");
 			}
-			Console.Write("Press any key to continue . . . ");
+			Console.Write("完成任务");
 			Console.ReadKey(true);
 		}
 	}

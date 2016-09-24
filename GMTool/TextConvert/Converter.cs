@@ -146,6 +146,7 @@ namespace TextConvert
 		/// <param name="outfile">输出文本</param>
 		/// <param name="listfile">规则文本，不转简体</param>
 		public void TW2CN(string outfile,string listfile){
+			Console.WriteLine("规则：");
 			Dictionary<string, bool> rules=new Dictionary<string, bool>();
 			using (FileStream fs = new FileStream(listfile, FileMode.Open))
 			{
@@ -166,6 +167,7 @@ namespace TextConvert
 					}
 				}
 			}
+			Console.WriteLine("\n开始处理");
 			File.Delete(outfile);
 			//以file为蓝本，根据list从check复制行出来到out
 			using (FileStream fs = new FileStream(file, FileMode.Open))
