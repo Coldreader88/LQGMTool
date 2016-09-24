@@ -35,7 +35,7 @@ namespace TextConvert
 				using (StreamReader sr = new StreamReader(fs, Encoding.Unicode))
 				{
 					string line = null;
-					Regex regex = new Regex("\"(\\S*?_HEROES_\\S+?)\"\\s+\"([\\s\\S]+?)\"");
+					Regex regex = new Regex("\"(\\S*?_\\S+?)\"\\s+\"([\\s\\S]+?)\"");
 					while ((line = sr.ReadLine()) != null)
 					{
 						Match m = regex.Match(line);
@@ -88,7 +88,7 @@ namespace TextConvert
 				using (StreamReader sr = new StreamReader(fs, Encoding.Unicode))
 				{
 					string line = null;
-					Regex regex = new Regex("\"(\\S*?_HEROES_\\S+?)\"\\s+\"([\\s\\S]+?)\"");
+					Regex regex = new Regex("\"(\\S*?_\\S+?)\"\\s+\"([\\s\\S]+?)\"");
 					while ((line = sr.ReadLine()) != null)
 					{
 						Match m = regex.Match(line);
@@ -113,7 +113,7 @@ namespace TextConvert
 						using (StreamWriter sw = new StreamWriter(fs2, Encoding.Unicode))
 						{
 							string line = null;
-							Regex regex = new Regex("\"(\\S*?_HEROES_\\S+?)\"\\s+\"([\\s\\S]+?)\"");
+							Regex regex = new Regex("\"(\\S*?_\\S+?)\"\\s+\"([\\s\\S]+?)\"");
 							while ((line = sr.ReadLine()) != null)
 							{
 								Match m = regex.Match(line);
@@ -145,7 +145,8 @@ namespace TextConvert
 		/// </summary>
 		/// <param name="outfile">输出文本</param>
 		/// <param name="listfile">规则文本，不转简体</param>
-		public void TW2CN(string outfile,string listfile){
+		public void TW2CN(string outfile,string listfile, bool exclude = true)
+        {
 			if(!File.Exists(file)){
 				Console.WriteLine("文件不存在："+file);
 				return;
@@ -189,7 +190,7 @@ namespace TextConvert
 							Regex regex = new Regex("\"(\\S*?_\\S+?)\"\\s+\"([\\s\\S]+?)\"");
 							while ((line = sr.ReadLine()) != null)
 							{
-								bool ignore= false;
+								bool hasKey= false;
 								Match m = regex.Match(line);
 								if(m.Groups.Count > 2){
 									string name = m.Groups[1].Value;
@@ -197,22 +198,35 @@ namespace TextConvert
 										bool all = rules[key];
 										if(all){
 											if(name.Equals(key)){
-												ignore=true;
+												hasKey=true;
 												Console.WriteLine("忽略:"+name);
 												break;
 											}
 										}else{
 											if(name.StartsWith(key)){
-												ignore=true;
+												hasKey=true;
 												Console.WriteLine("忽略:"+name);
 												break;
 											}
 										}
 									}
 								}
-								if(!ignore){
-									line = ChineseTextHelper.ToSimplified(line);
-								}
+                                if (exclude)
+                                {
+                                    //排除模式
+                                    if (!hasKey)
+                                    {
+                                        line = ChineseTextHelper.ToSimplified(line);
+                                    }
+                                }
+                                else
+                                {
+                                    //包含模式
+                                    if (hasKey)
+                                    {
+                                        line = ChineseTextHelper.ToSimplified(line);
+                                    }
+                                }
 								sw.WriteLine(line);
 							}
 						}

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace GMTool.win32
+namespace System.Win32
 {
     public class Kernel32
     {

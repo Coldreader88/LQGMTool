@@ -51,8 +51,8 @@ namespace GMTool.Helper
 				return Infos.Count;
 			}
 		}
-		public List<ItemClassInfo> SearchItems(string name, string id,
-		                                       string maincategory, string subcategory, User user)
+		public List<ItemClassInfo> SearchItems(string name, string id=null,
+		                                       string maincategory=null, string subcategory=null, User user=null)
 		{
 			List<ItemClassInfo> rs = new List<ItemClassInfo>();
 			foreach (ItemClassInfo info in Infos)

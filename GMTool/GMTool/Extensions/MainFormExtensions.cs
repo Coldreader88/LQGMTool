@@ -15,7 +15,7 @@ using GMTool.Extensions;
 
 namespace GMTool
 {
-	public static class MainFormExpress
+	public static class MainFormExtensions
 	{
 		#region 数据库
 		private static MSSqlHelper db = new MSSqlHelper();

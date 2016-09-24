@@ -14,7 +14,7 @@ namespace GMTool.Extensions
 	/// <summary>
 	/// Description of CategoryEx.
 	/// </summary>
-	public static class CategoryEx
+	public static class SubCategoryEx
 	{
 
         public static string Name(this SubCategory category)

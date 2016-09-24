@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "测试",
             "艾丽莎",
             "12"}, -1);
@@ -295,7 +295,7 @@
             this.list_users.GridLines = true;
             this.list_users.HideSelection = false;
             this.list_users.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem2});
             this.list_users.LabelWrap = false;
             this.list_users.Location = new System.Drawing.Point(3, 3);
             this.list_users.MultiSelect = false;
@@ -340,7 +340,7 @@
             this.toolStripSeparator6,
             this.contentMenuUserRefresh});
             this.contextMenuUser.Name = "contextMenuUser";
-            this.contextMenuUser.Size = new System.Drawing.Size(193, 286);
+            this.contextMenuUser.Size = new System.Drawing.Size(193, 264);
             // 
             // contentMenuUserModName
             // 
@@ -754,7 +754,7 @@
             // 
             this.btn_senditem_send.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_senditem_send.Enabled = false;
-            this.btn_senditem_send.Location = new System.Drawing.Point(1071, 611);
+            this.btn_senditem_send.Location = new System.Drawing.Point(1072, 611);
             this.btn_senditem_send.Name = "btn_senditem_send";
             this.btn_senditem_send.Size = new System.Drawing.Size(144, 41);
             this.btn_senditem_send.TabIndex = 5;
@@ -847,7 +847,7 @@
             // 
             this.btn_search_id.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_search_id.Enabled = false;
-            this.btn_search_id.Location = new System.Drawing.Point(1105, 573);
+            this.btn_search_id.Location = new System.Drawing.Point(1106, 573);
             this.btn_search_id.Name = "btn_search_id";
             this.btn_search_id.Size = new System.Drawing.Size(110, 32);
             this.btn_search_id.TabIndex = 5;
@@ -1192,7 +1192,7 @@
             this.cb_maincategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cb_maincategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_maincategory.FormattingEnabled = true;
-            this.cb_maincategory.Location = new System.Drawing.Point(1132, 544);
+            this.cb_maincategory.Location = new System.Drawing.Point(1039, 545);
             this.cb_maincategory.Name = "cb_maincategory";
             this.cb_maincategory.Size = new System.Drawing.Size(83, 20);
             this.cb_maincategory.TabIndex = 9;
@@ -1202,7 +1202,7 @@
             this.cb_subcategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cb_subcategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cb_subcategory.FormattingEnabled = true;
-            this.cb_subcategory.Location = new System.Drawing.Point(1042, 544);
+            this.cb_subcategory.Location = new System.Drawing.Point(1132, 545);
             this.cb_subcategory.Name = "cb_subcategory";
             this.cb_subcategory.Size = new System.Drawing.Size(84, 20);
             this.cb_subcategory.TabIndex = 9;

@@ -11,7 +11,7 @@ using GMTool.Enums;
 
 namespace GMTool.Extensions
 {
-	public static class ItemTradeCategoryEx
+	public static class MainCategoryEx
 	{
 		public static string[] Values = new string[] { "-","首饰","时装","衣服","碎片","沙龙","技能书",
 			"活动","商品","重甲","轻甲","材料","板甲","任务","背部","尾巴","Tir硬币","武器"

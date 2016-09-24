@@ -99,7 +99,8 @@
     <Compile Include="Extensions\ClassInfoEx.cs" />
     <Compile Include="Extensions\FormExpress.cs" />
     <Compile Include="Extensions\ItemTradeCategoryEx.cs" />
-    <Compile Include="Extensions\MainFormExpress.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\MainFormExtensions.cs" />
     <Compile Include="Helper\DbHelper.cs" />
     <Compile Include="Helper\HeroesTextHelper.cs" />
     <Compile Include="Helper\IniHelper.cs" />
@@ -155,10 +156,7 @@
   <ItemGroup>
     <Content Include="icon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Enums" />
-    <Folder Include="Extensions" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
