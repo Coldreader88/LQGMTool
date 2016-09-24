@@ -80,11 +80,10 @@ namespace GMTool.Helper
 		private void ReadTitles(SQLiteHelper db,HeroesTextHelper HeroesText){
 			List<TitleInfo> titles=new List<TitleInfo>();
 			using (DbDataReader reader = db.GetReader(
-				"select  titleid,ti.description as name,ts.description " +
-				",targetcount,isparty,category," +
-				"autogivelevel,requiredlevel,classrestriction"+
-				" from ( titlegoalinfo as ts left join  titleinfo as ti on  ti.id=ts.titleid)"+
-				" order by requiredlevel"))
+                "select ts.titleid,ti.description as name,feature,tg.description,category,autogivelevel,requiredlevel,classrestriction" +
+                " from (titlestatinfo as ts left join titleinfo as ti on  ts.titleid = ti.id )"+
+                " left join titlegoalinfo as tg on tg.titleid=ts.titleid"+
+                " group by ts.titleid order by requiredlevel"))
 			{
 				while (reader != null && reader.Read())
 				{
@@ -94,13 +93,16 @@ namespace GMTool.Helper
 					HeroesText.TitleNames.TryGetValue(info.Name.ToLower(), out info.Name);
 					info.Description = reader.ReadString("description","");
 					HeroesText.TitleDescs.TryGetValue(info.Description.ToLower(), out info.Description);
-					info.TargetCount = reader.ReadInt32("TargetCount");
-					info.IsParty = reader.ReadBoolean("IsParty");
 					info.Category = reader.ReadString("Category");
-					info.AutoGiveLevel = reader.ReadInt32("AutoGiveLevel");
+                    info.Feature = reader.ReadString("feature","");
+                    info.OnlyClass = info.Feature.GetClass();
+                    info.AutoGiveLevel = reader.ReadInt32("AutoGiveLevel");
 					info.RequiredLevel = reader.ReadInt32("RequiredLevel");
-					info.ClassRestriction = reader.ReadInt32("ClassRestriction");
-					titles.Add(info);
+					info.ClassRestriction = reader.ReadInt32("ClassRestriction",-1);
+                    if (info.ClassRestriction > 0)
+                    {
+                        titles.Add(info);
+                    }
 				}
 			}
 			foreach(TitleInfo info in titles){
@@ -118,14 +120,13 @@ namespace GMTool.Helper
 							info.Effect +=name+"+"+val+",";
 						}
 					}
-					if(string.IsNullOrEmpty(info.Effect))
-						continue;
+					//if(string.IsNullOrEmpty(info.Effect))
+					//	continue;
 				}
 				if(info.Effect.EndsWith(",")){
 					info.Effect = info.Effect.Substring(0, info.Effect.Length-1);
 				}
-				TitleInfo tmpinfo =new TitleInfo();
-				if(!Titles.TryGetValue(info.TitleID, out tmpinfo)){
+				if(!Titles.ContainsKey(info.TitleID)){
 					Titles.Add(info.TitleID, info);
 				}
 			}
@@ -194,13 +195,18 @@ namespace GMTool.Helper
 							has = true;
 							info.Effect += i + "." + var;
 						}
-						if(has){
-							if (HeroesText.EnchantEffectIfs.TryGetValue(info.Class + "_" + i, out var))
-							{
-								info.Effect += "[" + var+"]";
-							}
-							info.Effect += "\n";
-						}
+                        if (has)
+                        {
+                            if (HeroesText.EnchantEffectIfs.TryGetValue(info.Class + "_" + i, out var))
+                            {
+                                info.Effect += "[" + var + "]";
+                            }
+                            info.Effect += "\n";
+                        }
+                        else
+                        {
+                            break;
+                        }
 					}
 					if (info.Effect.Contains("{0}"))
 					{
