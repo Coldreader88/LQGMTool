@@ -165,7 +165,8 @@ namespace GMTool
         public void ReadPackage(PackageType type)
         {
             if (!CheckUser()) return;
-            switch (type) {
+            switch (type)
+            {
                 case PackageType.Normal:
                     AddItemList(this.list_items_normal, this.ReadUserItems(CurUser, PackageType.Normal));
                     break;
@@ -330,7 +331,7 @@ namespace GMTool
             this.list_users.EndUpdate();
             this.list_users.GoToRow(index);
         }
-       
+
         private void ReadMails()
         {
             AddUserMails(this.ReadUserMailList(CurUser));
@@ -931,7 +932,7 @@ namespace GMTool
             if (!CheckUser()) return;
             ListView listview = GetItemMenu(sender);
             if (listview == null) return;
-            if (this.DeleteItem(CurUser, listview.GetSelectItems<Item>()))
+            if (this.UnLimitTime(CurUser, listview.GetSelectItems<Item>()))
             {
                 contentMenuOtherRefresh_Click(sender, e);
             }
@@ -942,12 +943,9 @@ namespace GMTool
             if (!CheckUser()) return;
             ListView listview = GetItemMenu(sender);
             if (listview == null) return;
-            if (this.Question("这是特殊背包的物品，删除可能会出现问题。\n确定删除选中的物品？"))
+            if (this.DeleteItem(CurUser, listview.GetSelectItems<Item>()))
             {
-                if (this.UnLimitTime(CurUser, listview.GetSelectItems<Item>()))
-                {
-                    contentMenuOtherRefresh_Click(sender, e);
-                }
+                contentMenuOtherRefresh_Click(sender, e);
             }
         }
         private void contentMenuOtherRefresh_Click(object sender, EventArgs e)

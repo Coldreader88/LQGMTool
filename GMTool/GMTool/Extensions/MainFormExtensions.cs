@@ -530,11 +530,26 @@ namespace GMTool
 		{
 			if (items != null)
 			{
-				try
+                if (items.Length == 1)
+                {
+                    if (!main.Question("是否删除["+ items[0].ItemName+"]?"))
+                    {
+                        return false;
+                    }
+                }
+                else if(items.Length > 1)
+                {
+                    if (!main.Question("是否删除选中的" + items.Length + "个物品?"))
+                    {
+                        return false;
+                    }
+                }
+                try
 				{
 					foreach (Item item in items)
 					{
 						db.ExcuteSQL("DELETE FROM Item Where ID=" + item.ItemID);
+                        main.log("删除["+item.ItemName+"]"+item.ItemClass);
 					}
 					return true;
 				}
