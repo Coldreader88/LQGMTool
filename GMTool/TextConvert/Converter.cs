@@ -199,13 +199,15 @@ namespace TextConvert
 										if(all){
 											if(name.Equals(key)){
 												hasKey=true;
-												Console.WriteLine("忽略:"+name);
+                                                if (exclude)
+                                                    Console.WriteLine("忽略:"+name);
 												break;
 											}
 										}else{
 											if(name.StartsWith(key)){
 												hasKey=true;
-												Console.WriteLine("忽略:"+name);
+                                                if(exclude)
+                                                Console.WriteLine("忽略:"+name);
 												break;
 											}
 										}
