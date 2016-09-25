@@ -40,7 +40,7 @@ namespace GMTool.Bean
 		}
 		public override string ToString()
 		{
-			return Name+(OnlyClass!=ClassInfo.UnKnown? OnlyClass.Name()+"[专属]":"")+
+			return Name+(OnlyClass!=ClassInfo.UnKnown? "[" + OnlyClass.Name()+"专属]":"")+
                 "\n"+Description+"\n等级限制："+RequiredLevel+"\n职业限制："+ClassInfoEx.GetClassText(ClassRestriction)+"\n"+Effect;
 		}
 

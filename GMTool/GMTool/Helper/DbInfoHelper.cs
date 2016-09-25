@@ -98,7 +98,7 @@ namespace GMTool.Helper
 					HeroesText.TitleDescs.TryGetValue(info.Description.ToLower(), out info.Description);
 					info.Category = reader.ReadString("Category");
                     info.Feature = reader.ReadString("feature","");
-                    info.OnlyClass = info.Feature.GetClass();
+                    info.OnlyClass = info.Feature.ToClassInfo();
                     info.AutoGiveLevel = reader.ReadInt32("AutoGiveLevel");
 					info.RequiredLevel = reader.ReadInt32("RequiredLevel");
 					info.ClassRestriction = reader.ReadInt32("ClassRestriction",-1);
@@ -256,7 +256,7 @@ namespace GMTool.Helper
 		{
 			return Enchants.Values.ToArray<EnchantInfo>();
 		}
-		public ItemClassInfo Get(string itemclass)
+		public ItemClassInfo GetItemInfo(string itemclass)
 		{
 			if (itemclass == null) return null;
 			itemclass = itemclass.ToLower();

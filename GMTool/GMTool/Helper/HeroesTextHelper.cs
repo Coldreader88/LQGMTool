@@ -67,7 +67,7 @@ namespace GMTool.Helper
 			Regexs.Add(new Regex("(HEROES_TITLE_NAME_\\S+?)\"\\s+\"([\\s\\S]+?)\""), TitleNames);
 			Regexs.Add(new Regex("HEROES_MARKETDIALOG_DETAILOPTION_TITLE_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), StatNames);
 			Regexs.Add(new Regex("(HEROES_TITLE_GOAL_NAME_\\S+?)\"\\s+\"([\\s\\S]+?)\""), TitleDescs);
-            Regexs.Add(new Regex("\"(\\S+?_MAIL_TITLE)\"\\s+\"([\\s\\S]+?)\""), MailTitles);
+            Regexs.Add(new Regex("\"(\\S+?MAIL_TITLE)\"\\s+\"([\\s\\S]+?)\""), MailTitles);
         }
 		
 		public void Read(string file){

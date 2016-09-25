@@ -71,9 +71,24 @@ namespace GMTool
 					                     reader.ReadInt32("Class"),
 					                     reader.ReadInt32("Level")
 					                    );
-					userList.Add(item);
+                    //insert into vocation(CID,vocationClass,VocationLevel
+
+                    userList.Add(item);
 				}
 			}
+            foreach (User user in userList)
+            {
+                using (DbDataReader reader = db.GetReader("Select vocationClass,VocationLevel from vocation where CID=" + user.CID))
+                {
+                    while (reader != null && reader.Read())
+                    {
+                        int group = reader.ReadInt32("vocationClass", -1);
+                        user.Group = group.ToGroupInfo();
+                        user.GroupLevel = reader.ReadInt32("VocationLevel", -1);
+                        break;
+                    }
+                }
+            }
 			return userList;
 		}
 
@@ -353,23 +368,24 @@ namespace GMTool
 		/// 0 light
 		/// 1 dark
 		/// </summary>
-		public static void SetGroupLevel(this MainForm main, User user, GroupInfo group,int level)
+		public static void SetGroupLevel(this MainForm main, User user, GroupInfo group,int level=1,bool reset=false)
 		{
 			try
 			{
-				if (db.ExcuteScalarSQL("select count(*) from vocation where cid=" + user.CID) == 0)
+                if (db.ExcuteScalarSQL("select count(*) from vocation where cid=" + user.CID) == 0)
 				{
 					db.ExcuteSQL(string.Concat(new object[] { "insert into vocation(CID,vocationClass,VocationLevel,VocationEXP,LastTransform) values(", user.CID, ",", (int)group, ","+level+",0,'", DateTime.Now.ToString(), "')" }));
 				}
 				else
 				{
-					db.ExcuteSQL("update vocation set vocationClass = "+ (int)group + ",VocationLevel = "+level+" where cid =" + user.CID);
+                    db.ExcuteSQL("update vocation set vocationClass = "+ (int)group + ",VocationLevel = "+level+" where cid =" + user.CID);
 				}
-				if(level <=1){
-					ResetGroupSkill(main, user);
-				}
-				//this.output("角色 [" + this.userList[this.userIndex].name + "] 光明骑士等级修改成功!");
-			}
+                if (reset)
+                {
+                    ResetGroupSkill(main, user);
+                }
+                //this.output("角色 [" + this.userList[this.userIndex].name + "] 光明骑士等级修改成功!");
+            }
 			catch (Exception exception)
 			{
 				main.Error("最大阵营技能错误\n"+exception);
@@ -533,7 +549,8 @@ namespace GMTool
 		/// </summary>
 		public static bool ModItemPower(this MainForm main, User user, Item item, int power)
 		{
-			try
+            if (item == null) return false;
+            try
 			{
 				if (power == 0)
 				{
@@ -606,16 +623,33 @@ namespace GMTool
 				db.ExcuteSQL("insert into ItemAttribute(ItemID,Attribute,Value,Arg,Arg2) values(" + itemID + ",'QUALITY','',5,0)");
 			}
 		}
-		/// <summary>
-		/// 附魔
-		/// </summary>
-		public static bool Enchant(this MainForm main, Item item, EnchantInfo attribute)
-		{
-			if (attribute == null || item == null)
-			{
-				return false;
-			}
-			string name = attribute.IsPrefix ? "PREFIX" : "SUFFIX";
+        /// <summary>
+        /// 附魔
+        /// </summary>
+        public static bool Enchant(this MainForm main, Item item, EnchantInfo attribute)
+        {
+            if (attribute == null || item == null)
+            {
+                return false;
+            }
+            ItemClassInfo info = main.DataHelper.GetItemInfo(item.ItemClass);
+            if (info != null)
+            {
+                if (!(info.MainCategory == MainCategory.WEAPON
+                    || info.SubCategory == SubCategory.INNERARMOR
+                    || info.MainCategory == MainCategory.CLOTH
+                    || info.MainCategory == MainCategory.LIGHTARMOR
+                    || info.MainCategory == MainCategory.HEAVYARMOR
+                    || info.MainCategory == MainCategory.PLATEARMOR
+                    || info.MainCategory == MainCategory.ACCESSORY))
+                {
+                    if (!main.Question("该类型[" + info.MainCategory.Name() + "]不适合附魔，确定强制附魔？"))
+                    {
+                        return false;
+                    }
+                }
+            }
+            string name = attribute.IsPrefix ? "PREFIX" : "SUFFIX";
 			if (db.ExcuteScalarSQL("SELECT COUNT(*) FROM ItemAttribute ia LEFT JOIN Item i ON i.ID = ia.ItemID"
 			                       + " WHERE (ia.Attribute = '" + name + "') AND i.ID =" + item.ItemID) == 0)
 			{

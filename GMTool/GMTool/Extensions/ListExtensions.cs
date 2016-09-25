@@ -61,7 +61,7 @@ namespace GMTool.Extensions
         {
             selectindex = -1;
             ListViewItem vitem = new ListViewItem();
-            ItemClassInfo info = main.DataHelper.Get(t.ItemClass);
+            ItemClassInfo info = main.DataHelper.GetItemInfo(t.ItemClass);
             t.Attach(info);
             vitem.Tag = t;
             vitem.Text = (t.ItemName == null ? t.ItemClass : t.ItemName);

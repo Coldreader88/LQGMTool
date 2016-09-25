@@ -27,7 +27,7 @@ namespace GMTool
         public int NormalCurItem { get; private set; }
         public int CashCurItem { get; private set; }
 
-        public Item CurItem { get; private set; }
+        private Item ColorItem;
         #endregion
 
         #region 窗体
@@ -59,13 +59,31 @@ namespace GMTool
         }
         #endregion
 
+        #region common
+        public bool CheckUser()
+        {
+            bool b = CurUser != null;
+            if (!b)
+            {
+                this.Warnning("没有选择用户");
+            }
+            return b;
+        }
+        public void log(string text)
+        {
+            if (this.tb_logcat.Text.Length >= this.tb_logcat.MaxLength - 1024)
+            {
+                this.tb_logcat.Text = "";
+            }
+            this.tb_logcat.AppendText("\n" + DateTime.UtcNow.ToLongTimeString() + "  " + text + "\n");
+        }
+        #endregion
         #region 数据库
         private void btn_mssql_open_Click(object sender, EventArgs e)
         {
             SetAllEnable(false);
             if (this.btn_mssql_open.Text == "断开")
             {
-                CurItem = null;
                 CurUser = null;
                 this.CloseDataBase();
 
@@ -89,7 +107,9 @@ namespace GMTool
                         return;
                     }
                     //初始化菜单
-                    this.InitEnchantMenu(this.contentMenuEnchantPrefix, this.contentMenuEnchantSuffix);
+                    this.InitEnchantMenu(this.contentMenuEnchantPrefix, this.contentMenuEnchantSuffix, this.list_items_normal);
+                    this.InitCashEnchantMenu(this.contentMenuCashInnerEnchant, this.list_items_cash);
+                    //this.InitEnchantMenu(this.contentMenuCashInnerEnchant, null);
                 }
                 if (this.connectDataBase(this.tb_mssql_server.Text, this.tb_mssql_user.Text, this.tb_mssql_pwd.Text, this.tb_mssql_db.Text))
                 {
@@ -142,33 +162,45 @@ namespace GMTool
         #endregion
 
         #region 数据读取和添加
-        public void ReadItems()
+        public void ReadPackage(PackageType type)
         {
             if (!CheckUser()) return;
-            AddItemList(this.list_items_normal, this.ReadUserItems(CurUser, PackageType.Normal));
-            AddItemList(this.list_items_cash, this.ReadUserItems(CurUser, PackageType.Cash));
-            AddItemList(this.list_items_quest, this.ReadUserItems(CurUser, PackageType.Quest));
-            AddItemList(this.list_items_other, this.ReadUserItems(CurUser, PackageType.Other));
+            switch (type) {
+                case PackageType.Normal:
+                    AddItemList(this.list_items_normal, this.ReadUserItems(CurUser, PackageType.Normal));
+                    break;
+                case PackageType.Cash:
+                    AddItemList(this.list_items_cash, this.ReadUserItems(CurUser, PackageType.Cash));
+                    break;
+                case PackageType.Quest:
+                    AddItemList(this.list_items_quest, this.ReadUserItems(CurUser, PackageType.Quest));
+                    break;
+                case PackageType.Other:
+                    AddItemList(this.list_items_other, this.ReadUserItems(CurUser, PackageType.Other));
+                    break;
+                case PackageType.All:
+                    AddItemList(this.list_items_normal, this.ReadUserItems(CurUser, PackageType.Normal));
+                    AddItemList(this.list_items_cash, this.ReadUserItems(CurUser, PackageType.Cash));
+                    AddItemList(this.list_items_quest, this.ReadUserItems(CurUser, PackageType.Quest));
+                    AddItemList(this.list_items_other, this.ReadUserItems(CurUser, PackageType.Other));
+                    break;
+            }
         }
         private void SetCurItems(Item item)
         {
             if (item != null)
             {
-                if (CurItem != null)
+                if (ColorItem == null || ColorItem.ItemID != item.ItemID)
                 {
-                    if (item == CurItem)
+                    ColorItem = item;
+                    if (item.Color1 != 0)
                     {
-                        return;
-                    }
-                }
-                CurItem = item;
-                if (item.Color1 != 0)
-                {
-                    if (!chk_lock_color.Checked)
-                    {
-                        this.tb_color1.Text = item.Color1.ColorString();
-                        this.tb_color2.Text = item.Color2.ColorString();
-                        this.tb_color3.Text = item.Color3.ColorString();
+                        if (!chk_lock_color.Checked)
+                        {
+                            this.tb_color1.Text = item.Color1.ColorString();
+                            this.tb_color2.Text = item.Color2.ColorString();
+                            this.tb_color3.Text = item.Color3.ColorString();
+                        }
                     }
                 }
                 //this.tab_color.Text = this.tab_color.Text.Split(' ')[0] + " ("+item.ItemName+")";
@@ -298,14 +330,7 @@ namespace GMTool
             this.list_users.EndUpdate();
             this.list_users.GoToRow(index);
         }
-        public void log(string text)
-        {
-            if (this.tb_logcat.Text.Length >= this.tb_logcat.MaxLength - 1024)
-            {
-                this.tb_logcat.Text = "";
-            }
-            this.tb_logcat.AppendText("\n" + DateTime.UtcNow.ToLongTimeString() + "  " + text + "\n");
-        }
+       
         private void ReadMails()
         {
             AddUserMails(this.ReadUserMailList(CurUser));
@@ -461,28 +486,23 @@ namespace GMTool
         {
             if (!CheckUser()) return;
             log("[" + CurUser.Name + "]黑暗阵营满级");
-            this.SetGroupLevel(CurUser, GroupInfo.Dark, 40);
+            this.SetGroupLevel(CurUser, GroupInfo.Dark, 40, true);
+            ReadUsers();
         }
 
         private void contentMenuUserMaxLight_Click(object sender, EventArgs e)
         {
             if (!CheckUser()) return;
             log("[" + CurUser.Name + "]光明阵营满级");
-            this.SetGroupLevel(CurUser, GroupInfo.Light, 40);
-        }
-
-        private void ContentMenuUserResetLightGroupClick(object sender, EventArgs e)
-        {
-            if (!CheckUser()) return;
-            log("[" + CurUser.Name + "]转光明阵营，技能初始化为1");
-            this.SetGroupLevel(CurUser, GroupInfo.Light, 1);
+            this.SetGroupLevel(CurUser, GroupInfo.Light, 40, true);
+            ReadUsers();
         }
 
         private void ContentMenuUserResetDarkGroupClick(object sender, EventArgs e)
         {
             if (!CheckUser()) return;
-            log("[" + CurUser.Name + "]转黑暗阵营，技能初始化为1");
-            this.SetGroupLevel(CurUser, GroupInfo.Dark, 1);
+            log("[" + CurUser.Name + "]重置阵营技能");
+            this.ResetGroupSkill(CurUser);
         }
         private void contentMenuUserMaxSecondClass_Click(object sender, EventArgs e)
         {
@@ -521,153 +541,6 @@ namespace GMTool
         {
             AddUserList(this.ReadAllUsers());
         }
-        #endregion
-
-        #region 物品菜单
-        private ListView GetItemMenu(object sender)
-        {
-            ToolStripMenuItem menu = sender as ToolStripMenuItem;
-            Control parent = null;
-            if (menu != null)
-            {
-                parent = menu.GetMenuConrtol();
-            }
-            ListView listview = null;
-            if (parent == this.list_items_cash)
-            {
-                listview = this.list_items_cash;
-            }
-            else if (parent == this.list_items_normal)
-            {
-                listview = this.list_items_normal;
-            }
-            else
-            {
-                return null;
-            }
-            return listview;
-        }
-        private Item GetSelectItem(object sender)
-        {
-            ListView listview = GetItemMenu(sender);
-            if (listview == null)
-            {
-                return null;
-            }
-            return listview.GetSelectItem<Item>();
-        }
-        private Item[] GetSelectItems(object sender)
-        {
-            ListView listview = GetItemMenu(sender);
-            if (listview == null)
-            {
-                return null;
-            }
-            return listview.GetSelectItems<Item>();
-        }
-        private Item[] GetItems(object sender)
-        {
-            ListView listview = GetItemMenu(sender);
-            if (listview == null)
-            {
-                return null;
-            }
-            return listview.GetItems<Item>();
-        }
-        private void contentMenuDeleteItems_Click(object sender, EventArgs e)
-        {
-            if (!CheckUser()) return;
-            // if (!CheckItem()) return;
-            if (this.DeleteItem(CurUser, GetSelectItems(sender)))
-            {
-                ReadItems();
-            }
-        }
-        private void contentMenuItemPower_Click(object sender, EventArgs e)
-        {
-            if (!CheckItem()) return;
-            if (this.ModItemPower(CurUser, GetSelectItem(sender), 0))
-            {
-                ReadItems();
-            }
-        }
-
-        private void contentMenuItemPowers5_Click(object sender, EventArgs e)
-        {
-            if (!CheckItem()) return;
-            if (this.ModItemPower(CurUser, GetSelectItem(sender), 5))
-            {
-                ReadItems();
-            }
-        }
-
-        private void contentMenuItemPowers10_Click(object sender, EventArgs e)
-        {
-            if (!CheckItem()) return;
-            if (this.ModItemPower(CurUser, GetSelectItem(sender), 10))
-            {
-                ReadItems();
-            }
-        }
-
-        private void contentMenuItemPowers12_Click(object sender, EventArgs e)
-        {
-            if (!CheckItem()) return;
-            if (this.ModItemPower(CurUser, GetSelectItem(sender), 12))
-            {
-                ReadItems();
-            }
-        }
-        private void contentMenuItemPower13_Click(object sender, EventArgs e)
-        {
-            if (!CheckItem()) return;
-            if (this.ModItemPower(CurUser, GetSelectItem(sender), 13))
-            {
-                ReadItems();
-            }
-        }
-        private void contentMenuItemPowers15_Click(object sender, EventArgs e)
-        {
-            if (!CheckItem()) return;
-            if (this.ModItemPower(CurUser, GetSelectItem(sender), 15))
-            {
-                ReadItems();
-            }
-        }
-        private void contentMenuItemMaxStar_Click(object sender, EventArgs e)
-        {
-            if (!CheckItem()) return;
-            if (this.MaxStar(CurUser, GetSelectItems(sender)))
-            {
-                ReadItems();
-            }
-        }
-
-        private void contentMenuItemUnLimitTime_Click(object sender, EventArgs e)
-        {
-            if (!CheckItem()) return;
-            if (this.UnLimitTime(CurUser, GetSelectItems(sender)))
-            {
-                ReadItems();
-            }
-        }
-        /*
-        private void contentMennuAllMaxStar_Click(object sender, EventArgs e)
-        {
-            if (!CheckItem()) return;
-            if (this.MaxStar(CurUser, GetItems(sender)))
-            {
-                ReadItems();
-            }
-        }
-        private void contentMenuItemAllUnLimitTime_Click(object sender, EventArgs e)
-        {
-            if (!CheckItem()) return;
-            if (this.UnLimitTime(CurUser, GetItems(sender)))
-            {
-                ReadItems();
-            }
-        }*/
         #endregion
 
         #region 搜索相关
@@ -735,10 +608,12 @@ namespace GMTool
             User user = this.list_users.GetSelectItem<User>();
             if (user != null)
             {
+                this.NormalCurItem = 0;
+                this.CashCurItem = 0;
                 this.CurUser = user;
                 this.Text = this.DefTitle + "  - " + user.ToString();
                 ReadMails();
-                ReadItems();
+                ReadPackage(PackageType.All);
                 this.AddTitles(this.contentMenuUserAddTitle, this.GetTitles(CurUser));
                 this.AddClasses(CurUser, this.contentMenuUserClasses);
             }
@@ -790,7 +665,7 @@ namespace GMTool
 
         private Color SelectColor(Color def1, Color def2, Color def3, Color def)
         {
-            if (!CheckItem()) return def;
+            if (!CheckUser()) return def;
             if (colorDialog == null)
             {
                 colorDialog = new ColorDialog();
@@ -827,48 +702,6 @@ namespace GMTool
             this.tb_color2.Enabled = enable;
             this.tb_color3.Enabled = enable;
         }
-        public bool CheckItem()
-        {
-            bool b = CurItem != null;
-            if (!b)
-            {
-                this.Warnning("没有选中物品");
-            }
-            return b;
-        }
-        public bool CheckUser()
-        {
-            bool b = CurUser != null;
-            if (!b)
-            {
-                this.Warnning("没有选择用户");
-            }
-            return b;
-        }
-        private void contentMenuColor1_Click(object sender, EventArgs e)
-        {
-            this.ModItemColor(CurUser, lb_color1.BackColor.ToArgb(), 0, 0, GetSelectItems(sender));
-            ReadItems();
-        }
-
-        private void contentMenuColor2_Click(object sender, EventArgs e)
-        {
-            this.ModItemColor(CurUser, 0, lb_color2.BackColor.ToArgb(), 0, GetSelectItems(sender));
-            ReadItems();
-        }
-
-        private void contentMenuColor3_Click(object sender, EventArgs e)
-        {
-            this.ModItemColor(CurUser, 0, 0, lb_color3.BackColor.ToArgb(), GetSelectItems(sender));
-            ReadItems();
-        }
-
-        private void contentMenuColorAll_Click(object sender, EventArgs e)
-        {
-            this.ModItemColor(CurUser, lb_color1.BackColor.ToArgb(), lb_color2.BackColor.ToArgb(), lb_color3.BackColor.ToArgb(), GetSelectItems(sender));
-            ReadItems();
-        }
-
 
         private void lb_color1_Click(object sender, EventArgs e)
         {
@@ -896,8 +729,242 @@ namespace GMTool
                 lb_color3.BackColor = color;
             }
         }
+
         #endregion
 
- 
+        #region 普通物品菜单
+        private void contentMenuItemRefesh_Click(object sender, EventArgs e)
+        {
+            if (!CheckUser()) return;
+            ReadPackage(PackageType.Normal);
+        }
+        private void contentMenuDeleteItems_Click(object sender, EventArgs e)
+        {
+            if (!CheckUser()) return;
+            if (this.DeleteItem(CurUser, this.list_items_normal.GetSelectItems<Item>()))
+            {
+                ReadPackage(PackageType.Normal);
+            }
+        }
+
+        private void contentMenuItemPower5_Click(object sender, EventArgs e)
+        {
+            PowerItem(5);
+        }
+
+        private void contentMenuItemPower10_Click(object sender, EventArgs e)
+        {
+            PowerItem(10);
+        }
+
+        private void contentMenuItemPower12_Click(object sender, EventArgs e)
+        {
+            PowerItem(12);
+        }
+
+        private void contentMenuItemPower13_Click(object sender, EventArgs e)
+        {
+            PowerItem(13);
+        }
+
+        private void contentMenuItemPower15_Click(object sender, EventArgs e)
+        {
+            PowerItem(15);
+        }
+
+        private void contentMenuItemPower0_Click(object sender, EventArgs e)
+        {
+            PowerItem(0);
+        }
+        private void PowerItem(int level)
+        {
+            if (!CheckUser()) return;
+            if (this.ModItemPower(CurUser, this.list_items_normal.GetSelectItem<Item>(), level))
+            {
+                ReadPackage(PackageType.Normal);
+            }
+        }
+        private void contentMenuItemMaxStar_Click(object sender, EventArgs e)
+        {
+            if (!CheckUser()) return;
+            if (this.MaxStar(CurUser, this.list_items_normal.GetSelectItems<Item>()))
+            {
+                ReadPackage(PackageType.Normal);
+            }
+        }
+
+        private void contentMenuItemUnLimitTime_Click(object sender, EventArgs e)
+        {
+            if (!CheckUser()) return;
+            if (this.UnLimitTime(CurUser, this.list_items_normal.GetSelectItems<Item>()))
+            {
+                ReadPackage(PackageType.Normal);
+            }
+        }
+        private void contentMenuColor1_Click(object sender, EventArgs e)
+        {
+            if (!CheckUser()) return;
+            this.ModItemColor(CurUser, lb_color1.BackColor.ToArgb(), 0, 0, this.list_items_normal.GetSelectItems<Item>());
+            ReadPackage(PackageType.Normal);
+        }
+
+        private void contentMenuColor2_Click(object sender, EventArgs e)
+        {
+            if (!CheckUser()) return;
+            this.ModItemColor(CurUser, 0, lb_color2.BackColor.ToArgb(), 0, this.list_items_normal.GetSelectItems<Item>());
+            ReadPackage(PackageType.Normal);
+        }
+
+        private void contentMenuColor3_Click(object sender, EventArgs e)
+        {
+            if (this.ModItemColor(CurUser, 0, 0, lb_color3.BackColor.ToArgb(), this.list_items_normal.GetSelectItems<Item>()))
+            {
+                ReadPackage(PackageType.Normal);
+            }
+        }
+
+        private void contentMenuColorAll_Click(object sender, EventArgs e)
+        {
+            if (this.ModItemColor(CurUser,
+                lb_color1.BackColor.ToArgb(), lb_color2.BackColor.ToArgb(), lb_color3.BackColor.ToArgb(),
+                this.list_items_normal.GetSelectItems<Item>()))
+            {
+                ReadPackage(PackageType.Normal);
+            }
+        }
+
+
+        /*
+        private void contentMennuAllMaxStar_Click(object sender, EventArgs e)
+        {
+            if (!CheckItem()) return;
+            if (this.MaxStar(CurUser, GetItems(sender)))
+            {
+                ReadItems();
+            }
+        }
+        private void contentMenuItemAllUnLimitTime_Click(object sender, EventArgs e)
+        {
+            if (!CheckItem()) return;
+            if (this.UnLimitTime(CurUser, GetItems(sender)))
+            {
+                ReadItems();
+            }
+        }*/
+        #endregion
+
+        #region 现金背包菜单
+        private void contentMenuCashDelete_Click(object sender, EventArgs e)
+        {
+            if (!CheckUser()) return;
+            if (this.DeleteItem(CurUser, this.list_items_cash.GetSelectItems<Item>()))
+            {
+                ReadPackage(PackageType.Cash);
+            }
+        }
+
+        private void contentMenuCashRefresh_Click(object sender, EventArgs e)
+        {
+            if (!CheckUser()) return;
+            ReadPackage(PackageType.Cash);
+        }
+        private void contentMenuCashColorAll_Click(object sender, EventArgs e)
+        {
+            if (!CheckUser()) return;
+            this.ModItemColor(CurUser, lb_color1.BackColor.ToArgb(), 0, 0, this.list_items_cash.GetSelectItems<Item>());
+            ReadPackage(PackageType.Cash);
+        }
+
+        private void contentMenuCashColor3_Click(object sender, EventArgs e)
+        {
+            if (!CheckUser()) return;
+            this.ModItemColor(CurUser, lb_color1.BackColor.ToArgb(), 0, 0, this.list_items_cash.GetSelectItems<Item>());
+            ReadPackage(PackageType.Cash);
+        }
+
+        private void contentMenuCashColor2_Click(object sender, EventArgs e)
+        {
+            if (!CheckUser()) return;
+            this.ModItemColor(CurUser, lb_color1.BackColor.ToArgb(), 0, 0, this.list_items_cash.GetSelectItems<Item>());
+            ReadPackage(PackageType.Cash);
+        }
+
+        private void contentMenuCashColor1_Click(object sender, EventArgs e)
+        {
+            if (!CheckUser()) return;
+            this.ModItemColor(CurUser, lb_color1.BackColor.ToArgb(), 0, 0, this.list_items_cash.GetSelectItems<Item>());
+            ReadPackage(PackageType.Cash);
+        }
+
+        private void contentMenuCashUnlimitTime_Click(object sender, EventArgs e)
+        {
+            if (!CheckUser()) return;
+            if (this.UnLimitTime(CurUser, this.list_items_cash.GetSelectItems<Item>()))
+            {
+                ReadPackage(PackageType.Cash);
+            }
+        }
+        #endregion
+
+        #region 任务/隐藏物品
+        private ListView GetItemMenu(object sender)
+        {
+            ToolStripMenuItem menu = sender as ToolStripMenuItem;
+            Control parent = null;
+            ListView listview = null;
+            if (menu != null)
+            {
+                parent = menu.GetMenuConrtol();
+            }
+            if (parent == this.list_items_other)
+            {
+                listview = this.list_items_other;
+            }
+            else if (parent == this.list_items_quest)
+            {
+                listview = this.list_items_quest;
+            }
+            return listview;
+        }
+        private void contentMenuQuestUnlimit_Click(object sender, EventArgs e)
+        {
+            if (!CheckUser()) return;
+            ListView listview = GetItemMenu(sender);
+            if (listview == null) return;
+            if (this.DeleteItem(CurUser, listview.GetSelectItems<Item>()))
+            {
+                contentMenuOtherRefresh_Click(sender, e);
+            }
+        }
+
+        private void contentMenuQuestDelete_Click(object sender, EventArgs e)
+        {
+            if (!CheckUser()) return;
+            ListView listview = GetItemMenu(sender);
+            if (listview == null) return;
+            if (this.Question("这是特殊背包的物品，删除可能会出现问题。\n确定删除选中的物品？"))
+            {
+                if (this.UnLimitTime(CurUser, listview.GetSelectItems<Item>()))
+                {
+                    contentMenuOtherRefresh_Click(sender, e);
+                }
+            }
+        }
+        private void contentMenuOtherRefresh_Click(object sender, EventArgs e)
+        {
+            if (!CheckUser()) return;
+            ListView listview = GetItemMenu(sender);
+            if (listview == null) return;
+            if (listview == this.list_items_quest)
+            {
+                ReadPackage(PackageType.Quest);
+            }
+            else
+            {
+                ReadPackage(PackageType.Other);
+            }
+        }
+        #endregion
+
     }
 }

@@ -19,7 +19,7 @@ namespace System.Drawing
         {
             try
             {
-                return ColorTranslator.FromHtml(i);
+                return ColorTranslator.FromHtml(CheckColorString(i));
             }
             catch (Exception)
             {
@@ -32,7 +32,16 @@ namespace System.Drawing
             {
                 return "#FFFFFF";
             }
-            string str = color.ToString("X");
+            return CheckColorString(color.ToString("X"));
+        }
+
+        private static string CheckColorString(string str)
+        {
+            if (str == null) return "#FFFFFF";
+            if (str.StartsWith("#"))
+            {
+                str = str.Substring(1);
+            }
             if (str.Length != 6 && str.Length != 8)
             {
                 if (str.Length < 6)
@@ -48,7 +57,14 @@ namespace System.Drawing
                     return "#F" + str;
                 }
             }
-            return "#"+str;
+            if (str.Length == 8)
+            {
+                if (str.StartsWith("FF"))
+                {
+                    str = str.Substring(2);
+                }
+            }
+            return "#" + str;
         }
         public static string ColorString(this Color i)
         {

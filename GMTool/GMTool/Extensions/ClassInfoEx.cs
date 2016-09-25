@@ -41,12 +41,12 @@ namespace GMTool.Extensions
 		/// <summary>
 		/// 索引
 		/// </summary>
-		public static ClassInfo GetClass(this int i){
+		public static ClassInfo ToClassInfo(this int i){
 			if(i >= 0 && i < Indexs.Length)
 				return (ClassInfo)Indexs[i];
 			return ClassInfo.UnKnown;
 		}
-        public static ClassInfo GetClass(this string name)
+        public static ClassInfo ToClassInfo(this string name)
         {
             try
             {

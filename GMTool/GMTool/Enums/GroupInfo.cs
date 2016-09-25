@@ -15,7 +15,8 @@ namespace GMTool.Enums
 	/// </summary>
 	public enum GroupInfo
 	{
-		Dark=0,
-		Light=1
+        Light = 0,
+        Dark =1,
+        Unknown=999
 	}
 }

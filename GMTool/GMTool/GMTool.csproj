@@ -91,6 +91,7 @@
     <Compile Include="Enums\AttributeType.cs" />
     <Compile Include="Enums\Category.cs" />
     <Compile Include="Enums\ClassInfo.cs" />
+    <Compile Include="Extensions\GroupExtension.cs" />
     <Compile Include="Enums\GroupInfo.cs" />
     <Compile Include="Enums\SubCategory.cs" />
     <Compile Include="Enums\PackageType.cs" />
@@ -99,7 +100,7 @@
     <Compile Include="Extensions\ClassInfoEx.cs" />
     <Compile Include="Common\FormExpress.cs" />
     <Compile Include="Extensions\ColorEx.cs" />
-    <Compile Include="Extensions\ItemTradeCategoryEx.cs" />
+    <Compile Include="Extensions\MainCategoryEx.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\MainFormExtensions.cs" />
     <Compile Include="Common\DbHelper.cs" />

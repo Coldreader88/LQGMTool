@@ -59,22 +59,32 @@ namespace GMTool
             int k = 0;
             User user = main.CurUser;
             if (user == null) return;
-            ToolStripMenuItem level = new ToolStripMenuItem("lv." + (k * 10 + 1) + "-" + ((k + 1) * 10 - 1));
+            ToolStripMenuItem level = new ToolStripMenuItem("lv." + (k * 10 + 1) + "-" + ((k + 1) * 10));
+            menuitem.DropDownItems.Add(level);
+            int max = 20;
+            int i = 0;
             foreach (TitleInfo cls in titles)
             {
-                if (cls.RequiredLevel / 10 == k)
+                if (!user.IsEnable(cls.ClassRestriction))
                 {
-                    if (!user.IsEnable(cls.ClassRestriction))
+                    continue;
+                }
+                if (cls.OnlyClass != ClassInfo.UnKnown)
+                {
+                    if (user.Class != cls.OnlyClass)
                     {
                         continue;
                     }
-                    if (cls.OnlyClass != ClassInfo.UnKnown)
+                }
+                
+                if (cls.RequiredLevel <= (k + 1) * 10)
+                {
+                    if (i % max == 0 && i >= max)
                     {
-                        if (user.Class != cls.OnlyClass)
-                        {
-                            continue;
-                        }
+                        level = new ToolStripMenuItem("lv." + (k * 10 + 1) + "-" + ((k + 1) * 10) + "(" + (i / max + 1) + ")");
+                        menuitem.DropDownItems.Add(level);
                     }
+                    i++;
                     ToolStripMenuItem tsmi = new ToolStripMenuItem("lv." + cls.RequiredLevel + " " + cls.Name);
                     tsmi.Tag = cls;
                     tsmi.ToolTipText = cls.ToString();
@@ -85,7 +95,7 @@ namespace GMTool
                     }
                     else
                     {
-                        tsmi.Click += (object sender, EventArgs e)=> {
+                        tsmi.Click += (object sender, EventArgs e) => {
                             if (!main.CheckUser()) return;
                             ToolStripMenuItem menu = sender as ToolStripMenuItem;
                             if (menu != null && menu.Tag != null)
@@ -106,21 +116,62 @@ namespace GMTool
                 }
                 else
                 {
-                    k++;
-                    level = new ToolStripMenuItem("lv." + (k * 10 + 1) + "-" + ((k + 1) * 10 - 1));
+                    i = 0;
+                    k = cls.RequiredLevel / 10;
+                    level = new ToolStripMenuItem("lv." + (k * 10 + 1) + "-" + ((k + 1) * 10));
                     menuitem.DropDownItems.Add(level);
                 }
             }
         }
-        public static void InitEnchantMenu(this MainForm main, ToolStripDropDownItem prefixmenuitem, ToolStripDropDownItem suffixmenuitem)
+
+        public static void InitCashEnchantMenu(this MainForm main, ToolStripDropDownItem inner,ListView listview)
+        {
+            //contentMenuCashInnerEnchant
+            inner.DropDownItems.Clear();
+            EnchantInfo[] enchantinfos = main.DataHelper.GetEnchantInfos();
+            foreach (EnchantInfo info in enchantinfos)
+            {
+                ToolStripMenuItem tsmi = new ToolStripMenuItem(info.Name);
+                tsmi.Tag = info;
+                tsmi.ToolTipText = info.ToString();//提示文字为真实路径
+                tsmi.Click += (object sender, EventArgs e) => {
+                    ToolStripMenuItem menu = sender as ToolStripMenuItem;
+                    if (menu != null && menu.Tag != null)
+                    {
+                        EnchantInfo _info = menu.Tag as EnchantInfo;
+                        Item item = listview.GetSelectItem<Item>();
+                        if (_info != null && item!=null)
+                        {
+                            //附魔
+                            if (main.Enchant(item, _info))
+                            {
+                                main.log(item.ItemName + " 附魔【" + _info.Name + "】成功。");
+                                main.ReadPackage(item.Package);
+                            }
+                            else
+                            {
+                                //main.Warnning(item.ItemName + " 附魔【" + _info.Name + "】失败。");
+                                main.log(item.ItemName + " 附魔【" + _info.Name + "】失败。");
+                            }
+                        }
+                    }
+                };
+                if (info.Constraint!=null && info.Constraint.Contains(SubCategory.INNERARMOR.ToString()))
+                {
+                    if (!info.Class.EndsWith("day7"))
+                    {
+                        inner.DropDownItems.Add(tsmi);
+                    }
+                }
+            }
+        }
+        public static void InitEnchantMenu(this MainForm main, ToolStripDropDownItem prefixmenuitem, ToolStripDropDownItem suffixmenuitem,ListView listview)
         {
             prefixmenuitem.DropDownItems.Clear();
             suffixmenuitem.DropDownItems.Clear();
             EnchantInfo[] enchantinfos = main.DataHelper.GetEnchantInfos();
             ToolStripMenuItem prelist = null;
             ToolStripMenuItem suflist = null;
-            ToolStripMenuItem inner = new ToolStripMenuItem("内衣专属附魔");
-            prefixmenuitem.DropDownItems.Add(inner);
             int li=0, lj = 0;
             int maxi = 0, maxj = 0;
             int max = 10;
@@ -130,23 +181,23 @@ namespace GMTool
                 tsmi.Tag = info;
                 tsmi.ToolTipText = info.ToString();//提示文字为真实路径
                 tsmi.Click += (object sender, EventArgs e)=> {
-                    if (!main.CheckItem()) return;
+                    Item item = listview.GetSelectItem<Item>();
                     ToolStripMenuItem menu = sender as ToolStripMenuItem;
-                    if (menu != null && menu.Tag != null)
+                    if (menu != null && menu.Tag != null && item!=null)
                     {
                         EnchantInfo _info = menu.Tag as EnchantInfo;
                         if (_info != null)
                         {
                             //附魔
-                            if (main.Enchant(main.CurItem, _info))
+                            if (main.Enchant(item, _info))
                             {
-                                main.log(main.CurItem.ItemName + " 附魔【" + _info.Name + "】成功。");
-                                main.ReadItems();
+                                main.log(item.ItemName + " 附魔【" + _info.Name + "】成功。");
+                                main.ReadPackage(item.Package);
                             }
                             else
                             {
-                                main.Warnning(main.CurItem.ItemName + " 附魔【" + _info.Name + "】失败。");
-                                main.log(main.CurItem.ItemName + " 附魔【" + _info.Name + "】失败。");
+                               // main.Warnning(item.ItemName + " 附魔【" + _info.Name + "】失败。");
+                                main.log(item.ItemName + " 附魔【" + _info.Name + "】失败。");
                             }
                         }
                     }
@@ -166,14 +217,7 @@ namespace GMTool
                         prelist = new ToolStripMenuItem("等级：" + li + "-" + (maxi / max+1));
                         prefixmenuitem.DropDownItems.Add(prelist);
                     }
-                    if (info.Constraint == SubCategory.INNERARMOR.ToString())
-                    {
-                        if (!info.Class.EndsWith("day7"))
-                        {
-                            inner.DropDownItems.Add(tsmi);
-                        }
-                    }
-                    else
+                    if (info.Constraint != SubCategory.INNERARMOR.ToString())
                     {
                         maxi++;
                         prelist.DropDownItems.Add(tsmi);

@@ -37,7 +37,30 @@ namespace GMTool.Bean
             this.ItemClass = ItemClass;
             this.MainCategory = ItemType;
         }
-
+        /// <summary>
+        /// 背包类型
+        /// </summary>
+        public PackageType Package
+        {
+            get
+            {
+                if (Collection < 100)
+                {
+                    return PackageType.Normal;
+                } else if (Collection == (int)PackageType.Cash) {
+                    return PackageType.Cash;
+                }
+                else if (Collection == (int)PackageType.Quest)
+                {
+                    return PackageType.Quest;
+                }
+                else if (Collection == (int)PackageType.Other)
+                {
+                    return PackageType.Other;
+                }
+                return PackageType.All;
+            }
+        }
         public void Attach(ItemClassInfo info)
         {
             if (info != null)
