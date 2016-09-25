@@ -94,21 +94,22 @@
     <Compile Include="Enums\GroupInfo.cs" />
     <Compile Include="Enums\SubCategory.cs" />
     <Compile Include="Enums\PackageType.cs" />
-    <Compile Include="Extensions\ArrayList.cs" />
+    <Compile Include="Common\ArrayList.cs" />
     <Compile Include="Extensions\CategoryEx.cs" />
     <Compile Include="Extensions\ClassInfoEx.cs" />
-    <Compile Include="Extensions\FormExpress.cs" />
+    <Compile Include="Common\FormExpress.cs" />
     <Compile Include="Extensions\ItemTradeCategoryEx.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\MainFormExtensions.cs" />
-    <Compile Include="Helper\DbHelper.cs" />
+    <Compile Include="Common\DbHelper.cs" />
+    <Compile Include="Extensions\MenuExtensions.cs" />
     <Compile Include="Helper\HeroesTextHelper.cs" />
-    <Compile Include="Helper\IniHelper.cs" />
+    <Compile Include="Common\IniHelper.cs" />
     <Compile Include="Helper\DbInfoHelper.cs" />
-    <Compile Include="Helper\MSSqlHelper.cs" />
+    <Compile Include="Common\MSSqlHelper.cs" />
     <Compile Include="Helper\SearchHelper.cs" />
-    <Compile Include="Helper\SQLiteHelper.cs" />
-    <Compile Include="Helper\ChineseTextHelper.cs" />
+    <Compile Include="Common\SQLiteHelper.cs" />
+    <Compile Include="Common\ChineseTextHelper.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,7 +118,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="win32\Kernel32.cs" />
+    <Compile Include="Common\win32\Kernel32.cs" />
     <EmbeddedResource Include="ChangeNameForm.resx">
       <DependentUpon>ChangeNameForm.cs</DependentUpon>
     </EmbeddedResource>

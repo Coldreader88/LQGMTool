@@ -57,7 +57,7 @@ namespace GMTool
 		#endregion
 
 		#region 读取数据
-		public static List<User> ReadUserList(this MainForm main)
+		public static List<User> ReadAllUsers(this MainForm main)
 		{
 			List<User> userList = new List<User>();
 			using (DbDataReader reader = db.GetReader(SQL_QUERY_USERS))
@@ -88,9 +88,11 @@ namespace GMTool
 			{
 				while (reader != null && reader.Read())
 				{
-					Mail item = new Mail(
+                    string title = reader.ReadString("MailTitle");
+                    title = DbInfoHelper.Get().GetMailTitle(title);
+                    Mail item = new Mail(
 						reader.ReadInt64("RowID"),
-						reader.ReadString("MailTitle"),
+                        title,
 						reader.ReadString("MailContent")
 					);
 					item.Count = reader.ReadInt32("Count");

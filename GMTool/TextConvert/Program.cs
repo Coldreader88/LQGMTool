@@ -75,7 +75,7 @@ namespace TextConvert
                             {
                                 outfile = args[2];
                             }
-                            string listfile = "ignore.txt";
+                            string listfile = "include.txt";
                             if (args.Length > 3)
                             {
                                 listfile = args[3];

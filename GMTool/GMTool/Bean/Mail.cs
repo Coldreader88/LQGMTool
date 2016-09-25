@@ -20,7 +20,7 @@ namespace GMTool.Bean
         }
         public override string ToString()
         {
-            string txt="【"+Title+"】";
+            string txt="["+Title+"]";
             if (Count > 0)
             {
                 txt +=  Count;

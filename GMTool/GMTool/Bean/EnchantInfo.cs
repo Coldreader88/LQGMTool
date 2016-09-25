@@ -14,6 +14,7 @@ namespace GMTool.Bean
         public string Desc;
         public string Effect;
         public bool IsPrefix = true;
+        public int EnchantLevel;
         public int MinArg;
         public int MaxArg;
         public string GetValue()
@@ -22,7 +23,8 @@ namespace GMTool.Bean
         }
         public override string ToString()
         {
-            return Name+ "\n" + Desc + "\n" + Effect;
+            string txt= Name+ "\n" + Class+"\n"+Desc + "\n" + Effect;
+            return txt;
         }
     }
 }

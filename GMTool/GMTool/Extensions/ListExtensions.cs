@@ -14,6 +14,42 @@ namespace GMTool.Extensions
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="tag"></param>
+        /// <param name="listview"></param>
+        /// <param name="mails"></param>
+        /// <returns>is send</returns>
+        public static int AddMails(this MainForm main, string tag, ListView listview, List<Mail> mails)
+        {
+            //TODO
+            int count = mails.Count;
+            //TODO
+            listview.BeginUpdate();
+            listview.Items.Clear();
+
+            if (count >= 0)
+            {
+                ListViewItem[] items = new ListViewItem[count];
+                for (int i = 0; i < count; i++)
+                {
+                    Mail u = mails[i];
+                    items[i] = new ListViewItem();
+                    items[i].Tag = u;
+                    items[i].Text = u.Title;
+                    if (i % 2 == 0)
+                        items[i].BackColor = Color.GhostWhite;
+                    else
+                        items[i].BackColor = Color.White;
+                    items[i].ToolTipText = u.ToString();
+                }
+                listview.Items.AddRange(items);
+            }
+            listview.EndUpdate();
+            return count;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="main"></param>
         /// <param name="t"></param>
         /// <param name="info"></param>

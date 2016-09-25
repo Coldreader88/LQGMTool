@@ -21,7 +21,9 @@ namespace GMTool.Helper
 	{
 		#region
 		static DbInfoHelper sItemClassInfoHelper = null;
-		public static DbInfoHelper Get()
+        public Dictionary<string, string> MailTitles { get; private set; }
+
+        public static DbInfoHelper Get()
 		{
 			return sItemClassInfoHelper;
 		}
@@ -64,7 +66,8 @@ namespace GMTool.Helper
 			}
 			HeroesTextHelper HeroesText  = new HeroesTextHelper();
 			HeroesText.Read(textFile);
-			SQLiteHelper db = new SQLiteHelper(dbFile);
+            MailTitles = HeroesText.MailTitles;
+            SQLiteHelper db = new SQLiteHelper(dbFile);
 			db.Open();
 			ReadItems(db,HeroesText );
 			ReadEnchants(db,HeroesText);
@@ -172,7 +175,8 @@ namespace GMTool.Helper
 					info.IsPrefix = reader2.ReadBoolean("IsPrefix");
 					info.MinArg = reader2.ReadInt32("MinArgValue");
 					info.MaxArg = reader2.ReadInt32("MaxArgValue");
-					string var;
+                    info.EnchantLevel = reader2.ReadInt32("EnchantLevel");
+                    string var;
 					if (info.IsPrefix)
 					{
 						if(!HeroesText.PrefixNames.TryGetValue(info.Class, out info.Name)){
@@ -225,9 +229,20 @@ namespace GMTool.Helper
 				}
 			}
 		}
-		#endregion
-		
-		#region Cache/Get
+        #endregion
+
+        #region Cache/Get
+        public string GetMailTitle(string title)
+        {
+            if (title.StartsWith("#")) {
+                string t;
+                if (MailTitles.TryGetValue(title.Substring(1).ToLower(), out t))
+                {
+                    return t;
+                }
+            }
+            return title;
+        }
 		public TitleInfo GetTitle(int id){
 			TitleInfo info = new TitleInfo();
 			Titles.TryGetValue(id, out info);

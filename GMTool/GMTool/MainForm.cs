@@ -50,8 +50,8 @@ namespace GMTool
             this.list_items_normal.Items.Clear();
             this.list_search.Items.Clear();
             this.tb_logcat.Text = "";
-            AddTypes();
-            AddClasses();
+            this.AddTypes(this.cb_maincategory, this.cb_subcategory);
+            this.AddClasses(this.contentMenuUserClasses);
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -69,7 +69,7 @@ namespace GMTool
                 CurItem = null;
                 CurUser = null;
                 this.CloseDataBase();
-               
+
                 SetMssqlEnable(true);
                 AddUserList(new List<User>());
                 AddSearchItemList(new List<ItemClassInfo>());
@@ -90,14 +90,14 @@ namespace GMTool
                         return;
                     }
                     //初始化菜单
-                    InitEnchantMenu();
+                    this.InitEnchantMenu(this.contentMenuEnchantPrefix, this.contentMenuEnchantSuffix);
                 }
                 if (this.connectDataBase(this.tb_mssql_server.Text, this.tb_mssql_user.Text, this.tb_mssql_pwd.Text, this.tb_mssql_db.Text))
                 {
                     SetAllEnable(true);
                     SetMssqlEnable(false);
                     this.tb_logcat.Text = "";
-                    AddUserList(this.ReadUserList());
+                    ReadUsers();
                 }
                 else
                 {
@@ -142,178 +142,8 @@ namespace GMTool
         }
         #endregion
 
-
-        #region 菜单初始化
-        private void AddTitles(List<long> titleIds)
-        {
-            this.contentMenuUserAddTitle.DropDownItems.Clear();
-            TitleInfo[] titles = DataHelper.GetTitles();
-            int k = 0;
-            User user = CurUser;
-            if (user == null) return;
-            ToolStripMenuItem level = new ToolStripMenuItem("lv." + (k * 10 + 1) + "-" + ((k + 1) * 10 - 1));
-            foreach (TitleInfo cls in titles)
-            {
-                if (cls.RequiredLevel / 10 == k)
-                {
-                    if (!user.IsEnable(cls.ClassRestriction))
-                    {
-                        continue;
-                    }
-                    if (cls.OnlyClass != ClassInfo.UnKnown)
-                    {
-                        if (user.Class != cls.OnlyClass)
-                        {
-                            continue;
-                        }
-                    }
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem("lv." + cls.RequiredLevel + " " + cls.Name);
-                    tsmi.Tag = cls;
-                    tsmi.ToolTipText = cls.ToString();
-
-                    if (titleIds.Contains(cls.TitleID))
-                    {
-                        tsmi.Checked = true;
-                    }
-                    else
-                    {
-                        tsmi.Click += Titles_Click;
-                    }
-                    level.DropDownItems.Add(tsmi);
-                }
-                else
-                {
-                    k++;
-                    level = new ToolStripMenuItem("lv." + (k * 10 + 1) + "-" + ((k + 1) * 10 - 1));
-                    this.contentMenuUserAddTitle.DropDownItems.Add(level);
-                }
-            }
-        }
-        private void Titles_Click(object sender, EventArgs e)
-        {
-            if (!CheckUser()) return;
-            ToolStripMenuItem menu = sender as ToolStripMenuItem;
-            if (menu != null && menu.Tag != null)
-            {
-                TitleInfo info = (TitleInfo)menu.Tag;
-                if (!CurUser.IsEnable(info.ClassRestriction))
-                {
-                    this.Info("该头衔不适合当前职业");
-                    return;
-                }
-                //
-                this.AddTitle(CurUser, info);
-                AddUserList(this.ReadUserList());
-            }
-        }
-        private void AddClasses()
-        {
-            this.contentMenuUserClasses.DropDownItems.Clear();
-            Array classes = Enum.GetValues(typeof(ClassInfo));
-            foreach (ClassInfo cls in classes)
-            {
-                if (cls != ClassInfo.UnKnown)
-                {
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(cls.Name());
-                    tsmi.Tag = cls;
-                    tsmi.ToolTipText = cls.ToString() + " " + cls.Index();
-                    tsmi.Click += Classes_Click;
-                    this.contentMenuUserClasses.DropDownItems.Add(tsmi);
-                }
-            }
-        }
-        private void Classes_Click(object sender, EventArgs e)
-        {
-            if (!CheckUser()) return;
-            ToolStripMenuItem menu = sender as ToolStripMenuItem;
-            if (menu != null && menu.Tag != null)
-            {
-                ClassInfo info = (ClassInfo)menu.Tag;
-                //
-                if (this.ModUserClass(CurUser, info))
-                {
-                    AddUserList(this.ReadUserList());
-                }
-            }
-        }
-        private void InitEnchantMenu()
-        {
-            this.contentMenuEnchantPrefix.DropDownItems.Clear();
-            this.contentMenuEnchantSuffix.DropDownItems.Clear();
-            EnchantInfo[] enchantinfos = DataHelper.GetEnchantInfos();
-            int i = 0, j = 0;
-            int max = 10;
-            ToolStripMenuItem prelist = null;
-            ToolStripMenuItem suflist = null;
-            foreach (EnchantInfo info in enchantinfos)
-            {
-                if (info.IsPrefix)
-                {
-                    if (prelist == null || i % max == 0)
-                    {
-                        prelist = new ToolStripMenuItem(i + "-" + (i + max));
-                        this.contentMenuEnchantPrefix.DropDownItems.Add(prelist);
-                    }
-                    i++;
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(info.Name);
-                    tsmi.Tag = info;
-                    tsmi.ToolTipText = info.ToString();//提示文字为真实路径
-                    tsmi.Click += Enchant_Click;
-                    prelist.DropDownItems.Add(tsmi);
-                }
-                else
-                {
-                    if (suflist == null || j % max == 0)
-                    {
-                        suflist = new ToolStripMenuItem(j + "-" + (j + max));
-                        this.contentMenuEnchantSuffix.DropDownItems.Add(suflist);
-                    }
-                    j++;
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem(info.Name);
-                    tsmi.Tag = info;
-                    tsmi.ToolTipText = info.ToString();//提示文字为真实路径
-                    tsmi.Click += Enchant_Click;
-                    suflist.DropDownItems.Add(tsmi);
-                }
-            }
-
-        }
-        private void Enchant_Click(object sender, EventArgs e)
-        {
-            if (!CheckItem()) return;
-            ToolStripMenuItem menu = sender as ToolStripMenuItem;
-            if (menu != null && menu.Tag != null)
-            {
-                EnchantInfo info = menu.Tag as EnchantInfo;
-                if (info != null)
-                {
-                    //附魔
-                    if (this.Enchant(CurItem, info))
-                    {
-                        log(CurItem.ItemName + " 附魔【" + info.Name + "】成功。");
-                        ReadItems();
-                    }
-                    else
-                    {
-                        this.Warnning(CurItem.ItemName + " 附魔【" + info.Name + "】失败。");
-                        log(CurItem.ItemName + " 附魔【" + info.Name + "】失败。");
-                    }
-                }
-            }
-        }
-        private void AddTypes()
-        {
-            this.cb_maincategory.Items.Clear();
-            this.cb_subcategory.Items.Clear();
-            this.cb_maincategory.Items.AddRange(MainCategoryEx.Values);
-            this.cb_subcategory.Items.AddRange(SubCategoryEx.Values);
-            this.cb_maincategory.SelectedIndex = 0;
-            this.cb_subcategory.SelectedIndex = 0;
-        }
-        #endregion
-
         #region 数据读取和添加
-        private void ReadItems()
+        public void ReadItems()
         {
             if (!CheckUser()) return;
             AddItemList(this.list_items_normal, this.ReadUserItems(CurUser, PackageType.Normal));
@@ -356,7 +186,6 @@ namespace GMTool
                 this.tb_senditem_class.Text = item.ItemClass;
             }
         }
-
         private void AddSearchItemList(List<ItemClassInfo> items)
         {
             int count = items.Count;
@@ -385,8 +214,7 @@ namespace GMTool
             this.list_search.EndUpdate();
             this.list_search.GoToRow(index);
         }
-
-        #region 添加物品
+        
         private void AddItemList(ListView listview, List<Item> items)
         {
             int count = items.Count;
@@ -430,8 +258,11 @@ namespace GMTool
             listview.EndUpdate();
             listview.GoToRow(index);
         }
-        #endregion
 
+        public void ReadUsers()
+        {
+            AddUserList(this.ReadAllUsers());
+        }
         private void AddUserList(List<User> users)
         {
             int count = users.Count;
@@ -468,7 +299,7 @@ namespace GMTool
             this.list_users.EndUpdate();
             this.list_users.GoToRow(index);
         }
-        private void log(string text)
+        public void log(string text)
         {
             if (this.tb_logcat.Text.Length >= this.tb_logcat.MaxLength - 1024)
             {
@@ -483,49 +314,37 @@ namespace GMTool
         }
         private void AddUserMails(List<Mail> mails)
         {
-            AddMails("[邮箱]", this.list_mail_user, mails);
+            int count = this.AddMails("[邮箱]", this.list_mail_user, mails);
+            this.tab_mail_user.Text = this.tab_mail_user.Text.Split(' ')[0] + " (" + count + ")";
         }
         private void AddSendMails(List<Mail> mails)
         {
-            AddMails("[发送中]", this.list_mail_send, mails);
+            int count = this.AddMails("[发送中]", this.list_mail_send, mails);
+            this.tab_mail_send.Text = this.tab_mail_send.Text.Split(' ')[0] + " (" + count + ")";
         }
-        private void AddMails(string tag, ListView listview, List<Mail> mails)
-        {
-            //TODO
-            int count = mails.Count;
-            //TODO
-            listview.BeginUpdate();
-            listview.Items.Clear();
-            if (listview == list_mail_send)
-            {
-                this.tab_mail_send.Text = this.tab_mail_send.Text.Split(' ')[0] + " (" + count + ")";
-            }
-            else
-            {
-                this.tab_mail_user.Text = this.tab_mail_user.Text.Split(' ')[0] + " (" + count + ")";
-            }
-            if (count >= 0)
-            {
-                ListViewItem[] items = new ListViewItem[count];
-                for (int i = 0; i < count; i++)
-                {
-                    Mail u = mails[i];
-                    items[i] = new ListViewItem();
-                    items[i].Tag = u;
-                    items[i].Text = u.Title;
-                    if (i % 2 == 0)
-                        items[i].BackColor = Color.GhostWhite;
-                    else
-                        items[i].BackColor = Color.White;
-                    items[i].ToolTipText = u.ToString();
-                }
-                listview.Items.AddRange(items);
-            }
-            listview.EndUpdate();
-        }
+
         #endregion
 
         #region 邮件列表菜单
+        private ListView GetMailMenu(object sender)
+        {
+            ToolStripMenuItem menu = sender as ToolStripMenuItem;
+            Control parent = null;
+            ListView listview = null;
+            if (menu != null)
+            {
+                parent = menu.GetMenuConrtol();
+            }
+            if (parent == this.list_mail_send)
+            {
+                listview = this.list_mail_send;
+            }
+            else if (parent == this.list_mail_user)
+            {
+                listview = this.list_mail_user;
+            }
+            return listview;
+        }
         private void contentMenuRefreshMail_Click(object sender, EventArgs e)
         {
             if (!CheckUser()) return;
@@ -535,23 +354,9 @@ namespace GMTool
         private void contentMenuDeleteMail_Click(object sender, EventArgs e)
         {
             if (!CheckUser()) return;
-            ToolStripMenuItem menu = sender as ToolStripMenuItem;
-            Control parent = null;
-            if (menu != null)
-            {
-                parent = menu.GetMenuConrtol();
-            }
-            ListView listview = null;
-            Boolean isSend = false;
-            if (parent == this.list_mail_send)
-            {
-                listview = this.list_mail_send;
-                isSend = true;
-            }
-            else if (parent == this.list_mail_user)
-            {
-                listview = this.list_mail_user;
-            }
+            ListView listview = GetMailMenu(sender);
+            bool isSend = listview == this.list_mail_send;
+
             if (listview != null)
             {
                 Mail[] mails = listview.GetSelectItems<Mail>();
@@ -576,23 +381,8 @@ namespace GMTool
         private void contentMenuDeleteAllMails_Click(object sender, EventArgs e)
         {
             if (!CheckUser()) return;
-            ToolStripMenuItem menu = sender as ToolStripMenuItem;
-            Control parent = null;
-            if (menu != null)
-            {
-                parent = menu.GetMenuConrtol();
-            }
-            ListView listview = null;
-            Boolean isSend = false;
-            if (parent == this.list_mail_send)
-            {
-                listview = this.list_mail_send;
-                isSend = true;
-            }
-            else if (parent == this.list_mail_user)
-            {
-                listview = this.list_mail_user;
-            }
+            ListView listview = GetMailMenu(sender);
+            bool isSend = listview == this.list_mail_send;
             if (listview != null)
             {
                 Mail[] mails = listview.GetItems<Mail>();
@@ -654,7 +444,6 @@ namespace GMTool
         #endregion
 
         #region 用户列表菜单
-
         private void ContentMenuUserTitlesClick(object sender, EventArgs e)
         {
             if (this.Question("是否获取全部头衔？"))
@@ -711,7 +500,7 @@ namespace GMTool
                 if (form.ShowDialog() == DialogResult.OK)
                 {
                     log("成功修改用户[" + CurUser.Name + "]等级");
-                    AddUserList(this.ReadUserList());
+                    ReadUsers();
                 }
             }
         }
@@ -724,19 +513,19 @@ namespace GMTool
                 if (form.ShowDialog() == DialogResult.OK)
                 {
                     log("成功修改[" + CurUser.Name + "]名字");
-                    AddUserList(this.ReadUserList());
+                    ReadUsers();
                 }
             }
         }
 
         private void menuRefreshUsers_Click(object sender, EventArgs e)
         {
-            AddUserList(this.ReadUserList());
+            AddUserList(this.ReadAllUsers());
         }
         #endregion
 
         #region 物品菜单
-        private Item GetSelectItem(object sender)
+        private ListView GetItemMenu(object sender)
         {
             ToolStripMenuItem menu = sender as ToolStripMenuItem;
             Control parent = null;
@@ -754,6 +543,15 @@ namespace GMTool
                 listview = this.list_items_normal;
             }
             else
+            {
+                return null;
+            }
+            return listview;
+        }
+        private Item GetSelectItem(object sender)
+        {
+            ListView listview = GetItemMenu(sender);
+            if (listview == null)
             {
                 return null;
             }
@@ -761,22 +559,8 @@ namespace GMTool
         }
         private Item[] GetSelectItems(object sender)
         {
-            ToolStripMenuItem menu = sender as ToolStripMenuItem;
-            Control parent = null;
-            if (menu != null)
-            {
-                parent = menu.GetMenuConrtol();
-            }
-            ListView listview = null;
-            if (parent == this.list_items_cash)
-            {
-                listview = this.list_items_cash;
-            }
-            else if (parent == this.list_items_normal)
-            {
-                listview = this.list_items_normal;
-            }
-            else
+            ListView listview = GetItemMenu(sender);
+            if (listview == null)
             {
                 return null;
             }
@@ -784,22 +568,8 @@ namespace GMTool
         }
         private Item[] GetItems(object sender)
         {
-            ToolStripMenuItem menu = sender as ToolStripMenuItem;
-            Control parent = null;
-            if (menu != null)
-            {
-                parent = menu.GetMenuConrtol();
-            }
-            ListView listview = null;
-            if (parent == this.list_items_cash)
-            {
-                listview = this.list_items_cash;
-            }
-            else if (parent == this.list_items_normal)
-            {
-                listview = this.list_items_normal;
-            }
-            else
+            ListView listview = GetItemMenu(sender);
+            if (listview == null)
             {
                 return null;
             }
@@ -814,7 +584,6 @@ namespace GMTool
                 ReadItems();
             }
         }
-
         private void contentMenuItemPower_Click(object sender, EventArgs e)
         {
             if (!CheckItem()) return;
@@ -859,9 +628,6 @@ namespace GMTool
                 ReadItems();
             }
         }
-
-
-
         private void contentMenuItemMaxStar_Click(object sender, EventArgs e)
         {
             if (!CheckItem()) return;
@@ -899,7 +665,6 @@ namespace GMTool
         #endregion
 
         #region 搜索相关
-
         private void btn_search_id_Click(object sender, EventArgs e)
         {
             AddSearchItemList(DataHelper.Searcher.SearchItems(null, tb_senditem_class.Text, cb_maincategory.Text, cb_subcategory.Text, CurUser));
@@ -935,7 +700,6 @@ namespace GMTool
                 this.Error("数量不是一个数字");
             }
         }
-
         private void tb_senditem_class_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
@@ -960,7 +724,6 @@ namespace GMTool
         #endregion
 
         #region 选择
-
         private void list_users_SelectedIndexChanged(object sender, EventArgs e)
         {
             User user = this.list_users.GetSelectItem<User>();
@@ -970,7 +733,7 @@ namespace GMTool
                 this.Text = this.DefTitle + "  - " + user.ToString();
                 ReadMails();
                 ReadItems();
-                AddTitles(this.GetTitles(CurUser));
+                this.AddTitles(this.contentMenuUserAddTitle, this.GetTitles(CurUser));
             }
         }
         private void list_items_normal_SelectedIndexChanged(object sender, EventArgs e)
@@ -1003,7 +766,6 @@ namespace GMTool
         #endregion
 
         #region 颜色
-
         private void tb_color1_TextChanged(object sender, EventArgs e)
         {
             try
@@ -1079,7 +841,7 @@ namespace GMTool
             this.tb_color2.Enabled = enable;
             this.tb_color3.Enabled = enable;
         }
-        private bool CheckItem()
+        public bool CheckItem()
         {
             bool b = CurItem != null;
             if (!b)
@@ -1088,7 +850,7 @@ namespace GMTool
             }
             return b;
         }
-        private bool CheckUser()
+        public bool CheckUser()
         {
             bool b = CurUser != null;
             if (!b)
