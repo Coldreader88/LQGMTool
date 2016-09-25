@@ -98,6 +98,7 @@
     <Compile Include="Extensions\CategoryEx.cs" />
     <Compile Include="Extensions\ClassInfoEx.cs" />
     <Compile Include="Common\FormExpress.cs" />
+    <Compile Include="Extensions\ColorEx.cs" />
     <Compile Include="Extensions\ItemTradeCategoryEx.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
     <Compile Include="Extensions\MainFormExtensions.cs" />

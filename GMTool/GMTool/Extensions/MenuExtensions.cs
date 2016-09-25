@@ -11,7 +11,7 @@ namespace GMTool
 {
     public static class MenuExtensions
     {
-        public static void AddClasses(this MainForm main,ToolStripDropDownItem menuitem)
+        public static void AddClasses(this MainForm main,User user,ToolStripDropDownItem menuitem)
         {
             menuitem.DropDownItems.Clear();
             Array classes = Enum.GetValues(typeof(ClassInfo));
@@ -21,6 +21,10 @@ namespace GMTool
                 {
                     ToolStripMenuItem tsmi = new ToolStripMenuItem(cls.Name());
                     tsmi.Tag = cls;
+                    if (user != null && user.Class == cls)
+                    {
+                        tsmi.Checked = true;
+                    }
                     tsmi.ToolTipText = cls.ToString() + " " + cls.Index();
                     tsmi.Click += (object sender, EventArgs e) => {
                         if (!main.CheckUser()) return;

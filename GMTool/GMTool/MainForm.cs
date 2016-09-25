@@ -51,7 +51,6 @@ namespace GMTool
             this.list_search.Items.Clear();
             this.tb_logcat.Text = "";
             this.AddTypes(this.cb_maincategory, this.cb_subcategory);
-            this.AddClasses(this.contentMenuUserClasses);
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -167,9 +166,9 @@ namespace GMTool
                 {
                     if (!chk_lock_color.Checked)
                     {
-                        this.tb_color1.Text = (item.Color1 == 0 ? "" : "#" + item.Color1.ToString("X"));
-                        this.tb_color2.Text = (item.Color2 == 0 ? "" : "#" + item.Color2.ToString("X"));
-                        this.tb_color3.Text = (item.Color3 == 0 ? "" : "#" + item.Color3.ToString("X"));
+                        this.tb_color1.Text = item.Color1.ColorString();
+                        this.tb_color2.Text = item.Color2.ColorString();
+                        this.tb_color3.Text = item.Color3.ColorString();
                     }
                 }
                 //this.tab_color.Text = this.tab_color.Text.Split(' ')[0] + " ("+item.ItemName+")";
@@ -214,7 +213,7 @@ namespace GMTool
             this.list_search.EndUpdate();
             this.list_search.GoToRow(index);
         }
-        
+
         private void AddItemList(ListView listview, List<Item> items)
         {
             int count = items.Count;
@@ -619,7 +618,14 @@ namespace GMTool
                 ReadItems();
             }
         }
-
+        private void contentMenuItemPower13_Click(object sender, EventArgs e)
+        {
+            if (!CheckItem()) return;
+            if (this.ModItemPower(CurUser, GetSelectItem(sender), 13))
+            {
+                ReadItems();
+            }
+        }
         private void contentMenuItemPowers15_Click(object sender, EventArgs e)
         {
             if (!CheckItem()) return;
@@ -631,7 +637,7 @@ namespace GMTool
         private void contentMenuItemMaxStar_Click(object sender, EventArgs e)
         {
             if (!CheckItem()) return;
-            if (this.MaxStar(CurUser, GetSelectItem(sender)))
+            if (this.MaxStar(CurUser, GetSelectItems(sender)))
             {
                 ReadItems();
             }
@@ -640,12 +646,12 @@ namespace GMTool
         private void contentMenuItemUnLimitTime_Click(object sender, EventArgs e)
         {
             if (!CheckItem()) return;
-            if (this.UnLimitTime(CurUser, GetSelectItem(sender)))
+            if (this.UnLimitTime(CurUser, GetSelectItems(sender)))
             {
                 ReadItems();
             }
         }
-
+        /*
         private void contentMennuAllMaxStar_Click(object sender, EventArgs e)
         {
             if (!CheckItem()) return;
@@ -661,7 +667,7 @@ namespace GMTool
             {
                 ReadItems();
             }
-        }
+        }*/
         #endregion
 
         #region 搜索相关
@@ -734,6 +740,7 @@ namespace GMTool
                 ReadMails();
                 ReadItems();
                 this.AddTitles(this.contentMenuUserAddTitle, this.GetTitles(CurUser));
+                this.AddClasses(CurUser, this.contentMenuUserClasses);
             }
         }
         private void list_items_normal_SelectedIndexChanged(object sender, EventArgs e)
@@ -768,38 +775,17 @@ namespace GMTool
         #region 颜色
         private void tb_color1_TextChanged(object sender, EventArgs e)
         {
-            try
-            {
-                this.lb_color1.BackColor = ColorTranslator.FromHtml(tb_color1.Text);
-            }
-            catch (Exception)
-            {
-
-            }
+            this.lb_color1.BackColor = tb_color1.Text.GetColor();
         }
 
         private void tb_color2_TextChanged(object sender, EventArgs e)
         {
-            try
-            {
-                this.lb_color2.BackColor = ColorTranslator.FromHtml(tb_color2.Text);
-            }
-            catch (Exception)
-            {
-
-            }
+            this.lb_color2.BackColor = tb_color2.Text.GetColor();
         }
 
         private void tb_color3_TextChanged(object sender, EventArgs e)
         {
-            try
-            {
-                this.lb_color3.BackColor = ColorTranslator.FromHtml(tb_color3.Text);
-            }
-            catch (Exception)
-            {
-
-            }
+            this.lb_color3.BackColor = tb_color3.Text.GetColor();
         }
 
         private Color SelectColor(Color def1, Color def2, Color def3, Color def)
@@ -912,5 +898,6 @@ namespace GMTool
         }
         #endregion
 
+ 
     }
 }

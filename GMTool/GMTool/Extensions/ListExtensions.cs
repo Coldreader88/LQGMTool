@@ -131,9 +131,9 @@ namespace GMTool.Extensions
                 vitem.SubItems.Add("");// + (t.Color1 == 0 ? "" : t.Color1.ToString("x")));
                 vitem.SubItems.Add("");// + (t.Color1 == 0 || t.Color2 == 0 ? "" : t.Color2.ToString("x")));
                 vitem.SubItems.Add("");// + (t.Color1 == 0 || t.Color3 == 0 ? "" : t.Color3.ToString("x")));
-                vitem.SubItems[colorIndex].BackColor = ColorTranslator.FromHtml((t.Color1 == 0 ? "#00ffffff" : "#" + t.Color1.ToString("X")));
-                vitem.SubItems[colorIndex + 1].BackColor = ColorTranslator.FromHtml((t.Color2 == 0 ? "#00ffffff" : "#" + t.Color2.ToString("X")));
-                vitem.SubItems[colorIndex + 2].BackColor = ColorTranslator.FromHtml((t.Color3 == 0 ? "#00ffffff" : "#" + t.Color3.ToString("X")));
+                vitem.SubItems[colorIndex].BackColor = t.Color1.GetColor();
+                vitem.SubItems[colorIndex + 1].BackColor = t.Color2.GetColor();
+                vitem.SubItems[colorIndex + 2].BackColor = t.Color3.GetColor();
                 vitem.SubItems[colorIndex].ForeColor = vitem.SubItems[colorIndex].BackColor;
                 vitem.SubItems[colorIndex + 1].ForeColor = vitem.SubItems[colorIndex + 1].BackColor;
                 vitem.SubItems[colorIndex + 2].ForeColor = vitem.SubItems[colorIndex + 2].BackColor;
