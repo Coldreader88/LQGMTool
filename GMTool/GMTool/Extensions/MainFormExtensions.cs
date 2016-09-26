@@ -19,7 +19,7 @@ namespace GMTool
 	{
 		#region 数据库
 		private static MSSqlHelper db = new MSSqlHelper();
-		private const string SQL_QUERY_USERS = "select * from CharacterInfo where CreateTime >= '2016-01-01' ORDER BY CreateTime;";
+		private const string SQL_QUERY_USERS = "select * from CharacterInfo WHERE DeleteTime is NULL and CreateTime >= '2016-01-01' ORDER BY CreateTime;";
 
 		public static bool IsOpen(this MainForm main)
 		{
@@ -83,7 +83,7 @@ namespace GMTool
 					                     reader.ReadInt32("Level")
 					                    );
 					//insert into vocation(CID,vocationClass,VocationLevel
-
+					item.AP = reader.ReadInt32("AP");
 					userList.Add(item);
 				}
 			}
@@ -756,5 +756,17 @@ namespace GMTool
 		}
 		#endregion
 
+		
+		public static void ResetQuest(this MainForm main,User user=null){
+			string SQL = "Update Quest set TodayPlayCount = 0";
+			if(user!=null){
+				SQL += " WHERE OwnerID="+user.CID;
+			}
+			try{
+				db.ExcuteSQL(SQL);
+			}catch(Exception e){
+				main.Error("重置副本出错\n"+e);
+			}
+		}
 	}
 }

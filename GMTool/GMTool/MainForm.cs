@@ -324,7 +324,7 @@ namespace GMTool
                         items[i].BackColor = Color.White;
                     items[i].SubItems.Add("" + u.Class.Name());
                     items[i].SubItems.Add("" + u.level);
-                    items[i].ToolTipText = "CID:" + u.CID + "\n" + u.ToString();
+                    items[i].ToolTipText = u.ToLongString();
                 }
                 this.list_users.Items.AddRange(items);
             }
@@ -469,6 +469,11 @@ namespace GMTool
         #endregion
 
         #region 用户列表菜单
+                
+        private void ContentMenuUserResetQuestClick(object sender, EventArgs e)
+        {
+        	this.ResetQuest(CurUser);
+        }
         private void ContentMenuUserTitlesClick(object sender, EventArgs e)
         {
             if (this.Question("是否获取全部头衔？"))
@@ -963,5 +968,6 @@ namespace GMTool
             }
         }
         #endregion
+
     }
 }

@@ -178,6 +178,7 @@
         	this.label11 = new System.Windows.Forms.Label();
         	this.label9 = new System.Windows.Forms.Label();
         	this.label6 = new System.Windows.Forms.Label();
+        	this.contentMenuUserResetQuest = new System.Windows.Forms.ToolStripMenuItem();
         	this.groupBox1.SuspendLayout();
         	this.contextMenuUser.SuspendLayout();
         	this.contextMenuItem.SuspendLayout();
@@ -349,6 +350,7 @@
         	        	        	this.toolStripSeparator4,
         	        	        	this.contentMenuUserAddTitle,
         	        	        	this.contentMenuUserMaxSecondClass,
+        	        	        	this.contentMenuUserResetQuest,
         	        	        	this.contentMenuUserTitles,
         	        	        	this.toolStripSeparator5,
         	        	        	this.contentMenuUserMaxLight,
@@ -357,7 +359,7 @@
         	        	        	this.toolStripSeparator6,
         	        	        	this.contentMenuUserRefresh});
         	this.contextMenuUser.Name = "contextMenuUser";
-        	this.contextMenuUser.Size = new System.Drawing.Size(157, 242);
+        	this.contextMenuUser.Size = new System.Drawing.Size(157, 286);
         	// 
         	// contentMenuUserModName
         	// 
@@ -1473,6 +1475,13 @@
         	this.label6.TabIndex = 0;
         	this.label6.Text = "颜色1";
         	// 
+        	// contentMenuUserResetQuest
+        	// 
+        	this.contentMenuUserResetQuest.Name = "contentMenuUserResetQuest";
+        	this.contentMenuUserResetQuest.Size = new System.Drawing.Size(156, 22);
+        	this.contentMenuUserResetQuest.Text = "重置副本次数";
+        	this.contentMenuUserResetQuest.Click += new System.EventHandler(this.ContentMenuUserResetQuestClick);
+        	// 
         	// MainForm
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1525,6 +1534,7 @@
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.ToolStripMenuItem contentMenuUserResetQuest;
         private System.Windows.Forms.ToolStripMenuItem contentMenuUserResetDarkGroup;
         private System.Windows.Forms.ToolStripMenuItem contentMenuUserAddTitle;
         private System.Windows.Forms.ToolStripMenuItem contentMenuUserClasses;
