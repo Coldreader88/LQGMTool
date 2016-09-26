@@ -85,9 +85,9 @@ namespace GMTool
                         menuitem.DropDownItems.Add(level);
                     }
                     i++;
-                    ToolStripMenuItem tsmi = new ToolStripMenuItemEx("lv." + cls.RequiredLevel + " " + cls.Name);
+                    ToolStripMenuItem tsmi = new ToolStripMenuItemEx(cls.ToLineString());
                     tsmi.Tag = cls;
-                    tsmi.ToolTipText = cls.ToString();
+                   // tsmi.ToolTipText = cls.ToString();
 
                     if (titleIds.Contains(cls.TitleID))
                     {

@@ -38,6 +38,10 @@ namespace GMTool.Bean
 		{
 			Stats=new Dictionary<string, int>();
 		}
+		
+		public string ToLineString(){
+			return "lv." + RequiredLevel + " " + Name+" ("+Effect+")";
+		}
 		public override string ToString()
 		{
 			return Name+(OnlyClass!=ClassInfo.UnKnown? "[" + OnlyClass.Name()+"专属]":"")+
