@@ -963,6 +963,5 @@ namespace GMTool
             }
         }
         #endregion
-
     }
 }

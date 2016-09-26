@@ -85,7 +85,7 @@ namespace GMTool
                         menuitem.DropDownItems.Add(level);
                     }
                     i++;
-                    ToolStripMenuItem tsmi = new ToolStripMenuItem("lv." + cls.RequiredLevel + " " + cls.Name);
+                    ToolStripMenuItem tsmi = new ToolStripMenuItemEx("lv." + cls.RequiredLevel + " " + cls.Name);
                     tsmi.Tag = cls;
                     tsmi.ToolTipText = cls.ToString();
 
@@ -131,7 +131,7 @@ namespace GMTool
             EnchantInfo[] enchantinfos = main.DataHelper.GetEnchantInfos();
             foreach (EnchantInfo info in enchantinfos)
             {
-                ToolStripMenuItem tsmi = new ToolStripMenuItem(info.Name);
+                ToolStripMenuItem tsmi = new ToolStripMenuItemEx(info.Name);
                 tsmi.Tag = info;
                 tsmi.ToolTipText = info.ToString();//提示文字为真实路径
                 tsmi.Click += (object sender, EventArgs e) => {
@@ -174,10 +174,10 @@ namespace GMTool
             ToolStripMenuItem suflist = null;
             int li=0, lj = 0;
             int maxi = 0, maxj = 0;
-            int max = 10;
+            int max = 15;
             foreach (EnchantInfo info in enchantinfos)
             {
-                ToolStripMenuItem tsmi = new ToolStripMenuItem(info.Name);
+                ToolStripMenuItem tsmi = new ToolStripMenuItemEx(info.Name);
                 tsmi.Tag = info;
                 tsmi.ToolTipText = info.ToString();//提示文字为真实路径
                 tsmi.Click += (object sender, EventArgs e)=> {

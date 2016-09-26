@@ -88,6 +88,7 @@
     <Compile Include="ChangeUserLevelForm.Designer.cs">
       <DependentUpon>ChangeUserLevelForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Common\ToolStripDropDownItemEx.cs" />
     <Compile Include="Enums\AttributeType.cs" />
     <Compile Include="Enums\Category.cs" />
     <Compile Include="Enums\ClassInfo.cs" />
@@ -141,6 +142,9 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="DBIni.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
