@@ -76,19 +76,13 @@
     <Compile Include="Bean\Mail.cs" />
     <Compile Include="Bean\TitleInfo.cs" />
     <Compile Include="Bean\User.cs" />
-    <Compile Include="ChangeNameForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ChangeNameForm.Designer.cs">
-      <DependentUpon>ChangeNameForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ChangeUserLevelForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ChangeUserLevelForm.Designer.cs">
-      <DependentUpon>ChangeUserLevelForm.cs</DependentUpon>
+    <Compile Include="Common\InputDialog.cs" />
+    <Compile Include="Common\InputDialog.Designer.cs">
+      <DependentUpon>InputDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Common\ToolStripDropDownItemEx.cs" />
+    <Compile Include="Dialog\UserLevelDialog.cs" />
+    <Compile Include="Dialog\UserNameDialog.cs" />
     <Compile Include="Enums\AttributeType.cs" />
     <Compile Include="Enums\Category.cs" />
     <Compile Include="Enums\ClassInfo.cs" />
@@ -122,11 +116,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\win32\Kernel32.cs" />
-    <EmbeddedResource Include="ChangeNameForm.resx">
-      <DependentUpon>ChangeNameForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ChangeUserLevelForm.resx">
-      <DependentUpon>ChangeUserLevelForm.cs</DependentUpon>
+    <EmbeddedResource Include="Common\InputDialog.resx">
+      <DependentUpon>InputDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -163,7 +154,9 @@
   <ItemGroup>
     <Content Include="icon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Dialog" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
