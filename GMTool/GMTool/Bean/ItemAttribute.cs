@@ -19,13 +19,30 @@ namespace GMTool.Bean
 	{
 		public ItemAttributeType Type{get;set;}
 		public string Value{get;set;}
-		public string Arg{get;set;}
-		public string Arg2{get;set;}
+		public int Arg{get;set;}
+		public int Arg2{get;set;}
 		
 		private string _Desc;
-		
+		public ItemAttribute(ItemAttributeType type,string val)
+		{
+			this.Type = type;
+			this.Value =val;
+		}
+		public ItemAttribute(ItemAttributeType type,int arg)
+		{
+			this.Type = type;
+			this.Arg =arg;
+		}
 		public ItemAttribute()
 		{
+		}
+		public ItemAttribute SetArg2(int arg){
+			this.Arg2=arg;
+			return this;
+		}
+		public ItemAttribute SetArg(int arg){
+			this.Arg=arg;
+			return this;
 		}
 		public override string ToString()
 		{
@@ -48,7 +65,10 @@ namespace GMTool.Bean
 			}
 			else if (Type == ItemAttributeType.QUALITY)
 			{
-				_Desc= "品质：" + Arg;
+				_Desc= "星数：" + Arg;
+			}else if (Type == ItemAttributeType.SYNTHESISGRADE)
+			{
+				_Desc= "评分：" + Value;
 			}else{
 				_Desc= Type+":"+Value;
 			}

@@ -841,7 +841,7 @@ namespace GMTool
 		private void contentMenuItemMaxStar_Click(object sender, EventArgs e)
 		{
 			if (!CheckUser()) return;
-			if (this.MaxStar(CurUser, this.list_items_normal.GetSelectItems<Item>()))
+			if (this.MaxStar(CurUser, this.list_items_normal.GetSelectItems<Item>())>0)
 			{
 				ReadPackage(PackageType.Normal);
 			}

@@ -232,8 +232,8 @@ namespace GMTool
 							{
 								attr.Type = reader2.ReadEnum<ItemAttributeType>("Attribute",ItemAttributeType.NONE);
 								attr.Value = reader2.ReadString("Value");
-								attr.Arg = reader2.ReadString("Arg");
-								attr.Arg2 = reader2.ReadString("Arg2");
+								attr.Arg = reader2.ReadInt32("Arg");
+								attr.Arg2 = reader2.ReadInt32("Arg2");
 								attrs.Add(attr);
 							}
 							catch (Exception)
@@ -597,23 +597,13 @@ namespace GMTool
 					db.ExcuteSQL(string.Concat(new object[] { "DELETE FROM ItemAttribute where itemID=", item.ItemID, "and Attribute = 'ENHANCE'" }));
 					return true;
 				}
-				switch (db.ExcuteScalarSQL("select count(*) from ItemAttribute where itemID = " + item.ItemID + "and Attribute = 'ENHANCE'"))
-				{
-					case 0:
-						db.ExcuteSQL(string.Concat(new object[] { "insert into ItemAttribute([ItemID], [Attribute], [Value], [Arg], [Arg2])VALUES(", item.ItemID, ",'ENHANCE',", power, ",0,0)" }));
-						break;
-
-					case 1:
-						db.ExcuteSQL(string.Concat(new object[] { "update ItemAttribute set Value = ", power, " where itemID=", item.ItemID, "and Attribute = 'ENHANCE'" }));
-						break;
-				}
+				return ModItemAttr(main, new ItemAttribute(ItemAttributeType.ENHANCE, ""+power), item);
 			}
 			catch (Exception e)
 			{
 				main.Error("强化失败：" + e);
 			}
-
-			return true;
+			return false;
 		}
 		/// <summary>
 		/// 无限时间
@@ -633,34 +623,45 @@ namespace GMTool
 			}
 			return true;
 		}
+		
 		/// <summary>
 		/// 品质最大
 		/// </summary>
-		public static bool MaxStar(this MainForm main, User user, params Item[] items)
+		public static int MaxStar(this MainForm main, User user, params Item[] items)
 		{
 			if (items == null || items.Length == 0)
 			{
-				return false;
+				return 0;
 			}
 			else
 			{
+				int count = 0;
 				foreach (Item item in items)
 				{
-					ItemMaxStar(main, item);
+					if(ModItemAttr(main, new ItemAttribute(ItemAttributeType.QUALITY, 5), item)){
+						count++;
+					}
 				}
+				return count;
 			}
-			return true;
 		}
-		private static void ItemMaxStar(this MainForm main, Item item)
+		private static bool ModItemAttr(this MainForm main,ItemAttribute attr, Item item)
 		{
 			long itemID = item.ItemID;
-			if (db.ExcuteScalarSQL("select count(*) from ItemAttribute where attribute = 'QUALITY' and ItemID = " + itemID) > 0)
-			{
-				db.ExcuteSQL("update ItemAttribute set Arg = 5 where ItemID = " + itemID);
-			}
-			else
-			{
-				db.ExcuteSQL("insert into ItemAttribute(ItemID,Attribute,Value,Arg,Arg2) values(" + itemID + ",'QUALITY','',5,0)");
+			string val = (attr.Value==null?"":attr.Value);
+			if(db.ExcuteSQL("update ItemAttribute set Value='"+val+
+			                "',Arg="+attr.Arg+
+			                ",Arg2="+attr.Arg2+
+			                " where ItemID = " + itemID +" and Attribute = '"+
+			                attr.Type.ToString()
+			                +"'")==0){
+				//修改
+				return db.ExcuteSQL("insert into ItemAttribute(ItemID,Attribute,Value,Arg,Arg2)"+
+				             " values(" + itemID + ",'"+attr.Type.ToString()
+				             +"','"+val+"',"+attr.Arg+","+attr.Arg2+")") > 0;
+			}else{
+				//插入
+				return true;
 			}
 		}
 		/// <summary>
@@ -689,20 +690,24 @@ namespace GMTool
 					}
 				}
 			}
-			string name = attribute.IsPrefix ? "PREFIX" : "SUFFIX";
-			if (db.ExcuteScalarSQL("SELECT COUNT(*) FROM ItemAttribute ia LEFT JOIN Item i ON i.ID = ia.ItemID"
-			                       + " WHERE (ia.Attribute = '" + name + "') AND i.ID =" + item.ItemID) == 0)
-			{
-				return db.ExcuteSQL(string.Concat(new object[] {
-				                                  	"INSERT INTO ItemAttribute ([ItemID], [Attribute], [Value], [Arg], [Arg2]) VALUES (",
-				                                  	item.ItemID, ", '"+name+"','", attribute.Class, "', '"+attribute.MaxArg+"', '0')" })) > 0;
-			}
-			else if (db.ExcuteSQL("UPDATE ItemAttribute SET [Value] ='"+ attribute.Class+ "',[Arg]='"+ attribute.MaxArg +
-			                      "' WHERE ItemID =" + item.ItemID+ " AND Attribute = '"+name+"'") > 0)
-			{
-				return true;
-			}
-			return false;
+			
+			ItemAttributeType type = attribute.IsPrefix ? ItemAttributeType.PREFIX : ItemAttributeType.SUFFIX;
+			
+			return ModItemAttr(main, new ItemAttribute(type, attribute.Class).SetArg(attribute.MaxArg), item);
+//			
+//			if (db.ExcuteScalarSQL("SELECT COUNT(*) FROM ItemAttribute ia LEFT JOIN Item i ON i.ID = ia.ItemID"
+//			                       + " WHERE (ia.Attribute = '" + name + "') AND i.ID =" + item.ItemID) == 0)
+//			{
+//				return db.ExcuteSQL(string.Concat(new object[] {
+//				                                  	"INSERT INTO ItemAttribute ([ItemID], [Attribute], [Value], [Arg], [Arg2]) VALUES (",
+//				                                  	item.ItemID, ", '"+name+"','", attribute.Class, "', '"+attribute.MaxArg+"', '0')" })) > 0;
+//			}
+//			else if (db.ExcuteSQL("UPDATE ItemAttribute SET [Value] ='"+ attribute.Class+ "',[Arg]='"+ attribute.MaxArg +
+//			                      "' WHERE ItemID =" + item.ItemID+ " AND Attribute = '"+name+"'") > 0)
+//			{
+//				return true;
+//			}
+//			return false;
 		}
 		public static bool CleanItemColor(this MainForm main, User user, params Item[] items)
 		{
