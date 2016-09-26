@@ -79,6 +79,7 @@ namespace GMTool
 			this.tb_logcat.AppendText("\n" + DateTime.UtcNow.ToLongTimeString() + "  " + text + "\n");
 		}
 		#endregion
+		
 		#region 数据库
 		private void btn_mssql_open_Click(object sender, EventArgs e)
 		{
@@ -110,6 +111,7 @@ namespace GMTool
 					//初始化菜单
 					this.InitEnchantMenu(this.contentMenuEnchantPrefix, this.contentMenuEnchantSuffix, this.list_items_normal);
 					this.InitCashEnchantMenu(this.contentMenuCashInnerEnchant, this.list_items_cash);
+					this.InitModAttrMenu(this.contentMenuUserModAttr);
 					//this.InitEnchantMenu(this.contentMenuCashInnerEnchant, null);
 				}
 				if (this.connectDataBase(this.tb_mssql_server.Text, this.tb_mssql_user.Text, this.tb_mssql_pwd.Text, this.tb_mssql_db.Text))
@@ -470,7 +472,22 @@ namespace GMTool
 		#endregion
 
 		#region 用户列表菜单
-		
+		private void ContentMenuUserModApClick(object sender, EventArgs e)
+		{
+			if (!CheckUser()) return;
+			using (UserAttributeDialog form = new UserAttributeDialog(this))
+			{
+				form.SetUser(CurUser, UserStat.AP);
+				if (form.ShowDialog() == DialogResult.OK)
+				{
+					int ap = form.Value;
+					if(ap>0 && this.ModUserAP(CurUser, ap)){
+						log("成功修改用户[" + CurUser.Name + "]AP为"+ap);
+						ReadUsers();
+					}
+				}
+			}
+		}
 		private void ContentMenuUserResetQuestClick(object sender, EventArgs e)
 		{
 			this.ResetQuest(CurUser);
@@ -479,7 +496,7 @@ namespace GMTool
 		{
 			if (this.Question("是否获取全部头衔？"))
 			{
-				int count = this.GetCurTitles(CurUser, -1);
+				int count = this.GetAllTitles(CurUser);
 				this.Info("完成" + count + "个头衔");
 			}
 		}
@@ -523,10 +540,14 @@ namespace GMTool
 			if (!CheckUser()) return;
 			using (UserLevelDialog form = new UserLevelDialog(this))
 			{
+				form.SetUser(CurUser);
 				if (form.ShowDialog() == DialogResult.OK)
 				{
-					log("成功修改用户[" + CurUser.Name + "]等级");
-					ReadUsers();
+					int level = form.Level;
+					if(level>0 && this.ModUserLevel(CurUser, level)){
+						log("成功修改用户[" + CurUser.Name + "]等级");
+						ReadUsers();
+					}
 				}
 			}
 		}
@@ -627,7 +648,7 @@ namespace GMTool
 				this.NormalCurItem = 0;
 				this.CashCurItem = 0;
 				this.CurUser = user;
-				this.Text = this.DefTitle + "  - " + user.ToString();
+				this.Text = this.DefTitle + "  -  角色：" + user.Name;
 				ReadMails();
 				ReadPackage(PackageType.All);
 				this.AddTitles(this.contentMenuUserAddTitle, this.GetTitles(CurUser));
@@ -754,6 +775,23 @@ namespace GMTool
 			if (!CheckUser()) return;
 			ReadPackage(PackageType.Normal);
 		}
+		
+		private void ContentMenuItemCountClick(object sender, EventArgs e)
+		{
+			if (!CheckUser()) return;
+			Item item = list_items_normal.GetSelectItem<Item>();
+			if(item==null){
+				return;
+			}
+			using(ItemModCountDialog dlg=new ItemModCountDialog(this)){
+				dlg.SetUserAndItem(CurUser, item);
+				if(dlg.ShowDialog()==DialogResult.OK){
+					if(this.ModItemCount(CurUser, item, dlg.Count)){
+						ReadPackage(PackageType.Normal);
+					}
+				}
+			}
+		}
 		private void contentMenuDeleteItems_Click(object sender, EventArgs e)
 		{
 			if (!CheckUser()) return;
@@ -878,7 +916,22 @@ namespace GMTool
 				ReadPackage(PackageType.Cash);
 			}
 		}
-
+		private void ContentMenuCashCountClick(object sender, EventArgs e)
+		{
+			if (!CheckUser()) return;
+			Item item = list_items_cash.GetSelectItem<Item>();
+			if(item==null){
+				return;
+			}
+			using(ItemModCountDialog dlg=new ItemModCountDialog(this)){
+				dlg.SetUserAndItem(CurUser, item);
+				if(dlg.ShowDialog()==DialogResult.OK){
+					if(this.ModItemCount(CurUser, item, dlg.Count)){
+						ReadPackage(PackageType.Cash);
+					}
+				}
+			}
+		}
 		private void contentMenuCashRefresh_Click(object sender, EventArgs e)
 		{
 			if (!CheckUser()) return;
@@ -977,7 +1030,26 @@ namespace GMTool
 				ReadPackage(PackageType.Other);
 			}
 		}
+		
+		private void ContentMenuOtherCountClick(object sender, EventArgs e)
+		{
+			if (!CheckUser()) return;
+			ListView listview = GetItemMenu(sender);
+			if (listview == null) return;
+			Item item = listview.GetSelectItem<Item>();
+			if(item==null){
+				return;
+			}
+			using(ItemModCountDialog dlg=new ItemModCountDialog(this)){
+				dlg.SetUserAndItem(CurUser, item);
+				if(dlg.ShowDialog()==DialogResult.OK){
+					if(this.ModItemCount(CurUser, item, dlg.Count)){
+						contentMenuOtherRefresh_Click(sender, e);
+					}
+				}
+			}
+			
+		}
 		#endregion
-
 	}
 }

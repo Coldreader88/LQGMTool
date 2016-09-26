@@ -2,43 +2,47 @@
  * 由SharpDevelop创建。
  * 用户： Administrator
  * 日期: 2016/9/26
- * 时间: 15:34
+ * 时间: 16:46
  * 
  * 要改变这种模板请点击 工具|选项|代码编写|编辑标准头文件
  */
 using System;
 using System.Windows.Forms;
 using GMTool.Bean;
+using GMTool.Enums;
+using GMTool.Extensions;
 
 namespace GMTool.Dialog
 {
 	/// <summary>
-	/// Description of UserLevelDialog.
+	/// Description of UserAttributeDialog.
 	/// </summary>
-	public class UserLevelDialog: InputDialog
+	public class UserAttributeDialog: InputDialog
 	{
 		private MainForm mainForm;
 		private User user;
-		private int level;
-		public UserLevelDialog(MainForm main):base()
+		private int _value;
+		public UserAttributeDialog(MainForm main):base()
 		{
 			this.mainForm=main;
-			this.Title = "修改角色等级";
-			this.ContentText = "等级范围1-200";
-			this.OnCheckText  = OnCheckLevel;
-			SetUser(mainForm.CurUser);
+			this.ContentText="";
+			this.OnCheckText  = OnCheckValue;
+			SetUser(mainForm.CurUser, UserStat.AP);
 		}
-		public void SetUser(User user){
+		public void SetUser(User user,UserStat stat){
 			if(user==null){
 				return;
 			}
 			this.user = user;
-			this.InputText = ""+user.level;
+			this.Title = "修改角色属性："+stat.Name();
+			int val = stat.Value(user);
+			this.ContentText="当前值："+val;
+			this.InputText = ""+val;
 		}
-		public int Level{
-			get{return level;}
+		public int Value{
+			get{return _value;}
 		}
-		protected bool OnCheckLevel(string text){
+		protected bool OnCheckValue(string text){
 			if (mainForm == null|| mainForm.CurUser==null)
 			{
 				mainForm.Error("没有选择角色");
@@ -47,18 +51,18 @@ namespace GMTool.Dialog
 				DialogResult = DialogResult.Cancel;
 			}else {
 				try{
-					level = Convert.ToInt32(text);
+					_value = Convert.ToInt32(text);
 				}catch(Exception){
 					mainForm.Error("请输入一个数字");
 					return false;
 				}
-				if(level>=1 && level <= 200)
+				if(_value>=1)
 				{
 					return true;
 				}
 				else
 				{
-					this.Error("等级超出1-200的范围");
+					this.Error("不能为0");
 				}
 			}
 			return false;

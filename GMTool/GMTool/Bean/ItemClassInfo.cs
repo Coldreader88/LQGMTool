@@ -30,10 +30,12 @@ namespace GMTool.Bean
         public string Name;
 
         public string Desc;
+        
+        public long MaxStack;
 
         public override string ToString()
         {
-            return "物品ID："+ ItemClass+"\n物品名字："+Name+" \n需求等级： "+ RequiredLevel +"\n分类："+ SubCategory.Name()+ "  "+MainCategory.Name()
+        	return "物品ID："+ ItemClass+"\n物品名字："+Name+" \n需求等级： "+ RequiredLevel +"\n最大叠放数量："+(MaxStack<0?"不限":""+MaxStack)+"\n分类："+ SubCategory.Name()+ "  "+MainCategory.Name()
                 + "\n职业限制："+ClassInfoEx.GetClassText(ClassRestriction) + "\n物品描述" + Desc;
         }
     }

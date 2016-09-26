@@ -19,7 +19,7 @@ namespace GMTool
 	{
 		#region 数据库
 		private static MSSqlHelper db = new MSSqlHelper();
-		private const string SQL_QUERY_USERS = "select * from CharacterInfo WHERE DeleteTime is NULL and CreateTime >= '2016-01-01' ORDER BY CreateTime;";
+		private const string SQL_QUERY_USERS = "select * from CharacterInfo WHERE DeleteTime is NULL and CreateTime >= '2015-05-01' ORDER BY CreateTime;";
 
 		public static bool IsOpen(this MainForm main)
 		{
@@ -84,6 +84,13 @@ namespace GMTool
 					                    );
 					//insert into vocation(CID,vocationClass,VocationLevel
 					item.AP = reader.ReadInt32("AP");
+					item.STR = reader.ReadInt32("STR");
+					item.DEX = reader.ReadInt32("DEX");
+					item.INT = reader.ReadInt32("INT");
+					item.WILL = reader.ReadInt32("WILL");
+					item.LUCK = reader.ReadInt32("LUCK");
+					item.HP = reader.ReadInt32("HP");
+					item.STAMINA = reader.ReadInt32("STAMINA");
 					userList.Add(item);
 				}
 			}
@@ -274,6 +281,17 @@ namespace GMTool
 
 		#region 角色修改
 		
+		public static void ResetQuest(this MainForm main,User user=null){
+			string SQL = "Update Quest set TodayPlayCount = 0";
+			if(user!=null){
+				SQL += " WHERE OwnerID="+user.CID;
+			}
+			try{
+				db.ExcuteSQL(SQL);
+			}catch(Exception e){
+				main.Error("重置副本出错\n"+e);
+			}
+		}
 		public static List<long> GetTitles(this MainForm main,User user){
 			List<long> titles=new List<long>();
 			using(DbDataReader reader=db.GetReader("select TitleID from Title where Acquired =1 and CID="+user.CID)){
@@ -283,10 +301,7 @@ namespace GMTool
 			}
 			return titles;
 		}
-		
-		public static bool AddTitle(this MainForm main,User user,TitleInfo title){
-			return GetCurTitles(main, user, title.TitleID)>0;
-		}
+
 		public static void MaxSecondClass(this MainForm main, User user, string className)
 		{
 			try
@@ -316,52 +331,34 @@ namespace GMTool
 				main.MaxSecondClass(user, strArray[i]);
 			}
 		}
-
-		public static bool ModUserLevel(this MainForm main, User user, int level)
+		public static bool ModUserInfo(this MainForm main, User user,UserStat stat,object value)
 		{
-			if (user.level == level)
-			{
-				return true;
-			}
 			try
 			{
-				db.ExcuteSQL(string.Concat(new object[] { "update characterInfo set level = ", level, " where id = ", user.CID }));
+				db.ExcuteSQL("update characterInfo set "+stat.ToString()+" = N'"+value+"'"+
+				                           " where id = "+ user.CID );
 			}
 			catch (Exception)
 			{
 				return false;
 			}
 			return true;
+		}
+		public static bool ModUserLevel(this MainForm main, User user, int level)
+		{
+			return ModUserInfo(main, user, UserStat.LEVEL, level);
 		}
 		public static bool ModUserClass(this MainForm main, User user, ClassInfo cls)
 		{
-			if (user.Class.Index() == cls.Index())
-			{
-				return true;
-			}
-			try
-			{
-				db.ExcuteSQL(string.Concat(new object[] { "update characterInfo set Class = ", cls.Index(), " where id = ", user.CID }));
-			}
-			catch (Exception)
-			{
-				return false;
-			}
-			return true;
+			return ModUserInfo(main, user, UserStat.Class, cls.Index());
 		}
 		public static bool ModUserName(this MainForm main, User user, string name)
 		{
-			if (db.ExcuteScalarSQL("select count(*) from characterInfo where Name = N'" + name + "'") == 0)
-			{
-				db.ExcuteSQL(string.Concat(new object[] { "update characterInfo set name = N'", name, "' where id = ", user.CID }));
-				// this.output("将角色 [" + this.userList[this.userIndex].name + "] 角色名修改为 [" + this.txtUserName.Text + "] 成功!");
-				return true;
-			}
-			else
-			{
-				return false;
-				// this.output("角色名 [" + this.txtUserName.Text + "] 已存在!");
-			}
+			return ModUserInfo(main, user, UserStat.Name, name);
+		}
+		public static bool ModUserAP(this MainForm main, User user, int ap)
+		{
+			return ModUserInfo(main, user, UserStat.AP, ap);
 		}
 		private static string ToString(object obj)
 		{
@@ -415,36 +412,53 @@ namespace GMTool
 				main.Error("重置阵营技能错误\n" + exception);
 			}
 		}
-		
-		public static int GetCurTitles(this MainForm main,User user,long id){
-			//[Title]
-			string strSQL = "update Title set Acquired = 1 , AcquiredTime='"+DateTime.Now.ToString()+"'"
-				+" WHERE CID =" + user.CID;
-			if(id > 0){
-				strSQL += " and TitleID="+id;
-			}else{
-				strSQL += " and Acquired = 0";
+		public static int GetAllTitles(this MainForm main,User user){
+			int count = 0;
+			TitleInfo[] titles = main.DataHelper.GetTitles();
+			foreach (TitleInfo cls in titles)
+			{
+				if (!user.IsEnable(cls.ClassRestriction))
+				{
+					continue;
+				}
+				if (cls.OnlyClass != ClassInfo.UnKnown)
+				{
+					if (user.Class != cls.OnlyClass)
+					{
+						continue;
+					}
+				}
+				count += UserAddTitle(main, user, cls.TitleID);
 			}
+			return count;
+		}
+		
+		public static bool AddTitle(this MainForm main,User user,TitleInfo title){
+			return UserAddTitle(main, user, title.TitleID)>0;
+		}
+		public static int UserAddTitle(this MainForm main,User user,long titleId){
+			//[Title]
+
+			string strSQL = "update Title set Acquired = 1 , AcquiredTime='"+DateTime.Now.ToString()
+				+"' WHERE CID =" + user.CID+" and TitleID="+titleId;
 			try
 			{
 				int count = db.ExcuteSQL(strSQL);
-				if(count==0 && id>0){
+				if(count==0){
 					//插入
 					count = db.ExcuteSQL("INSERT INTO Title"+
 					                     "(CID,TitleID,Acquired,"+
 					                     "AcquiredTime,AcquiredQuest,ExpireDateTime)"+
 					                     " VALUES(" +
 					                     user.CID+","+
-					                     id+","+
+					                     titleId+","+
 					                     "1,'"+
 					                     DateTime.Now.ToString()+"',NULL,NULL"+
 					                     ")");
 				}
 				//清空记录
-				strSQL = "delete from TitleGoalProgress WHERE CID =" + user.CID;
-				if(id > 0){
-					strSQL += " and TitleGoalID="+id;
-				}
+				strSQL = "delete from TitleGoalProgress "+
+					"WHERE CID =" + user.CID+" and TitleGoalID="+titleId;
 				db.ExcuteSQL(strSQL);
 				return count;
 			}
@@ -626,18 +640,18 @@ namespace GMTool
 		{
 			if (items == null || items.Length == 0)
 			{
-				db.ExcuteSQL("UPDATE Item SET EXpireDateTime = NULL WHERE OwnerID =" + user.CID);
+				return false;
 			}
 			else
 			{
 				foreach (Item item in items)
 				{
-					MaxStart(main, item);
+					ItemMaxStar(main, item);
 				}
 			}
 			return true;
 		}
-		private static void MaxStart(this MainForm main, Item item)
+		private static void ItemMaxStar(this MainForm main, Item item)
 		{
 			long itemID = item.ItemID;
 			if (db.ExcuteScalarSQL("select count(*) from ItemAttribute where attribute = 'QUALITY' and ItemID = " + itemID) > 0)
@@ -754,19 +768,23 @@ namespace GMTool
 			}
 			return false;
 		}
-		#endregion
-
 		
-		public static void ResetQuest(this MainForm main,User user=null){
-			string SQL = "Update Quest set TodayPlayCount = 0";
-			if(user!=null){
-				SQL += " WHERE OwnerID="+user.CID;
+		/// <summary>
+		/// 修改物品数量
+		/// </summary>
+		public static bool ModItemCount(this MainForm main, User user, Item item,int count)
+		{
+			if (item == null)
+			{
+				return false;
 			}
-			try{
-				db.ExcuteSQL(SQL);
-			}catch(Exception e){
-				main.Error("重置副本出错\n"+e);
+			if(count > item.MaxStack){
+				return false;
 			}
+			db.ExcuteSQL("UPDATE Item SET Count = "+count+
+			             " WHERE OwnerID =" + user.CID + " and ID = " + item.ItemID);
+			return true;
 		}
+		#endregion
 	}
 }

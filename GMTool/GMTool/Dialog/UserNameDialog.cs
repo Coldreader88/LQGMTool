@@ -38,9 +38,9 @@ namespace GMTool.Dialog
 			if (mainForm == null|| mainForm.CurUser==null)
 			{
 				mainForm.Error("没有选择角色");
+				DialogResult = DialogResult.Cancel;
 			}if(user.Name == text){
 				DialogResult = DialogResult.Cancel;
-				return false;
 			}else if (!mainForm.CheckName(text))
 			{
 				mainForm.Warnning("名字["+ text + "]已经存在");

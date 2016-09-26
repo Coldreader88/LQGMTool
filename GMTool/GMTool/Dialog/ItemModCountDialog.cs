@@ -2,7 +2,7 @@
  * 由SharpDevelop创建。
  * 用户： Administrator
  * 日期: 2016/9/26
- * 时间: 15:34
+ * 时间: 16:08
  * 
  * 要改变这种模板请点击 工具|选项|代码编写|编辑标准头文件
  */
@@ -13,32 +13,37 @@ using GMTool.Bean;
 namespace GMTool.Dialog
 {
 	/// <summary>
-	/// Description of UserLevelDialog.
+	/// Description of ItemModCount.
 	/// </summary>
-	public class UserLevelDialog: InputDialog
+	public class ItemModCountDialog: InputDialog
 	{
 		private MainForm mainForm;
 		private User user;
-		private int level;
-		public UserLevelDialog(MainForm main):base()
+		private Item item;
+		private int count;
+		public ItemModCountDialog(MainForm main):base()
 		{
 			this.mainForm=main;
-			this.Title = "修改角色等级";
-			this.ContentText = "等级范围1-200";
-			this.OnCheckText  = OnCheckLevel;
-			SetUser(mainForm.CurUser);
+			this.Title = "修改物品数量";
+			this.OnCheckText  = OnCheckCount;
+			this.InputText = "0";
+			SetUserAndItem(mainForm.CurUser, null);
 		}
-		public void SetUser(User user){
+		public void SetUserAndItem(User user,Item item){
 			if(user==null){
 				return;
 			}
 			this.user = user;
-			this.InputText = ""+user.level;
+			if(item!=null){
+				this.item=item;
+				this.ContentText = "最大堆叠数量："+item.MaxStack;
+				this.InputText = ""+item.Count;
+			}
 		}
-		public int Level{
-			get{return level;}
+		public int Count{
+			get{return count;}
 		}
-		protected bool OnCheckLevel(string text){
+		protected bool OnCheckCount(string text){
 			if (mainForm == null|| mainForm.CurUser==null)
 			{
 				mainForm.Error("没有选择角色");
@@ -47,18 +52,18 @@ namespace GMTool.Dialog
 				DialogResult = DialogResult.Cancel;
 			}else {
 				try{
-					level = Convert.ToInt32(text);
+					count = Convert.ToInt32(text);
 				}catch(Exception){
 					mainForm.Error("请输入一个数字");
 					return false;
 				}
-				if(level>=1 && level <= 200)
+				if(count>=1 && count <= item.MaxStack)
 				{
 					return true;
 				}
 				else
 				{
-					this.Error("等级超出1-200的范围");
+					this.Error("超出最大堆叠数量:"+item.MaxStack);
 				}
 			}
 			return false;

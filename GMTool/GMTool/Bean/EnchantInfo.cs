@@ -23,8 +23,7 @@ namespace GMTool.Bean
         }
         public override string ToString()
         {
-            string txt= Name+ "\n" + Class+"\n"+Desc + "\n" + Effect;
-            return txt;
+            return Name+"\n"+Desc + "\n" + Effect;
         }
     }
 }

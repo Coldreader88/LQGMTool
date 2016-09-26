@@ -22,7 +22,7 @@ namespace GMTool.Helper
 		#region
 		static DbInfoHelper sItemClassInfoHelper = null;
         public Dictionary<string, string> MailTitles { get; private set; }
-
+		public Dictionary<string, string> StatNames{get; private set;}
         public static DbInfoHelper Get()
 		{
 			return sItemClassInfoHelper;
@@ -67,6 +67,7 @@ namespace GMTool.Helper
 			HeroesTextHelper HeroesText  = new HeroesTextHelper();
 			HeroesText.Read(textFile);
             MailTitles = HeroesText.MailTitles;
+             StatNames = HeroesText.StatNames;
             SQLiteHelper db = new SQLiteHelper(dbFile);
 			db.Open();
 			ReadItems(db,HeroesText );
@@ -146,7 +147,7 @@ namespace GMTool.Helper
 					info.ItemClass = reader.ReadString("ItemClass", "").ToLower();
 					info.SubCategory = reader.ReadEnum<SubCategory>("Category", SubCategory.NONE);
 					info.MainCategory= reader.ReadEnum<MainCategory>("TradeCategory", MainCategory.NONE);
-					
+					info.MaxStack =reader.ReadInt64("MaxStack");
 					info.RequiredLevel = reader.ReadInt32("RequiredLevel");
 					info.ClassRestriction = reader.ReadInt32("ClassRestriction");
 					HeroesText.ItemNames.TryGetValue(info.ItemClass, out info.Name);

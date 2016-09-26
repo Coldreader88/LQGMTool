@@ -81,11 +81,14 @@
       <DependentUpon>InputDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Common\ToolStripDropDownItemEx.cs" />
+    <Compile Include="Dialog\ItemModCountDialog.cs" />
+    <Compile Include="Dialog\UserAttributeDialog.cs" />
     <Compile Include="Dialog\UserLevelDialog.cs" />
     <Compile Include="Dialog\UserNameDialog.cs" />
     <Compile Include="Enums\AttributeType.cs" />
     <Compile Include="Enums\Category.cs" />
     <Compile Include="Enums\ClassInfo.cs" />
+    <Compile Include="Enums\UserStat.cs" />
     <Compile Include="Extensions\GroupExtension.cs" />
     <Compile Include="Enums\GroupInfo.cs" />
     <Compile Include="Enums\SubCategory.cs" />
@@ -100,6 +103,7 @@
     <Compile Include="Extensions\MainFormExtensions.cs" />
     <Compile Include="Common\DbHelper.cs" />
     <Compile Include="Extensions\MenuExtensions.cs" />
+    <Compile Include="Extensions\UserStatEx.cs" />
     <Compile Include="Helper\HeroesTextHelper.cs" />
     <Compile Include="Common\IniHelper.cs" />
     <Compile Include="Helper\DbInfoHelper.cs" />
