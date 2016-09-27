@@ -37,18 +37,7 @@ namespace GMTool
 
 		public static bool connectDataBase(this MainForm main, string server, string user, string pwd, string dbname)
 		{
-			string connect = "Data Source=" + server + ";Initial Catalog=" + dbname+";";
-			
-			if(string.IsNullOrEmpty(user)){
-				connect+="Integrated Security=SSPI;Persist Security Info=False;";
-			}else{
-				if(!string.IsNullOrEmpty(user)){
-					connect += "User Id=" + user + ";";
-				}
-				if(!string.IsNullOrEmpty(pwd)){
-					connect += "Password=" + pwd+";";
-				}
-			}
+			string connect = MSSqlHelper.MakeConnectString(server, user, pwd, dbname);
 			bool rs = db.Open(connect);
 			if (rs)
 			{

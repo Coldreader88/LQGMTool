@@ -80,6 +80,7 @@
     <Compile Include="Common\InputDialog.Designer.cs">
       <DependentUpon>InputDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Common\PathHelper.cs" />
     <Compile Include="Common\ToolStripDropDownItemEx.cs" />
     <Compile Include="Dialog\ItemModCountDialog.cs" />
     <Compile Include="Dialog\UserAttributeDialog.cs" />
