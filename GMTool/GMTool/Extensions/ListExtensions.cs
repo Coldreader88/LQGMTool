@@ -57,9 +57,8 @@ namespace GMTool.Extensions
         /// <param name="listview"></param>
         /// <param name="selectindex">选择索引</param>
         /// <returns></returns>
-        public static ListViewItem GetItemView(this MainForm main, Item t,int i,ListView listview,bool fullname,bool hascolor,bool has2category,out int selectindex)
+        public static ListViewItem GetItemView(this MainForm main, Item t,int i,ListView listview,bool fullname,bool hascolor,bool has2category)
         {
-            selectindex = -1;
             ListViewItem vitem = new ListViewItem();
             ItemClassInfo info = main.DataHelper.GetItemInfo(t.ItemClass);
             t.Attach(info);
@@ -112,12 +111,6 @@ namespace GMTool.Extensions
                 vitem.BackColor = Color.GhostWhite;
             else
                 vitem.BackColor = Color.White;
-            if (main.NormalCurItem == i)
-            {
-                selectindex = i;
-                vitem.Checked = true;
-                vitem.Selected = true;
-            }
             vitem.SubItems.Add("" + t.Count);
             if (has2category)
             {
