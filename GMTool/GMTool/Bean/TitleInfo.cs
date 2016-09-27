@@ -25,8 +25,8 @@ namespace GMTool.Bean
 		public int AutoGiveLevel;
 		public int RequiredLevel;
 		public int ClassRestriction;
-        public string Feature;
-        public ClassInfo OnlyClass;
+		public string Feature;
+		public ClassInfo OnlyClass;
 		/// <summary>
 		/// 属性
 		/// </summary>
@@ -38,14 +38,18 @@ namespace GMTool.Bean
 		{
 			Stats=new Dictionary<string, int>();
 		}
-		
+		public string ToShortString(){
+			return "lv." + RequiredLevel + " " + Name;
+		}
 		public string ToLineString(){
 			return "lv." + RequiredLevel + " " + Name+" ("+Effect+")";
 		}
 		public override string ToString()
 		{
 			return Name+(OnlyClass!=ClassInfo.UnKnown? "[" + OnlyClass.Name()+"专属]":"")+
-                "\n"+Description+"\n等级限制："+RequiredLevel+"\n职业限制："+ClassInfoEx.GetClassText(ClassRestriction)+"\n"+Effect;
+				"\n"+Description
+//				+"\n等级限制："+RequiredLevel+"\n职业限制："+ClassInfoEx.GetClassText(ClassRestriction)
+				+"\n"+Effect;
 		}
 
 	}
