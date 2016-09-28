@@ -50,10 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GMTool\Common\DbHelper.cs">
-      <Link>Comon\DbHelper.cs</Link>
+      <Link>Common\DbHelper.cs</Link>
     </Compile>
     <Compile Include="..\GMTool\Common\MSSqlHelper.cs">
-      <Link>Comon\MSSqlHelper.cs</Link>
+      <Link>Common\MSSqlHelper.cs</Link>
     </Compile>
     <Compile Include="..\GMTool\Common\PathHelper.cs">
       <Link>Common\PathHelper.cs</Link>
