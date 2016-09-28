@@ -6,7 +6,7 @@ using System.Text;
 
 namespace System.Win32
 {
-    public class Kernel32
+    public static class Kernel32
     {
 
         [DllImport("kernel32")]

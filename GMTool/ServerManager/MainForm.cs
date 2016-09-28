@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using GMTool.Common;
 
 namespace ServerManager
 {
@@ -18,9 +19,46 @@ namespace ServerManager
 	/// </summary>
 	public partial class MainForm : Form
 	{
+		ProcessPlus process;
 		public MainForm()
 		{
 			InitializeComponent();
 		}
+		
+		private void Tb_exec_showClick(object sender, EventArgs e)
+		{
+			if(process!=null&&process.isRunning){
+				if(process.IsShow){
+					process.Hide();
+					tb_exec_show.Text="显示";
+				}else{
+					process.Show();
+					tb_exec_show.Text="隐藏";
+				}
+			}
+		}
+		
+		private void Tb_exec_startClick(object sender, EventArgs e)
+		{
+			if(process==null){
+				process=new ProcessPlus(tb_exec_path.Text,"");
+				process.OnExitEvent += delegate(string path, string arg, bool error) { 
+					if(error){
+						this.Error("异常结束!\n"+path+" "+arg);
+					}
+				};
+			}
+			if(process.isRunning){
+				process.Stop();
+				tb_exec_start.Text="启动";
+			}else{
+				if(process.Start()){
+					tb_exec_start.Text="停止";
+					this.Info("启动成功:"+process.Title);
+				}
+			}
+		}
+		
+		
 	}
 }

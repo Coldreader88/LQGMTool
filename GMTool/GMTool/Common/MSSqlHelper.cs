@@ -9,8 +9,26 @@ using GMTool.Common;
 
 namespace GMTool.Helper
 {
+	public enum SqlServer{
+		V2000=0,
+		V2005,
+		V2008,
+		V2008R2,
+		V2012,
+		V2014,
+	}
+	
 	public class MSSqlHelper : DbHelper<SqlConnection>
 	{
+		private static string[] VERSIONS= new string[]{
+			"8.00",
+			"9.00",
+			"10.00",
+			"10.50",
+			"11.00",
+			"12.00",
+		};
+
 		public MSSqlHelper():base()
 		{
 		}
@@ -19,7 +37,24 @@ namespace GMTool.Helper
 		{
 			this.connStr = MakeConnectString(server,user,pwd, dbname);
 		}
-		
+		public SqlServer Version{
+			get{
+				if(IsOpen){
+					string ver = conn.ServerVersion;
+					int i =0;
+					if(!string.IsNullOrEmpty(ver)){
+						foreach(string v in VERSIONS){
+							if(ver.StartsWith(v)){
+								return (SqlServer)i;
+							}
+							i++;
+						}
+						return SqlServer.V2014;
+					}
+				}
+				return SqlServer.V2014;
+			}
+		}
 		public static string MakeConnectString(string server, string user=null, string pwd=null, string dbname=null){
 			string connect = "Data Source=" + server + ";";
 			if(!string.IsNullOrEmpty(dbname)){
@@ -91,7 +126,7 @@ namespace GMTool.Helper
 		/// <param name="dbname">数据库名字</param>
 		/// <param name="dbfile">数据库文件</param>
 		/// <returns></returns>
-		public int AttachDataBase(string dbname,string dbfile,bool haslog=false){
+		public int AttachDataBase2005(string dbname,string dbfile,bool haslog=false){
 			string sql="CREATE DATABASE ["+dbname+"] ON (FILENAME = N'"+dbfile+"')";
 			if(haslog){
 				sql+=" FOR ATTACH";
@@ -99,6 +134,17 @@ namespace GMTool.Helper
 				sql+=" FOR attach_force_rebuild_log";
 			}
 			return ExcuteSQL(sql);
+		}
+		public int AttachDataBase2000(string dbname,string dbfile,bool haslog=false){
+			string sql="EXEC sp_attach_db '"+dbname+"','"+dbfile+"';";
+			return ExcuteSQL(sql);
+		}
+		public int AttachDataBase(string dbname,string dbfile,bool haslog=true){
+			int n = (int)Version;
+			if(n>=(int)SqlServer.V2005){
+				return AttachDataBase2005(dbname, dbfile, haslog);
+			}
+			return AttachDataBase2000(dbname, dbfile, haslog);
 		}
 		/// <summary>
 		/// 分离数据库

@@ -40,6 +40,9 @@ namespace GMTool.Helper
 		
 		protected abstract T ConnectDataBase(string connStr);
 		
+		public T Connection{
+			get{return conn;}
+		}
 		
 		protected abstract DbCommand CreateCommand(string SQL, T conn);
 

@@ -4,7 +4,7 @@
     <ProjectGuid>{56EF7990-212C-4FA1-8E78-5936E0013E61}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>ServerManager</RootNamespace>
     <AssemblyName>ServerManager</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
@@ -49,14 +49,35 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GMTool\Common\ArrayList.cs">
+      <Link>Common\ArrayList.cs</Link>
+    </Compile>
+    <Compile Include="..\GMTool\Common\ChineseTextHelper.cs">
+      <Link>Common\ChineseTextHelper.cs</Link>
+    </Compile>
     <Compile Include="..\GMTool\Common\DbHelper.cs">
       <Link>Common\DbHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\GMTool\Common\FormExpress.cs">
+      <Link>Common\FormExpress.cs</Link>
+    </Compile>
+    <Compile Include="..\GMTool\Common\IniHelper.cs">
+      <Link>Common\IniHelper.cs</Link>
     </Compile>
     <Compile Include="..\GMTool\Common\MSSqlHelper.cs">
       <Link>Common\MSSqlHelper.cs</Link>
     </Compile>
     <Compile Include="..\GMTool\Common\PathHelper.cs">
       <Link>Common\PathHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\GMTool\Common\ProcessPlus.cs">
+      <Link>Common\ProcessPlus.cs</Link>
+    </Compile>
+    <Compile Include="..\GMTool\Common\win32\Kernel32.cs">
+      <Link>Common\Win32\Kernel32.cs</Link>
+    </Compile>
+    <Compile Include="..\GMTool\Common\win32\User32.cs">
+      <Link>Common\Win32\User32.cs</Link>
     </Compile>
     <Compile Include="Common\XmlHelper.cs" />
     <Compile Include="MainForm.cs" />
@@ -67,15 +88,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common" />
+    <Folder Include="Common\Win32" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
