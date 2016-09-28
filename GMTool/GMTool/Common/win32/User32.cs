@@ -14,33 +14,50 @@ namespace System.Win32
 {
 	public static class User32
 	{
-		public static readonly UInt32 GW_HWNDNEXT = 2;
+		public const UInt32 SW_HIDE = 0;
+		public const UInt32 SW_SHOWNORMAL = 1;
+		public const UInt32 SW_NORMAL = 1;
+		public const UInt32 SW_SHOWMINIMIZED = 2;
+		public const UInt32 SW_SHOWMAXIMIZED = 3;
+		public const UInt32 SW_MAXIMIZE = 3;
+		public const UInt32 SW_SHOWNOACTIVATE = 4;
+		public const UInt32 SW_SHOW = 5;
+		public const UInt32 SW_MINIMIZE = 6;
+		public const UInt32 SW_SHOWMINNOACTIVE = 7;
+		public const UInt32 SW_SHOWNA = 8;
+		public const UInt32 SW_RESTORE = 9;
 		
-		[DllImport("user32", EntryPoint = "FindWindow", SetLastError = true)]
+		public const UInt32 GW_HWNDNEXT = 2;
+		
+		[DllImport("user32", SetLastError = true)]
 		public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
-		[DllImport("user32", EntryPoint = "FindWindowEx", SetLastError = true)]
+		[DllImport("user32",SetLastError = true)]
 		public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
 
-		[DllImport("user32", EntryPoint = "ShowWindow", SetLastError = true)]
-		private static extern bool ShowWindow(IntPtr hWnd, uint nCmdShow);
-
-		[DllImport("user32.dll")]
+		[DllImport("user32" ,SetLastError = true)]
+		private static extern bool ShowWindow(IntPtr hWnd, UInt32 nCmdShow);
+		
+		[DllImport("User32")]
+		public static extern bool ShowWindowAsync(IntPtr hWnd, UInt32 cmdShow);
+		
+		[DllImport("user32")]
 		public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 		
-		[DllImport("user32.dll")]
+		[DllImport("user32")]
 		public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
-		
-		[DllImport("user32.dll")]
-		public static extern IntPtr GetWindow(IntPtr hWnd, UInt32 uCmd);
-		[DllImport("user32.dll")]
-		public static extern IntPtr GetTopWindow(IntPtr hWnd);
-		
-		public static IntPtr FindConsoleWindow(string title)
-		{
-			return FindWindow("ConsoleWindowClass", title);
-		}
 
+		[DllImport("user32")]
+		public static extern Int32 GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+		
+		[DllImport("user32")]
+		public static extern IntPtr GetWindow(IntPtr hWnd, UInt32 uCmd);
+		[DllImport("user32")]
+		public static extern IntPtr GetTopWindow(IntPtr hWnd);
+		[DllImport("User32")]
+		public static extern bool SetForegroundWindow(IntPtr hWnd);
+		
+		
 		public static IntPtr GetWindowByPid(Int32 pID)
 		{
 			IntPtr h = GetTopWindow(IntPtr.Zero);
@@ -52,18 +69,9 @@ namespace System.Win32
 				{
 					return h;
 				}
-				
 				h = GetWindow(h, GW_HWNDNEXT);
 			}
 			return h;
-		}
-		public static bool ShowWindow(IntPtr hWnd)
-		{
-			return ShowWindow(hWnd, 1);
-		}
-		public static bool HideWindow(IntPtr hWnd)
-		{
-			return ShowWindow(hWnd, 0);
 		}
 	}
 }

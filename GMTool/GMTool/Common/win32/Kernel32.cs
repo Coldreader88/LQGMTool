@@ -8,14 +8,15 @@ namespace System.Win32
 {
     public static class Kernel32
     {
-
+		[DllImport("kernel32")]
+        public static extern IntPtr GetConsoleWindow();
         [DllImport("kernel32")]
         public static extern int GetPrivateProfileString(string section, string key, string def, StringBuilder retVal, int size, string filePath);
 
         [DllImport("kernel32")]
         public static extern long WritePrivateProfileString(string section, string key, string val, string filePath);
 
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+        [DllImport("kernel32", CharSet = CharSet.Auto)]
         public static extern uint GetPrivateProfileSection(string lpAppName, IntPtr lpReturnedString, uint nSize, string lpFileName);
 
         public const int LOCALE_SYSTEM_DEFAULT = 0x0800;

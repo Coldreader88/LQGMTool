@@ -10,6 +10,7 @@ using System;
 using System.Diagnostics;
 using System.Win32;
 using System.Windows.Forms;
+using System.Text;
 
 namespace GMTool.Common
 {
@@ -26,6 +27,7 @@ namespace GMTool.Common
 		
 		public ProcessPlus(string title,string path,string args)
 		{
+			this.Window = IntPtr.Zero;
 			this.Title = title;
 			this.Path = path;
 			this.Args = args;
@@ -36,29 +38,26 @@ namespace GMTool.Common
 			this.Path = path;
 			this.Args = args;
 		}
-//		private void GetWindow()
-//		{
-//			if (Window != IntPtr.Zero) return;
-//			Window = User32.FindConsoleWindow(Title);
-//		}
-//		
+		private void GetWindow()
+		{
+			if (Window != IntPtr.Zero) return;
+			Window = User32.GetWindowByPid(process.Id);
+		}
 		public bool Show()
 		{
-//			GetWindow();
+			GetWindow();
 			if (Window != IntPtr.Zero)
 			{
-				IsShow = true;
-				return User32.ShowWindow(Window);
+				return (IsShow=User32.ShowWindowAsync(Window, User32.SW_SHOW));
 			}
 			return false;
 		}
 		public bool Hide()
 		{
-//			GetWindow();
+			GetWindow();
 			if (Window != IntPtr.Zero)
 			{
-				IsShow = false;
-				return User32.HideWindow(Window);
+				return (IsShow = !User32.ShowWindowAsync(Window, User32.SW_HIDE));
 			}
 			return false;
 		}
@@ -70,13 +69,13 @@ namespace GMTool.Common
 			}
 			process.StartInfo.FileName = Path;
 			//设定程式执行参数
-			process.StartInfo.UseShellExecute = false;
-			process.StartInfo.CreateNoWindow = true;
+//			process.StartInfo.UseShellExecute = false;
+//			process.StartInfo.CreateNoWindow = true;
 			process.StartInfo.Arguments = Args;
 			process.EnableRaisingEvents = true;
 			IsShow = false;
-//			process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-			process.Exited+=(object sender, EventArgs e)=>{
+			process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+			process.Exited += (object sender, EventArgs e)=>{
 				if(isRunning){
 					Stop();
 					//异常结束
@@ -90,7 +89,9 @@ namespace GMTool.Common
 			};
 			try{
 				process.Start();
-				Window = User32.GetWindowByPid(process.Id);
+//				StringBuilder sbText = new StringBuilder(200);
+//				User32.GetWindowText(Window,sbText ,200);
+//				Title = sbText.ToString();
 				return true;
 			}catch(Exception e){
 				MessageBox.Show(""+e, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -100,6 +101,7 @@ namespace GMTool.Common
 		public void Stop(){
 			if(!isRunning)return;
 			isRunning = false;
+			this.Window = IntPtr.Zero;
 			if(process!=null){
 				try{
 					process.Kill();

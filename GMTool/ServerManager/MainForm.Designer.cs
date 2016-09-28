@@ -36,6 +36,7 @@ namespace ServerManager
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.btn_mssql_open = new System.Windows.Forms.Button();
 			this.tb_mssql_db = new System.Windows.Forms.TextBox();
@@ -50,8 +51,10 @@ namespace ServerManager
 			this.button2 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
 			this.tb_exec_path = new System.Windows.Forms.TextBox();
-			this.tb_exec_start = new System.Windows.Forms.Button();
-			this.tb_exec_show = new System.Windows.Forms.Button();
+			this.btn_exec_start = new System.Windows.Forms.Button();
+			this.btn_exec_show = new System.Windows.Forms.Button();
+			this.button4 = new System.Windows.Forms.Button();
+			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -163,15 +166,17 @@ namespace ServerManager
 			this.button1.Size = new System.Drawing.Size(93, 23);
 			this.button1.TabIndex = 3;
 			this.button1.Text = "初始化数据库";
+			this.toolTip1.SetToolTip(this.button1, "从bak文件创建数据库");
 			this.button1.UseVisualStyleBackColor = true;
 			// 
 			// button2
 			// 
-			this.button2.Location = new System.Drawing.Point(403, 45);
+			this.button2.Location = new System.Drawing.Point(403, 41);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(93, 23);
 			this.button2.TabIndex = 3;
 			this.button2.Text = "附加数据库";
+			this.toolTip1.SetToolTip(this.button2, "把存在的数据库文件添加到sql server");
 			this.button2.UseVisualStyleBackColor = true;
 			// 
 			// button3
@@ -181,6 +186,7 @@ namespace ServerManager
 			this.button3.Size = new System.Drawing.Size(93, 23);
 			this.button3.TabIndex = 3;
 			this.button3.Text = "分离数据库";
+			this.toolTip1.SetToolTip(this.button3, "把数据库从sql server分离出来");
 			this.button3.UseVisualStyleBackColor = true;
 			// 
 			// tb_exec_path
@@ -191,47 +197,63 @@ namespace ServerManager
 			this.tb_exec_path.TabIndex = 4;
 			this.tb_exec_path.Text = "D:\\heroes\\server\\NMServer.exe";
 			// 
-			// tb_exec_start
+			// btn_exec_start
 			// 
-			this.tb_exec_start.Location = new System.Drawing.Point(18, 138);
-			this.tb_exec_start.Name = "tb_exec_start";
-			this.tb_exec_start.Size = new System.Drawing.Size(75, 23);
-			this.tb_exec_start.TabIndex = 5;
-			this.tb_exec_start.Text = "启动";
-			this.tb_exec_start.UseVisualStyleBackColor = true;
-			this.tb_exec_start.Click += new System.EventHandler(this.Tb_exec_startClick);
+			this.btn_exec_start.Location = new System.Drawing.Point(18, 138);
+			this.btn_exec_start.Name = "btn_exec_start";
+			this.btn_exec_start.Size = new System.Drawing.Size(75, 23);
+			this.btn_exec_start.TabIndex = 5;
+			this.btn_exec_start.Text = "启动";
+			this.btn_exec_start.UseVisualStyleBackColor = true;
+			this.btn_exec_start.Click += new System.EventHandler(this.Tb_exec_startClick);
 			// 
-			// tb_exec_show
+			// btn_exec_show
 			// 
-			this.tb_exec_show.Location = new System.Drawing.Point(99, 138);
-			this.tb_exec_show.Name = "tb_exec_show";
-			this.tb_exec_show.Size = new System.Drawing.Size(75, 23);
-			this.tb_exec_show.TabIndex = 5;
-			this.tb_exec_show.Text = "显示";
-			this.tb_exec_show.UseVisualStyleBackColor = true;
-			this.tb_exec_show.Click += new System.EventHandler(this.Tb_exec_showClick);
+			this.btn_exec_show.Location = new System.Drawing.Point(99, 138);
+			this.btn_exec_show.Name = "btn_exec_show";
+			this.btn_exec_show.Size = new System.Drawing.Size(75, 23);
+			this.btn_exec_show.TabIndex = 5;
+			this.btn_exec_show.Text = "显示";
+			this.btn_exec_show.UseVisualStyleBackColor = true;
+			this.btn_exec_show.Click += new System.EventHandler(this.Tb_exec_showClick);
+			// 
+			// button4
+			// 
+			this.button4.Location = new System.Drawing.Point(403, 103);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(93, 23);
+			this.button4.TabIndex = 5;
+			this.button4.Text = "设置数据库";
+			this.toolTip1.SetToolTip(this.button4, "把当前数据库配置保存");
+			this.button4.UseVisualStyleBackColor = true;
+			this.button4.Click += new System.EventHandler(this.Tb_exec_showClick);
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(498, 468);
-			this.Controls.Add(this.tb_exec_show);
-			this.Controls.Add(this.tb_exec_start);
+			this.Controls.Add(this.button4);
+			this.Controls.Add(this.btn_exec_show);
+			this.Controls.Add(this.btn_exec_start);
 			this.Controls.Add(this.tb_exec_path);
 			this.Controls.Add(this.button3);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.groupBox1);
 			this.Name = "MainForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "服务端管理";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
-		private System.Windows.Forms.Button tb_exec_show;
-		private System.Windows.Forms.Button tb_exec_start;
+		private System.Windows.Forms.Button button4;
+		private System.Windows.Forms.ToolTip toolTip1;
+		private System.Windows.Forms.Button btn_exec_show;
+		private System.Windows.Forms.Button btn_exec_start;
 		private System.Windows.Forms.TextBox tb_exec_path;
 		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.Button button2;

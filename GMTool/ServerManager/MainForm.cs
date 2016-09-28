@@ -29,11 +29,13 @@ namespace ServerManager
 		{
 			if(process!=null&&process.isRunning){
 				if(process.IsShow){
-					process.Hide();
-					tb_exec_show.Text="显示";
+					if(process.Hide()){
+						btn_exec_show.Text="显示";
+					}
 				}else{
-					process.Show();
-					tb_exec_show.Text="隐藏";
+					if(process.Show()){
+						btn_exec_show.Text="隐藏";
+					}
 				}
 			}
 		}
@@ -42,7 +44,7 @@ namespace ServerManager
 		{
 			if(process==null){
 				process=new ProcessPlus(tb_exec_path.Text,"");
-				process.OnExitEvent += delegate(string path, string arg, bool error) { 
+				process.OnExitEvent += delegate(string path, string arg, bool error) {
 					if(error){
 						this.Error("异常结束!\n"+path+" "+arg);
 					}
@@ -50,15 +52,22 @@ namespace ServerManager
 			}
 			if(process.isRunning){
 				process.Stop();
-				tb_exec_start.Text="启动";
+				btn_exec_start.Text="启动";
 			}else{
 				if(process.Start()){
-					tb_exec_start.Text="停止";
-					this.Info("启动成功:"+process.Title);
+					btn_exec_start.Text="停止";
+					this.Info("启动成功:\n"+process.Title);
 				}
 			}
 		}
 		
 		
+		
+		private void MainFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(process!=null&&process.isRunning){
+				process.Stop();
+			}
+		}
 	}
 }
