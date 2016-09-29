@@ -47,13 +47,13 @@ namespace ServerManager
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button3 = new System.Windows.Forms.Button();
+			this.btn_db_restore = new System.Windows.Forms.Button();
+			this.btn_db_attach = new System.Windows.Forms.Button();
+			this.btn_db_split = new System.Windows.Forms.Button();
 			this.tb_exec_path = new System.Windows.Forms.TextBox();
 			this.btn_exec_start = new System.Windows.Forms.Button();
 			this.btn_exec_show = new System.Windows.Forms.Button();
-			this.button4 = new System.Windows.Forms.Button();
+			this.btn_update_settings = new System.Windows.Forms.Button();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
@@ -159,35 +159,38 @@ namespace ServerManager
 			this.label1.TabIndex = 0;
 			this.label1.Text = "服务器";
 			// 
-			// button1
+			// btn_db_restore
 			// 
-			this.button1.Location = new System.Drawing.Point(403, 12);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(93, 23);
-			this.button1.TabIndex = 3;
-			this.button1.Text = "初始化数据库";
-			this.toolTip1.SetToolTip(this.button1, "从bak文件创建数据库");
-			this.button1.UseVisualStyleBackColor = true;
+			this.btn_db_restore.Location = new System.Drawing.Point(403, 12);
+			this.btn_db_restore.Name = "btn_db_restore";
+			this.btn_db_restore.Size = new System.Drawing.Size(93, 23);
+			this.btn_db_restore.TabIndex = 3;
+			this.btn_db_restore.Text = "初始化数据库";
+			this.toolTip1.SetToolTip(this.btn_db_restore, "从bak文件创建数据库");
+			this.btn_db_restore.UseVisualStyleBackColor = true;
+			this.btn_db_restore.Click += new System.EventHandler(this.Btn_db_restoreClick);
 			// 
-			// button2
+			// btn_db_attach
 			// 
-			this.button2.Location = new System.Drawing.Point(403, 41);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(93, 23);
-			this.button2.TabIndex = 3;
-			this.button2.Text = "附加数据库";
-			this.toolTip1.SetToolTip(this.button2, "把存在的数据库文件添加到sql server");
-			this.button2.UseVisualStyleBackColor = true;
+			this.btn_db_attach.Location = new System.Drawing.Point(403, 41);
+			this.btn_db_attach.Name = "btn_db_attach";
+			this.btn_db_attach.Size = new System.Drawing.Size(93, 23);
+			this.btn_db_attach.TabIndex = 3;
+			this.btn_db_attach.Text = "附加数据库";
+			this.toolTip1.SetToolTip(this.btn_db_attach, "把存在的数据库文件添加到sql server");
+			this.btn_db_attach.UseVisualStyleBackColor = true;
+			this.btn_db_attach.Click += new System.EventHandler(this.Btn_db_attachClick);
 			// 
-			// button3
+			// btn_db_split
 			// 
-			this.button3.Location = new System.Drawing.Point(403, 74);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(93, 23);
-			this.button3.TabIndex = 3;
-			this.button3.Text = "分离数据库";
-			this.toolTip1.SetToolTip(this.button3, "把数据库从sql server分离出来");
-			this.button3.UseVisualStyleBackColor = true;
+			this.btn_db_split.Location = new System.Drawing.Point(403, 74);
+			this.btn_db_split.Name = "btn_db_split";
+			this.btn_db_split.Size = new System.Drawing.Size(93, 23);
+			this.btn_db_split.TabIndex = 3;
+			this.btn_db_split.Text = "分离数据库";
+			this.toolTip1.SetToolTip(this.btn_db_split, "把数据库从sql server分离出来");
+			this.btn_db_split.UseVisualStyleBackColor = true;
+			this.btn_db_split.Click += new System.EventHandler(this.Btn_db_splitClick);
 			// 
 			// tb_exec_path
 			// 
@@ -217,29 +220,29 @@ namespace ServerManager
 			this.btn_exec_show.UseVisualStyleBackColor = true;
 			this.btn_exec_show.Click += new System.EventHandler(this.Tb_exec_showClick);
 			// 
-			// button4
+			// btn_update_settings
 			// 
-			this.button4.Location = new System.Drawing.Point(403, 103);
-			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(93, 23);
-			this.button4.TabIndex = 5;
-			this.button4.Text = "设置数据库";
-			this.toolTip1.SetToolTip(this.button4, "把当前数据库配置保存");
-			this.button4.UseVisualStyleBackColor = true;
-			this.button4.Click += new System.EventHandler(this.Tb_exec_showClick);
+			this.btn_update_settings.Location = new System.Drawing.Point(403, 103);
+			this.btn_update_settings.Name = "btn_update_settings";
+			this.btn_update_settings.Size = new System.Drawing.Size(93, 23);
+			this.btn_update_settings.TabIndex = 5;
+			this.btn_update_settings.Text = "更新设置";
+			this.toolTip1.SetToolTip(this.btn_update_settings, "把当前数据库配置保存");
+			this.btn_update_settings.UseVisualStyleBackColor = true;
+			this.btn_update_settings.Click += new System.EventHandler(this.Btn_update_settingsClick);
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(498, 468);
-			this.Controls.Add(this.button4);
+			this.Controls.Add(this.btn_update_settings);
 			this.Controls.Add(this.btn_exec_show);
 			this.Controls.Add(this.btn_exec_start);
 			this.Controls.Add(this.tb_exec_path);
-			this.Controls.Add(this.button3);
-			this.Controls.Add(this.button2);
-			this.Controls.Add(this.button1);
+			this.Controls.Add(this.btn_db_split);
+			this.Controls.Add(this.btn_db_attach);
+			this.Controls.Add(this.btn_db_restore);
 			this.Controls.Add(this.groupBox1);
 			this.Name = "MainForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -250,14 +253,14 @@ namespace ServerManager
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
-		private System.Windows.Forms.Button button4;
+		private System.Windows.Forms.Button btn_update_settings;
 		private System.Windows.Forms.ToolTip toolTip1;
 		private System.Windows.Forms.Button btn_exec_show;
 		private System.Windows.Forms.Button btn_exec_start;
 		private System.Windows.Forms.TextBox tb_exec_path;
-		private System.Windows.Forms.Button button3;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button btn_db_split;
+		private System.Windows.Forms.Button btn_db_attach;
+		private System.Windows.Forms.Button btn_db_restore;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label3;

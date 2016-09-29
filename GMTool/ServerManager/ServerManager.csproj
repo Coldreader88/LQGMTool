@@ -96,5 +96,8 @@
     <Folder Include="Common" />
     <Folder Include="Common\Win32" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Server.ini" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

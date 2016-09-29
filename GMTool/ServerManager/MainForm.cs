@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using GMTool.Common;
+using ServerManager.Comon;
 
 namespace ServerManager
 {
@@ -68,6 +69,28 @@ namespace ServerManager
 			if(process!=null&&process.isRunning){
 				process.Stop();
 			}
+		}
+		
+		void Btn_update_settingsClick(object sender, EventArgs e)
+		{
+			XmlHelper helper=new XmlHelper("\ServiceCore.dll.config");
+			//applicationSettings/UnifiedNetwork.Properties.Settings/setting[GameCode]
+			//connectionStrings/add[]/connectionString
+		}
+		
+		void Btn_db_splitClick(object sender, EventArgs e)
+		{
+			
+		}
+		
+		void Btn_db_restoreClick(object sender, EventArgs e)
+		{
+			
+		}
+		
+		void Btn_db_attachClick(object sender, EventArgs e)
+		{
+			
 		}
 	}
 }

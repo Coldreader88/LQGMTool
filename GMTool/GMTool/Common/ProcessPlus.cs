@@ -7,6 +7,7 @@
  * 要改变这种模板请点击 工具|选项|代码编写|编辑标准头文件
  */
 using System;
+using System.IO;
 using System.Diagnostics;
 using System.Win32;
 using System.Windows.Forms;
@@ -18,7 +19,7 @@ namespace GMTool.Common
 	{
 		private Process process;
 		public bool isRunning{get;private set;}
-		public string Path{get;private set;}
+		public string ExePath{get;private set;}
 		public string Args{get;set;}
 		public string Title{get;private set;}
 		public IntPtr Window{get;private set;}
@@ -29,19 +30,21 @@ namespace GMTool.Common
 		{
 			this.Window = IntPtr.Zero;
 			this.Title = title;
-			this.Path = path;
+			this.ExePath = path;
 			this.Args = args;
 		}
 		public ProcessPlus(string path,string args)
 		{
 			this.Title = path;
-			this.Path = path;
+			this.ExePath = path;
 			this.Args = args;
 		}
-		private void GetWindow()
+		public IntPtr GetWindow()
 		{
-			if (Window != IntPtr.Zero) return;
-			Window = User32.GetWindowByPid(process.Id);
+			if (Window == IntPtr.Zero){
+				Window = User32.GetWindowByPid(process.Id);
+			}
+			return Window;
 		}
 		public bool Show()
 		{
@@ -67,7 +70,8 @@ namespace GMTool.Common
 			if(process==null||process.HasExited){
 				process=new Process();
 			}
-			process.StartInfo.FileName = Path;
+			process.StartInfo.FileName = ExePath;
+			process.StartInfo.WorkingDirectory = Path.GetDirectoryName(ExePath);
 			//设定程式执行参数
 //			process.StartInfo.UseShellExecute = false;
 //			process.StartInfo.CreateNoWindow = true;
@@ -80,11 +84,11 @@ namespace GMTool.Common
 					Stop();
 					//异常结束
 					if(OnExitEvent!=null){
-						OnExitEvent(Path, Args, true);
+						OnExitEvent(ExePath, Args, true);
 					}
 				}else{
 					Stop();
-					OnExitEvent(Path, Args, false);
+					OnExitEvent(ExePath, Args, false);
 				}
 			};
 			try{
