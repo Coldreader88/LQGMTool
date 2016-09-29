@@ -73,7 +73,7 @@ namespace ServerManager
 		
 		void Btn_update_settingsClick(object sender, EventArgs e)
 		{
-			XmlHelper helper=new XmlHelper("\ServiceCore.dll.config");
+			XmlHelper helper=new XmlHelper("\\ServiceCore.dll.config");
 			//applicationSettings/UnifiedNetwork.Properties.Settings/setting[GameCode]
 			//connectionStrings/add[]/connectionString
 		}

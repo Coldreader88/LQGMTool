@@ -139,7 +139,7 @@ namespace GMTool.Helper
 		
 		#region items
 		private void ReadItems(SQLiteHelper db,HeroesTextHelper HeroesText){
-			using (DbDataReader reader = db.GetReader("SELECT * FROM ItemClassInfo"))
+			using (DbDataReader reader = db.GetReader("SELECT * FROM ItemClassInfo order by RequiredLevel;"))
 			{
 				while (reader != null && reader.Read())
 				{

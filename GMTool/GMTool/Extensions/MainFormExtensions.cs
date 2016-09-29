@@ -19,7 +19,7 @@ namespace GMTool
 	{
 		#region 数据库
 		private static MSSqlHelper db = new MSSqlHelper();
-		private const string SQL_QUERY_USERS = "select * from CharacterInfo WHERE DeleteTime is NULL and CreateTime >= '2016-01-01' ORDER BY CreateTime;";
+		private const string SQL_QUERY_USERS = "select * from CharacterInfo WHERE DeleteTime is NULL and CreateTime >= '2016-01-01' ORDER BY level desc,CreateTime;";
 
 		public static bool IsOpen(this MainForm main)
 		{
