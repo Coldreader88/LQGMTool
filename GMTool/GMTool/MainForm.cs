@@ -658,6 +658,7 @@ namespace GMTool
 				ReadPackage(PackageType.All);
 				this.AddTitles(this.contentMenuUserAddTitle, this.GetTitles(CurUser));
 				this.AddClasses(CurUser, this.contentMenuUserClasses);
+				this.AddSkillBouns(CurUser, this.contentMenuItemMaxScore,this.list_items_cash);
 			}
 		}
 		private void list_items_normal_SelectedIndexChanged(object sender, EventArgs e)
@@ -945,15 +946,7 @@ namespace GMTool
 				}
 			}
 		}
-		
-		private void ContentMenuItemMaxScoreClick(object sender, EventArgs e)
-		{
-			if (!CheckUser()) return;
-			if (this.ModItemScoreMax(CurUser, this.list_items_cash.GetSelectItems<Item>())>0)
-			{
-				ReadPackage(PackageType.Cash);
-			}
-		}
+
 		private void contentMenuCashRefresh_Click(object sender, EventArgs e)
 		{
 			if (!CheckUser()) return;
@@ -1077,7 +1070,6 @@ namespace GMTool
 
 		}
 		#endregion
-
 
 	}
 }

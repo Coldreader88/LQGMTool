@@ -1234,7 +1234,6 @@
         	this.contentMenuItemMaxScore.Name = "contentMenuItemMaxScore";
         	this.contentMenuItemMaxScore.Size = new System.Drawing.Size(152, 22);
         	this.contentMenuItemMaxScore.Text = "评分最大";
-        	this.contentMenuItemMaxScore.Click += new System.EventHandler(this.ContentMenuItemMaxScoreClick);
         	// 
         	// toolStripSeparator10
         	// 
@@ -1628,18 +1627,18 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListView list_users;
+        private GMTool.Common.DListView list_users;
         private System.Windows.Forms.ColumnHeader ch_userlist_name;
         private System.Windows.Forms.ColumnHeader ch_userlist_class;
         private System.Windows.Forms.ColumnHeader ch_userlist_level;
-        private System.Windows.Forms.ListView list_items_normal;
+        private GMTool.Common.DListView list_items_normal;
         private System.Windows.Forms.ColumnHeader ch_items_name;
         private System.Windows.Forms.ColumnHeader ch_items_type;
         private System.Windows.Forms.ColumnHeader ch_items_time;
         private System.Windows.Forms.ColumnHeader ch_items_color1;
         private System.Windows.Forms.ColumnHeader ch_items_color2;
         private System.Windows.Forms.ColumnHeader ch_items_color3;
-        private System.Windows.Forms.ListView list_search;
+        private GMTool.Common.DListView list_search;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tb_senditem_count;
@@ -1654,10 +1653,10 @@
         private System.Windows.Forms.Button btn_search_id;
         private System.Windows.Forms.TabControl tab_mail;
         private System.Windows.Forms.TabPage tab_mail_send;
-        private System.Windows.Forms.ListView list_mail_send;
+        private GMTool.Common.DListView list_mail_send;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.TabPage tab_mail_user;
-        private System.Windows.Forms.ListView list_mail_user;
+        private GMTool.Common.DListView list_mail_user;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ContextMenuStrip contextMenuItem;
         private System.Windows.Forms.ToolStripMenuItem contentMenuItemMaxStar;
@@ -1686,7 +1685,7 @@
         private System.Windows.Forms.TabControl tab_items;
         private System.Windows.Forms.TabPage tab_items_normal;
         private System.Windows.Forms.TabPage tab_items_cash;
-        private System.Windows.Forms.ListView list_items_cash;
+        private GMTool.Common.DListView list_items_cash;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.ColumnHeader columnHeader7;
@@ -1721,13 +1720,13 @@
         private System.Windows.Forms.Label lb_color3;
         private System.Windows.Forms.Label lb_color2;
         private System.Windows.Forms.TabPage tab_items_quest;
-        private System.Windows.Forms.ListView list_items_quest;
+        private GMTool.Common.DListView list_items_quest;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader11;
         private System.Windows.Forms.ColumnHeader columnHeader13;
         private System.Windows.Forms.ColumnHeader columnHeader19;
         private System.Windows.Forms.TabPage tab_items_other;
-        private System.Windows.Forms.ListView list_items_other;
+        private GMTool.Common.DListView list_items_other;
         private System.Windows.Forms.ColumnHeader columnHeader20;
         private System.Windows.Forms.ColumnHeader columnHeader21;
         private System.Windows.Forms.ColumnHeader columnHeader22;

@@ -112,11 +112,7 @@ namespace GMTool.Bean
 				+"\n背包："+ Collection + "，格子："+Slot
 				+ "\n类型：" +MainCategory + " [" +  SubCategory + "]";
 			text+="\n最大堆叠数量："+(MaxStack<0?"不限":""+MaxStack);
-			if (Time != "无限期")
-			{
-				text += "\n到期时间：" + Time;
-			}
-			
+		
 			if (Color1 != 0)
 			{
 				text += "\n颜色：" + (Color1 == 0 ? "无" : "#" + Color1.ToString("X"))
@@ -127,14 +123,17 @@ namespace GMTool.Bean
 			if(Stat!=null){
 				text+=Stat.ToString();
 			}
-			text += "\n物品描述：\n    " + ItemDesc;
-
 			if (Attributes != null)
 			{
 				foreach (ItemAttribute attr in Attributes)
 				{
 					text += "\n"+attr.ToString();
 				}
+			}
+			text += "\n物品描述：" + ItemDesc;
+			if (Time != "无限期")
+			{
+				text += "\n到期时间：" + Time;
 			}
 			return text;
 		}

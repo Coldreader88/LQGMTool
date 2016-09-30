@@ -32,6 +32,7 @@ namespace GMTool.Helper
 		public Dictionary<string, string> TitleDescs{get; private set;}
 		public Dictionary<string, string> ItemStatNames{get; private set;}
 		public Dictionary<string, string> MailTitles { get; private set; }
+		public Dictionary<string, string> SynSkillBonuds{get;private set;}
 
 		private bool TW2CN = true;
 		private Dictionary<Regex, Dictionary<string, string>> Regexs
@@ -56,6 +57,7 @@ namespace GMTool.Helper
 			TitleDescs=new Dictionary<string, string>();
 			MailTitles = new Dictionary<string, string>();
 			ItemStatNames=new Dictionary<string, string>();
+			SynSkillBonuds=new Dictionary<string, string>();
 			Regexs.Add(new Regex("HEROES_ATTRIBUTE_PREFIX_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), PrefixNames);
 			Regexs.Add(new Regex("HEROES_ATTRIBUTE_SUFFIX_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), SuffixNames);
 			Regexs.Add(new Regex("HEROES_ITEMCONSTRAINT_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), EnchantDescs);
@@ -67,6 +69,7 @@ namespace GMTool.Helper
 			Regexs.Add(new Regex("(HEROES_TITLE_GOAL_NAME_\\S+?)\"\\s+\"([\\s\\S]+?)\""), TitleDescs);
 			Regexs.Add(new Regex("\"(\\S+?MAIL_TITLE)\"\\s+\"([\\s\\S]+?)\""), MailTitles);
 			Regexs.Add(new Regex("HEROES_ITEMSTAT_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), ItemStatNames);
+			Regexs.Add(new Regex("Heroes_Desc_Avatar_Skill_Bonus_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), SynSkillBonuds);
 		}
 		
 		public void Read(string file){

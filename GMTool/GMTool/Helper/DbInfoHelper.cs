@@ -23,6 +23,14 @@ namespace GMTool.Helper
 		static DbInfoHelper sItemClassInfoHelper = null;
 		public Dictionary<string, string> MailTitles { get; private set; }
 		public Dictionary<string, string> ItemStatNames{get; private set;}
+		public List<SynthesisSkillBonus> SynthesisSkillBonues{get; private set;}
+
+		private string textFile, dbFile;
+		private bool mInit = false;
+		public SearchHelper Searcher{get;private set;}
+		private Dictionary<string, EnchantInfo> Enchants = new Dictionary<string, EnchantInfo>();
+		private Dictionary<long, TitleInfo> Titles=new Dictionary<long, TitleInfo>();
+				
 		public static DbInfoHelper Get()
 		{
 			return sItemClassInfoHelper;
@@ -32,15 +40,11 @@ namespace GMTool.Helper
 		{
 			get { return mInit; }
 		}
-		private string textFile, dbFile;
-		private bool mInit = false;
-		public SearchHelper Searcher{get;private set;}
-		private Dictionary<string, EnchantInfo> Enchants = new Dictionary<string, EnchantInfo>();
-		private Dictionary<long, TitleInfo> Titles=new Dictionary<long, TitleInfo>();
 		public DbInfoHelper()
 		{
 			sItemClassInfoHelper = this;
 			Searcher = new SearchHelper();
+			SynthesisSkillBonues = new List<SynthesisSkillBonus>();
 			IniHelper helper = new IniHelper(Program.INT_FILE);
 			this.textFile = helper.ReadValue("data", "text");
 			if (!File.Exists(textFile))
@@ -73,10 +77,23 @@ namespace GMTool.Helper
 			ReadItems(db,HeroesText );
 			ReadEnchants(db,HeroesText);
 			ReadTitles(db, HeroesText);
+			ReadSkillBonuds(db, HeroesText);
 			db.Close();
 			return true;
 		}
 		#endregion
+		
+		#region synskillbonuds
+		private void ReadSkillBonuds(SQLiteHelper db,HeroesTextHelper HeroesText){
+			using (DbDataReader reader = db.GetReader("select * from synthesisskillbonus order by classRestriction;"))
+			{
+				while (reader != null && reader.Read())
+				{
+					SynthesisSkillBonues.Add(new SynthesisSkillBonus(reader, HeroesText));
+				}
+			}
+		}
+		#endregion#
 		
 		#region title
 		//select titleid,ts.description,targetcount,ispositive,isparty,category,autogivelevel,requiredlevel,classrestriction from ( titlegoalinfo as ts left join  titleinfo as ti on  ti.id=ts.titleid) order by requiredlevel;

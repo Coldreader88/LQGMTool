@@ -7,11 +7,44 @@ using System.Linq;
 using System.Text;
 using GMTool.Dialog;
 using System.Windows.Forms;
+using GMTool.Helper;
 
 namespace GMTool
 {
 	public static class MenuExtensions
 	{
+		public static void AddSkillBouns(this MainForm main,User user,ToolStripDropDownItem menuitem,ListView listview){
+			menuitem.DropDownItems.Clear();
+			List<SynthesisSkillBonus> infos=main.DataHelper.SynthesisSkillBonues;
+			foreach (SynthesisSkillBonus info in infos)
+			{
+				if(user.IsEnable(info.ClassRestriction)){
+					ToolStripMenuItem tsmi = new ToolStripMenuItem(info.DESC);
+					tsmi.Tag = cls;
+					if (user != null && user.Class == cls)
+					{
+						tsmi.Checked = true;
+					}
+					tsmi.ToolTipText = cls.ToString() + " " + cls.Index();
+					tsmi.Click += (object sender, EventArgs e) => {
+						if (!CheckUser()) return;
+						if (this.ModItemScoreMax(CurUser, this.list_items_cash.GetSelectItems<Item>())>0)
+						{
+							ReadPackage(PackageType.Cash);
+						}
+					};
+					menuitem.DropDownItems.Add(tsmi);
+				}
+			}
+//		private void ContentMenuItemMaxScoreClick(object sender, EventArgs e)
+//		{
+//			if (!CheckUser()) return;
+//			if (this.ModItemScoreMax(CurUser, this.list_items_cash.GetSelectItems<Item>())>0)
+//			{
+//				ReadPackage(PackageType.Cash);
+//			}
+//		}
+		}
 		#region 职业
 		public static void AddClasses(this MainForm main,User user,ToolStripDropDownItem menuitem)
 		{

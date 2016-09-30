@@ -7,6 +7,9 @@
  * 要改变这种模板请点击 工具|选项|代码编写|编辑标准头文件
  */
 using System;
+using GMTool.Extensions;
+using System.Data.Common;
+using GMTool.Helper;
 
 namespace GMTool.Bean
 {
@@ -15,12 +18,35 @@ namespace GMTool.Bean
 	/// </summary>
 	public class SynthesisSkillBonus
 	{
-		public int ID;
-		public string Grade;
-		public int ClassRestriction;
-		public string DESC;
-		public string SkillID;
-		public string Type;
-		public int Value;
+		public int ID{get;private set;}
+		public string Grade{get;private set;}
+		public int ClassRestriction{get;private set;}
+		//描述
+		public string DESC{get;private set;}
+		//技能id
+		public string SkillID{get;private set;}
+		//效果类型
+		public string Type{get;private set;}
+		//百分比
+		public int Value{get;private set;}
+		
+		public SynthesisSkillBonus(DbDataReader reader,HeroesTextHelper HeroesText){
+			this.ID = reader.ReadInt32("ID");
+			this.Grade = reader.ReadString("Grade");
+			this.ClassRestriction = reader.ReadInt32("ClassRestriction");
+			this.DESC = reader.ReadString("DESC");
+			string tmp ;
+			if(HeroesText.SynSkillBonuds.TryGetValue(""+ID, out tmp)){
+				this.DESC = tmp;
+			}
+			this.SkillID = reader.ReadString("SkillID");
+			this.Type = reader.ReadString("Type");
+			this.Value = reader.ReadInt32("Value");
+		}
+		public override string ToString()
+		{
+			return base.ToString();
+		}
+
 	}
 }
