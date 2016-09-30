@@ -69,8 +69,8 @@ namespace GMTool.Bean
 			}else if (Type == ItemAttributeType.SYNTHESISGRADE)
 			{
 				_Desc= "评分：" + Value;
-			}else{
-				_Desc= Type+":"+Value;
+			}else if (Type == ItemAttributeType.VALUE){
+				_Desc= "";
 			}
 			return _Desc;
 		}

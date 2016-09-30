@@ -100,7 +100,10 @@ namespace GMTool.Extensions
                     {
                         head += "★" + attr.Arg + " ";
                         break;
+                    }else if(attr.Type == ItemAttributeType.VALUE){
+                    	vitem.Text = vitem.Text.Replace("{0}",attr.Value);
                     }
+                    
                 }
                 if (!string.IsNullOrEmpty(head))
                 {

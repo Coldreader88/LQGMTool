@@ -48,16 +48,16 @@
         	this.ch_userlist_class = new System.Windows.Forms.ColumnHeader();
         	this.ch_userlist_level = new System.Windows.Forms.ColumnHeader();
         	this.contextMenuUser = new System.Windows.Forms.ContextMenuStrip(this.components);
+        	this.contentMenuUserAddTitle = new System.Windows.Forms.ToolStripMenuItem();
+        	this.contentMenuUserMaxSecondClass = new System.Windows.Forms.ToolStripMenuItem();
+        	this.contentMenuUserResetQuest = new System.Windows.Forms.ToolStripMenuItem();
+        	this.contentMenuUserTitles = new System.Windows.Forms.ToolStripMenuItem();
+        	this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
         	this.contentMenuUserModName = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuUserModLevel = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuUserModAp = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuUserClasses = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuUserModAttr = new System.Windows.Forms.ToolStripMenuItem();
-        	this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-        	this.contentMenuUserAddTitle = new System.Windows.Forms.ToolStripMenuItem();
-        	this.contentMenuUserMaxSecondClass = new System.Windows.Forms.ToolStripMenuItem();
-        	this.contentMenuUserResetQuest = new System.Windows.Forms.ToolStripMenuItem();
-        	this.contentMenuUserTitles = new System.Windows.Forms.ToolStripMenuItem();
         	this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
         	this.contentMenuUserMaxLight = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuUserMaxDark = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,6 +74,8 @@
         	this.ch_items_color3 = new System.Windows.Forms.ColumnHeader();
         	this.ch_items_time = new System.Windows.Forms.ColumnHeader();
         	this.contextMenuItem = new System.Windows.Forms.ContextMenuStrip(this.components);
+        	this.contentMenuItemRefesh = new System.Windows.Forms.ToolStripMenuItem();
+        	this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
         	this.contentMenuEnchantPrefix = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuEnchantSuffix = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuItemPower = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,7 +93,6 @@
         	this.contentMenuItemColorAll = new System.Windows.Forms.ToolStripMenuItem();
         	this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
         	this.contentMenuItemCount = new System.Windows.Forms.ToolStripMenuItem();
-        	this.contentMenuItemRefesh = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuItemMaxStar = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuItemUnLimitTime = new System.Windows.Forms.ToolStripMenuItem();
         	this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -129,11 +130,12 @@
         	this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
         	this.tab_items = new System.Windows.Forms.TabControl();
         	this.contextMenuOther = new System.Windows.Forms.ContextMenuStrip(this.components);
-        	this.contentMenuOtherDelete = new System.Windows.Forms.ToolStripMenuItem();
+        	this.contentMenuOtherRefresh = new System.Windows.Forms.ToolStripMenuItem();
         	this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
         	this.contentMenuOtherCount = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuOtherUnlimit = new System.Windows.Forms.ToolStripMenuItem();
-        	this.contentMenuOtherRefresh = new System.Windows.Forms.ToolStripMenuItem();
+        	this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
+        	this.contentMenuOtherDelete = new System.Windows.Forms.ToolStripMenuItem();
         	this.tab_items_normal = new System.Windows.Forms.TabPage();
         	this.tab_items_cash = new System.Windows.Forms.TabPage();
         	this.list_items_cash = new System.Windows.Forms.ListView();
@@ -145,10 +147,11 @@
         	this.columnHeader9 = new System.Windows.Forms.ColumnHeader();
         	this.columnHeader10 = new System.Windows.Forms.ColumnHeader();
         	this.contextMenuCashItem = new System.Windows.Forms.ContextMenuStrip(this.components);
+        	this.contentMenuCashRefresh = new System.Windows.Forms.ToolStripMenuItem();
+        	this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
         	this.contentMenuCashInnerEnchant = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuCashCount = new System.Windows.Forms.ToolStripMenuItem();
-        	this.contentMenuCashUnlimitTime = new System.Windows.Forms.ToolStripMenuItem();
-        	this.contentMenuCashRefresh = new System.Windows.Forms.ToolStripMenuItem();
+        	this.contentMenuItemMaxScore = new System.Windows.Forms.ToolStripMenuItem();
         	this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
         	this.contentMenuCashColor1 = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuCashColor2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -184,9 +187,6 @@
         	this.label11 = new System.Windows.Forms.Label();
         	this.label9 = new System.Windows.Forms.Label();
         	this.label6 = new System.Windows.Forms.Label();
-        	this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-        	this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
-        	this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
         	this.groupBox1.SuspendLayout();
         	this.contextMenuUser.SuspendLayout();
         	this.contextMenuItem.SuspendLayout();
@@ -371,6 +371,38 @@
         	this.contextMenuUser.Name = "contextMenuUser";
         	this.contextMenuUser.Size = new System.Drawing.Size(157, 308);
         	// 
+        	// contentMenuUserAddTitle
+        	// 
+        	this.contentMenuUserAddTitle.Name = "contentMenuUserAddTitle";
+        	this.contentMenuUserAddTitle.Size = new System.Drawing.Size(156, 22);
+        	this.contentMenuUserAddTitle.Text = "添加头衔";
+        	// 
+        	// contentMenuUserMaxSecondClass
+        	// 
+        	this.contentMenuUserMaxSecondClass.Name = "contentMenuUserMaxSecondClass";
+        	this.contentMenuUserMaxSecondClass.Size = new System.Drawing.Size(156, 22);
+        	this.contentMenuUserMaxSecondClass.Text = "副职业满级";
+        	this.contentMenuUserMaxSecondClass.Click += new System.EventHandler(this.contentMenuUserMaxSecondClass_Click);
+        	// 
+        	// contentMenuUserResetQuest
+        	// 
+        	this.contentMenuUserResetQuest.Name = "contentMenuUserResetQuest";
+        	this.contentMenuUserResetQuest.Size = new System.Drawing.Size(156, 22);
+        	this.contentMenuUserResetQuest.Text = "重置副本次数";
+        	this.contentMenuUserResetQuest.Click += new System.EventHandler(this.ContentMenuUserResetQuestClick);
+        	// 
+        	// contentMenuUserTitles
+        	// 
+        	this.contentMenuUserTitles.Name = "contentMenuUserTitles";
+        	this.contentMenuUserTitles.Size = new System.Drawing.Size(156, 22);
+        	this.contentMenuUserTitles.Text = "获取全部头衔";
+        	this.contentMenuUserTitles.Click += new System.EventHandler(this.ContentMenuUserTitlesClick);
+        	// 
+        	// toolStripSeparator4
+        	// 
+        	this.toolStripSeparator4.Name = "toolStripSeparator4";
+        	this.toolStripSeparator4.Size = new System.Drawing.Size(153, 6);
+        	// 
         	// contentMenuUserModName
         	// 
         	this.contentMenuUserModName.Name = "contentMenuUserModName";
@@ -403,38 +435,6 @@
         	this.contentMenuUserModAttr.Name = "contentMenuUserModAttr";
         	this.contentMenuUserModAttr.Size = new System.Drawing.Size(156, 22);
         	this.contentMenuUserModAttr.Text = "修改属性";
-        	// 
-        	// toolStripSeparator4
-        	// 
-        	this.toolStripSeparator4.Name = "toolStripSeparator4";
-        	this.toolStripSeparator4.Size = new System.Drawing.Size(153, 6);
-        	// 
-        	// contentMenuUserAddTitle
-        	// 
-        	this.contentMenuUserAddTitle.Name = "contentMenuUserAddTitle";
-        	this.contentMenuUserAddTitle.Size = new System.Drawing.Size(156, 22);
-        	this.contentMenuUserAddTitle.Text = "添加头衔";
-        	// 
-        	// contentMenuUserMaxSecondClass
-        	// 
-        	this.contentMenuUserMaxSecondClass.Name = "contentMenuUserMaxSecondClass";
-        	this.contentMenuUserMaxSecondClass.Size = new System.Drawing.Size(156, 22);
-        	this.contentMenuUserMaxSecondClass.Text = "副职业满级";
-        	this.contentMenuUserMaxSecondClass.Click += new System.EventHandler(this.contentMenuUserMaxSecondClass_Click);
-        	// 
-        	// contentMenuUserResetQuest
-        	// 
-        	this.contentMenuUserResetQuest.Name = "contentMenuUserResetQuest";
-        	this.contentMenuUserResetQuest.Size = new System.Drawing.Size(156, 22);
-        	this.contentMenuUserResetQuest.Text = "重置副本次数";
-        	this.contentMenuUserResetQuest.Click += new System.EventHandler(this.ContentMenuUserResetQuestClick);
-        	// 
-        	// contentMenuUserTitles
-        	// 
-        	this.contentMenuUserTitles.Name = "contentMenuUserTitles";
-        	this.contentMenuUserTitles.Size = new System.Drawing.Size(156, 22);
-        	this.contentMenuUserTitles.Text = "获取全部头衔";
-        	this.contentMenuUserTitles.Click += new System.EventHandler(this.ContentMenuUserTitlesClick);
         	// 
         	// toolStripSeparator5
         	// 
@@ -563,6 +563,18 @@
         	this.contextMenuItem.Name = "contextMenuItem";
         	this.contextMenuItem.Size = new System.Drawing.Size(149, 292);
         	// 
+        	// contentMenuItemRefesh
+        	// 
+        	this.contentMenuItemRefesh.Name = "contentMenuItemRefesh";
+        	this.contentMenuItemRefesh.Size = new System.Drawing.Size(148, 22);
+        	this.contentMenuItemRefesh.Text = "刷新背包";
+        	this.contentMenuItemRefesh.Click += new System.EventHandler(this.contentMenuItemRefesh_Click);
+        	// 
+        	// toolStripSeparator12
+        	// 
+        	this.toolStripSeparator12.Name = "toolStripSeparator12";
+        	this.toolStripSeparator12.Size = new System.Drawing.Size(145, 6);
+        	// 
         	// contentMenuEnchantPrefix
         	// 
         	this.contentMenuEnchantPrefix.Name = "contentMenuEnchantPrefix";
@@ -680,13 +692,6 @@
         	this.contentMenuItemCount.Size = new System.Drawing.Size(148, 22);
         	this.contentMenuItemCount.Text = "修改数量";
         	this.contentMenuItemCount.Click += new System.EventHandler(this.ContentMenuItemCountClick);
-        	// 
-        	// contentMenuItemRefesh
-        	// 
-        	this.contentMenuItemRefesh.Name = "contentMenuItemRefesh";
-        	this.contentMenuItemRefesh.Size = new System.Drawing.Size(148, 22);
-        	this.contentMenuItemRefesh.Text = "刷新背包";
-        	this.contentMenuItemRefesh.Click += new System.EventHandler(this.contentMenuItemRefesh_Click);
         	// 
         	// contentMenuItemMaxStar
         	// 
@@ -1059,12 +1064,12 @@
         	this.contextMenuOther.Name = "contextMenuOther";
         	this.contextMenuOther.Size = new System.Drawing.Size(125, 104);
         	// 
-        	// contentMenuOtherDelete
+        	// contentMenuOtherRefresh
         	// 
-        	this.contentMenuOtherDelete.Name = "contentMenuOtherDelete";
-        	this.contentMenuOtherDelete.Size = new System.Drawing.Size(124, 22);
-        	this.contentMenuOtherDelete.Text = "删除物品";
-        	this.contentMenuOtherDelete.Click += new System.EventHandler(this.contentMenuQuestDelete_Click);
+        	this.contentMenuOtherRefresh.Name = "contentMenuOtherRefresh";
+        	this.contentMenuOtherRefresh.Size = new System.Drawing.Size(124, 22);
+        	this.contentMenuOtherRefresh.Text = "刷新背包";
+        	this.contentMenuOtherRefresh.Click += new System.EventHandler(this.contentMenuOtherRefresh_Click);
         	// 
         	// toolStripSeparator11
         	// 
@@ -1085,12 +1090,17 @@
         	this.contentMenuOtherUnlimit.Text = "无限时间";
         	this.contentMenuOtherUnlimit.Click += new System.EventHandler(this.contentMenuQuestUnlimit_Click);
         	// 
-        	// contentMenuOtherRefresh
+        	// toolStripSeparator14
         	// 
-        	this.contentMenuOtherRefresh.Name = "contentMenuOtherRefresh";
-        	this.contentMenuOtherRefresh.Size = new System.Drawing.Size(124, 22);
-        	this.contentMenuOtherRefresh.Text = "刷新背包";
-        	this.contentMenuOtherRefresh.Click += new System.EventHandler(this.contentMenuOtherRefresh_Click);
+        	this.toolStripSeparator14.Name = "toolStripSeparator14";
+        	this.toolStripSeparator14.Size = new System.Drawing.Size(121, 6);
+        	// 
+        	// contentMenuOtherDelete
+        	// 
+        	this.contentMenuOtherDelete.Name = "contentMenuOtherDelete";
+        	this.contentMenuOtherDelete.Size = new System.Drawing.Size(124, 22);
+        	this.contentMenuOtherDelete.Text = "删除物品";
+        	this.contentMenuOtherDelete.Click += new System.EventHandler(this.contentMenuQuestDelete_Click);
         	// 
         	// tab_items_normal
         	// 
@@ -1183,7 +1193,7 @@
         	        	        	this.toolStripSeparator13,
         	        	        	this.contentMenuCashInnerEnchant,
         	        	        	this.contentMenuCashCount,
-        	        	        	this.contentMenuCashUnlimitTime,
+        	        	        	this.contentMenuItemMaxScore,
         	        	        	this.toolStripSeparator10,
         	        	        	this.contentMenuCashColor1,
         	        	        	this.contentMenuCashColor2,
@@ -1192,77 +1202,82 @@
         	        	        	this.toolStripSeparator9,
         	        	        	this.contentMenuCashDelete});
         	this.contextMenuCashItem.Name = "contextMenuCashItem";
-        	this.contextMenuCashItem.Size = new System.Drawing.Size(149, 220);
+        	this.contextMenuCashItem.Size = new System.Drawing.Size(153, 242);
+        	// 
+        	// contentMenuCashRefresh
+        	// 
+        	this.contentMenuCashRefresh.Name = "contentMenuCashRefresh";
+        	this.contentMenuCashRefresh.Size = new System.Drawing.Size(152, 22);
+        	this.contentMenuCashRefresh.Text = "刷新背包";
+        	this.contentMenuCashRefresh.Click += new System.EventHandler(this.contentMenuCashRefresh_Click);
+        	// 
+        	// toolStripSeparator13
+        	// 
+        	this.toolStripSeparator13.Name = "toolStripSeparator13";
+        	this.toolStripSeparator13.Size = new System.Drawing.Size(149, 6);
         	// 
         	// contentMenuCashInnerEnchant
         	// 
         	this.contentMenuCashInnerEnchant.Name = "contentMenuCashInnerEnchant";
-        	this.contentMenuCashInnerEnchant.Size = new System.Drawing.Size(148, 22);
+        	this.contentMenuCashInnerEnchant.Size = new System.Drawing.Size(152, 22);
         	this.contentMenuCashInnerEnchant.Text = "内衣附魔";
         	// 
         	// contentMenuCashCount
         	// 
         	this.contentMenuCashCount.Name = "contentMenuCashCount";
-        	this.contentMenuCashCount.Size = new System.Drawing.Size(148, 22);
+        	this.contentMenuCashCount.Size = new System.Drawing.Size(152, 22);
         	this.contentMenuCashCount.Text = "修改数量";
         	this.contentMenuCashCount.Click += new System.EventHandler(this.ContentMenuCashCountClick);
         	// 
-        	// contentMenuCashUnlimitTime
+        	// contentMenuItemMaxScore
         	// 
-        	this.contentMenuCashUnlimitTime.Name = "contentMenuCashUnlimitTime";
-        	this.contentMenuCashUnlimitTime.Size = new System.Drawing.Size(148, 22);
-        	this.contentMenuCashUnlimitTime.Text = "无限时间";
-        	this.contentMenuCashUnlimitTime.Click += new System.EventHandler(this.contentMenuCashUnlimitTime_Click);
-        	// 
-        	// contentMenuCashRefresh
-        	// 
-        	this.contentMenuCashRefresh.Name = "contentMenuCashRefresh";
-        	this.contentMenuCashRefresh.Size = new System.Drawing.Size(148, 22);
-        	this.contentMenuCashRefresh.Text = "刷新背包";
-        	this.contentMenuCashRefresh.Click += new System.EventHandler(this.contentMenuCashRefresh_Click);
+        	this.contentMenuItemMaxScore.Name = "contentMenuItemMaxScore";
+        	this.contentMenuItemMaxScore.Size = new System.Drawing.Size(152, 22);
+        	this.contentMenuItemMaxScore.Text = "评分最大";
+        	this.contentMenuItemMaxScore.Click += new System.EventHandler(this.ContentMenuItemMaxScoreClick);
         	// 
         	// toolStripSeparator10
         	// 
         	this.toolStripSeparator10.Name = "toolStripSeparator10";
-        	this.toolStripSeparator10.Size = new System.Drawing.Size(145, 6);
+        	this.toolStripSeparator10.Size = new System.Drawing.Size(149, 6);
         	// 
         	// contentMenuCashColor1
         	// 
         	this.contentMenuCashColor1.Name = "contentMenuCashColor1";
-        	this.contentMenuCashColor1.Size = new System.Drawing.Size(148, 22);
+        	this.contentMenuCashColor1.Size = new System.Drawing.Size(152, 22);
         	this.contentMenuCashColor1.Text = "修改颜色1";
         	this.contentMenuCashColor1.Click += new System.EventHandler(this.contentMenuCashColor1_Click);
         	// 
         	// contentMenuCashColor2
         	// 
         	this.contentMenuCashColor2.Name = "contentMenuCashColor2";
-        	this.contentMenuCashColor2.Size = new System.Drawing.Size(148, 22);
+        	this.contentMenuCashColor2.Size = new System.Drawing.Size(152, 22);
         	this.contentMenuCashColor2.Text = "修改颜色2";
         	this.contentMenuCashColor2.Click += new System.EventHandler(this.contentMenuCashColor2_Click);
         	// 
         	// contentMenuCashColor3
         	// 
         	this.contentMenuCashColor3.Name = "contentMenuCashColor3";
-        	this.contentMenuCashColor3.Size = new System.Drawing.Size(148, 22);
+        	this.contentMenuCashColor3.Size = new System.Drawing.Size(152, 22);
         	this.contentMenuCashColor3.Text = "修改颜色3";
         	this.contentMenuCashColor3.Click += new System.EventHandler(this.contentMenuCashColor3_Click);
         	// 
         	// contentMenuCashColorAll
         	// 
         	this.contentMenuCashColorAll.Name = "contentMenuCashColorAll";
-        	this.contentMenuCashColorAll.Size = new System.Drawing.Size(148, 22);
+        	this.contentMenuCashColorAll.Size = new System.Drawing.Size(152, 22);
         	this.contentMenuCashColorAll.Text = "修改全部颜色";
         	this.contentMenuCashColorAll.Click += new System.EventHandler(this.contentMenuCashColorAll_Click);
         	// 
         	// toolStripSeparator9
         	// 
         	this.toolStripSeparator9.Name = "toolStripSeparator9";
-        	this.toolStripSeparator9.Size = new System.Drawing.Size(145, 6);
+        	this.toolStripSeparator9.Size = new System.Drawing.Size(149, 6);
         	// 
         	// contentMenuCashDelete
         	// 
         	this.contentMenuCashDelete.Name = "contentMenuCashDelete";
-        	this.contentMenuCashDelete.Size = new System.Drawing.Size(148, 22);
+        	this.contentMenuCashDelete.Size = new System.Drawing.Size(152, 22);
         	this.contentMenuCashDelete.Text = "删除物品";
         	this.contentMenuCashDelete.Click += new System.EventHandler(this.contentMenuCashDelete_Click);
         	// 
@@ -1532,21 +1547,6 @@
         	this.label6.TabIndex = 0;
         	this.label6.Text = "颜色1";
         	// 
-        	// toolStripSeparator12
-        	// 
-        	this.toolStripSeparator12.Name = "toolStripSeparator12";
-        	this.toolStripSeparator12.Size = new System.Drawing.Size(145, 6);
-        	// 
-        	// toolStripSeparator13
-        	// 
-        	this.toolStripSeparator13.Name = "toolStripSeparator13";
-        	this.toolStripSeparator13.Size = new System.Drawing.Size(145, 6);
-        	// 
-        	// toolStripSeparator14
-        	// 
-        	this.toolStripSeparator14.Name = "toolStripSeparator14";
-        	this.toolStripSeparator14.Size = new System.Drawing.Size(121, 6);
-        	// 
         	// MainForm
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1599,6 +1599,7 @@
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.ToolStripMenuItem contentMenuItemMaxScore;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
@@ -1740,7 +1741,6 @@
         private System.Windows.Forms.ToolStripMenuItem contentMenuCashColorAll;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem contentMenuCashDelete;
-        private System.Windows.Forms.ToolStripMenuItem contentMenuCashUnlimitTime;
         private System.Windows.Forms.ContextMenuStrip contextMenuOther;
         private System.Windows.Forms.ToolStripMenuItem contentMenuOtherDelete;
         private System.Windows.Forms.ToolStripMenuItem contentMenuOtherUnlimit;

@@ -319,7 +319,7 @@ namespace GMTool
 			try
 			{
 				db.ExcuteSQL("update characterInfo set "+name+" = N'"+value+"'"+
-				                           " where id = "+ user.CID );
+				             " where id = "+ user.CID );
 			}
 			catch (Exception)
 			{
@@ -606,7 +606,27 @@ namespace GMTool
 			}
 			return true;
 		}
-		
+		/// <summary>
+		/// 评分最大
+		/// </summary>
+		public static int MaxScore(this MainForm main, User user, params Item[] items)
+		{
+			if (items == null || items.Length == 0)
+			{
+				return 0;
+			}
+			else
+			{
+				int count = 0;
+				foreach (Item item in items)
+				{
+					if(ModItemAttr(main, new ItemAttribute(ItemAttributeType.SYNTHESISGRADE, "S"), item)){
+						count++;
+					}
+				}
+				return count;
+			}
+		}
 		/// <summary>
 		/// 品质最大
 		/// </summary>
@@ -640,8 +660,8 @@ namespace GMTool
 			                +"'")==0){
 				//修改
 				return db.ExcuteSQL("insert into ItemAttribute(ItemID,Attribute,Value,Arg,Arg2)"+
-				             " values(" + itemID + ",'"+attr.Type.ToString()
-				             +"','"+val+"',"+attr.Arg+","+attr.Arg2+")") > 0;
+				                    " values(" + itemID + ",'"+attr.Type.ToString()
+				                    +"','"+val+"',"+attr.Arg+","+attr.Arg2+")") > 0;
 			}else{
 				//插入
 				return true;
@@ -677,7 +697,7 @@ namespace GMTool
 			ItemAttributeType type = attribute.IsPrefix ? ItemAttributeType.PREFIX : ItemAttributeType.SUFFIX;
 			
 			return ModItemAttr(main, new ItemAttribute(type, attribute.Class).SetArg(attribute.MaxArg), item);
-//			
+//
 //			if (db.ExcuteScalarSQL("SELECT COUNT(*) FROM ItemAttribute ia LEFT JOIN Item i ON i.ID = ia.ItemID"
 //			                       + " WHERE (ia.Attribute = '" + name + "') AND i.ID =" + item.ItemID) == 0)
 //			{
