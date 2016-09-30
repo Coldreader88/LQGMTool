@@ -49,10 +49,11 @@ namespace GMTool.Bean
 			this.TOWN_SPEED = reader.ReadInt32("TOWN_SPEED");
 		}
 		public new bool IsEmpty(){
-			bool b =  base.IsEmpty();
-			if(b)return true;
-			return !(ATK != 0 || ATK_Speed !=0 || Critical!=0||Balance!=0||MATK!=0
+			bool b = (ATK != 0 || ATK_Speed !=0 || Critical!=0||Balance!=0||MATK!=0
 			         ||DEF!=0||Res_Critical!=0||PVP_ATK!=0||PVP_MATK!=0||PVP_DEF!=0||TOWN_SPEED!=0);
+			if(b)return false;
+			if(!base.IsEmpty())return false;
+			return  true;
 		}
 		public override string ToString()
 		{
@@ -60,13 +61,13 @@ namespace GMTool.Bean
 				StringBuilder sb=new StringBuilder();
 				if(ATK>0)
 					sb.Append("\n"+"ATK".StatName()+":"+ATK);
-				if(ATK>0)
+				if(ATK_Speed>0)
 					sb.Append("\n"+"ATK_Speed".StatName()+":"+ATK_Speed);
-				if(ATK>0)
+				if(Critical>0)
 					sb.Append("\n"+"Critical".StatName()+":"+Critical);
-				if(ATK>0)
+				if(Balance>0)
 					sb.Append("\n"+"Balance".StatName()+":"+Balance);
-				if(ATK>0)
+				if(MATK>0)
 					sb.Append("\n"+"MATK".StatName()+":"+MATK);
 				if(DEF>0)
 					sb.Append("\n"+"DEF".StatName()+":"+DEF);
