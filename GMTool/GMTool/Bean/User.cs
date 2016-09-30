@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using GMTool.Enums;
 using GMTool.Extensions;
+using System.Data.Common;
+using GMTool.Helper;
 
 namespace GMTool.Bean
 {
@@ -16,21 +18,31 @@ namespace GMTool.Bean
 		public ClassInfo Class { get; private set; }
 		public int level { get; private set; }
 
-		public int AP{get;set;}
-		public StatInfo Stat{get;set;}
-		public GroupInfo Group { get; set; }
-		public int GroupLevel {get; set;}
+		public int AP{ get; private set; }
+		public StatInfo Stat{ get; private set; }
+		public GroupInfo Group { get; private set; }
+		public int GroupLevel { get; private set; }
 		private string _txt;
-		public User(long ID, int UID, int CharacterSN,string Name,int Class, int level)
+		public User(){
+			
+		}
+		public User(DbDataReader reader)
 		{
-			this.Stat=new StatInfo();
-			this.CID = ID;
-			this.UID = UID;
-			this.CharacterSN = CharacterSN;
-			this.Name = Name;
-			this.Class = Class.ToClassInfo();
-			this.level = level;
+			this.CID = reader.ReadInt64("ID");
+			this.UID =  reader.ReadInt32("UID");
+			this.CharacterSN = reader.ReadInt32("CharacterSN");
+			this.Name =  reader.ReadString("Name");
+			this.Class =  reader.ReadInt32("Class").ToClassInfo();
+			this.level = reader.ReadInt32("Level");
+			this.AP = reader.ReadInt32("AP");
+			this.Stat= new StatInfo(reader);
 			this.Group = GroupInfo.Unknown;
+		}
+		
+		public void UpdateGroup(DbDataReader reader){
+			int group = reader.ReadInt32("vocationClass", -1);
+			this.Group = group.ToGroupInfo();
+			this.GroupLevel = reader.ReadInt32("VocationLevel", -1);
 		}
 		public string ToLongString()
 		{

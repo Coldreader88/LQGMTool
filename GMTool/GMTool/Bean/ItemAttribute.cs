@@ -9,6 +9,8 @@
 using System;
 using GMTool.Enums;
 using GMTool.Helper;
+using GMTool.Extensions;
+using System.Data.Common;
 
 namespace GMTool.Bean
 {
@@ -17,12 +19,18 @@ namespace GMTool.Bean
 	/// </summary>
 	public class ItemAttribute
 	{
-		public ItemAttributeType Type{get;set;}
-		public string Value{get;set;}
-		public int Arg{get;set;}
-		public int Arg2{get;set;}
+		public ItemAttributeType Type{get; private set;}
+		public string Value{get; private set;}
+		public int Arg{get; private set;}
+		public int Arg2{get; private set;}
 		
 		private string _Desc;
+		public ItemAttribute(DbDataReader reader){
+			this.Type = reader.ReadEnum<ItemAttributeType>("Attribute",ItemAttributeType.NONE);
+			this.Value = reader.ReadString("Value");
+			this.Arg = reader.ReadInt32("Arg");
+			this.Arg2 = reader.ReadInt32("Arg2");
+		}
 		public ItemAttribute(ItemAttributeType type,string val)
 		{
 			this.Type = type;

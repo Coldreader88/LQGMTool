@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using GMTool.Extensions;
 using GMTool.Enums;
+using System.Data.Common;
+using GMTool.Helper;
 
 namespace GMTool.Bean
 {
@@ -19,24 +21,59 @@ namespace GMTool.Bean
 		/// <summary>
 		/// 名字
 		/// </summary>
-		public string Name;
-		public string Description;
-		public string Category;
-		public int AutoGiveLevel;
-		public int RequiredLevel;
-		public int ClassRestriction;
-		public string Feature;
-		public ClassInfo OnlyClass;
+		public string Name{get;private set;}
+		public string Description{get;private set;}
+		public string Category{get;private set;}
+		public int AutoGiveLevel{get;private set;}
+		public int RequiredLevel{get;private set;}
+		public int ClassRestriction{get;private set;}
+		public string Feature{get;private set;}
+		public ClassInfo OnlyClass{get;private set;}
 		/// <summary>
 		/// 属性
 		/// </summary>
-		public Dictionary<string, int> Stats;
+		public Dictionary<string, int> Stats{get;private set;}
 		
-		public string Effect;
-		
-		public TitleInfo()
+		public string Effect{get;private set;}
+		public TitleInfo(){
+			
+		}
+		public TitleInfo(DbDataReader reader,HeroesTextHelper HeroesText)
 		{
 			Stats=new Dictionary<string, int>();
+			this.TitleID = reader.ReadInt64("titleid");// Convert.ToInt64(ToString(reader["titleid"]));
+			string tmp;
+			this.Name = reader.ReadString("name","");
+			if(HeroesText.TitleNames.TryGetValue(this.Name.ToLower(), out tmp)){
+				this.Name =tmp;
+			}
+			this.Description = reader.ReadString("description","");
+			if(HeroesText.TitleDescs.TryGetValue(this.Description.ToLower(), out tmp)){
+				this.Description =tmp;
+			}
+			this.Category = reader.ReadString("Category");
+			this.Feature = reader.ReadString("feature","");
+			this.OnlyClass = this.Feature.ToClassInfo();
+			this.AutoGiveLevel = reader.ReadInt32("AutoGiveLevel");
+			this.RequiredLevel = reader.ReadInt32("RequiredLevel");
+			this.ClassRestriction = reader.ReadInt32("ClassRestriction",-1);
+			this.Effect="";
+		}
+		
+		public void UpdateEffect(DbDataReader reader){
+			string stat = reader.ReadString("Stat","");
+			int val = reader.ReadInt32("Amount");
+			int tmp = 0;
+			if(!this.Stats.TryGetValue(stat, out tmp)){
+				this.Stats.Add(stat, val);
+				string name = stat.StatName();
+				this.Effect +=name+"+"+val+",";
+			}
+		}
+		public void Trim(){
+			if(this.Effect.EndsWith(",")){
+					this.Effect = this.Effect.Substring(0, this.Effect.Length-1);
+				}
 		}
 		public string ToShortString(){
 			return "lv." + RequiredLevel + " " + Name;

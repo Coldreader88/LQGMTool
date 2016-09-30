@@ -16,13 +16,13 @@ namespace GMTool.Bean
 {
 	public class StatInfo
 	{
-		public int STR;
-		public int DEX;
-		public int INT;
-		public int WILL;
-		public int LUCK;
-		public int HP;
-		public int STAMINA;
+		public int STR{get;private set;}
+		public int DEX{get;private set;}
+		public int INT{get;private set;}
+		public int WILL{get;private set;}
+		public int LUCK{get;private set;}
+		public int HP{get;private set;}
+		public int STAMINA{get;private set;}
 		public StatInfo(){
 			
 		}

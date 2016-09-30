@@ -153,7 +153,7 @@ namespace GMTool
 						if (_info != null && item!=null)
 						{
 							//附魔
-							if (main.Enchant(item, _info))
+							if (main.ItemEnchant(item, _info))
 							{
 								main.log(item.ItemName + " 附魔【" + _info.Name + "】成功。");
 								main.ReadPackage(item.Package);
@@ -199,7 +199,7 @@ namespace GMTool
 						if (_info != null)
 						{
 							//附魔
-							if (main.Enchant(item, _info))
+							if (main.ItemEnchant(item, _info))
 							{
 								main.log(item.ItemName + " 附魔【" + _info.Name + "】成功。");
 								main.ReadPackage(item.Package);

@@ -64,16 +64,8 @@ namespace GMTool
 			{
 				while (reader != null && reader.Read())
 				{
-					User item = new User(reader.ReadInt64("ID"),
-					                     reader.ReadInt32("UID"),
-					                     reader.ReadInt32("CharacterSN"),
-					                     reader.ReadString("Name"),
-					                     reader.ReadInt32("Class"),
-					                     reader.ReadInt32("Level")
-					                    );
+					User item = new User(reader);
 					//insert into vocation(CID,vocationClass,VocationLevel
-					item.AP = reader.ReadInt32("AP");
-					item.Stat = new StatInfo(reader);
 					userList.Add(item);
 				}
 			}
@@ -83,9 +75,7 @@ namespace GMTool
 				{
 					while (reader != null && reader.Read())
 					{
-						int group = reader.ReadInt32("vocationClass", -1);
-						user.Group = group.ToGroupInfo();
-						user.GroupLevel = reader.ReadInt32("VocationLevel", -1);
+						user.UpdateGroup(reader);
 						break;
 					}
 				}
@@ -104,14 +94,7 @@ namespace GMTool
 			{
 				while (reader != null && reader.Read())
 				{
-					string title = reader.ReadString("MailTitle");
-					title = DbInfoHelper.Get().GetMailTitle(title);
-					Mail item = new Mail(
-						reader.ReadInt64("RowID"),
-						title,
-						reader.ReadString("MailContent")
-					);
-					item.Count = reader.ReadInt32("Count");
+					Mail item = new Mail(reader);
 					mails.Add(item);
 				}
 			}
@@ -129,12 +112,7 @@ namespace GMTool
 			{
 				while (reader != null && reader.Read())
 				{
-					Mail item = new Mail(
-						reader.ReadInt64("mailID"),
-						reader.ReadString("title"),
-						reader.ReadString("content")
-					);
-					mails.Add(item);
+					mails.Add(new Mail().AttachBox(reader));
 				}
 			}
 			return mails;
@@ -179,27 +157,7 @@ namespace GMTool
 				{
 					while (reader != null && reader.Read())
 					{
-						Item item = new Item(reader.ReadInt64("ID"),
-						                     reader.ReadString("itemClass"),
-						                     ""// Convert.ToString(reader["itemType"])
-						                    );
-						string time = reader.ReadString("ExpireDateTime", null);
-						if (time != null)
-						{
-							item.Time = time.Split(' ')[0];
-						}
-						else
-						{
-							item.Time = "无限期";
-						}
-						item.Collection = reader.ReadInt32("Collection");
-						item.Slot = reader.ReadInt32("Slot");
-						//  item.attrName = reader["Attribute"] == DBNull.Value ? null : Convert.ToString(reader["Attribute"]);
-						//  item.attrValue = reader["Value"] == DBNull.Value ? null : Convert.ToString(reader["Value"]);
-						item.Count = reader.ReadInt32("Count", 1);
-						item.Color1  = reader.ReadInt32("Color1",0);
-						item.Color2  = reader.ReadInt32("Color2",0);
-						item.Color3  = reader.ReadInt32("Color3",0);
+						Item item = new Item(reader);
 						items.Add(item);
 					}
 				}
@@ -207,24 +165,7 @@ namespace GMTool
 				{
 					using (DbDataReader reader2 = db.GetReader("SELECT * FROM ItemAttribute WHERE ItemID = " + item.ItemID))
 					{
-						List<ItemAttribute> attrs = new List<ItemAttribute>();
-						while (reader2 != null && reader2.Read())
-						{
-							ItemAttribute attr = new ItemAttribute();
-							try
-							{
-								attr.Type = reader2.ReadEnum<ItemAttributeType>("Attribute",ItemAttributeType.NONE);
-								attr.Value = reader2.ReadString("Value");
-								attr.Arg = reader2.ReadInt32("Arg");
-								attr.Arg2 = reader2.ReadInt32("Arg2");
-								attrs.Add(attr);
-							}
-							catch (Exception)
-							{
-							}
-
-						}
-						item.Attributes = attrs.ToArray<ItemAttribute>();
+						item.UpdateAttributes(reader2);
 					}
 				}
 			}
@@ -591,7 +532,7 @@ namespace GMTool
 		/// <summary>
 		/// 无限时间
 		/// </summary>
-		public static bool UnLimitTime(this MainForm main, User user, params Item[] items)
+		public static bool ModItemTime(this MainForm main, User user, params Item[] items)
 		{
 			if (items == null || items.Length == 0)
 			{
@@ -609,7 +550,14 @@ namespace GMTool
 		/// <summary>
 		/// 评分最大
 		/// </summary>
-		public static int MaxScore(this MainForm main, User user, params Item[] items)
+		public static int ModItemScoreMax(this MainForm main, User user,params Item[] items)
+		{
+			return ModItemScore(main, user,"S", items);
+		}
+		/// <summary>
+		/// 评分最大
+		/// </summary>
+		public static int ModItemScore(this MainForm main, User user,string score, params Item[] items)
 		{
 			if (items == null || items.Length == 0)
 			{
@@ -620,7 +568,7 @@ namespace GMTool
 				int count = 0;
 				foreach (Item item in items)
 				{
-					if(ModItemAttr(main, new ItemAttribute(ItemAttributeType.SYNTHESISGRADE, "S"), item)){
+					if(ModItemAttr(main, new ItemAttribute(ItemAttributeType.SYNTHESISGRADE, score), item)){
 						count++;
 					}
 				}
@@ -630,7 +578,14 @@ namespace GMTool
 		/// <summary>
 		/// 品质最大
 		/// </summary>
-		public static int MaxStar(this MainForm main, User user, params Item[] items)
+		public static int ModItemStarMax(this MainForm main, User user, params Item[] items)
+		{
+			return ModItemStar(main, user, 5, items);
+		}
+		/// <summary>
+		/// 品质最大
+		/// </summary>
+		public static int ModItemStar(this MainForm main, User user, int q,params Item[] items)
 		{
 			if (items == null || items.Length == 0)
 			{
@@ -641,7 +596,7 @@ namespace GMTool
 				int count = 0;
 				foreach (Item item in items)
 				{
-					if(ModItemAttr(main, new ItemAttribute(ItemAttributeType.QUALITY, 5), item)){
+					if(ModItemAttr(main, new ItemAttribute(ItemAttributeType.QUALITY, q), item)){
 						count++;
 					}
 				}
@@ -670,7 +625,7 @@ namespace GMTool
 		/// <summary>
 		/// 附魔
 		/// </summary>
-		public static bool Enchant(this MainForm main, Item item, EnchantInfo attribute)
+		public static bool ItemEnchant(this MainForm main, Item item, EnchantInfo attribute)
 		{
 			if (attribute == null || item == null)
 			{

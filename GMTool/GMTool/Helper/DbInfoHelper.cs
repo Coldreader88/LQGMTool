@@ -91,18 +91,7 @@ namespace GMTool.Helper
 			{
 				while (reader != null && reader.Read())
 				{
-					TitleInfo info = new TitleInfo();
-					info.TitleID = reader.ReadInt64("titleid");// Convert.ToInt64(ToString(reader["titleid"]));
-					info.Name = reader.ReadString("name","");
-					HeroesText.TitleNames.TryGetValue(info.Name.ToLower(), out info.Name);
-					info.Description = reader.ReadString("description","");
-					HeroesText.TitleDescs.TryGetValue(info.Description.ToLower(), out info.Description);
-					info.Category = reader.ReadString("Category");
-					info.Feature = reader.ReadString("feature","");
-					info.OnlyClass = info.Feature.ToClassInfo();
-					info.AutoGiveLevel = reader.ReadInt32("AutoGiveLevel");
-					info.RequiredLevel = reader.ReadInt32("RequiredLevel");
-					info.ClassRestriction = reader.ReadInt32("ClassRestriction",-1);
+					TitleInfo info = new TitleInfo(reader, HeroesText);
 					if (info.ClassRestriction > 0)
 					{
 						titles.Add(info);
@@ -110,26 +99,16 @@ namespace GMTool.Helper
 				}
 			}
 			foreach(TitleInfo info in titles){
-				using(DbDataReader reader = db.GetReader("select * from titlestatinfo where titleID = "+info.TitleID)){
-					info.Effect = "";
-					while (reader != null && reader.Read())
-					{
-						string stat = reader.ReadString("Stat","");
-						int val = reader.ReadInt32("Amount");
-						int tmp = 0;
-						if(!info.Stats.TryGetValue(stat, out tmp)){
-							info.Stats.Add(stat, val);
-							string name = stat.StatName();
-							info.Effect +=name+"+"+val+",";
-						}
-					}
-					//if(string.IsNullOrEmpty(info.Effect))
-					//	continue;
-				}
-				if(info.Effect.EndsWith(",")){
-					info.Effect = info.Effect.Substring(0, info.Effect.Length-1);
-				}
 				if(!Titles.ContainsKey(info.TitleID)){
+					using(DbDataReader reader = db.GetReader("select * from titlestatinfo where titleID = "+info.TitleID)){
+						while (reader != null && reader.Read())
+						{
+							info.UpdateEffect(reader);
+						}
+						//if(string.IsNullOrEmpty(info.Effect))
+						//	continue;
+					}
+					info.Trim();
 					Titles.Add(info.TitleID, info);
 				}
 			}
@@ -142,21 +121,7 @@ namespace GMTool.Helper
 			{
 				while (reader != null && reader.Read())
 				{
-					ItemClassInfo info = new ItemClassInfo();
-					info.ItemClass = reader.ReadString("ItemClass", "").ToLower();
-					info.SubCategory = reader.ReadEnum<SubCategory>("Category", SubCategory.NONE);
-					info.MainCategory= reader.ReadEnum<MainCategory>("TradeCategory", MainCategory.NONE);
-					info.MaxStack =reader.ReadInt64("MaxStack");
-					info.RequiredLevel = reader.ReadInt32("RequiredLevel");
-					info.ClassRestriction = reader.ReadInt32("ClassRestriction");
-					HeroesText.ItemNames.TryGetValue(info.ItemClass, out info.Name);
-					HeroesText.ItemDescs.TryGetValue(info.ItemClass, out info.Desc);
-					
-					ItemStatInfo stat=new ItemStatInfo(reader);
-					if(!stat.IsEmpty()){
-						info.Stat = stat;
-					}
-					Searcher.Add(info);
+					Searcher.Add(new ItemClassInfo(reader, HeroesText));
 				}
 			}
 		}
@@ -169,64 +134,12 @@ namespace GMTool.Helper
 			{
 				while (reader2 != null && reader2.Read())
 				{
-					EnchantInfo info = new EnchantInfo();
-					info.Class =reader2.ReadString("EnchantClass","").ToLower();
+					EnchantInfo info = new EnchantInfo(reader2,HeroesText);
 					if (info.Class.EndsWith("_100"))
 					{
 						continue;
 					}
-					info.Constraint = reader2.ReadString("ItemConstraint");
-					info.Desc = reader2.ReadString("ItemConstraintDesc");
-					info.IsPrefix = reader2.ReadBoolean("IsPrefix");
-					info.MinArg = reader2.ReadInt32("MinArgValue");
-					info.MaxArg = reader2.ReadInt32("MaxArgValue");
-					info.EnchantLevel = reader2.ReadInt32("EnchantLevel");
-					string var;
-					if (info.IsPrefix)
-					{
-						if(!HeroesText.PrefixNames.TryGetValue(info.Class, out info.Name)){
-							info.Name = info.Class;
-						}
-					}
-					else
-					{
-						if(!HeroesText.SuffixNames.TryGetValue(info.Class, out info.Name)){
-							info.Name = info.Class;
-						}
-					}
-					HeroesText.EnchantDescs.TryGetValue(info.Class, out info.Desc);
-					info.Effect = "";
-					bool has= false;
-					for (int i = 1; i <= 5; i++)
-					{
-						if (HeroesText.EnchantEffects.TryGetValue(info.Class + "_" + i, out var))
-						{
-							has = true;
-							info.Effect += i + "." + var;
-						}
-						if (has)
-						{
-							if (HeroesText.EnchantEffectIfs.TryGetValue(info.Class + "_" + i, out var))
-							{
-								info.Effect += "[" + var + "]";
-							}
-							info.Effect += "\n";
-						}
-						else
-						{
-							break;
-						}
-					}
-					if (info.Effect.Contains("{0}"))
-					{
-						info.Effect = info.Effect.Replace("{0}", info.GetValue());
-					}
-					EnchantInfo tmp = new EnchantInfo();
-					if (Enchants.TryGetValue(info.Class, out tmp))
-					{
-						//  Enchants[info.ItemClass] = info;
-					}
-					else
+					if (!Enchants.ContainsKey(info.Class))
 					{
 						Enchants.Add(info.Class, info);
 					}

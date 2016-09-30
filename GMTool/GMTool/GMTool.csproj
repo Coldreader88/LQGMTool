@@ -76,8 +76,10 @@
     <Compile Include="Bean\ItemStatInfo.cs" />
     <Compile Include="Bean\Mail.cs" />
     <Compile Include="Bean\StatInfo.cs" />
+    <Compile Include="Bean\SynthesisSkillBonus.cs" />
     <Compile Include="Bean\TitleInfo.cs" />
     <Compile Include="Bean\User.cs" />
+    <Compile Include="Common\DListView.cs" />
     <Compile Include="Common\ProcessPlus.cs" />
     <Compile Include="Common\InputDialog.cs" />
     <Compile Include="Common\InputDialog.Designer.cs">

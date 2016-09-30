@@ -5,38 +5,69 @@ using System.Linq;
 using System.Text;
 using GMTool.Enums;
 using GMTool.Extensions;
+using System.Data.Common;
+
 namespace GMTool.Bean
 {
 	public class Item
 	{
-		public string ItemName { get; set; }
-		public string ItemDesc { get; set; }
+		public string ItemName  { get; private set; }
+		public string ItemDesc  { get; private set; }
 		public string ItemClass { get; private set; }
 		public string SubCategory { get; private set; }
 		public string MainCategory { get; private set; }
 		public long ItemID { get; private set; }
 
-		public int RequiredClass { get; set; }
-		public string Time { get; set; }
+		public int RequiredClass  { get; private set; }
+		public string Time  { get; private set; }
 
-		public int Count { get; set; }
-		public int Collection { get; set; }
-		public int Slot { get; set; }
+		public int Count  { get; private set; }
+		public int Collection  { get; private set; }
+		public int Slot  { get; private set; }
 		/// <summary>
 		/// 强化
 		/// </summary>
-		public ItemAttribute[] Attributes;
-		public ItemStatInfo Stat;
-		public long MaxStack = 1;
-		public int Color1 { get; set; }
-		public int Color2 { get; set; }
-		public int Color3 { get; set; }
-
-		public Item(long ItemID, string ItemClass, string ItemType)
+		public ItemAttribute[] Attributes { get; private set; }
+		public ItemStatInfo Stat { get; private set; }
+		public long MaxStack { get; private set; }
+		public int Color1  { get; private set; }
+		public int Color2  { get; private set; }
+		public int Color3 { get; private set; }
+		public Item(){
+			
+		}
+		public Item(DbDataReader reader)
 		{
-			this.ItemID = ItemID;
-			this.ItemClass = ItemClass;
-			this.MainCategory = ItemType;
+			this.ItemID = reader.ReadInt64("ID");
+			this.ItemClass =   reader.ReadString("itemClass");
+			this.MainCategory = "";
+			this.MaxStack=1;
+			string time = reader.ReadString("ExpireDateTime", null);
+			if (time != null)
+			{
+				this.Time = time.Split(' ')[0];
+			}
+			else
+			{
+				this.Time = "无限期";
+			}
+			this.Collection = reader.ReadInt32("Collection");
+			this.Slot = reader.ReadInt32("Slot");
+			//  this.attrName = reader["Attribute"] == DBNull.Value ? null : Convert.ToString(reader["Attribute"]);
+			//  this.attrValue = reader["Value"] == DBNull.Value ? null : Convert.ToString(reader["Value"]);
+			this.Count = reader.ReadInt32("Count", 1);
+			this.Color1  = reader.ReadInt32("Color1",0);
+			this.Color2  = reader.ReadInt32("Color2",0);
+			this.Color3  = reader.ReadInt32("Color3",0);
+		}
+		
+		public void UpdateAttributes(DbDataReader reader){
+			List<ItemAttribute> attrs = new List<ItemAttribute>();
+			while (reader != null && reader.Read())
+			{
+				attrs.Add(new ItemAttribute(reader));
+			}
+			this.Attributes = attrs.ToArray<ItemAttribute>();
 		}
 		/// <summary>
 		/// 背包类型

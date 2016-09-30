@@ -43,7 +43,7 @@
         	this.label4 = new System.Windows.Forms.Label();
         	this.label3 = new System.Windows.Forms.Label();
         	this.label2 = new System.Windows.Forms.Label();
-        	this.list_users = new System.Windows.Forms.ListView();
+        	this.list_users = new GMTool.Common.DListView();
         	this.ch_userlist_name = new System.Windows.Forms.ColumnHeader();
         	this.ch_userlist_class = new System.Windows.Forms.ColumnHeader();
         	this.ch_userlist_level = new System.Windows.Forms.ColumnHeader();
@@ -64,7 +64,7 @@
         	this.contentMenuUserResetDarkGroup = new System.Windows.Forms.ToolStripMenuItem();
         	this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
         	this.contentMenuUserRefresh = new System.Windows.Forms.ToolStripMenuItem();
-        	this.list_items_normal = new System.Windows.Forms.ListView();
+        	this.list_items_normal = new GMTool.Common.DListView();
         	this.ch_items_name = new System.Windows.Forms.ColumnHeader();
         	this.columnHeader12 = new System.Windows.Forms.ColumnHeader();
         	this.columnHeader15 = new System.Windows.Forms.ColumnHeader();
@@ -97,7 +97,7 @@
         	this.contentMenuItemUnLimitTime = new System.Windows.Forms.ToolStripMenuItem();
         	this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
         	this.contentMenuDeleteItems = new System.Windows.Forms.ToolStripMenuItem();
-        	this.list_search = new System.Windows.Forms.ListView();
+        	this.list_search = new GMTool.Common.DListView();
         	this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
         	this.contextMenuSend = new System.Windows.Forms.ContextMenuStrip(this.components);
         	this.contentMenuSendItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -118,7 +118,7 @@
         	this.btn_search_id = new System.Windows.Forms.Button();
         	this.tab_mail = new System.Windows.Forms.TabControl();
         	this.tab_mail_send = new System.Windows.Forms.TabPage();
-        	this.list_mail_send = new System.Windows.Forms.ListView();
+        	this.list_mail_send = new GMTool.Common.DListView();
         	this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
         	this.contextMenuMail = new System.Windows.Forms.ContextMenuStrip(this.components);
         	this.contentMenuRefreshMail = new System.Windows.Forms.ToolStripMenuItem();
@@ -126,7 +126,7 @@
         	this.contentMenuDeleteMail = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuDeleteAllMails = new System.Windows.Forms.ToolStripMenuItem();
         	this.tab_mail_user = new System.Windows.Forms.TabPage();
-        	this.list_mail_user = new System.Windows.Forms.ListView();
+        	this.list_mail_user = new GMTool.Common.DListView();
         	this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
         	this.tab_items = new System.Windows.Forms.TabControl();
         	this.contextMenuOther = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -138,7 +138,7 @@
         	this.contentMenuOtherDelete = new System.Windows.Forms.ToolStripMenuItem();
         	this.tab_items_normal = new System.Windows.Forms.TabPage();
         	this.tab_items_cash = new System.Windows.Forms.TabPage();
-        	this.list_items_cash = new System.Windows.Forms.ListView();
+        	this.list_items_cash = new GMTool.Common.DListView();
         	this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
         	this.columnHeader14 = new System.Windows.Forms.ColumnHeader();
         	this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
@@ -160,13 +160,13 @@
         	this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
         	this.contentMenuCashDelete = new System.Windows.Forms.ToolStripMenuItem();
         	this.tab_items_quest = new System.Windows.Forms.TabPage();
-        	this.list_items_quest = new System.Windows.Forms.ListView();
+        	this.list_items_quest = new GMTool.Common.DListView();
         	this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
         	this.columnHeader11 = new System.Windows.Forms.ColumnHeader();
         	this.columnHeader13 = new System.Windows.Forms.ColumnHeader();
         	this.columnHeader19 = new System.Windows.Forms.ColumnHeader();
         	this.tab_items_other = new System.Windows.Forms.TabPage();
-        	this.list_items_other = new System.Windows.Forms.ListView();
+        	this.list_items_other = new GMTool.Common.DListView();
         	this.columnHeader20 = new System.Windows.Forms.ColumnHeader();
         	this.columnHeader21 = new System.Windows.Forms.ColumnHeader();
         	this.columnHeader22 = new System.Windows.Forms.ColumnHeader();

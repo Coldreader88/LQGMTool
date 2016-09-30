@@ -36,7 +36,7 @@ namespace GMTool
 		{
 			CashCurItem = -1;
 			NormalCurItem = -1;
-			CurUser = new User(0, 0, 0, "", 0, 1);
+			CurUser = new User();
 			DataHelper = new DbInfoHelper();
 			InitializeComponent();
 			this.Text += " " + Application.ProductVersion.ToString();
@@ -850,7 +850,7 @@ namespace GMTool
 		private void contentMenuItemMaxStar_Click(object sender, EventArgs e)
 		{
 			if (!CheckUser()) return;
-			if (this.MaxStar(CurUser, this.list_items_normal.GetSelectItems<Item>()) > 0)
+			if (this.ModItemStarMax(CurUser, this.list_items_normal.GetSelectItems<Item>()) > 0)
 			{
 				ReadPackage(PackageType.Normal);
 			}
@@ -859,7 +859,7 @@ namespace GMTool
 		private void contentMenuItemUnLimitTime_Click(object sender, EventArgs e)
 		{
 			if (!CheckUser()) return;
-			if (this.UnLimitTime(CurUser, this.list_items_normal.GetSelectItems<Item>()))
+			if (this.ModItemTime(CurUser, this.list_items_normal.GetSelectItems<Item>()))
 			{
 				ReadPackage(PackageType.Normal);
 			}
@@ -949,7 +949,7 @@ namespace GMTool
 		private void ContentMenuItemMaxScoreClick(object sender, EventArgs e)
 		{
 			if (!CheckUser()) return;
-			if (this.MaxScore(CurUser, this.list_items_cash.GetSelectItems<Item>())>0)
+			if (this.ModItemScoreMax(CurUser, this.list_items_cash.GetSelectItems<Item>())>0)
 			{
 				ReadPackage(PackageType.Cash);
 			}
@@ -990,7 +990,7 @@ namespace GMTool
 		private void contentMenuCashUnlimitTime_Click(object sender, EventArgs e)
 		{
 			if (!CheckUser()) return;
-			if (this.UnLimitTime(CurUser, this.list_items_cash.GetSelectItems<Item>()))
+			if (this.ModItemTime(CurUser, this.list_items_cash.GetSelectItems<Item>()))
 			{
 				ReadPackage(PackageType.Cash);
 			}
@@ -1022,7 +1022,7 @@ namespace GMTool
 			if (!CheckUser()) return;
 			ListView listview = GetItemMenu(sender);
 			if (listview == null) return;
-			if (this.UnLimitTime(CurUser, listview.GetSelectItems<Item>()))
+			if (this.ModItemTime(CurUser, listview.GetSelectItems<Item>()))
 			{
 				contentMenuOtherRefresh_Click(sender, e);
 			}
