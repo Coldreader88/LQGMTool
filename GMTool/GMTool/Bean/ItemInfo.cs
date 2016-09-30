@@ -26,6 +26,7 @@ namespace GMTool.Bean
 		/// 强化
 		/// </summary>
 		public ItemAttribute[] Attributes;
+		public ItemStatInfo Stat;
 		public long MaxStack = 1;
 		public int Color1 { get; set; }
 		public int Color2 { get; set; }
@@ -71,6 +72,7 @@ namespace GMTool.Bean
 				this.SubCategory = info.SubCategory.Name();
 				this.RequiredClass = info.ClassRestriction;
 				this.MaxStack = info.MaxStack;
+				this.Stat = info.Stat;
 			}
 		}
 		public override string ToString()
@@ -86,20 +88,21 @@ namespace GMTool.Bean
 			
 			if (Color1 != 0)
 			{
-				text += "\n-----------------------------";
 				text += "\n颜色：" + (Color1 == 0 ? "无" : "#" + Color1.ToString("X"))
 					+ "，" + (Color2 == 0 ? "无" : "#" + Color2.ToString("X"))
 					+ "，" + (Color3 == 0 ? "无" : "#" + Color3.ToString("X"));
-				text += "\n-----------------------------";
 			}
 			text += "\n职业限制：" + ClassInfoEx.GetClassText(this.RequiredClass);
+			if(Stat!=null){
+				text+=Stat.ToString();
+			}
 			text += "\n物品描述：\n    " + ItemDesc;
 
 			if (Attributes != null)
 			{
 				foreach (ItemAttribute attr in Attributes)
 				{
-					text += "\n-----------------------------\n"+attr.ToString();
+					text += "\n"+attr.ToString();
 				}
 			}
 			return text;

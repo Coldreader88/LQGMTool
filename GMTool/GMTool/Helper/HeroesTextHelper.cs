@@ -29,10 +29,9 @@ namespace GMTool.Helper
 		public Dictionary<string, string> ItemNames{get; private set;}
 		public Dictionary<string, string> ItemDescs{get; private set;}
 		public Dictionary<string, string> TitleNames{get; private set;}
-		public Dictionary<string, string> StatNames{get; private set;}
 		public Dictionary<string, string> TitleDescs{get; private set;}
-
-        public Dictionary<string, string> MailTitles { get; private set; }
+		public Dictionary<string, string> ItemStatNames{get; private set;}
+		public Dictionary<string, string> MailTitles { get; private set; }
 
 		private bool TW2CN = true;
 		private Dictionary<Regex, Dictionary<string, string>> Regexs
@@ -41,7 +40,7 @@ namespace GMTool.Helper
 		public HeroesTextHelper()
 		{
 			IniHelper helper = new IniHelper(Program.INT_FILE);
-				string val  =helper.ReadValue("data", "forceZhCN");
+			string val  =helper.ReadValue("data", "forceZhCN");
 			if(val!=null){
 				val  = val.ToLower();
 			}
@@ -54,9 +53,9 @@ namespace GMTool.Helper
 			ItemNames =new Dictionary<string, string>();
 			ItemDescs =new Dictionary<string, string>();
 			TitleNames = new Dictionary<string, string>();
-			StatNames=new Dictionary<string, string>();
 			TitleDescs=new Dictionary<string, string>();
-            MailTitles = new Dictionary<string, string>();
+			MailTitles = new Dictionary<string, string>();
+			ItemStatNames=new Dictionary<string, string>();
 			Regexs.Add(new Regex("HEROES_ATTRIBUTE_PREFIX_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), PrefixNames);
 			Regexs.Add(new Regex("HEROES_ATTRIBUTE_SUFFIX_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), SuffixNames);
 			Regexs.Add(new Regex("HEROES_ITEMCONSTRAINT_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), EnchantDescs);
@@ -65,10 +64,10 @@ namespace GMTool.Helper
 			Regexs.Add(new Regex("HEROES_ITEM_NAME_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), ItemNames);
 			Regexs.Add(new Regex("HEROES_ITEM_DESC_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), ItemDescs);
 			Regexs.Add(new Regex("(HEROES_TITLE_NAME_\\S+?)\"\\s+\"([\\s\\S]+?)\""), TitleNames);
-			Regexs.Add(new Regex("HEROES_MARKETDIALOG_DETAILOPTION_TITLE_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), StatNames);
 			Regexs.Add(new Regex("(HEROES_TITLE_GOAL_NAME_\\S+?)\"\\s+\"([\\s\\S]+?)\""), TitleDescs);
-            Regexs.Add(new Regex("\"(\\S+?MAIL_TITLE)\"\\s+\"([\\s\\S]+?)\""), MailTitles);
-        }
+			Regexs.Add(new Regex("\"(\\S+?MAIL_TITLE)\"\\s+\"([\\s\\S]+?)\""), MailTitles);
+			Regexs.Add(new Regex("HEROES_ITEMSTAT_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), ItemStatNames);
+		}
 		
 		public void Read(string file){
 			if(!File.Exists(file))return;

@@ -479,7 +479,7 @@ namespace GMTool
             if (!CheckUser()) return;
             using (UserAttributeDialog form = new UserAttributeDialog(this))
             {
-                form.SetUser(CurUser, UserStat.AP);
+                form.SetUser(CurUser, "AP","AP");
                 if (form.ShowDialog() == DialogResult.OK)
                 {
                     int ap = form.Value;

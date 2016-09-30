@@ -19,7 +19,7 @@ namespace GMTool
 	{
 		#region 数据库
 		private static MSSqlHelper db = new MSSqlHelper();
-		private const string SQL_QUERY_USERS = "select * from CharacterInfo WHERE DeleteTime is NULL and CreateTime >= '2016-01-01' ORDER BY level desc,CreateTime;";
+		private const string SQL_QUERY_USERS = "select * from CharacterInfo WHERE DeleteTime is NULL ORDER BY level desc,CreateTime;";
 
 		public static bool IsOpen(this MainForm main)
 		{
@@ -73,13 +73,7 @@ namespace GMTool
 					                    );
 					//insert into vocation(CID,vocationClass,VocationLevel
 					item.AP = reader.ReadInt32("AP");
-					item.STR = reader.ReadInt32("STR");
-					item.DEX = reader.ReadInt32("DEX");
-					item.INT = reader.ReadInt32("INT");
-					item.WILL = reader.ReadInt32("WILL");
-					item.LUCK = reader.ReadInt32("LUCK");
-					item.HP = reader.ReadInt32("HP");
-					item.STAMINA = reader.ReadInt32("STAMINA");
+					item.Stat = new StatInfo(reader);
 					userList.Add(item);
 				}
 			}
@@ -320,11 +314,11 @@ namespace GMTool
 				main.MaxSecondClass(user, strArray[i]);
 			}
 		}
-		public static bool ModUserInfo(this MainForm main, User user,UserStat stat,object value)
+		public static bool ModUserInfo(this MainForm main, User user,string name,object value)
 		{
 			try
 			{
-				db.ExcuteSQL("update characterInfo set "+stat.ToString()+" = N'"+value+"'"+
+				db.ExcuteSQL("update characterInfo set "+name+" = N'"+value+"'"+
 				                           " where id = "+ user.CID );
 			}
 			catch (Exception)
@@ -335,19 +329,19 @@ namespace GMTool
 		}
 		public static bool ModUserLevel(this MainForm main, User user, int level)
 		{
-			return ModUserInfo(main, user, UserStat.LEVEL, level);
+			return ModUserInfo(main, user, "Level", level);
 		}
 		public static bool ModUserClass(this MainForm main, User user, ClassInfo cls)
 		{
-			return ModUserInfo(main, user, UserStat.Class, cls.Index());
+			return ModUserInfo(main, user, "class", cls.Index());
 		}
 		public static bool ModUserName(this MainForm main, User user, string name)
 		{
-			return ModUserInfo(main, user, UserStat.Name, name);
+			return ModUserInfo(main, user, "name", name);
 		}
 		public static bool ModUserAP(this MainForm main, User user, int ap)
 		{
-			return ModUserInfo(main, user, UserStat.AP, ap);
+			return ModUserInfo(main, user, "ap", ap);
 		}
 		private static string ToString(object obj)
 		{

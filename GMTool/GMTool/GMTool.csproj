@@ -73,7 +73,9 @@
     <Compile Include="Bean\ItemAttribute.cs" />
     <Compile Include="Bean\ItemInfo.cs" />
     <Compile Include="Bean\ItemClassInfo.cs" />
+    <Compile Include="Bean\ItemStatInfo.cs" />
     <Compile Include="Bean\Mail.cs" />
+    <Compile Include="Bean\StatInfo.cs" />
     <Compile Include="Bean\TitleInfo.cs" />
     <Compile Include="Bean\User.cs" />
     <Compile Include="Common\ProcessPlus.cs" />
@@ -91,7 +93,7 @@
     <Compile Include="Enums\AttributeType.cs" />
     <Compile Include="Enums\Category.cs" />
     <Compile Include="Enums\ClassInfo.cs" />
-    <Compile Include="Enums\UserStat.cs" />
+    <Compile Include="Enums\ItemStat.cs" />
     <Compile Include="Extensions\GroupExtension.cs" />
     <Compile Include="Enums\GroupInfo.cs" />
     <Compile Include="Enums\SubCategory.cs" />

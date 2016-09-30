@@ -27,14 +27,14 @@ namespace GMTool.Dialog
 			this.mainForm=main;
 			this.ContentText="";
 			this.OnCheckText  = OnCheckValue;
-			SetUser(mainForm.CurUser, UserStat.AP);
+			SetUser(mainForm.CurUser, "AP","AP");
 		}
-		public void SetUser(User user,UserStat stat){
+		public void SetUser(User user, string stat,string name){
 			if(user==null){
 				return;
 			}
 			this.user = user;
-			this.Title = "修改角色属性："+stat.Name();
+			this.Title = "修改角色属性："+name;
 			int val = stat.Value(user);
 			this.ContentText="当前值："+val;
 			this.InputText = ""+val;

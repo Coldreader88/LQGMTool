@@ -21,9 +21,9 @@ namespace GMTool.Helper
 	{
 		#region
 		static DbInfoHelper sItemClassInfoHelper = null;
-        public Dictionary<string, string> MailTitles { get; private set; }
-		public Dictionary<string, string> StatNames{get; private set;}
-        public static DbInfoHelper Get()
+		public Dictionary<string, string> MailTitles { get; private set; }
+		public Dictionary<string, string> ItemStatNames{get; private set;}
+		public static DbInfoHelper Get()
 		{
 			return sItemClassInfoHelper;
 		}
@@ -66,9 +66,9 @@ namespace GMTool.Helper
 			}
 			HeroesTextHelper HeroesText  = new HeroesTextHelper();
 			HeroesText.Read(textFile);
-            MailTitles = HeroesText.MailTitles;
-             StatNames = HeroesText.StatNames;
-            SQLiteHelper db = new SQLiteHelper(dbFile);
+			MailTitles = HeroesText.MailTitles;
+			ItemStatNames = HeroesText.ItemStatNames;
+			SQLiteHelper db = new SQLiteHelper(dbFile);
 			db.Open();
 			ReadItems(db,HeroesText );
 			ReadEnchants(db,HeroesText);
@@ -84,10 +84,10 @@ namespace GMTool.Helper
 		private void ReadTitles(SQLiteHelper db,HeroesTextHelper HeroesText){
 			List<TitleInfo> titles=new List<TitleInfo>();
 			using (DbDataReader reader = db.GetReader(
-                "select ts.titleid,ti.description as name,feature,tg.description,category,autogivelevel,requiredlevel,classrestriction" +
-                " from (titlestatinfo as ts left join titleinfo as ti on  ts.titleid = ti.id )"+
-                " left join titlegoalinfo as tg on tg.titleid=ts.titleid"+
-                " group by ts.titleid order by requiredlevel"))
+				"select ts.titleid,ti.description as name,feature,tg.description,category,autogivelevel,requiredlevel,classrestriction" +
+				" from (titlestatinfo as ts left join titleinfo as ti on  ts.titleid = ti.id )"+
+				" left join titlegoalinfo as tg on tg.titleid=ts.titleid"+
+				" group by ts.titleid order by requiredlevel"))
 			{
 				while (reader != null && reader.Read())
 				{
@@ -98,15 +98,15 @@ namespace GMTool.Helper
 					info.Description = reader.ReadString("description","");
 					HeroesText.TitleDescs.TryGetValue(info.Description.ToLower(), out info.Description);
 					info.Category = reader.ReadString("Category");
-                    info.Feature = reader.ReadString("feature","");
-                    info.OnlyClass = info.Feature.ToClassInfo();
-                    info.AutoGiveLevel = reader.ReadInt32("AutoGiveLevel");
+					info.Feature = reader.ReadString("feature","");
+					info.OnlyClass = info.Feature.ToClassInfo();
+					info.AutoGiveLevel = reader.ReadInt32("AutoGiveLevel");
 					info.RequiredLevel = reader.ReadInt32("RequiredLevel");
 					info.ClassRestriction = reader.ReadInt32("ClassRestriction",-1);
-                    if (info.ClassRestriction > 0)
-                    {
-                        titles.Add(info);
-                    }
+					if (info.ClassRestriction > 0)
+					{
+						titles.Add(info);
+					}
 				}
 			}
 			foreach(TitleInfo info in titles){
@@ -119,8 +119,7 @@ namespace GMTool.Helper
 						int tmp = 0;
 						if(!info.Stats.TryGetValue(stat, out tmp)){
 							info.Stats.Add(stat, val);
-							string name =stat;
-							HeroesText.StatNames.TryGetValue(stat.ToLower(), out name);
+							string name = stat.StatName();
 							info.Effect +=name+"+"+val+",";
 						}
 					}
@@ -139,7 +138,7 @@ namespace GMTool.Helper
 		
 		#region items
 		private void ReadItems(SQLiteHelper db,HeroesTextHelper HeroesText){
-			using (DbDataReader reader = db.GetReader("SELECT * FROM ItemClassInfo order by RequiredLevel;"))
+			using (DbDataReader reader = db.GetReader("SELECT * FROM ItemClassInfo left join equipiteminfo on ItemClassInfo.itemclass = equipiteminfo.itemclass order by RequiredLevel;"))
 			{
 				while (reader != null && reader.Read())
 				{
@@ -152,6 +151,11 @@ namespace GMTool.Helper
 					info.ClassRestriction = reader.ReadInt32("ClassRestriction");
 					HeroesText.ItemNames.TryGetValue(info.ItemClass, out info.Name);
 					HeroesText.ItemDescs.TryGetValue(info.ItemClass, out info.Desc);
+					
+					ItemStatInfo stat=new ItemStatInfo(reader);
+					if(!stat.IsEmpty()){
+						info.Stat = stat;
+					}
 					Searcher.Add(info);
 				}
 			}
@@ -176,8 +180,8 @@ namespace GMTool.Helper
 					info.IsPrefix = reader2.ReadBoolean("IsPrefix");
 					info.MinArg = reader2.ReadInt32("MinArgValue");
 					info.MaxArg = reader2.ReadInt32("MaxArgValue");
-                    info.EnchantLevel = reader2.ReadInt32("EnchantLevel");
-                    string var;
+					info.EnchantLevel = reader2.ReadInt32("EnchantLevel");
+					string var;
 					if (info.IsPrefix)
 					{
 						if(!HeroesText.PrefixNames.TryGetValue(info.Class, out info.Name)){
@@ -200,18 +204,18 @@ namespace GMTool.Helper
 							has = true;
 							info.Effect += i + "." + var;
 						}
-                        if (has)
-                        {
-                            if (HeroesText.EnchantEffectIfs.TryGetValue(info.Class + "_" + i, out var))
-                            {
-                                info.Effect += "[" + var + "]";
-                            }
-                            info.Effect += "\n";
-                        }
-                        else
-                        {
-                            break;
-                        }
+						if (has)
+						{
+							if (HeroesText.EnchantEffectIfs.TryGetValue(info.Class + "_" + i, out var))
+							{
+								info.Effect += "[" + var + "]";
+							}
+							info.Effect += "\n";
+						}
+						else
+						{
+							break;
+						}
 					}
 					if (info.Effect.Contains("{0}"))
 					{
@@ -230,20 +234,20 @@ namespace GMTool.Helper
 				}
 			}
 		}
-        #endregion
+		#endregion
 
-        #region Cache/Get
-        public string GetMailTitle(string title)
-        {
-            if (title.StartsWith("#")) {
-                string t;
-                if (MailTitles.TryGetValue(title.Substring(1).ToLower(), out t))
-                {
-                    return t;
-                }
-            }
-            return title;
-        }
+		#region Cache/Get
+		public string GetMailTitle(string title)
+		{
+			if (title.StartsWith("#")) {
+				string t;
+				if (MailTitles.TryGetValue(title.Substring(1).ToLower(), out t))
+				{
+					return t;
+				}
+			}
+			return title;
+		}
 		public TitleInfo GetTitle(int id){
 			TitleInfo info = new TitleInfo();
 			Titles.TryGetValue(id, out info);

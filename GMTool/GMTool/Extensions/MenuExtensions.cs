@@ -257,35 +257,35 @@ namespace GMTool
 		
 		#region 属性
 		public static void InitModAttrMenu(this MainForm main,ToolStripDropDownItem menuitem){
-			UserStat[] stats=new UserStat[]{
-				UserStat.STR,
-				UserStat.DEX,
-				UserStat.INT,
-				UserStat.WILL,
-				UserStat.LUCK,
-				UserStat.HP,
-				UserStat.STAMINA
+			string[] stats=new string[]{
+				"STR",
+				"DEX",
+				"INT",
+				"WILL",
+				"LUCK",
+				"HP",
+				"STAMINA"
 			};
 			menuitem.DropDownItems.Clear();
-			foreach(UserStat stat in stats){
-				ToolStripMenuItem tsmi = new ToolStripMenuItem(stat.Name());
+			foreach(string stat in stats){
+				string name = stat.StatName();
+				ToolStripMenuItem tsmi = new ToolStripMenuItem(name);
 				tsmi.Tag = stat;
 				tsmi.Click += (object sender, EventArgs e) => {
 					if (!main.CheckUser()) return;
 					ToolStripMenuItem menu = sender as ToolStripMenuItem;
 					if (menu != null && menu.Tag != null)
 					{
-						UserStat info = (UserStat)menu.Tag;
+						string info = (string)menu.Tag;
 						//
 						using (UserAttributeDialog form = new UserAttributeDialog(main))
 						{
-							form.SetUser(main.CurUser, info);
+							form.SetUser(main.CurUser, stat, name);
 							if (form.ShowDialog() == DialogResult.OK)
 							{
 								int ap = form.Value;
-								if(ap>0 && main.ModUserInfo(main.CurUser,info, ap)){
-									main.log("成功修改用户[" + main.CurUser.Name + "]"+
-									         info.Name()+"为"+ap);
+								if(ap>0 && main.ModUserInfo(main.CurUser, info, ap)){
+									main.log("成功修改用户[" + main.CurUser.Name + "]"+name+"为"+ap);
 									main.ReadUsers();
 								}
 							}

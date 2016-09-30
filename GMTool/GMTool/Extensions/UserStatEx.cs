@@ -18,39 +18,26 @@ namespace GMTool.Extensions
 	/// </summary>
 	public static class UserStatEx
 	{
-		public static string Name(this UserStat stat)
-		{
-			if(stat== UserStat.LUCK){
-				return "幸运";
-			}
-			string val;
-			if(DbInfoHelper.Get().StatNames.TryGetValue(stat.ToString().ToLower(), out val)){
+		public static string StatName(this string name){
+			string val ;
+			if(DbInfoHelper.Get().ItemStatNames.TryGetValue(name.ToLower(), out val)){
 				return val;
 			}
-			return stat.ToString();
+			return name;
 		}
-		public static string UserStatName(this string stat)
-		{
-			if(stat==null)return "";
-			string val;
-			if(DbInfoHelper.Get().StatNames.TryGetValue(stat.ToLower(), out val)){
-				return val;
-			}
-			return stat.ToString();
-		}
-		public static int Value(this UserStat stat,User user){
+		public static int Value(this string stat,User user){
 			if(user==null)return 0;
 			switch(stat){
-					case UserStat.STR:return user.STR;
-					case UserStat.DEX:return user.DEX;
-					case UserStat.INT:return user.INT;
-					case UserStat.WILL:return user.WILL;
-					case UserStat.LUCK:return user.LUCK;
-					case UserStat.HP:return user.HP;
-					case UserStat.STAMINA:return user.STAMINA;
-					case UserStat.AP:return user.AP;
-					case UserStat.LEVEL:return user.level;
-					case UserStat.Class:return user.Class.Index();
+					case "STR":return user.Stat.STR;
+					case "DEX":return user.Stat.DEX;
+					case "INT":return user.Stat.INT;
+					case "WILL":return user.Stat.WILL;
+					case "LUCK":return user.Stat.LUCK;
+					case "HP":return user.Stat.HP;
+					case "STAMINA":return user.Stat.STAMINA;
+					case "AP":return user.AP;
+					case "LEVEL":return user.level;
+					case "Class":return user.Class.Index();
 			}
 			return 0;
 		}
