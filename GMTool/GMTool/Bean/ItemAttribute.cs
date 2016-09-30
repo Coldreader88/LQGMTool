@@ -83,7 +83,7 @@ namespace GMTool.Bean
                     if (strs.Length > 1)
                     {
                         int i = Convert.ToInt32(strs[1]);
-                        SynthesisSkillBonus info = new SynthesisSkillBonus();
+                        SkillBonusInfo info = new SkillBonusInfo();
                         if (DbInfoHelper.Get().SynthesisSkillBonues.TryGetValue(i, out info))
                         {
                             _Desc = "评分：" + info.GetKey()+" "+info.DESC;

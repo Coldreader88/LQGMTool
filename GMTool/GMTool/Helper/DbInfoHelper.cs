@@ -23,7 +23,7 @@ namespace GMTool.Helper
 		static DbInfoHelper sItemClassInfoHelper = null;
 		public Dictionary<string, string> MailTitles { get; private set; }
 		public Dictionary<string, string> ItemStatNames{get; private set;}
-		public Dictionary<int, SynthesisSkillBonus> SynthesisSkillBonues{get; private set;}
+		public Dictionary<int, SkillBonusInfo> SynthesisSkillBonues{get; private set;}
 
 		private string textFile, dbFile;
 		private bool mInit = false;
@@ -44,7 +44,7 @@ namespace GMTool.Helper
 		{
 			sItemClassInfoHelper = this;
 			Searcher = new SearchHelper();
-			SynthesisSkillBonues = new Dictionary<int, SynthesisSkillBonus>();
+			SynthesisSkillBonues = new Dictionary<int, SkillBonusInfo>();
 			IniHelper helper = new IniHelper(Program.INT_FILE);
 			this.textFile = helper.ReadValue("data", "text");
 			if (!File.Exists(textFile))
@@ -90,7 +90,7 @@ namespace GMTool.Helper
                // MessageBox.Show("count=" + HeroesText.SynSkillBonuds.Count);
                 while (reader != null && reader.Read())
 				{
-                    SynthesisSkillBonus info = new SynthesisSkillBonus(reader, HeroesText);
+                    SkillBonusInfo info = new SkillBonusInfo(reader, HeroesText);
                     if (!SynthesisSkillBonues.ContainsKey(info.ID))
                     {
                         SynthesisSkillBonues.Add(info.ID, info);

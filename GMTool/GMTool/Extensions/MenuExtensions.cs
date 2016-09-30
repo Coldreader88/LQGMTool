@@ -16,7 +16,7 @@ namespace GMTool
 		public static void AddSkillBouns(this MainForm main,User user,ToolStripDropDownItem menuitem,ListView listview){
 			menuitem.DropDownItems.Clear();
             var infos =main.DataHelper.SynthesisSkillBonues.Values;
-			foreach (SynthesisSkillBonus info in infos)
+			foreach (SkillBonusInfo info in infos)
 			{
 				if(user.IsEnable(info.ClassRestriction)){
 					ToolStripMenuItem tsmi = new ToolStripMenuItem(info.Grade+" "+info.DESC);

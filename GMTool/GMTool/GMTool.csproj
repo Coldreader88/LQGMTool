@@ -76,7 +76,7 @@
     <Compile Include="Bean\ItemStatInfo.cs" />
     <Compile Include="Bean\Mail.cs" />
     <Compile Include="Bean\StatInfo.cs" />
-    <Compile Include="Bean\SynthesisSkillBonus.cs" />
+    <Compile Include="Bean\SkillBonusInfo.cs" />
     <Compile Include="Bean\TitleInfo.cs" />
     <Compile Include="Bean\User.cs" />
     <Compile Include="Common\DListView.cs" />
@@ -165,9 +165,7 @@
   <ItemGroup>
     <Content Include="icon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dialog" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
