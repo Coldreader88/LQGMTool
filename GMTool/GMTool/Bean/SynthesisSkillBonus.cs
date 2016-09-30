@@ -13,40 +13,48 @@ using GMTool.Helper;
 
 namespace GMTool.Bean
 {
-	/// <summary>
-	/// Description of SynthesisSkillBonus.
-	/// </summary>
-	public class SynthesisSkillBonus
-	{
-		public int ID{get;private set;}
-		public string Grade{get;private set;}
-		public int ClassRestriction{get;private set;}
-		//描述
-		public string DESC{get;private set;}
-		//技能id
-		public string SkillID{get;private set;}
-		//效果类型
-		public string Type{get;private set;}
-		//百分比
-		public int Value{get;private set;}
-		
-		public SynthesisSkillBonus(DbDataReader reader,HeroesTextHelper HeroesText){
-			this.ID = reader.ReadInt32("ID");
-			this.Grade = reader.ReadString("Grade");
-			this.ClassRestriction = reader.ReadInt32("ClassRestriction");
-			this.DESC = reader.ReadString("DESC");
-			string tmp ;
-			if(HeroesText.SynSkillBonuds.TryGetValue(""+ID, out tmp)){
-				this.DESC = tmp;
-			}
-			this.SkillID = reader.ReadString("SkillID");
-			this.Type = reader.ReadString("Type");
-			this.Value = reader.ReadInt32("Value");
-		}
-		public override string ToString()
-		{
-			return base.ToString();
-		}
+    /// <summary>
+    /// Description of SynthesisSkillBonus.
+    /// </summary>
+    public class SynthesisSkillBonus
+    {
+        public int ID { get; private set; }
+        public string Grade { get; private set; }
+        public int ClassRestriction { get; private set; }
+        //描述
+        public string DESC { get; private set; }
+        //技能id
+        public string SkillID { get; private set; }
+        //效果类型
+        public string Type { get; private set; }
+        //百分比
+        public int Value { get; private set; }
+        public SynthesisSkillBonus()
+        {
+        }
+        public SynthesisSkillBonus(DbDataReader reader, HeroesTextHelper HeroesText)
+        {
+            this.ID = reader.ReadInt32("ID");
+            this.Grade = reader.ReadString("Grade");
+            this.ClassRestriction = reader.ReadInt32("ClassRestriction");
+            this.DESC = reader.ReadString("DESCID");
+            string tmp;
+            if (HeroesText.SynSkillBonuds.TryGetValue("" + ID, out tmp))
+            {
+                this.DESC = tmp;
+            }
+            this.SkillID = reader.ReadString("SkillID");
+            this.Type = reader.ReadString("Type");
+            this.Value = reader.ReadInt32("Value");
+        }
+        public string GetKey()
+        {
+            return Grade + "/" + ID;
+        }
+        public override string ToString()
+        {
+            return GetKey() + " " +(string.IsNullOrEmpty(DESC)?( SkillID + " " + Type + " " + Value): DESC);
+        }
 
-	}
+    }
 }

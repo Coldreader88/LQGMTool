@@ -15,22 +15,18 @@ namespace GMTool
 	{
 		public static void AddSkillBouns(this MainForm main,User user,ToolStripDropDownItem menuitem,ListView listview){
 			menuitem.DropDownItems.Clear();
-			List<SynthesisSkillBonus> infos=main.DataHelper.SynthesisSkillBonues;
+            var infos =main.DataHelper.SynthesisSkillBonues.Values;
 			foreach (SynthesisSkillBonus info in infos)
 			{
 				if(user.IsEnable(info.ClassRestriction)){
-					ToolStripMenuItem tsmi = new ToolStripMenuItem(info.DESC);
-					tsmi.Tag = cls;
-					if (user != null && user.Class == cls)
-					{
-						tsmi.Checked = true;
-					}
-					tsmi.ToolTipText = cls.ToString() + " " + cls.Index();
-					tsmi.Click += (object sender, EventArgs e) => {
-						if (!CheckUser()) return;
-						if (this.ModItemScoreMax(CurUser, this.list_items_cash.GetSelectItems<Item>())>0)
+					ToolStripMenuItem tsmi = new ToolStripMenuItem(info.Grade+" "+info.DESC);
+					tsmi.Tag = info;
+                    tsmi.ToolTipText = info.ToString();
+                    tsmi.Click += (object sender, EventArgs e) => {
+						if (!main.CheckUser()) return;
+						if (main.ModItemScore(main.CurUser, info.GetKey(), listview.GetSelectItems<Item>())>0)
 						{
-							ReadPackage(PackageType.Cash);
+                            main.ReadPackage(PackageType.Cash);
 						}
 					};
 					menuitem.DropDownItems.Add(tsmi);
