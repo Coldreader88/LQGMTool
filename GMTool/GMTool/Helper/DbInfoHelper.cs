@@ -20,7 +20,7 @@ namespace GMTool.Helper
 	public class DbInfoHelper
 	{
 		#region
-		static DbInfoHelper sItemClassInfoHelper = null;
+		static DbInfoHelper sItemClassInfoHelper = new DbInfoHelper();
 		public Dictionary<string, string> MailTitles { get; private set; }
 		public Dictionary<string, string> ItemStatNames{get; private set;}
 		public Dictionary<int, SkillBonusInfo> SynthesisSkillBonues{get; private set;}
@@ -40,7 +40,7 @@ namespace GMTool.Helper
 		{
 			get { return mInit; }
 		}
-		public DbInfoHelper()
+		private DbInfoHelper()
 		{
 			sItemClassInfoHelper = this;
 			Searcher = new SearchHelper();

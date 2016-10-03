@@ -55,6 +55,10 @@ namespace GMTool.Helper
 		                                       string maincategory=null, string subcategory=null, User user=null)
 		{
 			List<ItemClassInfo> rs = new List<ItemClassInfo>();
+            if (!string.IsNullOrEmpty(name))
+            {
+                name = name.ToLower();
+            }
 			foreach (ItemClassInfo info in Infos)
 			{
 				if (!string.IsNullOrEmpty(name))

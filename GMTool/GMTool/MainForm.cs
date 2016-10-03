@@ -37,7 +37,7 @@ namespace GMTool
             CashCurItem = -1;
             NormalCurItem = -1;
             CurUser = new User();
-            DataHelper = new DbInfoHelper();
+            DataHelper = DbInfoHelper.Get();
             InitializeComponent();
             this.Text += " " + Application.ProductVersion.ToString();
             this.DefTitle = this.Text;
