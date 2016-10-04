@@ -11,6 +11,35 @@ namespace ServerManager
 {
     public static class DataBaseExtensitons
     {
+        public static int ShrinkDataBase(this MainForm main, CoreConfig config)
+        {
+            MSSqlHelper sql = new MSSqlHelper(config.ConnectionString);
+            if (sql.Open())
+            {
+                List<string> dbs = config.DataBases;
+                if (dbs != null)
+                {
+                    int i = 0;
+                    foreach (string db in dbs)
+                    {
+                        try
+                        {
+                            if (sql.Exist(db))
+                            {
+                                sql.ShrinkDataBase(db);
+                                i++;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            break;
+                        }
+                    }
+                    return i;
+                }
+            }
+            return 0;
+        }
         public static int SplitDb(this MainForm main, CoreConfig config)
         {
             MSSqlHelper sql = new MSSqlHelper(config.ConnectionString);
@@ -42,7 +71,7 @@ namespace ServerManager
 #if DEBUG
                             main.Error("分离失败\n" + e);
 #else
-                             main.Error("分离失败\n"+e.Message);
+                            main.Error("分离失败\n" + e.Message);
 #endif
                             break;
                         }
@@ -54,7 +83,7 @@ namespace ServerManager
 
         }
 
-        public static int CleanDabaBaseLog(this MainForm main, CoreConfig config)
+        public static int CleanDataBaseLog(this MainForm main, CoreConfig config)
         {
             List<string> dbs = config.DataBases;
 
@@ -105,6 +134,7 @@ namespace ServerManager
                     int i = 0;
                     foreach (string db in dbs)
                     {
+                        string file = PathHelper.Combine(config.DatabasePath, db + ".mdf");
                         try
                         {
                             if (sql.Exist(db))
@@ -115,7 +145,7 @@ namespace ServerManager
                             }
                             else
                             {
-                                string file = PathHelper.Combine(config.DatabasePath, db + ".mdf");
+                               
                                 sql.AttachDataBase(db, file);
                                 i++;
                             }
@@ -125,7 +155,7 @@ namespace ServerManager
 #if DEBUG
                             main.Error("分离失败\n" + e);
 #else
-                             main.Error("分离失败\n"+e.Message);
+                            main.Error("附加失败\n" + file+"\n"+e.Message);
 #endif
                             break;
                         }

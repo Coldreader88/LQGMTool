@@ -144,7 +144,7 @@ namespace ServerManager
         {
             if (this.Question("是否清空日志？"))
             {
-                int j = this.CleanDabaBaseLog(Config);
+                int j = this.CleanDataBaseLog(Config);
                 if (j > 0)
                 {
                     this.Info("删除" + j + "个数据库日志");
@@ -215,6 +215,19 @@ namespace ServerManager
                 {
                     MessageBox.Show("异常结束!\n" + path + " " + args);
                 }
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int rs = this.ShrinkDataBase(Config);
+            if (rs > 0)
+            {
+                this.Info("压缩" + rs + "个数据库成功");
+            }
+            else
+            {
+                this.Error("压缩数据库失败\n请确保数据库存在");
             }
         }
     }

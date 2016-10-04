@@ -42,10 +42,11 @@ namespace ServerManager
             this.btnSplitDb = new System.Windows.Forms.Button();
             this.btnAttachDb = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
+            this.chkNoPeople = new System.Windows.Forms.CheckBox();
             this.btnCreateDbFromBackup = new System.Windows.Forms.Button();
             this.layoutMain = new System.Windows.Forms.FlowLayoutPanel();
             this.btnStop = new System.Windows.Forms.Button();
-            this.chkNoPeople = new System.Windows.Forms.CheckBox();
+            this.btnShrink = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnUpdateConfig
@@ -61,22 +62,22 @@ namespace ServerManager
             // 
             // btnSplitDb
             // 
-            this.btnSplitDb.Location = new System.Drawing.Point(258, 6);
+            this.btnSplitDb.Location = new System.Drawing.Point(255, 6);
             this.btnSplitDb.Name = "btnSplitDb";
-            this.btnSplitDb.Size = new System.Drawing.Size(120, 28);
+            this.btnSplitDb.Size = new System.Drawing.Size(63, 28);
             this.btnSplitDb.TabIndex = 1;
-            this.btnSplitDb.Text = "分离数据库";
+            this.btnSplitDb.Text = "分离";
             this.toolTip1.SetToolTip(this.btnSplitDb, "分离后，可以删除日志，再附加");
             this.btnSplitDb.UseVisualStyleBackColor = true;
             this.btnSplitDb.Click += new System.EventHandler(this.btnSplitDb_Click);
             // 
             // btnAttachDb
             // 
-            this.btnAttachDb.Location = new System.Drawing.Point(258, 38);
+            this.btnAttachDb.Location = new System.Drawing.Point(320, 6);
             this.btnAttachDb.Name = "btnAttachDb";
-            this.btnAttachDb.Size = new System.Drawing.Size(120, 28);
+            this.btnAttachDb.Size = new System.Drawing.Size(63, 28);
             this.btnAttachDb.TabIndex = 1;
-            this.btnAttachDb.Text = "附加数据库";
+            this.btnAttachDb.Text = "附加";
             this.toolTip1.SetToolTip(this.btnAttachDb, "可以先清空日志再附加");
             this.btnAttachDb.UseVisualStyleBackColor = true;
             this.btnAttachDb.Click += new System.EventHandler(this.btnAttachDb_Click);
@@ -91,6 +92,17 @@ namespace ServerManager
             this.toolTip1.SetToolTip(this.btnStart, "启动全部服务");
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            // 
+            // chkNoPeople
+            // 
+            this.chkNoPeople.AutoSize = true;
+            this.chkNoPeople.Location = new System.Drawing.Point(7, 45);
+            this.chkNoPeople.Name = "chkNoPeople";
+            this.chkNoPeople.Size = new System.Drawing.Size(72, 16);
+            this.chkNoPeople.TabIndex = 3;
+            this.chkNoPeople.Text = "静默模式";
+            this.toolTip1.SetToolTip(this.chkNoPeople, "服务异常结束不提示，自动重新启动服务");
+            this.chkNoPeople.UseVisualStyleBackColor = true;
             // 
             // btnCreateDbFromBackup
             // 
@@ -123,16 +135,15 @@ namespace ServerManager
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
-            // chkNoPeople
+            // btnShrink
             // 
-            this.chkNoPeople.AutoSize = true;
-            this.chkNoPeople.Location = new System.Drawing.Point(7, 45);
-            this.chkNoPeople.Name = "chkNoPeople";
-            this.chkNoPeople.Size = new System.Drawing.Size(72, 16);
-            this.chkNoPeople.TabIndex = 3;
-            this.chkNoPeople.Text = "静默模式";
-            this.toolTip1.SetToolTip(this.chkNoPeople, "服务异常结束不提示，自动重新启动服务");
-            this.chkNoPeople.UseVisualStyleBackColor = true;
+            this.btnShrink.Location = new System.Drawing.Point(255, 37);
+            this.btnShrink.Name = "btnShrink";
+            this.btnShrink.Size = new System.Drawing.Size(126, 28);
+            this.btnShrink.TabIndex = 1;
+            this.btnShrink.Text = "压缩数据库";
+            this.btnShrink.UseVisualStyleBackColor = true;
+            this.btnShrink.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainForm
             // 
@@ -143,6 +154,7 @@ namespace ServerManager
             this.Controls.Add(this.layoutMain);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
+            this.Controls.Add(this.btnShrink);
             this.Controls.Add(this.btnAttachDb);
             this.Controls.Add(this.btnSplitDb);
             this.Controls.Add(this.btnCreateDbFromBackup);
@@ -167,5 +179,6 @@ namespace ServerManager
         private System.Windows.Forms.FlowLayoutPanel layoutMain;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.CheckBox chkNoPeople;
+        private System.Windows.Forms.Button btnShrink;
     }
 }

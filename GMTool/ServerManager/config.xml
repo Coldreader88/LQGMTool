@@ -2,7 +2,7 @@
 <CoreConfig>
   <ConnectionString>Data Source=127.0.0.1,1433;User Id=sa;Password=123456;</ConnectionString>
   <ProviderName>System.Data.SqlClient</ProviderName>
-  <DatabasePath>D:\LQServer\2008db\</DatabasePath>
+  <DatabasePath>D:\LQServer\Server\db\</DatabasePath>
   <GamePath>G:\Program Files (x86)\zh-CN</GamePath>
   <BinPath>D:\LQServer\Server\Bin</BinPath>
   <GameCode>16850955</GameCode>
