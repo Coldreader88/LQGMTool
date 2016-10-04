@@ -41,14 +41,17 @@ namespace GMTool.Common
 		}
 		public IntPtr GetWindow()
 		{
-			if (Window == IntPtr.Zero){
+            if (process == null)
+                return IntPtr.Zero;
+            if (Window == IntPtr.Zero){
 				Window = User32.GetWindowByPid(process.Id);
 			}
 			return Window;
 		}
 		public bool Show()
 		{
-			GetWindow();
+            if (IsShow) return true;
+            GetWindow();
 			if (Window != IntPtr.Zero)
 			{
 				return (IsShow=User32.ShowWindowAsync(Window, User32.SW_SHOW));
@@ -57,6 +60,7 @@ namespace GMTool.Common
 		}
 		public bool Hide()
 		{
+            if (!IsShow) return true;
 			GetWindow();
 			if (Window != IntPtr.Zero)
 			{
@@ -98,7 +102,10 @@ namespace GMTool.Common
 //				Title = sbText.ToString();
 				return true;
 			}catch(Exception e){
-				MessageBox.Show(""+e, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                process.Close();
+                process = null;
+                isRunning = false;
+                MessageBox.Show(ExePath + "\n"+e, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 			return false;
 		}

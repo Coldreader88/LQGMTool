@@ -53,16 +53,23 @@ namespace GMTool.Bean
 			bool has= false;
 			for (int i = 1; i <= 5; i++)
 			{
-				if (HeroesText.EnchantEffects.TryGetValue(this.Class + "_" + i, out tmp))
+                has = false;
+                if (HeroesText.EnchantEffects.TryGetValue(this.Class + "_" + i, out tmp))
 				{
-					has = true;
-					this.Effect += i + "." + tmp;
+                    if (!string.IsNullOrEmpty(tmp))
+                    {
+                        has = true;
+                        this.Effect += i + "." + tmp;
+                    }
 				}
 				if (has)
 				{
 					if (HeroesText.EnchantEffectIfs.TryGetValue(this.Class + "_" + i, out tmp))
 					{
-						this.Effect += "[" + tmp + "]";
+                        if (!string.IsNullOrEmpty(tmp))
+                        {
+                            this.Effect += "[" + tmp + "]";
+                        }
 					}
 					this.Effect += "\n";
 				}
@@ -87,7 +94,7 @@ namespace GMTool.Bean
 		}
 		public override string ToString()
 		{
-			return Name+"\n"+Desc + "\n" + Effect;
+			return Name+ "("+Class+")\n" +Desc + "\n" + Effect;
 		}
 	}
 }

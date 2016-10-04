@@ -35,7 +35,14 @@ namespace GMTool.Helper
 
 		public MSSqlHelper(string server, string user=null, string pwd=null, string dbname=null):base()
 		{
-			this.connStr = MakeConnectString(server,user,pwd, dbname);
+            if (server.StartsWith("Data Source"))
+            {
+                this.connStr = server;
+            }
+            else
+            {
+                this.connStr = MakeConnectString(server, user, pwd, dbname);
+            }
 		}
 		public SqlServer Version{
 			get{
@@ -55,7 +62,8 @@ namespace GMTool.Helper
 				return SqlServer.V2014;
 			}
 		}
-		public static string MakeConnectString(string server, string user=null, string pwd=null, string dbname=null){
+
+        public static string MakeConnectString(string server, string user=null, string pwd=null, string dbname=null){
 			string connect = "Data Source=" + server + ";";
 			if(!string.IsNullOrEmpty(dbname)){
 				connect+="Initial Catalog=" + dbname+";";
@@ -89,7 +97,8 @@ namespace GMTool.Helper
 			return ExcuteSQL(sql);
 		}
 		
-		public int RestoreOrCreate(string bakfile,string dbname=null,string path=null){
+		public int RestoreOrCreate(string bakfile,string path=null, string dbname = null)
+        {
 			string sql2;
 			if(string.IsNullOrEmpty(dbname)){
 				dbname = Path.GetFileNameWithoutExtension(bakfile);
@@ -151,10 +160,19 @@ namespace GMTool.Helper
 		/// </summary>
 		/// <param name="dbname">数据库</param>
 		/// <returns></returns>
-		public int SplitDataBase(string dbname){
+		public void SplitDataBase(string dbname){
 			string sql="ALTER DATABASE "+dbname+" SET SINGLE_USER WITH ROLLBACK IMMEDIATE;"
 				+"EXEC sp_detach_db '"+dbname+"';";
-			return ExcuteSQL(sql);
+			ExcuteSQL(sql);
 		}
+
+        public bool Exist(string dbname)
+        {
+            using (DbDataReader reader = GetReader("select * From master.dbo.sysdatabases where name='"+ dbname + "';"))
+            {
+                return reader != null&&reader.Read();
+            }
+        }
+
 	}
 }

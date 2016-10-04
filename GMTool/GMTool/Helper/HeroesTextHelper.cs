@@ -72,38 +72,57 @@ namespace GMTool.Helper
 			Regexs.Add(new Regex("HEROES_DESC_AVATAR_SKILL_BONUS_(\\S+?)\"\\s+\"([\\s\\S]+?)\""), SynSkillBonuds);
 		}
 		
-		public void Read(string file){
+		public void Read(string file,string patch=null){
 			if(!File.Exists(file))return;
-			using (FileStream fs = new FileStream(file, FileMode.Open))
-			{
-				using (StreamReader sr = new StreamReader(fs, Encoding.Unicode))
-				{
-					string line = null;
-					
-					while ((line = sr.ReadLine()) != null)
-					{
-						foreach(Regex regex in Regexs.Keys){
-							if(Add(regex, line, Regexs[regex])){
-								break;
-							}
-						}
-					}
-				}
-			}
+            ReadText(file, false);
+            if (!string.IsNullOrEmpty(patch) && File.Exists(patch))
+            {
+                ReadText(patch, true);
+            }
 		}
-		
-		private bool Add(Regex regex, string line,Dictionary<string, string> dic){
+
+        private int ReadText(string file,bool force)
+        {
+            int count = 0;
+            using (FileStream fs = new FileStream(file, FileMode.Open))
+            {
+                using (StreamReader sr = new StreamReader(fs, Encoding.Unicode))
+                {
+                    string line = null;
+
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        foreach (Regex regex in Regexs.Keys)
+                        {
+                            if (Add(regex, line, Regexs[regex], force))
+                            {
+                                count++;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return count;
+        }
+
+        private bool Add(Regex regex, string line,Dictionary<string, string> dic,bool force=false){
 			Match m = regex.Match(line);
 			if (m!= null)
 			{
 				if (m.Groups.Count > 2)
 				{
-					string v;
 					string k = m.Groups[1].Value.ToLower();
-					if (!dic.TryGetValue(k, out v))
-					{
-						dic.Add(k, ToCN(m.Groups[2].Value));
-					}
+                    string v = ToCN(m.Groups[2].Value);
+                    if (!dic.ContainsKey(k))
+                    {
+                        dic.Add(k, v);
+                    }
+                    else if(force)
+                    {
+                        //存在
+                        dic[k] = v;
+                    }
 					return true;
 				}
 			}

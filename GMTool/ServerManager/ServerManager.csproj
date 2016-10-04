@@ -79,25 +79,39 @@
     <Compile Include="..\GMTool\Common\win32\User32.cs">
       <Link>Common\Win32\User32.cs</Link>
     </Compile>
-    <Compile Include="Common\XmlHelper.cs" />
-    <Compile Include="MainForm.cs" />
+    <Compile Include="..\GMTool\Common\XmlHelper.cs">
+      <Link>Common\XmlHelper.cs</Link>
+    </Compile>
+    <Compile Include="CoreConfig.cs" />
+    <Compile Include="DataBaseExtensitons.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingExtensions.cs" />
+    <Compile Include="ProcessPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProcessPanel.Designer.cs">
+      <DependentUpon>ProcessPanel.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ProcessPanel.resx">
+      <DependentUpon>ProcessPanel.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common" />
-    <Folder Include="Common\Win32" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Server.ini" />
+    <Content Include="config.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

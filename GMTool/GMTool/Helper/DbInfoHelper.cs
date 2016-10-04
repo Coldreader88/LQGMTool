@@ -25,7 +25,7 @@ namespace GMTool.Helper
 		public Dictionary<string, string> ItemStatNames{get; private set;}
 		public Dictionary<int, SkillBonusInfo> SynthesisSkillBonues{get; private set;}
 
-		private string textFile, dbFile;
+		private string textFile,patchTextFile, dbFile;
 		private bool mInit = false;
 		public SearchHelper Searcher{get;private set;}
 		private Dictionary<string, EnchantInfo> Enchants = new Dictionary<string, EnchantInfo>();
@@ -51,7 +51,8 @@ namespace GMTool.Helper
 			{
 				textFile = "./heroes_text_taiwan.txt";
 			}
-			this.dbFile = helper.ReadValue("data", "heroes");
+            patchTextFile = helper.ReadValue("data", "patch_text");
+            this.dbFile = helper.ReadValue("data", "heroes");
 			if (!File.Exists(dbFile))
 			{
 				dbFile = "./heroes.db3";
@@ -69,7 +70,7 @@ namespace GMTool.Helper
 				return false;
 			}
 			HeroesTextHelper HeroesText  = new HeroesTextHelper();
-			HeroesText.Read(textFile);
+			HeroesText.Read(textFile, patchTextFile);
 			MailTitles = HeroesText.MailTitles;
 			ItemStatNames = HeroesText.ItemStatNames;
 			SQLiteHelper db = new SQLiteHelper(dbFile);

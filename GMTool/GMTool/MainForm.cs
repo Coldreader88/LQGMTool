@@ -586,6 +586,22 @@ namespace GMTool
         #endregion
 
         #region 搜索相关
+
+        private void contentMenuSendItemCopyIDs_Click(object sender, EventArgs e)
+        {
+            ItemClassInfo[] items= this.list_search.GetSelectItems<ItemClassInfo>();
+            if (items != null)
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (ItemClassInfo item in items)
+                {
+                    sb.Append(item.ItemClass);
+                    sb.AppendLine();
+                }
+                Clipboard.SetDataObject(sb.ToString());
+                this.Info("复制了"+items.Length+"个物品ID");
+            }
+        }
         private void btn_search_id_Click(object sender, EventArgs e)
         {
             AddSearchItemList(DataHelper.Searcher.SearchItems(null, tb_senditem_class.Text, cb_maincategory.Text, cb_subcategory.Text, CurUser));
@@ -1077,8 +1093,8 @@ namespace GMTool
             }
 
         }
-        #endregion
 
+        #endregion
 
     }
 }
