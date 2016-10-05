@@ -63,7 +63,12 @@ namespace GMTool.Helper
 			{
 				if (!string.IsNullOrEmpty(name))
 				{
-					if (info.Name == null || !info.Name.Contains(name))
+                    if (string.IsNullOrEmpty(info.Name))
+                    {
+                        continue;
+                    }
+                    string iname = info.Name.ToLower();
+                    if (!iname.Contains(name))
 					{
 						continue;
 					}

@@ -47,22 +47,23 @@ namespace ServerManager
             this.layoutMain = new System.Windows.Forms.FlowLayoutPanel();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnShrink = new System.Windows.Forms.Button();
+            this.btnSqlserver = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnUpdateConfig
             // 
-            this.btnUpdateConfig.Location = new System.Drawing.Point(5, 6);
+            this.btnUpdateConfig.Location = new System.Drawing.Point(4, 5);
             this.btnUpdateConfig.Name = "btnUpdateConfig";
-            this.btnUpdateConfig.Size = new System.Drawing.Size(120, 28);
+            this.btnUpdateConfig.Size = new System.Drawing.Size(75, 28);
             this.btnUpdateConfig.TabIndex = 1;
-            this.btnUpdateConfig.Text = "更新服务端配置";
+            this.btnUpdateConfig.Text = "更新配置";
             this.toolTip1.SetToolTip(this.btnUpdateConfig, "更新数据库连接配置\r\n游戏代码\r\nDS路径\r\n版本信息路径");
             this.btnUpdateConfig.UseVisualStyleBackColor = true;
             this.btnUpdateConfig.Click += new System.EventHandler(this.btnUpdateConfig_Click);
             // 
             // btnSplitDb
             // 
-            this.btnSplitDb.Location = new System.Drawing.Point(255, 6);
+            this.btnSplitDb.Location = new System.Drawing.Point(255, 5);
             this.btnSplitDb.Name = "btnSplitDb";
             this.btnSplitDb.Size = new System.Drawing.Size(63, 28);
             this.btnSplitDb.TabIndex = 1;
@@ -73,12 +74,12 @@ namespace ServerManager
             // 
             // btnAttachDb
             // 
-            this.btnAttachDb.Location = new System.Drawing.Point(320, 6);
+            this.btnAttachDb.Location = new System.Drawing.Point(320, 5);
             this.btnAttachDb.Name = "btnAttachDb";
             this.btnAttachDb.Size = new System.Drawing.Size(63, 28);
             this.btnAttachDb.TabIndex = 1;
             this.btnAttachDb.Text = "附加";
-            this.toolTip1.SetToolTip(this.btnAttachDb, "可以先清空日志再附加");
+            this.toolTip1.SetToolTip(this.btnAttachDb, "可以先清空日志再附加\r\n路径必须和分离前的一致");
             this.btnAttachDb.UseVisualStyleBackColor = true;
             this.btnAttachDb.Click += new System.EventHandler(this.btnAttachDb_Click);
             // 
@@ -106,11 +107,11 @@ namespace ServerManager
             // 
             // btnCreateDbFromBackup
             // 
-            this.btnCreateDbFromBackup.Location = new System.Drawing.Point(132, 6);
+            this.btnCreateDbFromBackup.Location = new System.Drawing.Point(83, 5);
             this.btnCreateDbFromBackup.Name = "btnCreateDbFromBackup";
-            this.btnCreateDbFromBackup.Size = new System.Drawing.Size(120, 28);
+            this.btnCreateDbFromBackup.Size = new System.Drawing.Size(82, 28);
             this.btnCreateDbFromBackup.TabIndex = 1;
-            this.btnCreateDbFromBackup.Text = "从备份创建数据库";
+            this.btnCreateDbFromBackup.Text = "创建数据库";
             this.btnCreateDbFromBackup.UseVisualStyleBackColor = true;
             this.btnCreateDbFromBackup.Click += new System.EventHandler(this.btnCreateDbFromBackup_Click);
             // 
@@ -145,6 +146,16 @@ namespace ServerManager
             this.btnShrink.UseVisualStyleBackColor = true;
             this.btnShrink.Click += new System.EventHandler(this.button1_Click);
             // 
+            // btnSqlserver
+            // 
+            this.btnSqlserver.Location = new System.Drawing.Point(170, 5);
+            this.btnSqlserver.Name = "btnSqlserver";
+            this.btnSqlserver.Size = new System.Drawing.Size(82, 28);
+            this.btnSqlserver.TabIndex = 1;
+            this.btnSqlserver.Text = "启动数据库";
+            this.btnSqlserver.UseVisualStyleBackColor = true;
+            this.btnSqlserver.Click += new System.EventHandler(this.btnSqlserver_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -157,6 +168,7 @@ namespace ServerManager
             this.Controls.Add(this.btnShrink);
             this.Controls.Add(this.btnAttachDb);
             this.Controls.Add(this.btnSplitDb);
+            this.Controls.Add(this.btnSqlserver);
             this.Controls.Add(this.btnCreateDbFromBackup);
             this.Controls.Add(this.btnUpdateConfig);
             this.MaximizeBox = false;
@@ -180,5 +192,6 @@ namespace ServerManager
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.CheckBox chkNoPeople;
         private System.Windows.Forms.Button btnShrink;
+        private System.Windows.Forms.Button btnSqlserver;
     }
 }

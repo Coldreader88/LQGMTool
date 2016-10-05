@@ -468,8 +468,13 @@ namespace GMTool
             if (_count > 0)
             {
                 ReadMails();
+                log("发送" + _count + "个物品成功");
             }
-            log("发送" + _count + "个物品成功");
+            else
+            {
+                this.Warnning("含有特殊物品，不能批量发送。\n名字带有{0}都是特殊物品");
+            }
+           
         }
         #endregion
 
@@ -622,7 +627,7 @@ namespace GMTool
             try
             {
                 int count = Convert.ToInt32(tb_senditem_count.Text);
-                if (this.SendItem(CurUser, count, tb_senditem_class.Text, tb_senditem_name.Text) > 0)
+                if (this.SendItem(CurUser, count, tb_senditem_class.Text, tb_senditem_name.Text, this.tb_senditem_value.Text) > 0)
                 {
                     ReadMails();
                     log("发送成功:" + tb_senditem_name.Text);

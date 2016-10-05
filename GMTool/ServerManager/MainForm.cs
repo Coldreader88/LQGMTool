@@ -51,6 +51,20 @@ namespace ServerManager
         }
         private void btnStart_Click(object sender, EventArgs e)
         {
+            if (!SerivceHelper.ExistService(Config.SqlServer))
+            {
+                this.Error("SQLServer没有安装");
+                return;
+            }
+            if (!SerivceHelper.IsRunningService(Config.SqlServer))
+            {
+                if (!SerivceHelper.StartService(Config.SqlServer))
+                {
+                    this.Error("无法启动数据库:"+Config.SqlServer);
+                    return;
+                }
+                this.btnSqlserver.Text = "停止数据库";
+            }
             if (ProcessPanels != null)
             {
                 foreach (ProcessPanel p in ProcessPanels)
@@ -64,6 +78,11 @@ namespace ServerManager
         }
         private void btnStop_Click(object sender, EventArgs e)
         {
+            if (SerivceHelper.IsRunningService(Config.SqlServer))
+            {
+                SerivceHelper.StopService(Config.SqlServer);
+                this.btnSqlserver.Text = "启动数据库";
+            }
             if (ProcessPanels != null)
             {
                 foreach (ProcessPanel p in ProcessPanels)
@@ -87,6 +106,13 @@ namespace ServerManager
             {
                 this.Error("读取配置出错\n" + ex);
             }
+            if (SerivceHelper.ExistService(Config.SqlServer))
+            {
+                if (SerivceHelper.IsRunningService(Config.SqlServer))
+                {
+                    this.btnSqlserver.Text = "停止数据库";
+                }
+            }
             // 
         }
 
@@ -108,6 +134,7 @@ namespace ServerManager
             using (FolderBrowserDialog dlg = new FolderBrowserDialog())
             {
                 dlg.SelectedPath = LastPath;
+                dlg.Description = "选择数据库备份bak文件的文件夹";
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     //bak
@@ -228,6 +255,25 @@ namespace ServerManager
             else
             {
                 this.Error("压缩数据库失败\n请确保数据库存在");
+            }
+        }
+
+        private void btnSqlserver_Click(object sender, EventArgs e)
+        {
+            if (!SerivceHelper.ExistService(Config.SqlServer))
+            {
+                this.Error("SQLServer没有安装");
+                return;
+            }
+            if (SerivceHelper.IsRunningService(Config.SqlServer))
+            {
+                SerivceHelper.StopService(Config.SqlServer);
+                this.btnSqlserver.Text = "启动数据库";
+            }
+            else
+            {
+                SerivceHelper.StartService(Config.SqlServer);
+                this.btnSqlserver.Text = "停止数据库";
             }
         }
     }

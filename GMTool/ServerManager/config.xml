@@ -2,10 +2,17 @@
 <CoreConfig>
   <ConnectionString>Data Source=127.0.0.1,1433;User Id=sa;Password=123456;</ConnectionString>
   <ProviderName>System.Data.SqlClient</ProviderName>
+  <!-- 数据库存放路径 -->
   <DatabasePath>D:\LQServer\Server\db\</DatabasePath>
+  <!-- 游戏路径，用于版本检测，PVP主机 -->
   <GamePath>G:\Program Files (x86)\zh-CN</GamePath>
+  <!-- 服务端bin文件夹 -->
   <BinPath>D:\LQServer\Server\Bin</BinPath>
+  <!-- 游戏代码GM模式兼容非GM模式 -->
   <GameCode>16850955</GameCode>
+  <!-- sqlserver 服务名 -->
+  <SqlServer>MSSQL$SQLEXPRESS</SqlServer>
+  <!-- 数据库名 -->
   <DataBases>
     <item>heroes</item>
     <item>HeroesExcept</item>
@@ -16,24 +23,24 @@
   </DataBases>
   <Apps>
     <App name="认证服务" path="D:\LQServer\Server\NMServer.exe"/>
-    <App name="网页服务" path="D:\LQServer\Server\webserver.exe"/>
     <App name="游戏服务" path="D:\LQServer\Server\Bin\Executer.exe">
       <StubApps>
-        <StubApp name="LocationService" args="UnifiedNetwork.dll UnifiedNetwork.LocationService.LocationService StartService LocationService 42"/>
-        <StubApp name="FrontendService" args="FrontendServiceCore.dll FrontendServiceCore.FrontendService StartService FrontendService 127.0.0.1 42"/>
-        <StubApp name="CashShopService" args="CashShopService.dll CashShopService.CashShopService StartService CashShopService 127.0.0.1 42"/>
-        <StubApp name="RankService" args="RankService.dll RankService.RankService StartService RankService 127.0.0.1 42"/>
-        <StubApp name="GuildService" args="GuildService.dll GuildService.GuildService StartService GuildService 127.0.0.1 42"/>
-        <StubApp name="PvpService" args="PvpService.dll PvpService.PvpService StartService PvpService 127.0.0.1 42"/>
-        <StubApp name="LoginService" args="LoginServiceCore.dll LoginServiceCore.LoginService StartService LoginService 127.0.0.1 42"/>
-        <StubApp name="MicroPlayService" args="MicroPlayServiceCore.dll MicroPlayServiceCore.MicroPlayService StartService MicroPlayService 127.0.0.1 42"/>
+        <StubApp name="定位服务-LocationService" args="UnifiedNetwork.dll UnifiedNetwork.LocationService.LocationService StartService LocationService 42"/>
+        <StubApp name="主服务-FrontendService" args="FrontendServiceCore.dll FrontendServiceCore.FrontendService StartService FrontendService 127.0.0.1 42"/>
+        <StubApp name="玩家服务-PlayerService" args="PlayerService.dll PlayerService.PlayerService StartService PlayerService 127.0.0.1 42"/>
+        <StubApp name="商城服务-CashShopService" args="CashShopService.dll CashShopService.CashShopService StartService CashShopService 127.0.0.1 42"/>
+        <StubApp name="排行服务-RankService" args="RankService.dll RankService.RankService StartService RankService 127.0.0.1 42"/>
+        <StubApp name="公会服务-GuildService" args="GuildService.dll GuildService.GuildService StartService GuildService 127.0.0.1 42"/>
+        <StubApp name="PVP服务-PvpService" args="PvpService.dll PvpService.PvpService StartService PvpService 127.0.0.1 42"/>
+        <StubApp name="登录服务-LoginService" args="LoginServiceCore.dll LoginServiceCore.LoginService StartService LoginService 127.0.0.1 42"/>
+        <StubApp name="副本服务-MicroPlayService" args="MicroPlayServiceCore.dll MicroPlayServiceCore.MicroPlayService StartService MicroPlayService 127.0.0.1 42"/>
         <StubApp name="MMOChannelService" args="MMOChannelService.dll MMOChannelService.MMOChannelService StartService MMOChannelService 127.0.0.1 42"/>
-        <StubApp name="PlayerService" args="PlayerService.dll PlayerService.PlayerService StartService PlayerService 127.0.0.1 42"/>
         <StubApp name="DSService" args="DSService.dll DSService.DSService StartService DSService 127.0.0.1 42"/>
         <StubApp name="PingService" args="PingService.dll PingServiceCore.PingService StartService PingService 127.0.0.1 42"/>
         <StubApp name="UserDSHostService" args="UserDSHostService.dll UserDSHostService.UserDSHostService StartService UserDSHostService 127.0.0.1 42"/>
-        <StubApp name="AdminService" args="AdminClientServiceCore.dll AdminClientServiceCore.AdminClientService StartService AdminService 127.0.0.1 42"/>
+        <StubApp name="管理服务-AdminService" args="AdminClientServiceCore.dll AdminClientServiceCore.AdminClientService StartService AdminService 127.0.0.1 42"/>
       </StubApps>
     </App>
+    <App name="网页服务" path="D:\LQServer\Server\webserver.exe"/>
   </Apps>
 </CoreConfig>

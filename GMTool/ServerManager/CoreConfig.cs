@@ -15,6 +15,7 @@ namespace ServerManager
         public long GameCode;
         public string ProviderName;
         public string BinPath;
+        public string SqlServer;
 
         [XmlArray("DataBases")]
         [XmlArrayItem("item")]

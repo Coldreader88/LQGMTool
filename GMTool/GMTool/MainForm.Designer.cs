@@ -105,6 +105,7 @@
             this.contentMenuSendItem10 = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMenuSendItem20 = new System.Windows.Forms.ToolStripMenuItem();
             this.contentMenuSendItem100 = new System.Windows.Forms.ToolStripMenuItem();
+            this.contentMenuSendItemCopyIDs = new System.Windows.Forms.ToolStripMenuItem();
             this.label7 = new System.Windows.Forms.Label();
             this.tb_senditem_count = new System.Windows.Forms.TextBox();
             this.btn_senditem_send = new System.Windows.Forms.Button();
@@ -188,7 +189,8 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.contentMenuSendItemCopyIDs = new System.Windows.Forms.ToolStripMenuItem();
+            this.tb_senditem_value = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.contextMenuUser.SuspendLayout();
             this.contextMenuItem.SuspendLayout();
@@ -758,7 +760,7 @@
             this.contentMenuSendItem100,
             this.contentMenuSendItemCopyIDs});
             this.contextMenuSend.Name = "contextMenuSend";
-            this.contextMenuSend.Size = new System.Drawing.Size(162, 158);
+            this.contextMenuSend.Size = new System.Drawing.Size(162, 136);
             // 
             // contentMenuSendItem1
             // 
@@ -795,11 +797,18 @@
             this.contentMenuSendItem100.Text = "发送100个";
             this.contentMenuSendItem100.Click += new System.EventHandler(this.contentMenuSendItem100_Click);
             // 
+            // contentMenuSendItemCopyIDs
+            // 
+            this.contentMenuSendItemCopyIDs.Name = "contentMenuSendItemCopyIDs";
+            this.contentMenuSendItemCopyIDs.Size = new System.Drawing.Size(161, 22);
+            this.contentMenuSendItemCopyIDs.Text = "复制选中物品ID";
+            this.contentMenuSendItemCopyIDs.Click += new System.EventHandler(this.contentMenuSendItemCopyIDs_Click);
+            // 
             // label7
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(988, 611);
+            this.label7.Location = new System.Drawing.Point(989, 614);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(53, 12);
             this.label7.TabIndex = 4;
@@ -808,10 +817,10 @@
             // tb_senditem_count
             // 
             this.tb_senditem_count.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_senditem_count.Location = new System.Drawing.Point(988, 631);
+            this.tb_senditem_count.Location = new System.Drawing.Point(1045, 611);
             this.tb_senditem_count.MaxLength = 12;
             this.tb_senditem_count.Name = "tb_senditem_count";
-            this.tb_senditem_count.Size = new System.Drawing.Size(77, 21);
+            this.tb_senditem_count.Size = new System.Drawing.Size(53, 21);
             this.tb_senditem_count.TabIndex = 2;
             this.tb_senditem_count.Text = "1";
             this.tb_senditem_count.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -821,9 +830,9 @@
             // 
             this.btn_senditem_send.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btn_senditem_send.Enabled = false;
-            this.btn_senditem_send.Location = new System.Drawing.Point(1072, 611);
+            this.btn_senditem_send.Location = new System.Drawing.Point(1106, 611);
             this.btn_senditem_send.Name = "btn_senditem_send";
-            this.btn_senditem_send.Size = new System.Drawing.Size(144, 41);
+            this.btn_senditem_send.Size = new System.Drawing.Size(110, 41);
             this.btn_senditem_send.TabIndex = 5;
             this.btn_senditem_send.Text = "发送";
             this.btn_senditem_send.UseVisualStyleBackColor = true;
@@ -1557,12 +1566,27 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "颜色1";
             // 
-            // contentMenuSendItemCopyIDs
+            // tb_senditem_value
             // 
-            this.contentMenuSendItemCopyIDs.Name = "contentMenuSendItemCopyIDs";
-            this.contentMenuSendItemCopyIDs.Size = new System.Drawing.Size(161, 22);
-            this.contentMenuSendItemCopyIDs.Text = "复制选中物品ID";
-            this.contentMenuSendItemCopyIDs.Click += new System.EventHandler(this.contentMenuSendItemCopyIDs_Click);
+            this.tb_senditem_value.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb_senditem_value.Location = new System.Drawing.Point(1045, 636);
+            this.tb_senditem_value.MaxLength = 12;
+            this.tb_senditem_value.Name = "tb_senditem_value";
+            this.tb_senditem_value.Size = new System.Drawing.Size(53, 21);
+            this.tb_senditem_value.TabIndex = 2;
+            this.tb_senditem_value.Text = "1";
+            this.tb_senditem_value.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.tb_senditem_value.WordWrap = false;
+            // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(991, 639);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(41, 12);
+            this.label12.TabIndex = 4;
+            this.label12.Text = "指定值";
             // 
             // MainForm
             // 
@@ -1581,10 +1605,12 @@
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label5);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.list_search);
             this.Controls.Add(this.tb_senditem_class);
             this.Controls.Add(this.tb_senditem_name);
+            this.Controls.Add(this.tb_senditem_value);
             this.Controls.Add(this.tb_senditem_count);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lb_search);
@@ -1776,6 +1802,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem contentMenuItemPower0;
         private System.Windows.Forms.ToolStripMenuItem contentMenuSendItemCopyIDs;
+        private System.Windows.Forms.TextBox tb_senditem_value;
+        private System.Windows.Forms.Label label12;
     }
 }
 
