@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using GMTool.Common;
+using System.Threading;
 
 namespace ServerManager
 {
@@ -16,9 +17,11 @@ namespace ServerManager
         private ProcessPlus process;
         public Action<ProcessPanel,string, string, bool> OnProcessExit;
         private StubApp App;
+        SynchronizationContext m_SyncContext = null;
         public ProcessPanel()
         {
             InitializeComponent();
+            m_SyncContext = SynchronizationContext.Current;
         }
         public ProcessPanel(StubApp app,int width)
         {
@@ -53,27 +56,41 @@ namespace ServerManager
                 };
             }
         }
-
-        public void UpdateStatus()
+        delegate void SetTextBoxText(ButtonBase tb, string txt);
+        private void SetShowText(object text)
         {
-            if (IsShowing())
+            this.btnShow.Text = text.ToString();
+        }
+        private void SetText(ButtonBase tb, string text)
+        {
+            this.btnStart.Text = text.ToString();
+            if (this.btnStart.Text == "停止")
             {
-                btnShow.Text = "隐藏";
-            }
-            else
-            {
-                btnShow.Text = "显示";
-            }
-            if (IsRunning())
-            {
-                btnStart.Text = "停止";
                 btnStart.BackColor = Color.DarkRed;
             }
             else
             {
-                btnStart.Text = "启动";
                 btnStart.BackColor = Color.ForestGreen;
             }
+            if (tb.InvokeRequired)//如果调用控件的线程和创建创建控件的线程不是同一个则为True
+            {
+                while (!tb.IsHandleCreated)
+                {
+                    //解决窗体关闭时出现“访问已释放句柄“的异常
+                    if (tb.Disposing || tb.IsDisposed)
+                        return;
+                }
+                tb.Invoke(new SetTextBoxText(SetText), new object[] { tb, text});
+            }
+            else
+            {
+                tb.Text = text;
+            }
+        }
+        public void UpdateStatus()
+        {
+            SetText(btnShow, IsShowing() ? "隐藏" : "显示");
+            SetText(btnStart, IsRunning() ? "停止" : "启动");
         }
 
         public void StartProcess()

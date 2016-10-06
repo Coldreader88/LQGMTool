@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using GMTool.Common;
 using System.IO;
+using System.Threading;
 
 namespace ServerManager
 {
@@ -60,38 +61,47 @@ namespace ServerManager
             {
                 if (!SerivceHelper.StartService(Config.SqlServer))
                 {
-                    this.Error("无法启动数据库:"+Config.SqlServer);
+                    this.Error("无法启动数据库:" + Config.SqlServer);
                     return;
                 }
                 this.btnSqlserver.Text = "停止数据库";
             }
             if (ProcessPanels != null)
             {
-                foreach (ProcessPanel p in ProcessPanels)
+                new Thread(() =>
                 {
-                    if (!p.IsRunning())
+                    foreach (ProcessPanel p in ProcessPanels)
                     {
-                        p.StartProcess();
+                        if (!p.IsRunning())
+                        {
+                            p.StartProcess();
+                        }
                     }
-                }
+                }).Start();
             }
         }
         private void btnStop_Click(object sender, EventArgs e)
         {
             if (SerivceHelper.IsRunningService(Config.SqlServer))
             {
-                SerivceHelper.StopService(Config.SqlServer);
-                this.btnSqlserver.Text = "启动数据库";
+                if (this.Question("是否停止数据库?"))
+                {
+                    SerivceHelper.StopService(Config.SqlServer);
+                    this.btnSqlserver.Text = "启动数据库";
+                }
             }
             if (ProcessPanels != null)
             {
-                foreach (ProcessPanel p in ProcessPanels)
+                new Thread(() =>
                 {
-                    if (p.IsRunning())
+                    foreach (ProcessPanel p in ProcessPanels)
                     {
-                        p.StopProcess();
+                        if (p.IsRunning())
+                        {
+                            p.StopProcess();
+                        }
                     }
-                }
+                }).Start();
             }
         }
         private void MainForm_Load(object sender, EventArgs e)
@@ -196,10 +206,10 @@ namespace ServerManager
 
         private void InitProcessPanel(CoreConfig config)
         {
-            int width = this.layoutMain.Size.Width- 28;
+            int width = this.layoutMain.Size.Width - 28;
             this.layoutMain.SuspendLayout();
             this.layoutMain.Controls.Clear();
-          //  List<StubApp> apps =new List<StubApp>();
+            //  List<StubApp> apps =new List<StubApp>();
             if (config.Apps != null)
             {
                 foreach (App app in config.Apps)
@@ -230,7 +240,7 @@ namespace ServerManager
             }
             this.layoutMain.ResumeLayout();
         }
-        public void onProcessExit(ProcessPanel p,string path,string args,bool error)
+        public void onProcessExit(ProcessPanel p, string path, string args, bool error)
         {
             if (error)
             {
