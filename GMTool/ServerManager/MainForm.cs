@@ -52,20 +52,18 @@ namespace ServerManager
         }
         private void btnStart_Click(object sender, EventArgs e)
         {
-            if (!SerivceHelper.ExistService(Config.SqlServer))
-            {
-                this.Error("SQLServer没有安装");
-                return;
-            }
-            if (!SerivceHelper.IsRunningService(Config.SqlServer))
+            if (SerivceHelper.ExistService(Config.SqlServer) && !SerivceHelper.IsRunningService(Config.SqlServer))
             {
                 if (!SerivceHelper.StartService(Config.SqlServer))
                 {
-                    this.Error("无法启动数据库:" + Config.SqlServer);
-                    return;
+
+                    if (!this.Question("无法启动数据库:" + Config.SqlServer + "\n是否继续启动？"))
+                    {
+                        return;
+                    }
                 }
-                this.btnSqlserver.Text = "停止数据库";
             }
+            this.btnSqlserver.Text = "停止数据库";
             if (ProcessPanels != null)
             {
                 new Thread(() =>

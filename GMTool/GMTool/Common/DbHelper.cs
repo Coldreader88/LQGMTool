@@ -103,10 +103,40 @@ namespace GMTool.Helper
 				return command.ExecuteReader(CommandBehavior.SingleResult);
 			}
 		}
-		#endregion
+        #endregion
 
-		#region exec
-		public int ExcuteSQL(string strSQL, CommandType cmdtype = CommandType.Text, DbParameter[] paras=null)
+        #region exec
+
+        public int ExcuteSQLs(params string[] SQLs)
+        {
+            if (!IsOpen) return 0;
+            int result = 0;
+            using (DbTransaction transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (DbCommand cmd = CreateCommand("", conn))
+                    {
+                        foreach (string SQLstr in SQLs)
+                        {
+                            cmd.CommandText = SQLstr;
+                            result += cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                catch
+                {
+                    transaction.Rollback();//出错，回滚
+                    result = -1;
+                }
+                finally
+                {
+                    transaction.Commit();
+                }
+            }
+            return  result;
+        }
+        public int ExcuteSQL(string strSQL, CommandType cmdtype = CommandType.Text, DbParameter[] paras=null)
 		{
 			if (!IsOpen) return 0;
 			int num = 0;
@@ -185,5 +215,6 @@ namespace GMTool.Helper
 			}
 			return e;
 		}
+
 	}
 }
