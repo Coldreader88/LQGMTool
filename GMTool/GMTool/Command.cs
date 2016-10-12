@@ -64,21 +64,8 @@ namespace GMTool
 		
 		#region 繁体转简体
 		public void TW2CN(string path){
-			//db
-			string textpath = PathHelper.Combine(path, "resource","localized_text","chinese");
-			string cntext = PathHelper.Combine(textpath, "heroes_text_chinese.txt");
-			if(!File.Exists(cntext)){
-				if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(path, "hfs"),
-				                              "heroes_text_taiwan.txt",
-				                              textpath)){
-					string text = PathHelper.Combine(textpath, "heroes_text_taiwan.txt");
-					
-					File.Delete(cntext);
-					File.Move(text, cntext);
-					TextTW2CN(cntext);
-				}
-			}
 			//font
+			Console.WriteLine("复制字体");
 			string fontpath = PathHelper.Combine(path ,"scaleform", "font");
 			if(!Directory.Exists(fontpath)){
 				Directory.CreateDirectory(fontpath);
@@ -101,6 +88,21 @@ namespace GMTool
 					}
 				}
 			}
+			//db
+			string textpath = PathHelper.Combine(path, "resource","localized_text","chinese");
+			string cntext = PathHelper.Combine(textpath, "heroes_text_chinese.txt");
+			if(!File.Exists(cntext)){
+				if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(path, "hfs"),
+				                              "heroes_text_taiwan.txt",
+				                              textpath)){
+					string text = PathHelper.Combine(textpath, "heroes_text_taiwan.txt");
+					
+					File.Delete(cntext);
+					File.Move(text, cntext);
+					TextTW2CN(cntext);
+				}
+			}
+			Console.WriteLine("处理数据库");
 			string dbpath = PathHelper.Combine(path, "sql");
 			string cndb  =PathHelper.Combine(dbpath, "heroes.db3");
 			if(!File.Exists(cndb)){
@@ -138,7 +140,7 @@ namespace GMTool
 				Console.WriteLine("文件不存在："+infile);
 				return;
 			}
-			Console.WriteLine("\n开始处理");
+			Console.WriteLine("繁体翻译变简体");
 			File.Delete(outfile);
 			//以file为蓝本，根据list从check复制行出来到out
 			using (FileStream fs = new FileStream(infile, FileMode.Open))
