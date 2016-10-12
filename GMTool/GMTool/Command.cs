@@ -12,6 +12,7 @@ using System.Text;
 using GMTool.Helper;
 using System.Data.Common;
 using GMTool.Common;
+using System.Windows.Forms;
 
 namespace GMTool
 {
@@ -65,32 +66,48 @@ namespace GMTool
 		public void TW2CN(string path){
 			//db
 			string textpath = PathHelper.Combine(path, "resource","localized_text","chinese");
-			if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(path, "hfs"),
-			                              "heroes_text_taiwan.txt",
-			                              textpath)){
-				string text = PathHelper.Combine(textpath, "heroes_text_taiwan.txt");
-				string cntext = PathHelper.Combine(textpath, "heroes_text_chinese.txt");
-				File.Move(text, cntext);
-				TextTW2CN(cntext);
+			string cntext = PathHelper.Combine(textpath, "heroes_text_chinese.txt");
+			if(!File.Exists(cntext)){
+				if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(path, "hfs"),
+				                              "heroes_text_taiwan.txt",
+				                              textpath)){
+					string text = PathHelper.Combine(textpath, "heroes_text_taiwan.txt");
+					
+					File.Delete(cntext);
+					File.Move(text, cntext);
+					TextTW2CN(cntext);
+				}
 			}
 			//font
 			string fontpath = PathHelper.Combine(path ,"scaleform", "font");
-			if(!VZip.ExtractAllHfsFindFile(PathHelper.Combine(path, "hfs"),
-			                               "fonts_ch.swf",
-			                               fontpath)){
-				if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(path, "hfs"),
-				                              "fonts_tw.swf",
-				                              fontpath)){
-					string text = PathHelper.Combine(fontpath, "fonts_tw.swf");
-					string cntext = PathHelper.Combine(fontpath, "fonts_ch.swf");
-					File.Move(text, cntext);
+			if(!Directory.Exists(fontpath)){
+				Directory.CreateDirectory(fontpath);
+			}
+			string curfont = PathHelper.Combine(Application.StartupPath, "fonts_ch.swf");
+			string cnfont = PathHelper.Combine(fontpath, "fonts_ch.swf");
+			if(!File.Exists(cnfont)){
+				if(File.Exists(curfont)){
+					File.Copy(curfont, cnfont);
+				}else{
+					if(!VZip.ExtractAllHfsFindFile(PathHelper.Combine(path, "hfs"),
+					                               "fonts_ch.swf",
+					                               fontpath)){
+						if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(path, "hfs"),
+						                              "fonts_tw.swf",
+						                              fontpath)){
+							string text = PathHelper.Combine(fontpath, "fonts_tw.swf");
+							File.Move(text, cnfont);
+						}
+					}
 				}
 			}
 			string dbpath = PathHelper.Combine(path, "sql");
-			
-			if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(path, "hfs"),
-			                              "heroes.db3", dbpath)){
-				DbTW2CN(PathHelper.Combine(dbpath, "heroes.db3"));
+			string cndb  =PathHelper.Combine(dbpath, "heroes.db3");
+			if(!File.Exists(cndb)){
+				if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(path, "hfs"),
+				                              "heroes.db3", dbpath)){
+					DbTW2CN(cndb);
+				}
 			}
 		}
 		public void DbTW2CN(string dbfile){
