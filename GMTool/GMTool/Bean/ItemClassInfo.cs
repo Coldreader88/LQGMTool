@@ -34,7 +34,8 @@ namespace GMTool.Bean
 		public string Desc{get;private set;}
 		public ItemStatInfo Stat{get;private set;}
 		public long MaxStack{get;private set;}
-		public ItemClassInfo(){
+        public string Feature { get; private set; }
+        public ItemClassInfo(){
 			
 		}
 		public ItemClassInfo(DbDataReader reader,HeroesTextHelper HeroesText){
@@ -56,11 +57,16 @@ namespace GMTool.Bean
 			if(!stat.IsEmpty()){
 				this.Stat = stat;
 			}
-		}
+            this.Feature = reader.ReadString("Feature");
+        }
 		public override string ToString()
 		{
-			return "物品ID："+ ItemClass+"\n物品名字："+Name+" \n需求等级： "+ RequiredLevel +"\n最大叠放数量："+(MaxStack<0?"不限":""+MaxStack)+"\n分类："+ SubCategory.Name()+ "  "+MainCategory.Name()
-				+ "\n职业限制："+ClassInfoEx.GetClassText(ClassRestriction)+(Stat==null?"":"\n"+Stat.ToString()) + "\n" + Desc;
+			return "物品ID："+ ItemClass+"\n物品名字："+Name+" \n需求等级： "+ RequiredLevel 
+                +"\n最大叠放数量："+(MaxStack<0?"不限":""+MaxStack)
+                +"\n分类："+ SubCategory.Name()+ "  "+MainCategory.Name()
+				+ "\n限制条件"+Feature+"\n职业限制：" +ClassInfoEx.GetClassText(ClassRestriction)
+                +(Stat==null?"":"\n"+Stat.ToString()) 
+                + "\n" + Desc;
 		}
 	}
 }

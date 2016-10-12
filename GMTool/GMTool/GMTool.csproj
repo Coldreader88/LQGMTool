@@ -76,23 +76,38 @@
     <Compile Include="Bean\ItemStatInfo.cs" />
     <Compile Include="Bean\Mail.cs" />
     <Compile Include="Bean\StatInfo.cs" />
-    <Compile Include="Bean\SynthesisSkillBonus.cs" />
+    <Compile Include="Bean\SkillBonusInfo.cs" />
     <Compile Include="Bean\TitleInfo.cs" />
     <Compile Include="Bean\User.cs" />
-    <Compile Include="Common\DListView.cs" />
+    <Compile Include="Common\DListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Common\ProcessPlus.cs" />
-    <Compile Include="Common\InputDialog.cs" />
+    <Compile Include="Common\InputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Common\InputDialog.Designer.cs">
       <DependentUpon>InputDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Common\PathHelper.cs" />
-    <Compile Include="Common\ToolStripDropDownItemEx.cs" />
+    <Compile Include="Common\ToolStripDropDownItemEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Common\VZip.cs" />
     <Compile Include="Common\win32\User32.cs" />
-    <Compile Include="Dialog\ItemModCountDialog.cs" />
-    <Compile Include="Dialog\UserAttributeDialog.cs" />
-    <Compile Include="Dialog\UserLevelDialog.cs" />
-    <Compile Include="Dialog\UserNameDialog.cs" />
+    <Compile Include="Common\XmlHelper.cs" />
+    <Compile Include="Dialog\ItemModCountDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\UserAttributeDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\UserLevelDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog\UserNameDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Enums\AttributeType.cs" />
     <Compile Include="Enums\Category.cs" />
     <Compile Include="Enums\ClassInfo.cs" />
@@ -166,9 +181,7 @@
   <ItemGroup>
     <Content Include="icon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dialog" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\SharpZipLib\ICSharpCode.SharpZLib.csproj">
       <Project>{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}</Project>

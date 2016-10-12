@@ -19,7 +19,7 @@ namespace GMTool
 	{
 		#region 数据库
 		private static MSSqlHelper db = new MSSqlHelper();
-		private const string SQL_QUERY_USERS = "select * from CharacterInfo WHERE DeleteTime is NULL ORDER BY level desc,CreateTime;";
+		private const string SQL_QUERY_USERS = "select * from CharacterInfo WHERE DeleteTime is NULL and CreateTime >= '2016-01-01' ORDER BY level desc,CreateTime;";
 
 		public static bool IsOpen(this MainForm main)
 		{
@@ -405,11 +405,21 @@ namespace GMTool
 				return 0;
 			}
 			int rs = 0;
-			foreach (ItemClassInfo item in items)
+            foreach (ItemClassInfo item in items)
+            {
+                if (item != null)
+                {
+                    if (item.Name != null && item.Name.Contains("{0}"))
+                    {
+                        return -1;
+                    }
+                }
+            }
+            foreach (ItemClassInfo item in items)
 			{
 				if (item != null)
 				{
-					rs += SendItem(main, user, count, item.ItemClass, item.Name);
+					rs += SendItem(main, user, count, item.ItemClass, item.Name, null);
 				}
 			}
 			return rs;
@@ -418,13 +428,17 @@ namespace GMTool
 		/// <summary>
 		/// 发送物品
 		/// </summary>
-		public static int SendItem(this MainForm main, User user, int count, string item, string name)
+		public static int SendItem(this MainForm main, User user, int count, string item, string name,string value)
 		{
 			if (user == null || string.IsNullOrEmpty(item))
 			{
 				return 0;
 			}
-			if (string.IsNullOrEmpty(name))
+            if (!string.IsNullOrEmpty(value))
+            {
+                item += "[VALUE:" + value + "]";
+            }
+            if (string.IsNullOrEmpty(name))
 			{
 				name = item;
 			}

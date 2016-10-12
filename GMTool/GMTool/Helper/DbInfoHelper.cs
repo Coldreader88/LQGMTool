@@ -20,12 +20,12 @@ namespace GMTool.Helper
 	public class DbInfoHelper
 	{
 		#region
-		static DbInfoHelper sItemClassInfoHelper = null;
+		static DbInfoHelper sItemClassInfoHelper = new DbInfoHelper();
 		public Dictionary<string, string> MailTitles { get; private set; }
 		public Dictionary<string, string> ItemStatNames{get; private set;}
-		public List<SynthesisSkillBonus> SynthesisSkillBonues{get; private set;}
+		public Dictionary<int, SkillBonusInfo> SynthesisSkillBonues{get; private set;}
 
-		private string textFile, dbFile;
+		private string textFile,patchTextFile, dbFile;
 		private bool mInit = false;
 		public SearchHelper Searcher{get;private set;}
 		private Dictionary<string, EnchantInfo> Enchants = new Dictionary<string, EnchantInfo>();
@@ -40,18 +40,19 @@ namespace GMTool.Helper
 		{
 			get { return mInit; }
 		}
-		public DbInfoHelper()
+		private DbInfoHelper()
 		{
 			sItemClassInfoHelper = this;
 			Searcher = new SearchHelper();
-			SynthesisSkillBonues = new List<SynthesisSkillBonus>();
+			SynthesisSkillBonues = new Dictionary<int, SkillBonusInfo>();
 			IniHelper helper = new IniHelper(Program.INT_FILE);
 			this.textFile = helper.ReadValue("data", "text");
 			if (!File.Exists(textFile))
 			{
 				textFile = "./heroes_text_taiwan.txt";
 			}
-			this.dbFile = helper.ReadValue("data", "heroes");
+            patchTextFile = helper.ReadValue("data", "patch_text");
+            this.dbFile = helper.ReadValue("data", "heroes");
 			if (!File.Exists(dbFile))
 			{
 				dbFile = "./heroes.db3";
@@ -69,7 +70,7 @@ namespace GMTool.Helper
 				return false;
 			}
 			HeroesTextHelper HeroesText  = new HeroesTextHelper();
-			HeroesText.Read(textFile);
+			HeroesText.Read(textFile, patchTextFile);
 			MailTitles = HeroesText.MailTitles;
 			ItemStatNames = HeroesText.ItemStatNames;
 			SQLiteHelper db = new SQLiteHelper(dbFile);
@@ -87,9 +88,14 @@ namespace GMTool.Helper
 		private void ReadSkillBonuds(SQLiteHelper db,HeroesTextHelper HeroesText){
 			using (DbDataReader reader = db.GetReader("select * from synthesisskillbonus order by classRestriction;"))
 			{
-				while (reader != null && reader.Read())
+               // MessageBox.Show("count=" + HeroesText.SynSkillBonuds.Count);
+                while (reader != null && reader.Read())
 				{
-					SynthesisSkillBonues.Add(new SynthesisSkillBonus(reader, HeroesText));
+                    SkillBonusInfo info = new SkillBonusInfo(reader, HeroesText);
+                    if (!SynthesisSkillBonues.ContainsKey(info.ID))
+                    {
+                        SynthesisSkillBonues.Add(info.ID, info);
+                    }
 				}
 			}
 		}

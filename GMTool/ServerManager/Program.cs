@@ -8,7 +8,6 @@
  */
 using System;
 using System.Windows.Forms;
-using ServerManager.Comon;
 using GMTool.Helper;
 using System.IO;
 
@@ -27,7 +26,14 @@ namespace ServerManager
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new MainForm());
+            if (args != null && args.Length > 0)
+            {
+                Application.Run(new MainForm(args[0]));
+            }
+            else
+            {
+                Application.Run(new MainForm());
+            }
 			//new XmlHelper(@"D:\heroes\server\Bin\ServiceCore.dll.config").ModConnectStrings("127.0.0.1,1433","sa","123456");
 //			MSSqlHelper helper=new MSSqlHelper("127.0.0.1,1433",null);
 //			//Console.WriteLine(Path.GetFileNameWithoutExtension(@"D:\heroes\EN\database\heroes.bak"));

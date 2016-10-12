@@ -77,8 +77,23 @@ namespace GMTool.Bean
 			}else if (Type == ItemAttributeType.SYNTHESISGRADE)
 			{
 				_Desc= "评分：" + Value;
-			}else if (Type == ItemAttributeType.VALUE){
-				_Desc= "";
+                if (!string.IsNullOrEmpty(Value))
+                {
+                    string[] strs = Value.Split('/');
+                    if (strs.Length > 1)
+                    {
+                        int i = Convert.ToInt32(strs[1]);
+                        SkillBonusInfo info = new SkillBonusInfo();
+                        if (DbInfoHelper.Get().SynthesisSkillBonues.TryGetValue(i, out info))
+                        {
+                            _Desc = "评分：" + info.GetKey()+" "+info.DESC;
+                        }
+                    }
+                }
+            }
+            else if (Type == ItemAttributeType.VALUE){
+                _Desc = "";
+                
 			}
 			return _Desc;
 		}

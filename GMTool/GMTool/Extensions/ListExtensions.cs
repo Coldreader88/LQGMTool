@@ -75,7 +75,14 @@ namespace GMTool.Extensions
                         break;
                     }
                 }
-
+                foreach (ItemAttribute attr in t.Attributes)
+                {
+                    if (attr.Type == ItemAttributeType.SYNTHESISGRADE)
+                    {
+                        head = "【" + attr.Value.Split('/')[0] + "】";
+                        break;
+                    }
+                }
                 foreach (ItemAttribute attr in t.Attributes)
                 {
                     if (attr.Type == ItemAttributeType.PREFIX)
@@ -103,7 +110,6 @@ namespace GMTool.Extensions
                     }else if(attr.Type == ItemAttributeType.VALUE){
                     	vitem.Text = vitem.Text.Replace("{0}",attr.Value);
                     }
-                    
                 }
                 if (!string.IsNullOrEmpty(head))
                 {
