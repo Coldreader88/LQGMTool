@@ -10,6 +10,7 @@ heroes_text_taiwan.txt和heroes.db3放在本程序的文件夹
 1.1.9:
 支持台服客户端变国服，需要以命令行启动
 gmtool.exe -tw2cn 游戏路径
+mail的标题为null的错误
 1.1.8:
 支持自动解压hfs，查找数据文件
 1.1.7:

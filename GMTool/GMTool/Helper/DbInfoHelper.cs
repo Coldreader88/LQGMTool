@@ -91,6 +91,7 @@ namespace GMTool.Helper
 		}
 		#endregion
 		
+		#region checkfile
 		public bool CheckFiles(Form form){
 			IniHelper helper = new IniHelper(Program.INT_FILE);
 			string SEP = ""+Path.PathSeparator;
@@ -192,6 +193,7 @@ namespace GMTool.Helper
 			}while(!Directory.Exists(PathHelper.Combine(dir, "hfs")));
 			return dir;
 		}
+		#endregion
 
 		#region synskillbonuds
 		private void ReadSkillBonuds(SQLiteHelper db,HeroesTextHelper HeroesText){
@@ -284,7 +286,7 @@ namespace GMTool.Helper
 		#region Cache/Get
 		public string GetMailTitle(string title)
 		{
-			if (title.StartsWith("#")) {
+			if (title!=null && title.StartsWith("#")) {
 				string t;
 				if (MailTitles.TryGetValue(title.Substring(1).ToLower(), out t))
 				{
@@ -325,13 +327,6 @@ namespace GMTool.Helper
 			EnchantInfo info = new EnchantInfo();
 			Enchants.TryGetValue(name, out info);
 			return info;
-		}
-
-		private string ToString(object obj)
-		{
-			if (obj == DBNull.Value)
-				return "";
-			return Convert.ToString(obj);
 		}
 		#endregion
 	}
