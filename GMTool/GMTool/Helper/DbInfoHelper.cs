@@ -11,6 +11,7 @@ using System.Data.SQLite;
 using GMTool.Bean;
 using GMTool.Helpers;
 using System.Data.Common;
+using GMTool.Common;
 using GMTool.Enums;
 using GMTool.Extensions;
 using System.Windows.Forms;
@@ -20,7 +21,7 @@ namespace GMTool.Helper
 	public class DbInfoHelper
 	{
 		#region
-		static DbInfoHelper sItemClassInfoHelper = new DbInfoHelper();
+		public readonly static DbInfoHelper sItemClassInfoHelper = new DbInfoHelper();
 		public Dictionary<string, string> MailTitles { get; private set; }
 		public Dictionary<string, string> ItemStatNames{get; private set;}
 		public Dictionary<int, SkillBonusInfo> SynthesisSkillBonues{get; private set;}
@@ -30,7 +31,10 @@ namespace GMTool.Helper
 		public SearchHelper Searcher{get;private set;}
 		private Dictionary<string, EnchantInfo> Enchants = new Dictionary<string, EnchantInfo>();
 		private Dictionary<long, TitleInfo> Titles=new Dictionary<long, TitleInfo>();
-				
+		private static string DEF_TEXT = "heroes_text_chinese.txt";
+		private static string DEF_TW = "heroes_text_taiwan.txt";
+		private static string DEF_DB = "heroes.db3";
+		
 		public static DbInfoHelper Get()
 		{
 			return sItemClassInfoHelper;
@@ -42,20 +46,23 @@ namespace GMTool.Helper
 		}
 		private DbInfoHelper()
 		{
-			sItemClassInfoHelper = this;
 			Searcher = new SearchHelper();
 			SynthesisSkillBonues = new Dictionary<int, SkillBonusInfo>();
 			IniHelper helper = new IniHelper(Program.INT_FILE);
 			this.textFile = helper.ReadValue("data", "text");
 			if (!File.Exists(textFile))
 			{
-				textFile = "./heroes_text_taiwan.txt";
+				textFile = "./"+DEF_TEXT;
 			}
-            patchTextFile = helper.ReadValue("data", "patch_text");
-            this.dbFile = helper.ReadValue("data", "heroes");
+			if (!File.Exists(textFile))
+			{
+				textFile = "./"+DEF_TW;
+			}
+			patchTextFile = helper.ReadValue("data", "patch_text");
+			this.dbFile = helper.ReadValue("data", "heroes");
 			if (!File.Exists(dbFile))
 			{
-				dbFile = "./heroes.db3";
+				this.dbFile = "./"+DEF_DB;
 			}
 		}
 
@@ -65,7 +72,7 @@ namespace GMTool.Helper
 				return true;
 			}
 			mInit = true;
-			if (!File.Exists(dbFile))
+			if (!File.Exists(this.dbFile))
 			{
 				return false;
 			}
@@ -84,18 +91,122 @@ namespace GMTool.Helper
 		}
 		#endregion
 		
+		#region checkfile
+		public bool CheckFiles(Form form){
+			IniHelper helper = new IniHelper(Program.INT_FILE);
+			string SEP = ""+Path.PathSeparator;
+			string name = null;
+			bool CN = false;
+			string dir = "";
+			if(!File.Exists(textFile)){
+				CN = SelectGameVer(out name);
+				if(string.IsNullOrEmpty(name)){
+					return false;
+				}
+				form.Info("请选择游戏目录");
+				dir = SelectGamePath(CN);
+				if(dir == null){
+					return false;
+				}
+				//查找本地已经存在的
+				string deftext= PathHelper.Combine(dir, "resource","localized_text",(CN?"chinese":"taiwan"),(CN?DEF_TEXT:DEF_TW));
+				if(File.Exists(deftext)){
+					form.Info("找到翻译文件\n"+deftext);
+					helper.WriteValue("data", "text",deftext);
+					this.textFile = deftext;
+				}else{
+					//解压
+					if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(dir, "hfs"), name, Application.StartupPath)){
+						form.Info("找到翻译文件\n"+name);
+						helper.WriteValue("data", "text", name);
+						this.textFile = PathHelper.Combine(Application.StartupPath, name);
+					}else{
+						form.Info("没找到翻译文件\n"+name);
+						return false;
+					}
+				}
+			}
+			if(!File.Exists(dbFile)){
+				if(string.IsNullOrEmpty(name)){
+					CN = SelectGameVer(out name);
+					if(string.IsNullOrEmpty(name)){
+						return false;
+					}
+					form.Info("请选择游戏目录");
+					dir = SelectGamePath(CN);
+					if(dir == null){
+						return false;
+					}
+				}
+				string defdb= PathHelper.Combine(dir, "sql", DEF_DB);
+				if(File.Exists(defdb)){
+					form.Info("找到数据库\n"+defdb);
+					helper.WriteValue("data", "heroes",defdb);
+					this.dbFile = defdb;
+				}else{
+					//解压
+					if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(dir, "hfs"), DEF_DB, Application.StartupPath)){
+						form.Info("找到数据库\n"+DEF_DB);
+						helper.WriteValue("data", "heroes",DEF_DB);
+						this.dbFile = DEF_DB;
+					}else{
+						form.Error("没找到数据库\n"+DEF_DB);
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		private bool SelectGameVer(out string text){
+			bool CN = false;
+			DialogResult rs = MessageBoxEx.Show(
+				"没有找到翻译文件，接下来请选择游戏目录，自动导出客户端的翻译文件",
+				"请选择游戏目录",
+				MessageBoxButtons.YesNoCancel,
+				MessageBoxIcon.Question,
+				new string[]{"国服","台服","取消"}
+			);
+			if(rs==DialogResult.Yes){
+				text = DEF_TEXT;
+				CN = true;
+			}else if(rs==DialogResult.No){
+				text = DEF_TW;
+				CN = false;
+			}else{
+				text = null;
+				return false;
+			}
+			return CN;
+		}
+		private string SelectGamePath(bool CN){
+			string dir="";
+			do{
+				using(FolderBrowserDialog dlg=new FolderBrowserDialog()){
+					dlg.SelectedPath = Application.StartupPath;
+					dlg.Description = "请选择"+(CN?"":"")+"游戏文件夹";
+					if(dlg.ShowDialog()==DialogResult.OK){
+						dir = dlg.SelectedPath;
+					}else{
+						return null;
+					}
+				}
+			}while(!Directory.Exists(PathHelper.Combine(dir, "hfs")));
+			return dir;
+		}
+		#endregion
+
 		#region synskillbonuds
 		private void ReadSkillBonuds(SQLiteHelper db,HeroesTextHelper HeroesText){
 			using (DbDataReader reader = db.GetReader("select * from synthesisskillbonus order by classRestriction;"))
 			{
-               // MessageBox.Show("count=" + HeroesText.SynSkillBonuds.Count);
-                while (reader != null && reader.Read())
+				// MessageBox.Show("count=" + HeroesText.SynSkillBonuds.Count);
+				while (reader != null && reader.Read())
 				{
-                    SkillBonusInfo info = new SkillBonusInfo(reader, HeroesText);
-                    if (!SynthesisSkillBonues.ContainsKey(info.ID))
-                    {
-                        SynthesisSkillBonues.Add(info.ID, info);
-                    }
+					SkillBonusInfo info = new SkillBonusInfo(reader, HeroesText);
+					if (!SynthesisSkillBonues.ContainsKey(info.ID))
+					{
+						SynthesisSkillBonues.Add(info.ID, info);
+					}
 				}
 			}
 		}
@@ -175,7 +286,7 @@ namespace GMTool.Helper
 		#region Cache/Get
 		public string GetMailTitle(string title)
 		{
-			if (title.StartsWith("#")) {
+			if (title!=null && title.StartsWith("#")) {
 				string t;
 				if (MailTitles.TryGetValue(title.Substring(1).ToLower(), out t))
 				{
@@ -216,13 +327,6 @@ namespace GMTool.Helper
 			EnchantInfo info = new EnchantInfo();
 			Enchants.TryGetValue(name, out info);
 			return info;
-		}
-
-		private string ToString(object obj)
-		{
-			if (obj == DBNull.Value)
-				return "";
-			return Convert.ToString(obj);
 		}
 		#endregion
 	}

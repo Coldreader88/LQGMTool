@@ -16,7 +16,8 @@ namespace ServerManager
         public string ProviderName;
         public string BinPath;
         public string SqlServer;
-
+		public int WebPort;
+		public string WebRoot;
         [XmlArray("DataBases")]
         [XmlArrayItem("item")]
         public List<string> DataBases;

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <CoreConfig>
   <ConnectionString>Data Source=127.0.0.1,1433;User Id=sa;Password=123456;</ConnectionString>
   <ProviderName>System.Data.SqlClient</ProviderName>
@@ -12,6 +12,9 @@
   <GameCode>16850955</GameCode>
   <!-- sqlserver 服务名 -->
   <SqlServer>MSSQL$SQLEXPRESS</SqlServer>
+  <!-- web服务 -->
+  <WebPort>80</WebPort>
+  <WebRoot>D:\LQServer\server\www</WebRoot>
   <!-- 数据库名 -->
   <DataBases>
     <item>heroes</item>
@@ -41,6 +44,6 @@
         <StubApp name="管理服务-AdminService" args="AdminClientServiceCore.dll AdminClientServiceCore.AdminClientService StartService AdminService 127.0.0.1 42"/>
       </StubApps>
     </App>
-    <App name="网页服务" path="D:\LQServer\Server\webserver.exe"/>
+    <!--<App name="网页服务" path="D:\LQServer\Server\webserver.exe"/>-->
   </Apps>
 </CoreConfig>

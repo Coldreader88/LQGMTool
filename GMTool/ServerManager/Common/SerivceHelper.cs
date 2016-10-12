@@ -77,7 +77,7 @@ namespace ServerManager
             return IsRunningService(GetService(name, machineName));
         }
         public static bool IsRunningService(ServiceController cs) {
-            return cs!=null&& cs.Status == ServiceControllerStatus.Running;
+        	return cs!=null&& (cs.Status == ServiceControllerStatus.Running || cs.Status == ServiceControllerStatus.StartPending);
         }
         public static bool ExistService(string serviceName)
         {
