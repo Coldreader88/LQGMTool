@@ -106,10 +106,13 @@ namespace GMTool
 			string dbpath = PathHelper.Combine(path, "sql");
 			string cndb  =PathHelper.Combine(dbpath, "heroes.db3");
 			if(!File.Exists(cndb)){
-				if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(path, "hfs"),
+				if(!VZip.ExtractAllHfsFindFile(PathHelper.Combine(path, "hfs"),
 				                              "heroes.db3", dbpath)){
-					DbTW2CN(cndb);
+					return;
 				}
+			}
+			if(File.Exists(cndb)){
+				DbTW2CN(cndb);
 			}
 		}
 		public void DbTW2CN(string dbfile){

@@ -7,6 +7,8 @@ heroes_text_taiwan.txt和heroes.db3放在本程序的文件夹
 修改金币，AP：搜索金币和AP胶囊
 
 更新历史：
+1.1.10:
+修正，sql/heroes.db3存在，则简体化bug
 1.1.9:
 支持台服客户端变国服，需要以命令行启动
 gmtool.exe -tw2cn 游戏路径

@@ -23,7 +23,7 @@ namespace System.Windows.Forms
 		}
 		public static bool Question(this Form form, string text)
 		{
-			return MessageBox.Show(text, "询问", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)==DialogResult.OK;
+			return MessageBox.Show(text, "询问", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)==DialogResult.OK;
 		}
 
 		public static int GetSelectIndex(this ListView listView)
