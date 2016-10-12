@@ -175,7 +175,7 @@ namespace WebServer
                 case (".txt"):
                 case (".css"):
                     responseType = "text/" + filetype.Substring(1);    // leave off the decimal point
-                    binary = false;
+                    binary = true;
                     break;
 
                 case (".json"):
