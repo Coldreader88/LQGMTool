@@ -21,7 +21,7 @@ namespace GMTool.Helper
 	public class DbInfoHelper
 	{
 		#region
-		static DbInfoHelper sItemClassInfoHelper = new DbInfoHelper();
+		public readonly static DbInfoHelper sItemClassInfoHelper = new DbInfoHelper();
 		public Dictionary<string, string> MailTitles { get; private set; }
 		public Dictionary<string, string> ItemStatNames{get; private set;}
 		public Dictionary<int, SkillBonusInfo> SynthesisSkillBonues{get; private set;}
@@ -46,7 +46,6 @@ namespace GMTool.Helper
 		}
 		private DbInfoHelper()
 		{
-			sItemClassInfoHelper = this;
 			Searcher = new SearchHelper();
 			SynthesisSkillBonues = new Dictionary<int, SkillBonusInfo>();
 			IniHelper helper = new IniHelper(Program.INT_FILE);
@@ -119,7 +118,7 @@ namespace GMTool.Helper
 					if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(dir, "hfs"), name, Application.StartupPath)){
 						form.Info("找到翻译文件\n"+name);
 						helper.WriteValue("data", "text", name);
-						this.textFile = deftext;
+						this.textFile = PathHelper.Combine(Application.StartupPath, name);
 					}else{
 						form.Info("没找到翻译文件\n"+name);
 						return false;

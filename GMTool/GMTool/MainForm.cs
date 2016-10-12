@@ -15,6 +15,7 @@ using GMTool.Enums;
 using GMTool.Extensions;
 using GMTool.Dialog;
 
+
 namespace GMTool
 {
 	public partial class MainForm : Form

@@ -52,9 +52,13 @@ namespace GMTool.Common
 							{
 								if(filename == hfsEntry.Name||filename+".comp" == hfsEntry.Name){
 									using(Stream read = hfs.GetInputStream(hfsEntry)){
+										string fullname = PathHelper.Combine(path, filename);
+										string fullpath = Path.GetDirectoryName(fullname);
+										if(!Directory.Exists(fullpath)){
+											Directory.CreateDirectory(fullpath);
+										}
 										using(FileStream fs=new FileStream(
-											PathHelper.Combine(path, filename),
-											FileMode.Create)){
+											fullname, FileMode.Create)){
 											byte[] data=new byte[4096];
 											long count = read.Length;
 											long max = count/data.Length;
