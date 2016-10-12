@@ -190,8 +190,5 @@
   <ItemGroup>
     <EmbeddedResource Include="XorTruths.bin" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="ChecksumTruths.bin" />
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

@@ -274,8 +274,9 @@ namespace ICSharpCode.SharpZipLib.Hfs
         /// <param name="sizeEntries">The size of the entries in the directory.</param>
         /// <param name="startOfCentralDirectory">The start of the central directory.</param>
         /// <param name="comment">The archive comment.  (This can be null).</param>
+        /// <param name="obfuscationKey">obfs key</param>
         public void WriteEndOfCentralDirectory(long noOfEntries, long sizeEntries,
-            long startOfCentralDirectory, byte[] comment)
+            long startOfCentralDirectory, byte[] comment, uint obfuscationKey)
         {
 
             if ((noOfEntries >= 0xffff) ||
@@ -338,6 +339,12 @@ namespace ICSharpCode.SharpZipLib.Hfs
             {
                 Write(comment, 0, comment.Length);
             }
+
+            if (obfuscationKey > 0)
+            {
+                WriteLEInt(0); // TODO
+            }
+
         }
 
         #region LE value reading/writing

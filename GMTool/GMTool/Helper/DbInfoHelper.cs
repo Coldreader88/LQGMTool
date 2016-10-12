@@ -63,7 +63,7 @@ namespace GMTool.Helper
 			this.dbFile = helper.ReadValue("data", "heroes");
 			if (!File.Exists(dbFile))
 			{
-				dbFile = "./"+DEF_DB;
+				this.dbFile = "./"+DEF_DB;
 			}
 		}
 
@@ -73,7 +73,7 @@ namespace GMTool.Helper
 				return true;
 			}
 			mInit = true;
-			if (!File.Exists(dbFile))
+			if (!File.Exists(this.dbFile))
 			{
 				return false;
 			}
@@ -113,20 +113,15 @@ namespace GMTool.Helper
 				if(File.Exists(deftext)){
 					form.Info("找到翻译文件\n"+deftext);
 					helper.WriteValue("data", "text",deftext);
-					textFile = deftext;
+					this.textFile = deftext;
 				}else{
 					//解压
-					try{
-						if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(dir, "hfs"), name, Application.StartupPath)){
-							form.Info("找到翻译文件\n"+deftext);
-							helper.WriteValue("data", "text", deftext);
-							textFile = deftext;
-						}else{
-							form.Info("没找到翻译文件\n"+deftext);
-							return false;
-						}
-					}catch(Exception e){
-						form.Error("读取hfs文件出错\n"+e);
+					if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(dir, "hfs"), name, Application.StartupPath)){
+						form.Info("找到翻译文件\n"+name);
+						helper.WriteValue("data", "text", name);
+						this.textFile = deftext;
+					}else{
+						form.Info("没找到翻译文件\n"+name);
 						return false;
 					}
 				}
@@ -147,20 +142,15 @@ namespace GMTool.Helper
 				if(File.Exists(defdb)){
 					form.Info("找到数据库\n"+defdb);
 					helper.WriteValue("data", "heroes",defdb);
-					dbFile = defdb;
+					this.dbFile = defdb;
 				}else{
 					//解压
-					try{
-						if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(dir, "hfs"), DEF_DB, Application.StartupPath)){
-							form.Info("找到数据库\n"+defdb);
-							helper.WriteValue("data", "heroes",defdb);
-							dbFile = defdb;
-						}else{
-							form.Error("没找到数据库\n"+defdb);
-							return false;
-						}
-					}catch(Exception e){
-						form.Error("读取hfs文件出错\n"+e);
+					if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(dir, "hfs"), DEF_DB, Application.StartupPath)){
+						form.Info("找到数据库\n"+DEF_DB);
+						helper.WriteValue("data", "heroes",DEF_DB);
+						this.dbFile = DEF_DB;
+					}else{
+						form.Error("没找到数据库\n"+DEF_DB);
 						return false;
 					}
 				}

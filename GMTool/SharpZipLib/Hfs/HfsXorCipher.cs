@@ -10,7 +10,7 @@ namespace ICSharpCode.SharpZipLib.Hfs
     static class HfsXorCipher
     {
         public static byte[] XorTruths; // extracted, simplified truths
-        public static UInt32[] ChecksumTruths; // extracted (simplified?) checksum truths
+
         static HfsXorCipher()
         {
             try
@@ -20,17 +20,6 @@ namespace ICSharpCode.SharpZipLib.Hfs
                 Stream xortruths = self.GetManifestResourceStream("ICSharpCode.SharpZipLib.XorTruths.bin");
                 XorTruths = new byte[xortruths.Length];
                 xortruths.Read(XorTruths, 0, XorTruths.Length);
-
-                Stream checksumtruths = self.GetManifestResourceStream("ICSharpCode.SharpZipLib.ChecksumTruths.bin");
-                byte[] checksumBuffer = new byte[checksumtruths.Length];
-                checksumtruths.Read(checksumBuffer, 0, checksumBuffer.Length);
-
-                ChecksumTruths = new UInt32[checksumBuffer.Length / 4];
-
-                for (int i = 0; i < ChecksumTruths.Length; i++)
-                {
-                    ChecksumTruths[i] = BitConverter.ToUInt32(checksumBuffer, i * 4);
-                }
             }
             catch (Exception ex)
             {
@@ -46,16 +35,6 @@ namespace ICSharpCode.SharpZipLib.Hfs
             {
                 buffer[x] ^= key[(src_position + x) & (key.Length - 1)];
             }
-        }
-
-        public static UInt32 XorRollWithKey(byte[] buffer, int limit, UInt32[] key, UInt32 checksum)
-        {
-            for (int x = 0; x < limit; x++)
-            {
-                checksum = key[buffer[x] ^ (byte)(checksum & 0xFF)] ^ (checksum >> 8);
-            }
-
-            return checksum;
         }
 
         public static bool ValidateCompSig(byte[] buffer, out UInt32 decompressed)

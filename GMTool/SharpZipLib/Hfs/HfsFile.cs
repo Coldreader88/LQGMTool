@@ -1368,7 +1368,7 @@ namespace ICSharpCode.SharpZipLib.Hfs
                         byte[] theComment = (newComment_ != null) ? newComment_.RawComment : HfsConstants.ConvertToArray(comment_);
                         using (HfsHelperStream zhs = new HfsHelperStream(baseStream_))
                         {
-                            zhs.WriteEndOfCentralDirectory(0, 0, 0, theComment);
+                            zhs.WriteEndOfCentralDirectory(0, 0, 0, theComment, 0);
                         }
                     }
                 }
@@ -2705,7 +2705,7 @@ namespace ICSharpCode.SharpZipLib.Hfs
 
                 using (HfsHelperStream zhs = new HfsHelperStream(workFile.baseStream_))
                 {
-                    zhs.WriteEndOfCentralDirectory(updateCount_, sizeEntries, centralDirOffset, theComment);
+                    zhs.WriteEndOfCentralDirectory(updateCount_, sizeEntries, centralDirOffset, theComment, obfuscationKey);
                 }
 
                 endOfStream = workFile.baseStream_.Position;
@@ -2768,34 +2768,6 @@ namespace ICSharpCode.SharpZipLib.Hfs
                         }
 
                     }
-                }
-
-                // finally, post-process the entire file to generate the 2nd pass checksum
-                if (obfuscationKey > 0)
-                {
-                    workFile.baseStream_.Position = 0;
-
-                    int bytesRead;
-                    byte[] buffer = new byte[4096];
-
-                    UInt32 checksum = UInt32.MaxValue;
-
-                    do
-                    {
-                        bytesRead = workFile.baseStream_.Read(buffer, 0, buffer.Length);
-                        if (bytesRead > 0)
-                        {
-                            checksum = HfsXorCipher.XorRollWithKey(buffer, bytesRead, HfsXorCipher.ChecksumTruths, checksum);
-                        }
-                    }
-                    while (bytesRead > 0);
-
-                    checksum = ~checksum;
-
-                    workFile.baseStream_.Position = endOfStream;
-                    workFile.WriteLEUint(checksum);
-
-                    endOfStream = workFile.baseStream_.Position;
                 }
             }
             catch

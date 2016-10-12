@@ -46,24 +46,35 @@ namespace GMTool.Common
 					path = Path.GetDirectoryName(dir);
 				}
 				foreach(string file in files){
-					using (HfsFile hfs = new HfsFile(file)){
-						foreach (HfsEntry hfsEntry in hfs)
-						{
-							if((filename+".comp") == hfsEntry.Name){
-								using(Stream read = hfs.GetInputStream(hfsEntry)){
-									using(FileStream fs=new FileStream(
-										PathHelper.Combine(path, filename),
-										FileMode.Create)){
-										byte[] data=new byte[4096];
-										int len = 0;
-										while((len = read.Read(data,0,data.Length))!=-1){
-											fs.Write(data,0,len);
+					try{
+						using (HfsFile hfs = new HfsFile(file)){
+							foreach (HfsEntry hfsEntry in hfs)
+							{
+								if(filename == hfsEntry.Name||filename+".comp" == hfsEntry.Name){
+									using(Stream read = hfs.GetInputStream(hfsEntry)){
+										using(FileStream fs=new FileStream(
+											PathHelper.Combine(path, filename),
+											FileMode.Create)){
+											byte[] data=new byte[4096];
+											long count = read.Length;
+											long max = count/data.Length;
+											for(long i = 0;i<max;i++){
+												read.Read(data, 0, data.Length);
+												fs.Write(data,0 , data.Length);
+											}
+											if(max * data.Length < count){
+												int c = (int)(count-(max*data.Length));
+												read.Read(data, 0, c);
+												fs.Write(data,0 , c);
+											}
 										}
 									}
+									return true;
 								}
-								return true;
 							}
 						}
+					}catch(Exception e){
+						MessageBox.Show(""+file+"\n"+e);
 					}
 				}
 			}
