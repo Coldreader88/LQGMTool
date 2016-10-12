@@ -52,6 +52,9 @@ namespace GMTool
             this.list_search.Items.Clear();
             this.tb_logcat.Text = "";
             this.AddTypes(this.cb_maincategory, this.cb_subcategory);
+            if(!DataHelper.CheckFiles(this)){
+            	Application.Exit();
+            }
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)

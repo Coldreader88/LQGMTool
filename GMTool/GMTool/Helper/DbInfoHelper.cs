@@ -11,6 +11,7 @@ using System.Data.SQLite;
 using GMTool.Bean;
 using GMTool.Helpers;
 using System.Data.Common;
+using GMTool.Common;
 using GMTool.Enums;
 using GMTool.Extensions;
 using System.Windows.Forms;
@@ -30,7 +31,10 @@ namespace GMTool.Helper
 		public SearchHelper Searcher{get;private set;}
 		private Dictionary<string, EnchantInfo> Enchants = new Dictionary<string, EnchantInfo>();
 		private Dictionary<long, TitleInfo> Titles=new Dictionary<long, TitleInfo>();
-				
+		private static string DEF_TEXT = "heroes_text_chinese.txt";
+		private static string DEF_TW = "heroes_text_taiwan.txt";
+		private static string DEF_DB = "heroes.db3";
+		
 		public static DbInfoHelper Get()
 		{
 			return sItemClassInfoHelper;
@@ -49,13 +53,17 @@ namespace GMTool.Helper
 			this.textFile = helper.ReadValue("data", "text");
 			if (!File.Exists(textFile))
 			{
-				textFile = "./heroes_text_taiwan.txt";
+				textFile = "./"+DEF_TEXT;
 			}
-            patchTextFile = helper.ReadValue("data", "patch_text");
-            this.dbFile = helper.ReadValue("data", "heroes");
+			if (!File.Exists(textFile))
+			{
+				textFile = "./"+DEF_TW;
+			}
+			patchTextFile = helper.ReadValue("data", "patch_text");
+			this.dbFile = helper.ReadValue("data", "heroes");
 			if (!File.Exists(dbFile))
 			{
-				dbFile = "./heroes.db3";
+				dbFile = "./"+DEF_DB;
 			}
 		}
 
@@ -84,18 +92,130 @@ namespace GMTool.Helper
 		}
 		#endregion
 		
+		public bool CheckFiles(Form form){
+			IniHelper helper = new IniHelper(Program.INT_FILE);
+			string SEP = ""+Path.PathSeparator;
+			string name = null;
+			bool CN = false;
+			string dir = "";
+			if(!File.Exists(textFile)){
+				CN = SelectGameVer(out name);
+				if(string.IsNullOrEmpty(name)){
+					return false;
+				}
+				form.Info("请选择游戏目录");
+				dir = SelectGamePath(CN);
+				if(dir == null){
+					return false;
+				}
+				//查找本地已经存在的
+				string deftext= PathHelper.Combine(dir, "resource","localized_text",(CN?"chinese":"taiwan"),(CN?DEF_TEXT:DEF_TW));
+				if(File.Exists(deftext)){
+					form.Info("找到翻译文件\n"+deftext);
+					helper.WriteValue("data", "text",deftext);
+					textFile = deftext;
+				}else{
+					//解压
+					try{
+						if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(dir, "hfs"), name, Application.StartupPath)){
+							form.Info("找到翻译文件\n"+deftext);
+							helper.WriteValue("data", "text", deftext);
+							textFile = deftext;
+						}else{
+							form.Info("没找到翻译文件\n"+deftext);
+							return false;
+						}
+					}catch(Exception e){
+						form.Error("读取hfs文件出错\n"+e);
+						return false;
+					}
+				}
+			}
+			if(!File.Exists(dbFile)){
+				if(string.IsNullOrEmpty(name)){
+					CN = SelectGameVer(out name);
+					if(string.IsNullOrEmpty(name)){
+						return false;
+					}
+					form.Info("请选择游戏目录");
+					dir = SelectGamePath(CN);
+					if(dir == null){
+						return false;
+					}
+				}
+				string defdb= PathHelper.Combine(dir, "sql", DEF_DB);
+				if(File.Exists(defdb)){
+					form.Info("找到数据库\n"+defdb);
+					helper.WriteValue("data", "heroes",defdb);
+					dbFile = defdb;
+				}else{
+					//解压
+					try{
+						if(VZip.ExtractAllHfsFindFile(PathHelper.Combine(dir, "hfs"), DEF_DB, Application.StartupPath)){
+							form.Info("找到数据库\n"+defdb);
+							helper.WriteValue("data", "heroes",defdb);
+							dbFile = defdb;
+						}else{
+							form.Error("没找到数据库\n"+defdb);
+							return false;
+						}
+					}catch(Exception e){
+						form.Error("读取hfs文件出错\n"+e);
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		private bool SelectGameVer(out string text){
+			bool CN = false;
+			DialogResult rs = MessageBoxEx.Show(
+				"没有找到翻译文件，接下来请选择游戏目录，自动导出客户端的翻译文件",
+				"请选择游戏目录",
+				MessageBoxButtons.YesNoCancel,
+				MessageBoxIcon.Question,
+				new string[]{"国服","台服","取消"}
+			);
+			if(rs==DialogResult.Yes){
+				text = DEF_TEXT;
+				CN = true;
+			}else if(rs==DialogResult.No){
+				text = DEF_TW;
+				CN = false;
+			}else{
+				text = null;
+				return false;
+			}
+			return CN;
+		}
+		private string SelectGamePath(bool CN){
+			string dir="";
+			do{
+				using(FolderBrowserDialog dlg=new FolderBrowserDialog()){
+					dlg.SelectedPath = Application.StartupPath;
+					dlg.Description = "请选择"+(CN?"":"")+"游戏文件夹";
+					if(dlg.ShowDialog()==DialogResult.OK){
+						dir = dlg.SelectedPath;
+					}else{
+						return null;
+					}
+				}
+			}while(!Directory.Exists(PathHelper.Combine(dir, "hfs")));
+			return dir;
+		}
+
 		#region synskillbonuds
 		private void ReadSkillBonuds(SQLiteHelper db,HeroesTextHelper HeroesText){
 			using (DbDataReader reader = db.GetReader("select * from synthesisskillbonus order by classRestriction;"))
 			{
-               // MessageBox.Show("count=" + HeroesText.SynSkillBonuds.Count);
-                while (reader != null && reader.Read())
+				// MessageBox.Show("count=" + HeroesText.SynSkillBonuds.Count);
+				while (reader != null && reader.Read())
 				{
-                    SkillBonusInfo info = new SkillBonusInfo(reader, HeroesText);
-                    if (!SynthesisSkillBonues.ContainsKey(info.ID))
-                    {
-                        SynthesisSkillBonues.Add(info.ID, info);
-                    }
+					SkillBonusInfo info = new SkillBonusInfo(reader, HeroesText);
+					if (!SynthesisSkillBonues.ContainsKey(info.ID))
+					{
+						SynthesisSkillBonues.Add(info.ID, info);
+					}
 				}
 			}
 		}

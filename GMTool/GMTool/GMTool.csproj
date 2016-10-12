@@ -82,6 +82,7 @@
     <Compile Include="Common\DListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Common\MessageBoxEx.cs" />
     <Compile Include="Common\ProcessPlus.cs" />
     <Compile Include="Common\InputDialog.cs">
       <SubType>Form</SubType>
