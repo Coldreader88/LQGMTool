@@ -20,17 +20,13 @@ namespace GMTool
 			{
 				if(user.IsEnable(info.ClassRestriction)){
 					ToolStripMenuItem tsmi = new ToolStripMenuItem(info.DESC);
-					tsmi.Tag = cls;
-					if (user != null && user.Class == cls)
-					{
-						tsmi.Checked = true;
-					}
-					tsmi.ToolTipText = cls.ToString() + " " + cls.Index();
+					tsmi.Tag = info;
+					tsmi.ToolTipText = info.ToString();
 					tsmi.Click += (object sender, EventArgs e) => {
-						if (!CheckUser()) return;
-						if (this.ModItemScoreMax(CurUser, this.list_items_cash.GetSelectItems<Item>())>0)
+						if (!main.CheckUser()) return;
+						if (main.ModItemScoreMax(CurUser, main.list_items_cash.GetSelectItems<Item>())>0)
 						{
-							ReadPackage(PackageType.Cash);
+							main.ReadPackage(PackageType.Cash);
 						}
 					};
 					menuitem.DropDownItems.Add(tsmi);

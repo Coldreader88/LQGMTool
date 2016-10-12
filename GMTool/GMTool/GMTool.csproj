@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="Common\PathHelper.cs" />
     <Compile Include="Common\ToolStripDropDownItemEx.cs" />
+    <Compile Include="Common\VZip.cs" />
     <Compile Include="Common\win32\User32.cs" />
     <Compile Include="Dialog\ItemModCountDialog.cs" />
     <Compile Include="Dialog\UserAttributeDialog.cs" />
@@ -167,6 +168,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dialog" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpZipLib\ICSharpCode.SharpZLib.csproj">
+      <Project>{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}</Project>
+      <Name>ICSharpCode.SharpZLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
