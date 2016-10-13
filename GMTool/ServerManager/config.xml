@@ -1,11 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <CoreConfig>
-  <ConnectionString>Data Source=127.0.0.1,1433;User Id=sa;Password=123456;</ConnectionString>
+  <ConnectionString>Data Source=.\SQLEXPRESS;Integrated Security=SSPI;Persist Security Info=False;</ConnectionString>
   <ProviderName>System.Data.SqlClient</ProviderName>
   <!-- 数据库存放路径 -->
   <DatabasePath>D:\LQServer\Server\db\</DatabasePath>
   <!-- 游戏路径，用于版本检测，PVP主机 -->
   <GamePath>G:\Program Files (x86)\zh-CN</GamePath>
+  <!-- 启动游戏 国服是zh-cn，台服是zh-tw  -->
+  <Game>Vindictus.exe -stage -dev -lang zh-cn -noupdate</Game>
   <!-- 服务端bin文件夹 -->
   <BinPath>D:\LQServer\Server\Bin</BinPath>
   <!-- 游戏代码GM模式兼容非GM模式 -->

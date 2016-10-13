@@ -54,18 +54,18 @@ namespace ServerManager
 			// 
 			// btnUpdateConfig
 			// 
-			this.btnUpdateConfig.Location = new System.Drawing.Point(261, 66);
+			this.btnUpdateConfig.Location = new System.Drawing.Point(256, 67);
 			this.btnUpdateConfig.Name = "btnUpdateConfig";
-			this.btnUpdateConfig.Size = new System.Drawing.Size(115, 28);
+			this.btnUpdateConfig.Size = new System.Drawing.Size(123, 28);
 			this.btnUpdateConfig.TabIndex = 1;
-			this.btnUpdateConfig.Text = "更新服务端配置";
+			this.btnUpdateConfig.Text = "更新服务端设置";
 			this.toolTip1.SetToolTip(this.btnUpdateConfig, "更新数据库连接配置\r\n游戏代码\r\nDS路径\r\n版本信息路径");
 			this.btnUpdateConfig.UseVisualStyleBackColor = true;
 			this.btnUpdateConfig.Click += new System.EventHandler(this.btnUpdateConfig_Click);
 			// 
 			// btnSplitDb
 			// 
-			this.btnSplitDb.Location = new System.Drawing.Point(171, 19);
+			this.btnSplitDb.Location = new System.Drawing.Point(169, 19);
 			this.btnSplitDb.Name = "btnSplitDb";
 			this.btnSplitDb.Size = new System.Drawing.Size(63, 28);
 			this.btnSplitDb.TabIndex = 1;
@@ -89,9 +89,9 @@ namespace ServerManager
 			// 
 			this.btnStart.BackColor = System.Drawing.Color.ForestGreen;
 			this.btnStart.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-			this.btnStart.Location = new System.Drawing.Point(85, 67);
+			this.btnStart.Location = new System.Drawing.Point(83, 67);
 			this.btnStart.Name = "btnStart";
-			this.btnStart.Size = new System.Drawing.Size(82, 28);
+			this.btnStart.Size = new System.Drawing.Size(80, 28);
 			this.btnStart.TabIndex = 0;
 			this.btnStart.Text = "全部启动";
 			this.toolTip1.SetToolTip(this.btnStart, "启动全部服务");
@@ -101,21 +101,22 @@ namespace ServerManager
 			// chkNoPeople
 			// 
 			this.chkNoPeople.AutoSize = true;
-			this.chkNoPeople.Location = new System.Drawing.Point(7, 73);
+			this.chkNoPeople.Location = new System.Drawing.Point(8, 74);
 			this.chkNoPeople.Name = "chkNoPeople";
 			this.chkNoPeople.Size = new System.Drawing.Size(72, 16);
 			this.chkNoPeople.TabIndex = 3;
-			this.chkNoPeople.Text = "静默模式";
+			this.chkNoPeople.Text = "进程守护";
 			this.toolTip1.SetToolTip(this.chkNoPeople, "服务异常结束不提示，自动重新启动服务");
 			this.chkNoPeople.UseVisualStyleBackColor = true;
 			// 
 			// btnCreateDbFromBackup
 			// 
-			this.btnCreateDbFromBackup.Location = new System.Drawing.Point(104, 19);
+			this.btnCreateDbFromBackup.Location = new System.Drawing.Point(100, 19);
 			this.btnCreateDbFromBackup.Name = "btnCreateDbFromBackup";
 			this.btnCreateDbFromBackup.Size = new System.Drawing.Size(60, 28);
 			this.btnCreateDbFromBackup.TabIndex = 1;
 			this.btnCreateDbFromBackup.Text = "创建";
+			this.toolTip1.SetToolTip(this.btnCreateDbFromBackup, "从bak创建新的数据库");
 			this.btnCreateDbFromBackup.UseVisualStyleBackColor = true;
 			this.btnCreateDbFromBackup.Click += new System.EventHandler(this.btnCreateDbFromBackup_Click);
 			// 
@@ -134,11 +135,12 @@ namespace ServerManager
 			// 
 			this.btnStop.BackColor = System.Drawing.Color.ForestGreen;
 			this.btnStop.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-			this.btnStop.Location = new System.Drawing.Point(173, 67);
+			this.btnStop.Location = new System.Drawing.Point(170, 67);
 			this.btnStop.Name = "btnStop";
-			this.btnStop.Size = new System.Drawing.Size(81, 28);
+			this.btnStop.Size = new System.Drawing.Size(80, 28);
 			this.btnStop.TabIndex = 1;
 			this.btnStop.Text = "启动Web";
+			this.toolTip1.SetToolTip(this.btnStop, "EndPoint.txt的服务");
 			this.btnStop.UseVisualStyleBackColor = false;
 			this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
 			// 
@@ -149,6 +151,7 @@ namespace ServerManager
 			this.btnShrink.Size = new System.Drawing.Size(60, 28);
 			this.btnShrink.TabIndex = 1;
 			this.btnShrink.Text = "压缩";
+			this.toolTip1.SetToolTip(this.btnShrink, "回收删除的空间");
 			this.btnShrink.UseVisualStyleBackColor = true;
 			this.btnShrink.Click += new System.EventHandler(this.button1_Click);
 			// 
@@ -156,7 +159,7 @@ namespace ServerManager
 			// 
 			this.btnSqlserver.BackColor = System.Drawing.Color.ForestGreen;
 			this.btnSqlserver.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-			this.btnSqlserver.Location = new System.Drawing.Point(10, 20);
+			this.btnSqlserver.Location = new System.Drawing.Point(7, 20);
 			this.btnSqlserver.Name = "btnSqlserver";
 			this.btnSqlserver.Size = new System.Drawing.Size(87, 28);
 			this.btnSqlserver.TabIndex = 1;
