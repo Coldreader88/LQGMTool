@@ -57,21 +57,9 @@ namespace ServerManager
             }
         }
         delegate void SetTextBoxText(ButtonBase tb, string txt);
-        private void SetShowText(object text)
-        {
-            this.btnShow.Text = text.ToString();
-        }
+
         private void SetText(ButtonBase tb, string text)
         {
-            this.btnStart.Text = text.ToString();
-            if (this.btnStart.Text == "停止")
-            {
-                btnStart.BackColor = Color.DarkRed;
-            }
-            else
-            {
-                btnStart.BackColor = Color.ForestGreen;
-            }
             if (tb.InvokeRequired)//如果调用控件的线程和创建创建控件的线程不是同一个则为True
             {
                 while (!tb.IsHandleCreated)
@@ -80,11 +68,23 @@ namespace ServerManager
                     if (tb.Disposing || tb.IsDisposed)
                         return;
                 }
-                tb.Invoke(new SetTextBoxText(SetText), new object[] { tb, text});
+                tb.Invoke(new SetTextBoxText(SetText), new object[] { tb, text });
             }
             else
             {
                 tb.Text = text;
+                if (tb == btnStart)
+                {
+                    tb.Text = text;
+                    if (tb.Text == "停止")
+                    {
+                        tb.BackColor = Color.DarkRed;
+                    }
+                    else
+                    {
+                        tb.BackColor = Color.ForestGreen;
+                    }
+                }
             }
         }
         public void UpdateStatus()
