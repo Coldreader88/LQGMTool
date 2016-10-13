@@ -95,6 +95,7 @@
       <Link>Common\XmlHelper.cs</Link>
     </Compile>
     <Compile Include="Common\HttpWebServer.cs" />
+    <Compile Include="Common\IdentifyEncoding.cs" />
     <Compile Include="Common\SerivceHelper.cs" />
     <Compile Include="CoreConfig.cs" />
     <Compile Include="DataBaseExtensitons.cs" />

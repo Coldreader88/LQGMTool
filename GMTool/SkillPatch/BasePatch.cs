@@ -10,7 +10,7 @@ namespace SkillPatch
 {
     public class FilePatch
     {
-        string basePath, path1, ex1, path2, ex2,Sep;
+        string basePath, path1, ex1, path2, ex2;
         /// <summary>
         /// 
         /// </summary>

@@ -23,8 +23,8 @@ namespace GMTool
 				Console.ReadKey();
 				return;
 			}
-			#if !DEBUG
 			ConsoleWindow = User32.FindWindow(null, Console.Title);
+			#if !DEBUG
 			if(ConsoleWindow != IntPtr.Zero){
 				User32.ShowWindowAsync(ConsoleWindow, User32.SW_HIDE);
 			}

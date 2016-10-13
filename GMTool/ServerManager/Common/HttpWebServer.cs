@@ -128,7 +128,7 @@ namespace WebServer
 			string filetype = "";
 			bool binary = false;
 			byte[] buffer;
-			int pos;
+//			int pos;
 			StreamReader streamReader;
 
 			HttpListener listener = (HttpListener)result.AsyncState;
@@ -171,9 +171,9 @@ namespace WebServer
 					binary = true;
 					break;
 				case (".txt"):
-					responseType = "text/" + filetype.Substring(1);    // leave off the decimal point
-					binary = true;
-					break;
+//					responseType = "text/" + filetype.Substring(1);    // leave off the decimal point
+//					binary = true;
+//					break;
 				case (".xml"):
 				case (".css"):
 					responseType = "text/" + filetype.Substring(1);    // leave off the decimal point
@@ -210,7 +210,8 @@ namespace WebServer
 				else
 				{
 					// read text file
-					streamReader = new StreamReader(path);
+					Encoding encoding = EncodingType.GetType(path, Encoding.UTF8);
+					streamReader = new StreamReader(path, encoding);
 					pageString = streamReader.ReadToEnd();
 
 					if (filetype == appFileType)
@@ -234,7 +235,7 @@ namespace WebServer
 						responseString = pageString;
 
 					}
-					buffer = Encoding.UTF8.GetBytes(responseString);
+					buffer = encoding.GetBytes(responseString);
 					streamReader.Close();
 				}
 			}
@@ -256,13 +257,13 @@ namespace WebServer
 			}
 
 			// check for a command
-			else if ((pos = path.IndexOf("cmd=", 0)) > 0)
-			{
-				string command = path.Substring(pos + 4);
-				RaiseCommand(command);
-				responseString = "<html>OK</html>";
-				buffer = Encoding.UTF8.GetBytes(responseString);
-			}
+//			else if ((pos = path.IndexOf("cmd=", 0)) > 0)
+//			{
+//				string command = path.Substring(pos + 4);
+//				RaiseCommand(command);
+//				responseString = "<html>OK</html>";
+//				buffer = Encoding.UTF8.GetBytes(responseString);
+//			}
 			else
 			{
 				responseString = "<html>Unknown file: " + request.RawUrl + "</html>";
