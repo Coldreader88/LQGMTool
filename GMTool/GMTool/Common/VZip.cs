@@ -5,7 +5,6 @@ using System.Text;
 using ICSharpCode.SharpZipLib.Hfs;
 using ICSharpCode.SharpZipLib.Zip;
 using System.IO;
-using System.Windows.Forms;
 
 namespace GMTool.Common
 {
@@ -78,7 +77,7 @@ namespace GMTool.Common
 							}
 						}
 					}catch(Exception e){
-						MessageBox.Show(""+file+"\n"+e);
+						Console.WriteLine("Couldn't process " + e.Message);
 					}
 				}
 			}
@@ -154,5 +153,33 @@ namespace GMTool.Common
 			Console.WriteLine("Wrote to " + basep + @"\" + plain + "_.hfs");
 		}
 
+		
+		public static void AddOrReplace(string hfsfile,string file,string filename=null){
+			if(string.IsNullOrEmpty(filename)){
+				filename = Path.GetFileName(file);
+			}
+			if(!filename.EndsWith(".comp")){
+				filename += ".comp";
+			}
+			string basep = Path.GetDirectoryName(filename);
+			string plain = Path.GetFileNameWithoutExtension(filename);
+			using (HfsFile hfs = new HfsFile(hfsfile)){
+				foreach (HfsEntry hfsEntry in hfs)
+				{
+					if(filename != hfsEntry.Name){
+						Console.WriteLine("skip "+hfsEntry.Name);
+						continue;
+					}
+					hfs.BeginUpdate();
+					Console.WriteLine("hfs rm "+filename);
+					hfs.Delete(hfsEntry);
+					Console.WriteLine("hfs add "+filename);
+					hfs.Add(file, filename);
+					hfs.CommitUpdate();
+					break;
+				}
+				Console.WriteLine("completed...");
+			}
+		}
 	}
 }
