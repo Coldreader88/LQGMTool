@@ -153,7 +153,28 @@ namespace GMTool.Common
 			Console.WriteLine("Wrote to " + basep + @"\" + plain + "_.hfs");
 		}
 
-		
+		public static void Delete(string hfsfile,string filename){
+			if(!filename.EndsWith(".comp")){
+				filename += ".comp";
+			}
+			string basep = Path.GetDirectoryName(filename);
+			string plain = Path.GetFileNameWithoutExtension(filename);
+			using (HfsFile hfs = new HfsFile(hfsfile)){
+				foreach (HfsEntry hfsEntry in hfs)
+				{
+					if(filename != hfsEntry.Name){
+						Console.WriteLine("skip "+hfsEntry.Name);
+						continue;
+					}
+					hfs.BeginUpdate();
+					Console.WriteLine("hfs rm "+filename);
+					hfs.Delete(hfsEntry);
+					hfs.CommitUpdate();
+					break;
+				}
+				Console.WriteLine("completed...");
+			}
+		}
 		public static void AddOrReplace(string hfsfile,string file,string filename=null){
 			if(string.IsNullOrEmpty(filename)){
 				filename = Path.GetFileName(file);

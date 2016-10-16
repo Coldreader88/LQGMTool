@@ -16,6 +16,7 @@ namespace VZipTool
 				Console.WriteLine("h [file]  Convert .zip to .hfs");
 				Console.WriteLine("z [file]  Convert .hfs to .zip");
 				Console.WriteLine("r [hfs] [file] Add/Replace file to .hfs");
+				Console.WriteLine("d [hfs] [name] Delete name to .hfs");
 				return;
 			}
 
@@ -72,12 +73,23 @@ namespace VZipTool
 							VZip.AddOrReplace(args[1],args[2]);
 						}
 						break;
+					case "d":
+						{
+							if (args.Length < 3)
+							{
+								return;
+							}
+
+							VZip.Delete(args[1],args[2]);
+						}
+						break;
 					default:
 						Console.WriteLine("Options:");
 						Console.WriteLine("a [dir]  Copies all .hfs in the current directory to .zip");
 						Console.WriteLine("h [file]  Convert .zip to .hfs");
 						Console.WriteLine("z [file]  Convert .hfs to .zip");
 						Console.WriteLine("r [hfs] [file] Add/Replace file to .hfs");
+							Console.WriteLine("d [hfs] [name] Delete name to .hfs");
 						break;
 				}
 
