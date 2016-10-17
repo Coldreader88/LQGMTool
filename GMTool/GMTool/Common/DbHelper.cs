@@ -66,8 +66,9 @@ namespace GMTool.Helper
 			{
 				conn = ConnectDataBase(connStr);
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
+				Console.WriteLine(e);
 				return false;
 			}
 			return IsOpen;

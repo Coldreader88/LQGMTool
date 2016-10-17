@@ -73,10 +73,6 @@ namespace GMTool.Helper
         public static string MakeConnectString(string server, string user = null, string pwd = null, string dbname = null)
         {
             string connect = "Data Source=" + server + ";";
-            if (!string.IsNullOrEmpty(dbname))
-            {
-                connect += "Initial Catalog=" + dbname + ";";
-            }
             if (string.IsNullOrEmpty(user))
             {
                 connect += "Integrated Security=SSPI;Persist Security Info=False;";
@@ -91,6 +87,10 @@ namespace GMTool.Helper
                 {
                     connect += "Password=" + pwd + ";";
                 }
+            }
+            if (!string.IsNullOrEmpty(dbname))
+            {
+                connect += "Initial Catalog=" + dbname + ";";
             }
             return connect;
         }
