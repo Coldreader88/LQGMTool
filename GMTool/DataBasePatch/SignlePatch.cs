@@ -53,8 +53,11 @@ namespace DataBasePatch
                 }
             }
             Console.WriteLine("读取全数据:"+ Class + "_"+Type);
-            sql = "SELECT ItemClass from ItemClassInfo " +
-                "where ItemClass like '" + Class + "%" + Type.Key() + "%' and Category='" + Type.Name() + "';";
+            //sql = "SELECT ItemClass from ItemClassInfo " +
+            //    "where ItemClass like '" + Class + "%" + Type.Key() + "%' and Category='" + Type.Name() + "';";
+            sql ="SELECT ItemClass from ItemClassInfo "+
+            	"where (classRestriction & "+(int)Class+") = "+(int)Class+
+            	" and Category='"+Type.Name()+"' and itemclass like '%_"+Type.Name()+"_%' and itemclass not like 'cash%' order by itemclass;";
 #if DEBUG
             Console.WriteLine(sql);
 #endif
