@@ -100,7 +100,7 @@ namespace ServerManager
 				           			p.StartProcess();
 				           		}
 				           	}
-				           //	Invoke(new UpdateUI(updateStatu), new object[]{false});
+				           	//	Invoke(new UpdateUI(updateStatu), new object[]{false});
 				           }).Start();
 			}
 			if(HttpServer!=null){
@@ -127,7 +127,7 @@ namespace ServerManager
 				           			p.StopProcess();
 				           		}
 				           	}
-				           //	Invoke(new UpdateUI(updateStatu), new object[]{false});
+				           	//	Invoke(new UpdateUI(updateStatu), new object[]{false});
 				           }).Start();
 			}
 			if(HttpServer!=null){
@@ -170,7 +170,27 @@ namespace ServerManager
 			}
 			else
 			{
-				this.Error("设置失败:code=" + rs);
+				switch(rs){
+					case -5:
+						this.Error("设置失败:没找到配置文件");
+						break;
+					case -4:
+						this.Error("设置失败:无法识别的游戏代码:"+Config.GameCode);
+						break;
+					case -3:
+						this.Error("设置失败:db3没有找到");
+						break;
+					case -2:
+						this.Error("设置失败:设置游戏代码失败");
+						break;
+					case -1:
+						this.Error("设置失败:数据库连接失败");
+						break;
+					default:
+						this.Error("设置失败:code=" + rs);
+						break;
+				}
+				
 			}
 		}
 

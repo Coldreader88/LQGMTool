@@ -472,7 +472,11 @@ namespace GMTool
 			if (_count > 0)
 			{
 				ReadMails();
-				log("发送" + _count + "个物品成功");
+				if(_count==1){
+					log("发送" + items[0].Name + "成功");
+				}else{
+					log("发送" + _count + "个物品成功");
+				}
 			}
 			else
 			{

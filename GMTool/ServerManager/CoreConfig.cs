@@ -12,7 +12,7 @@ namespace ServerManager
         public string ConnectionString;
         public string DatabasePath;
         public string GamePath;
-        public long GameCode;
+        public string GameCode;
         public string ProviderName;
         public string BinPath;
         public string SqlServer;
