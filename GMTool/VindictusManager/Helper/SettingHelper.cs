@@ -66,8 +66,8 @@ namespace Vindictus.Helper
 							if(gamecode == _code){
 								return false;
 							}
-							config.GameCode = _code;
-							code = _code;
+							config.GameCode = FormatCode(gamecode);
+							code = config.GameCode;
 //						System.Windows.Forms.MessageBox.Show(gamecode);
 //						return -3;
 						}else{
@@ -101,6 +101,14 @@ namespace Vindictus.Helper
 			}
 			
 			return true;
+		}
+		private static string FormatCode(string val){
+			string[] vs = val.Split('-');
+			if(vs.Length>1){
+				return vs[0].ToLower()+"-"+vs[1].ToUpper();
+			}else{
+				return vs[0].ToLower();
+			}
 		}
 		public static int UpdateConfig(this Form main, CoreConfig config, string configname = "ServiceCore.dll.config")
 		{

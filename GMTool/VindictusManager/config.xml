@@ -19,6 +19,9 @@
 	<Language>language.txt</Language>
 	<!-- 启动游戏 国服是zh-cn，台服是zh-tw  -->
 	<Game>Vindictus.exe -stage -dev -lang zh-cn -noupdate</Game>
+	<!-- GM sql/heroes.db3 -->
+	<PatchText>D:\Program Files (x86)\zh-CN\resource\localized_text\chinese\heroes_text_chinese.txt</PatchText>
+	<GameText>D:\LQServer\www\zh-CN\LocalizedText_chinese.txt</GameText>
 	<!-- 数据库名 -->
 	<DataBases>
 		<item>heroes</item>

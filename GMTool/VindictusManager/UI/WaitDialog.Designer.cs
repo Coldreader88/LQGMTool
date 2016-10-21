@@ -35,26 +35,27 @@ namespace Vindictus.UI
 			// 
 			// progressBar1
 			// 
-			this.progressBar1.Location = new System.Drawing.Point(12, 80);
+			this.progressBar1.Location = new System.Drawing.Point(3, 40);
 			this.progressBar1.Name = "progressBar1";
-			this.progressBar1.Size = new System.Drawing.Size(334, 35);
+			this.progressBar1.Size = new System.Drawing.Size(343, 32);
 			this.progressBar1.Step = 1;
 			this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
 			this.progressBar1.TabIndex = 0;
 			// 
 			// textLabel
 			// 
-			this.textLabel.Location = new System.Drawing.Point(12, 9);
+			this.textLabel.Location = new System.Drawing.Point(3, 3);
 			this.textLabel.Name = "textLabel";
-			this.textLabel.Size = new System.Drawing.Size(334, 54);
+			this.textLabel.Size = new System.Drawing.Size(334, 32);
 			this.textLabel.TabIndex = 1;
 			this.textLabel.Text = "Text";
+			this.textLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// WaitDialog
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(358, 127);
+			this.ClientSize = new System.Drawing.Size(352, 78);
 			this.Controls.Add(this.textLabel);
 			this.Controls.Add(this.progressBar1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;

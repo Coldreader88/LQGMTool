@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GMTool.Enums;
-using GMTool.Extensions;
+using Vindictus.Enums;
+using Vindictus.Extensions;
 using System.Data.Common;
-using GMTool.Helper;
+using Vindictus.Helper;
 
-namespace GMTool.Bean
+namespace Vindictus.Bean
 {
 	public class User
 	{
@@ -50,12 +50,14 @@ namespace GMTool.Bean
 				StringBuilder sb=new StringBuilder();
 				sb.Append("CID:"+CID);
 				sb.Append("\n--------------------------\n");
-				sb.Append("角色：" + Name + "\n职业：" + Class.Name() + "\n等级：" + level);
+				sb.Append(R.UserName+"：\t" + Name 
+				          + "\n"+R.UserClass+"：\t" + Class.Name()
+				          +"\n"+R.UserLevel+"：\t" + level);
 				sb.Append(Stat.ToString());
-				sb.Append("\n技能点(AP):"+AP);
+				sb.Append("\nAP:\t"+AP);
 				if (Group != GroupInfo.Unknown)
 				{
-					sb.Append("\n[阵营：" + Group.Name() + " lv." + GroupLevel+"]");
+					sb.Append("\n["+R.UserGroup+"：" + Group.Name() + " lv." + GroupLevel+"]");
 				}
 				
 				_txt= sb.ToString();;
@@ -64,7 +66,7 @@ namespace GMTool.Bean
 		}
 		public override string ToString()
 		{
-			string txt=  Name + " (" + Class.Name() + ") lv." + level;
+			string txt= R.UserName+"：" + Name + " "+R.UserClass+"：" + Class.Name() + " "+R.UserLevel+":" + level;
 			return txt;
 		}
 	}

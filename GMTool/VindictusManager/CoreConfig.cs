@@ -19,6 +19,8 @@ namespace Vindictus
 		public int WebPort;
 		public string WebRoot;
 		public string Language;
+		public string PatchText;
+		public string GameText;
         [XmlArray("DataBases")]
         [XmlArrayItem("item")]
         public List<string> DataBases;

@@ -35,6 +35,7 @@ namespace Vindictus.Extensions
 			}
 			if(form.Question(string.Format(R.TipDealDb, db3, srvdb3))){
 				form.PostTask((IWaitDialog arg)=>{
+				              	arg.SetTitle(R.SalonPirce);
 				              	arg.SetInfo(string.Format(R.TipDealClientDb, db3));
 				              	using(SQLiteHelper db=new SQLiteHelper(db3)){
 				              		new PircePatch(db, Config.GameCode)
@@ -67,6 +68,7 @@ namespace Vindictus.Extensions
 			}
 			if(form.Question(string.Format(R.TipDealDb, db3, srvdb3))){
 				form.PostTask((IWaitDialog arg)=>{
+				              	arg.SetTitle(R.AllSalon);
 				              	arg.SetInfo(string.Format(R.TipDealClientDb, db3));
 				              	AllSalonPatchDb(db3, Config.GameCode, arg.SetInfo);
 				              	arg.SetInfo(string.Format(R.TipDealServerDb, srvdb3));

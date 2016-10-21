@@ -104,5 +104,51 @@ namespace Vindictus
 		
 		public static string TipServerSplitDbOK{ 	get{ return Get("TipServerSplitDbOK"); } }
 		public static string ErrorServerSplitDbFail{ 	get{ return Get("ErrorServerSplitDbFail"); } }
+		public static string MailTitle{ 	get{ return Get("MailTitle"); } }
+		public static string UserName{ 	get{ return Get("UserName"); } }
+		public static string UserClass{ 	get{ return Get("UserClass"); } }
+		public static string UserLevel{ 	get{ return Get("UserLevel"); } }
+		public static string UserList{ 	get{ return Get("UserList"); } }
+		public static string ItemDetail{ 	get{ return Get("ItemDetail"); } }
+		public static string MailSending{ 	get{ return Get("MailSending"); } }
+		public static string MailReceiver{ 	get{ return Get("MailReceiver"); } }
+		public static string TipInit{ 	get{ return Get("TipInit"); } }
+		public static string ConnectSqlServer{ 	get{ return Get("ConnectSqlServer"); } }
+		public static string TipReadText{ 	get{ return Get("TipReadText"); } }
+		public static string TipReadItem{ 	get{ return Get("TipReadItem"); } }
+		public static string Classes{get{ return Get("Classes"); }}
+		public static string GroupLight{get{ return Get("GroupLight"); }}
+		public static string GroupDark{get{ return Get("GroupDark"); }}
+		public static string UnKnown{get{ return Get("UnKnown"); }}
+		public static string UserGroup{get{ return Get("UserGroup"); }}
+		public static string MainCategory{get{ return Get("MainCategory"); }}
+		public static string SubCategory{get{ return Get("SubCategory"); }}
+		
+		public static string ItemName{get{ return Get("ItemName"); }}
+		public static string ItemRequireLevel{get{ return Get("ItemRequireLevel"); }}
+		public static string ItemMaxStack{get{ return Get("ItemMaxStack"); }}
+		public static string UnLimit{get{ return Get("UnLimit"); }}
+		public static string Category{get{ return Get("Category"); }}
+		public static string Feature{get{ return Get("Feature"); }}
+		public static string ClassRestriction{get{ return Get("ClassRestriction"); }}
+		
+		public static string TipReadUsers{get{ return Get("TipReadUsers"); }}
+		
+		public static string RefeshMail{get{ return Get("RefeshMail"); }}
+		public static string DeleteMails{get{ return Get("DeleteMails"); }}
+		public static string DeleteAllMails{get{ return Get("DeleteAllMails"); }}
+		
+		public static string NoUser{get{ return Get("NoUser"); }}
+		
+		public static string RefreshUser{get{ return Get("RefreshUser"); }}
+		public static string AddTitle{get{ return Get("AddTitle"); }}
+		public static string AddTitles{get{ return Get("AddTitles"); }}
+		public static string MaxSubClass{get{ return Get("MaxSubClass"); }}
+		public static string MaxGroupLight{get{ return Get("MaxGroupLight"); }}
+		public static string MaxGroupDark{get{ return Get("MaxGroupDark"); }}
+		public static string ResetGroupSkill{get{ return Get("ResetGroupSkill"); }}
+		public static string ModUser{get{ return Get("ModUser"); }}
+		public static string ResetQuestTimes{get{ return Get("ResetQuestTimes"); }}
+		
 	}
 }

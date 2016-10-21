@@ -204,7 +204,6 @@ namespace GMTool
 		#endregion
 
 		#region 角色修改
-		
 		public static void ResetQuest(this MainForm main,User user=null){
 			string SQL = "Update Quest set TodayPlayCount = 0";
 			if(user!=null){
@@ -283,12 +282,6 @@ namespace GMTool
 		public static bool ModUserAP(this MainForm main, User user, int ap)
 		{
 			return ModUserInfo(main, user, "ap", ap);
-		}
-		private static string ToString(object obj)
-		{
-			if (obj == DBNull.Value)
-				return "";
-			return Convert.ToString(obj);
 		}
 		public static bool CheckName(this MainForm main, string name)
 		{
@@ -444,7 +437,7 @@ namespace GMTool
 			{
 				name = item;
 			}
-			return SendMail(main, user, name + "(" + count + ")", name + "(" + item + ":" + count + ")", count, item);
+			return SendMail(main, user, name + "(" + count + ")", name + "\\n(" + item + ":" + count + ")", count, item);
 		}
 
 		public static int SendMail(this MainForm main, User user, string title, string content, int count, string itemClass)

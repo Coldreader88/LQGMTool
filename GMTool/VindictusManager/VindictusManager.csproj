@@ -13,9 +13,18 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
     <NoWin32Manifest>False</NoWin32Manifest>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
+    <BaseAddress>4194304</BaseAddress>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -32,6 +41,7 @@
     <Optimize>True</Optimize>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
     <DefineConstants>TRACE</DefineConstants>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
@@ -57,10 +67,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bean\EnchantInfo.cs" />
+    <Compile Include="Bean\ItemClassInfo.cs" />
+    <Compile Include="Bean\ItemStatInfo.cs" />
+    <Compile Include="Bean\Mail.cs" />
+    <Compile Include="Bean\SkillBonusInfo.cs" />
+    <Compile Include="Bean\StatInfo.cs" />
+    <Compile Include="Bean\TitleInfo.cs" />
+    <Compile Include="Bean\User.cs" />
     <Compile Include="Common\ChineseTextHelper.cs" />
     <Compile Include="Common\Database\DbHelper.cs" />
     <Compile Include="Common\Database\MSSqlHelper.cs" />
     <Compile Include="Common\Database\SQLiteHelper.cs" />
+    <Compile Include="Common\DListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Common\FormExpress.cs" />
     <Compile Include="Common\HttpWebServer.cs" />
     <Compile Include="Common\EncodingType.cs" />
@@ -79,9 +100,19 @@
     <Compile Include="Enums\ItemStat.cs" />
     <Compile Include="Enums\PackageType.cs" />
     <Compile Include="Enums\SubCategory.cs" />
+    <Compile Include="Extensions\ClassInfoEx.cs" />
+    <Compile Include="Extensions\ColorEx.cs" />
+    <Compile Include="Extensions\DataBaseExtensitons.cs" />
+    <Compile Include="Extensions\GroupExtension.cs" />
+    <Compile Include="Extensions\MainCategoryEx.cs" />
+    <Compile Include="Extensions\MainFormDataExtension.cs" />
     <Compile Include="Extensions\MainFormExtension.cs" />
     <Compile Include="Extensions\MainFormMenuExtension.cs" />
     <Compile Include="Extensions\MainFormToolExtension.cs" />
+    <Compile Include="Extensions\UserStatEx.cs" />
+    <Compile Include="Helper\DataHelper.cs" />
+    <Compile Include="Helper\HeroesTextHelper.cs" />
+    <Compile Include="Helper\SearchHelper.cs" />
     <Compile Include="Helper\SettingHelper.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="MainForm.Designer.cs">
@@ -95,13 +126,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\R.cs" />
-    <Compile Include="Server\DataBaseExtensitons.cs" />
-    <Compile Include="Server\ServerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Server\ServerForm.Designer.cs">
-      <DependentUpon>ServerForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\InputDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +138,12 @@
     </Compile>
     <Compile Include="UI\ProcessPanel.Designer.cs">
       <DependentUpon>ProcessPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ServerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ServerForm.Designer.cs">
+      <DependentUpon>ServerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\WaitDialog.cs" />
     <Compile Include="UI\WaitDialog.Designer.cs">
@@ -135,7 +165,7 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Server\ServerForm.resx">
+    <EmbeddedResource Include="UI\ServerForm.resx">
       <DependentUpon>ServerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\WaitDialog.resx">
@@ -148,10 +178,10 @@
     <Folder Include="Common" />
     <Folder Include="Enums" />
     <Folder Include="UI" />
-    <Folder Include="Helper" />
-    <Folder Include="Server" />
     <Folder Include="Patch" />
     <Folder Include="Extensions" />
+    <Folder Include="Bean" />
+    <Folder Include="Helper" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -10,22 +10,35 @@ namespace System.Windows.Forms
 {
 	public static class FormExpress
 	{
-		public static void Info(this Form form,string text)
+		public static void Info(this Form form,string text,string title=null)
 		{
+			if(title==null){
+				title=R.Info;
+			}
 			MessageBox.Show(text, R.Info, MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
-		public static void Error(this Form form, string text)
+		public static void Error(this Form form, string text,string title=null)
 		{
+			if(title==null){
+				title=R.Error;
+			}
 			MessageBox.Show(text, R.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
-		public static void Warnning(this Form form, string text)
+		public static void Warnning(this Form form, string text,string title=null)
 		{
+			if(title==null){
+				title=R.Warnning;
+			}
 			MessageBox.Show( text, R.Warnning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
 		}
-		public static bool Question(this Form form, string text)
+		public static bool Question(this Form form, string text,string title=null)
 		{
-			return MessageBox.Show(text, R.Question, MessageBoxButtons.OKCancel, MessageBoxIcon.Question)==DialogResult.OK;
+			if(title==null){
+				title=R.Question;
+			}
+			return MessageBox.Show(text, title, MessageBoxButtons.OKCancel, MessageBoxIcon.Question)==DialogResult.OK;
 		}
+		
 		public static int GetSelectIndex(this ListView listView)
 		{
 			if (listView.SelectedItems != null)
