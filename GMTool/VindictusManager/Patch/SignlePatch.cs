@@ -21,22 +21,16 @@ namespace DataBasePatch
             this.Type = type;
             this.CashshopType = cashshopType;
         }
-        public SignlePatch(string db, Category type, ClassInfo Class, string cashshopType = "zh-CN") : base(db)
-        {
-            this.Class = Class;
-            this.Type = type;
-            this.CashshopType = cashshopType;
-        }
 
         protected override bool ReadData()
         {
-            Console.WriteLine("读取存在的数据");
+            LogCat("读取存在的数据");
             //已经添加的列表
             string sql = "SELECT \"Order\",ItemClass from CustomizeItemInfo " +
                 "where (CashShopType='"+ CashshopType + "' or CashShopType ISNULL) " +
                 "and Category ='" + Type.Name() + "' and ItemClass like '" + Class + "%"+Type.Key()+"%';";
 #if DEBUG
-            Console.WriteLine(sql);
+            LogCat(sql);
 #endif
             using (DbDataReader reader = db.GetReader(sql))
             {
@@ -51,14 +45,14 @@ namespace DataBasePatch
                     Items.Add(order, itemclass);
                 }
             }
-            Console.WriteLine("读取全数据:"+ Class + "_"+Type);
+            LogCat("读取全数据:"+ Class + "_"+Type);
             //sql = "SELECT ItemClass from ItemClassInfo " +
             //    "where ItemClass like '" + Class + "%" + Type.Key() + "%' and Category='" + Type.Name() + "';";
             sql ="SELECT ItemClass from ItemClassInfo "+
             	"where (classRestriction & "+(int)Class+") = "+(int)Class+
             	" and Category='"+Type.Name()+"' and itemclass like '%_"+Type.Name()+"_%' and itemclass not like 'cash%' order by itemclass;";
 #if DEBUG
-            Console.WriteLine(sql);
+            LogCat(sql);
 #endif
             //可用列表
             using (DbDataReader reader = db.GetReader(sql))
@@ -77,7 +71,7 @@ namespace DataBasePatch
         public override int Patch()
         {
             int max= Items.Count>0?Items.Keys.Max()+1:1;
-            Console.WriteLine("开始位置:" + max);
+            LogCat("开始位置:" + max);
             List<string> sqls = new List<string>();
             foreach (string item in ItemClasses)
             {
@@ -87,11 +81,11 @@ namespace DataBasePatch
                 }
                 string sql = GetSQL(item, max++);
 #if DEBUG
-                Console.WriteLine(sql);
+                LogCat(sql);
 #endif
                 sqls.Add(sql);
             }
-            Console.WriteLine("准备添加:"+ sqls.Count+"个物品");
+            LogCat("准备添加:"+ sqls.Count+"个物品");
 #if DEBUG
             return sqls.Count;//
 #else

@@ -34,11 +34,15 @@ namespace Vindictus.Extensions
 				form.PostTask((WaitDialog arg)=>{
 				              	arg.SetInfo(string.Format(R.TipDealClientDb, db3));
 				              	using(SQLiteHelper db=new SQLiteHelper(db3)){
-				              		new DataBasePatch.PircePatch(db, Config.GameCode).Patch();
+				              		new PircePatch(db, Config.GameCode)
+				              			.SetLogCat(arg.SetInfo)
+				              			.Patch();
 				              	}
 				              	arg.SetInfo(string.Format(R.TipDealServerDb, srvdb3));
 				              	using(SQLiteHelper db=new SQLiteHelper(srvdb3)){
-				              		new DataBasePatch.PircePatch(db, Config.GameCode).Patch();
+				              		new PircePatch(db, Config.GameCode)
+				              			.SetLogCat(arg.SetInfo)
+				              			.Patch();
 				              	}
 				              	arg.Info(R.TipTaskCompleted);
 				              });
@@ -60,12 +64,15 @@ namespace Vindictus.Extensions
 			}
 			if(form.Question(string.Format(R.TipDealDb, db3, srvdb3))){
 				form.PostTask((WaitDialog arg)=>{
-				              	AllSalonPatchDb(db3, Config.GameCode);
-				              	AllSalonPatchDb(srvdb3, Config.GameCode);
+				              	arg.SetInfo(string.Format(R.TipDealClientDb, db3));
+				              	AllSalonPatchDb(db3, Config.GameCode, arg.SetInfo);
+				              	arg.SetInfo(string.Format(R.TipDealServerDb, srvdb3));
+				              	AllSalonPatchDb(srvdb3, Config.GameCode, arg.SetInfo);
+				              	arg.Info(R.TipTaskCompleted);
 				              });
 			}
 		}
-		private static void AllSalonPatchDb(string dbfile,string country){
+		private static void AllSalonPatchDb(string dbfile, string country,Action<string> logcat){
 			using(SQLiteHelper db=new SQLiteHelper(dbfile)){
 				List<BasePatch> patchs = new List<BasePatch>();
 
@@ -103,6 +110,7 @@ namespace Vindictus.Extensions
 				patchs.Add(new PircePatch(db, country));
 				foreach (BasePatch patch in patchs)
 				{
+					patch.SetLogCat(logcat);
 					if (patch.Read())
 					{
 						patch.Patch();

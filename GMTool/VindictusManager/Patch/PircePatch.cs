@@ -20,9 +20,9 @@ namespace DataBasePatch
 
         public override int Patch()
         {
-            Console.WriteLine("清空旧价格表，重新添加价格表");
+            LogCat("清空旧价格表，重新添加价格表");
             db.ExcuteSQL("delete from CustomizePriceInfo");
-            Console.WriteLine("开始处理价格");
+            LogCat("开始处理价格");
             List<string> sqls = new List<string>();
             foreach (string item in ItemClasses)
             {
@@ -30,7 +30,7 @@ namespace DataBasePatch
           " VALUES ('"+ item + "', -1, 0, NULL, NULL);";
                 sqls.Add(s);
             }
-            Console.WriteLine("准备添加:" + sqls.Count + "物品价格");
+            LogCat("准备添加:" + sqls.Count + "物品价格");
 #if DEBUG
             return sqls.Count;//
 #else
@@ -40,11 +40,11 @@ namespace DataBasePatch
 
         protected override bool ReadData()
         {
-            Console.WriteLine("读取存在的数据");
+            LogCat("读取存在的数据");
             //已经添加的列表
             string sql = "SELECT * from CustomizeItemInfo GROUP BY ItemClass";
 #if DEBUG
-            Console.WriteLine(sql);
+            LogCat(sql);
 #endif
             using (DbDataReader reader = db.GetReader(sql))
             {

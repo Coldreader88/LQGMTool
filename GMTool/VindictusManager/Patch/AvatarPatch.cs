@@ -59,14 +59,10 @@ namespace DataBasePatch
         {
             this.CashshopType = cashshopType;
         }
-        public AvatarPatch(string db, string cashshopType = "zh-CN") : base(db)
-        {
-            this.CashshopType = cashshopType;
-        }
 
         public override int Patch()
         {
-            Console.WriteLine("清空全部时装，重新添加");
+            LogCat("清空全部时装，重新添加");
 #if !DEBUG
             db.ExcuteSQL("delete from CustomizeItemInfo WHERE "+
                         "(Feature ISNULL or Feature = '"+ CashshopType + "' or Feature='') and " +
@@ -77,7 +73,7 @@ namespace DataBasePatch
                         "'AVATAR_BOOTS'," +
                         "'AVATAR_GLOVES') ");
 #endif
-            Console.WriteLine("开始处理时装");
+            LogCat("开始处理时装");
             List<string> sqls = new List<string>();
             int order = 0;
             foreach (AvatarInfo info in AvatarInfos.Values)
@@ -109,7 +105,7 @@ namespace DataBasePatch
                     order++;
                 }
             }
-            Console.WriteLine("准备添加时装:"+ sqls.Count);
+            LogCat("准备添加时装:"+ sqls.Count);
 #if DEBUG
             return sqls.Count;//
 #else
@@ -119,7 +115,7 @@ namespace DataBasePatch
 
         protected override bool ReadData()
         {
-            Console.WriteLine("读取全部时装");
+            LogCat("读取全部时装");
             //已经添加的列表
             string sql = "SELECT * FROM ItemClassInfo where " +
                         "(Feature ISNULL or Feature = '"+ CashshopType + "' or Feature='') and " +
@@ -133,7 +129,7 @@ namespace DataBasePatch
                         " and ItemClass not like 'cash%' " +
                         "ORDER BY ItemClass; ";
 #if DEBUG
-            Console.WriteLine(sql);
+            LogCat(sql);
 #endif
             List<string> packages = new List<string>();
             int foot = 0, head = 0, hand = 0, lower = 0, upper = 0;
@@ -212,12 +208,12 @@ namespace DataBasePatch
                 }
             }
 #if DEBUG
-            Console.WriteLine("packages=" + packages.Count);
-            Console.WriteLine("foot=" + foot);
-            Console.WriteLine("hand=" + hand);
-            Console.WriteLine("head=" + head);
-            Console.WriteLine("lower=" + lower);
-            Console.WriteLine("upper=" + upper);
+            LogCat("packages=" + packages.Count);
+            LogCat("foot=" + foot);
+            LogCat("hand=" + hand);
+            LogCat("head=" + head);
+            LogCat("lower=" + lower);
+            LogCat("upper=" + upper);
             int i = 0;
             foreach (AvatarInfo info in AvatarInfos.Values)
             {
@@ -228,10 +224,10 @@ namespace DataBasePatch
                 else
                 {
                     if (i > 1)
-                        Console.WriteLine(info);
+                        LogCat(info);
                 }
             }
-            Console.WriteLine("set=" + i);
+            LogCat("set=" + i);
 #endif
             return true;
         }
