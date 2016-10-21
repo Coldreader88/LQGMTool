@@ -170,10 +170,6 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainFormV2.cs" />
-    <Compile Include="MainFormV2.Designer.cs">
-      <DependentUpon>MainFormV2.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\win32\Kernel32.cs" />

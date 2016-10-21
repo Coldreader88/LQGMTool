@@ -5,10 +5,11 @@ using System.Windows.Forms;
 
 namespace Vindictus.UI
 {
-	public partial class WaitDialog : Form
+	public partial class WaitDialog : Form,IWaitDialog
 	{
 		private delegate void CloseForm(Form form);
 		private delegate void SetText(string text,Control col);
+		private bool isClose;
 		public WaitDialog()
 		{
 			InitializeComponent();
@@ -35,6 +36,9 @@ namespace Vindictus.UI
 				SetTitleText(info, this);
 			}
 		}
+		public void Message(string info){
+			this.Info(info);
+		}
 		public void SetInfo(string info){
 			if (textLabel.InvokeRequired)//如果调用控件的线程和创建创建控件的线程不是同一个则为True
 			{
@@ -53,8 +57,10 @@ namespace Vindictus.UI
 		}
 		private void closeForm(Form form){
 			form.Close();
+			isClose=true;
 		}
 		public void CloseDialog(){
+			if(isClose)return;
 			CanClose = true;
 			if (this.InvokeRequired)//如果调用控件的线程和创建创建控件的线程不是同一个则为True
 			{

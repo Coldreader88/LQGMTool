@@ -16,10 +16,13 @@ using DataBasePatch;
 
 namespace Vindictus.Extensions
 {
+	public interface IDialog{
+		
+	}
 	public static class MainFormToolExtension
 	{
 		#region 沙龙价格
-		public static void PricePatch(this MainForm form,CoreConfig Config){
+		public static void PricePatch(this MainForm form, CoreConfig Config){
 			string db3 = PathHelper.Combine(Config.GamePath ,"sql/heroes.db3");
 			string srvdb3 = PathHelper.Combine(Config.ServerPath ,"bin", "heroesContents.db3");
 			if(!File.Exists(db3)){
@@ -31,7 +34,7 @@ namespace Vindictus.Extensions
 				return;
 			}
 			if(form.Question(string.Format(R.TipDealDb, db3, srvdb3))){
-				form.PostTask((WaitDialog arg)=>{
+				form.PostTask((IWaitDialog arg)=>{
 				              	arg.SetInfo(string.Format(R.TipDealClientDb, db3));
 				              	using(SQLiteHelper db=new SQLiteHelper(db3)){
 				              		new PircePatch(db, Config.GameCode)
@@ -44,7 +47,7 @@ namespace Vindictus.Extensions
 				              			.SetLogCat(arg.SetInfo)
 				              			.Patch();
 				              	}
-				              	arg.Info(R.TipTaskCompleted);
+				              	arg.Message(R.TipTaskCompleted);
 				              });
 			}
 		}
@@ -63,12 +66,12 @@ namespace Vindictus.Extensions
 				return;
 			}
 			if(form.Question(string.Format(R.TipDealDb, db3, srvdb3))){
-				form.PostTask((WaitDialog arg)=>{
+				form.PostTask((IWaitDialog arg)=>{
 				              	arg.SetInfo(string.Format(R.TipDealClientDb, db3));
 				              	AllSalonPatchDb(db3, Config.GameCode, arg.SetInfo);
 				              	arg.SetInfo(string.Format(R.TipDealServerDb, srvdb3));
 				              	AllSalonPatchDb(srvdb3, Config.GameCode, arg.SetInfo);
-				              	arg.Info(R.TipTaskCompleted);
+				              	arg.Message(R.TipTaskCompleted);
 				              });
 			}
 		}

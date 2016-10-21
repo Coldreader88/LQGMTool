@@ -108,6 +108,7 @@
     <Compile Include="UI\InputDialog.Designer.cs">
       <DependentUpon>InputDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\IWaitDialog.cs" />
     <Compile Include="UI\ProcessPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>

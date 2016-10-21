@@ -17,7 +17,7 @@ namespace Vindictus.Extensions
 	public static class MainFormExtension
 	{
 		
-		public static void PostTask(this Form form, Action<WaitDialog> action){
+		public static void PostTask(this Form form, Action<IWaitDialog> action){
 			if(action==null)return;
 			using(WaitDialog dlg=new WaitDialog()){
 				dlg.Closing+= delegate(object sender, CancelEventArgs e) {
