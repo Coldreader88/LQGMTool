@@ -41,9 +41,11 @@ namespace Vindictus.Extensions
 				if(form.Question(R.TipCloseServer)){
 					serverForm.Close();
 					return true;
+				}else{
+					return false;
 				}
 			}
-			return false;
+			return true;
 		}
 	}
 }

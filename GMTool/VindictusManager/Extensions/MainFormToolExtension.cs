@@ -21,7 +21,7 @@ namespace Vindictus.Extensions
 		#region 沙龙价格
 		public static void PricePatch(this MainForm form,CoreConfig Config){
 			string db3 = PathHelper.Combine(Config.GamePath ,"sql/heroes.db3");
-			string srvdb3 = PathHelper.Combine(Config.BinPath ,"heroesContents.db3");
+			string srvdb3 = PathHelper.Combine(Config.ServerPath ,"bin", "heroesContents.db3");
 			if(!File.Exists(db3)){
 				form.Warnning(string.Format(R.TipFileNotExist, db3));
 				return;
@@ -52,8 +52,8 @@ namespace Vindictus.Extensions
 		
 		#region 沙龙，发型，妆容，内衣，眉毛
 		public static void AllSaLonPatch(this MainForm form,CoreConfig Config){
-			string db3 = PathHelper.Combine(Config.GamePath ,"sql/heroes.db3");
-			string srvdb3 = PathHelper.Combine(Config.BinPath ,"heroesContents.db3");
+			string db3 = PathHelper.Combine(Config.GamePath ,"sql","heroes.db3");
+			string srvdb3 = PathHelper.Combine(Config.ServerPath ,"bin","heroesContents.db3");
 			if(!File.Exists(db3)){
 				form.Warnning(string.Format(R.TipFileNotExist, db3));
 				return;

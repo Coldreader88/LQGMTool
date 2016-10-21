@@ -14,7 +14,7 @@ namespace Vindictus
         public string GamePath;
         public string GameCode;
         public string ProviderName;
-        public string BinPath;
+        public string ServerPath;
         public string SqlServer;
 		public int WebPort;
 		public string WebRoot;

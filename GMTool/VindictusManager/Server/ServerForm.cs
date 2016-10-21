@@ -253,7 +253,7 @@ namespace ServerManager
 				foreach (App app in config.Apps)
 				{
 					if (app.Disable) continue;
-					app.Path = app.Path.Replace("${BinPath}", config.BinPath);
+					app.Path = app.Path.Replace("${ServerPath}", config.ServerPath);
 					if (app.HasStubApp)
 					{
 						foreach (StubApp a in app.Apps)

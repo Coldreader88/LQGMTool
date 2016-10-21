@@ -42,8 +42,8 @@ namespace Vindictus.Helper
 		}
 		public static bool CheckGameCode(CoreConfig config, out string code){
 			string gamecode  =config.GameCode;
-			string cdb3= PathHelper.Combine(config.GamePath, "sql/heroes.db3");
-			string srcdb3=PathHelper.Combine(config.BinPath, "heroesContents.db3");
+			string cdb3= PathHelper.Combine(config.GamePath, "sql","heroes.db3");
+			string srcdb3=PathHelper.Combine(config.ServerPath, "bin","heroesContents.db3");
 			int i;
 			string db3 = cdb3;
 			code = gamecode;
@@ -104,7 +104,7 @@ namespace Vindictus.Helper
 		}
 		public static int UpdateConfig(this Form main, CoreConfig config, string configname = "ServiceCore.dll.config")
 		{
-			string xmlfile = PathHelper.Combine(config.BinPath, configname);
+			string xmlfile = PathHelper.Combine(config.ServerPath, "bin",configname);
 			if(!File.Exists(xmlfile)){
 				//	return -5;
 			}

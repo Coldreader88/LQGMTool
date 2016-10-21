@@ -71,7 +71,7 @@
     <Compile Include="Common\win32\Kernel32.cs" />
     <Compile Include="Common\win32\User32.cs" />
     <Compile Include="Common\XmlHelper.cs" />
-    <Compile Include="Config\CoreConfig.cs" />
+    <Compile Include="CoreConfig.cs" />
     <Compile Include="Enums\AttributeType.cs" />
     <Compile Include="Enums\Category.cs" />
     <Compile Include="Enums\ClassInfo.cs" />
@@ -141,7 +141,6 @@
   <ItemGroup>
     <Folder Include="Common\win32" />
     <Folder Include="Common\Database" />
-    <Folder Include="Config" />
     <Folder Include="Common" />
     <Folder Include="Enums" />
     <Folder Include="UI" />
