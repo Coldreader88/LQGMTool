@@ -9,6 +9,7 @@ using Vindictus;
 using Vindictus.UI;
 using Vindictus.Helper;
 using Vindictus.Common;
+using System.Data.Common;
 
 namespace ServerManager
 {
@@ -29,6 +30,13 @@ namespace ServerManager
 			ProcessPanels = new List<ProcessPanel>();
 			Config = Program.Config;
 			InitializeComponent();
+			this.Text = R.ServerManager;
+			chkNoPeople.Text= R.Daemon;
+			btnAttachDb.Text=R.ServerDbAttach;
+			btnCreateDbFromBackup.Text=R.ServerDbCreate;
+			btnSplitDb.Text = R.ServerDbSplit;
+			btnUpdateConfig.Text=R.UpdateServerSettings;
+			btnShrink.Text=R.ServerDbCompress;
 		}
 
 		private void MainFormFormClosing(object sender, FormClosingEventArgs e)
@@ -69,14 +77,20 @@ namespace ServerManager
 		private bool StartAll(){
 			if (!SerivceHelper.ExistService(Config.SqlServer))
 			{
-				this.Error("SQLServer没有安装");
+				this.Error(R.ErrorSqlServerNotInstall);
 				return false;
 			}
 			if (!SerivceHelper.IsRunningService(Config.SqlServer))
 			{
 				if (!SerivceHelper.StartService(Config.SqlServer))
 				{
-					this.Error("无法启动数据库:" + Config.SqlServer);
+					this.Error(string.Format(R.ErrorSqlServerNotStart, Config.SqlServer));
+					return false;
+				}
+			}
+			using(MSSqlHelper db=new MSSqlHelper(Config.ConnectionString)){
+				if(!db.Open()){
+					this.Error(R.ErrorSqlServerNotConnect);
 					return false;
 				}
 			}
@@ -102,7 +116,7 @@ namespace ServerManager
 		private void StopAll(){
 			if (SerivceHelper.IsRunningService(Config.SqlServer))
 			{
-				if (this.Question("是否停止数据库?"))
+				if (this.Question(R.TipServerStopSqlServer))
 				{
 					SerivceHelper.StopService(Config.SqlServer);
 				}
@@ -149,30 +163,31 @@ namespace ServerManager
 			int rs = this.UpdateConfig(Config);
 			if (rs == 0)
 			{
-				this.Info("设置成功");
+				this.Info(R.TipServerSettingOk);
 			}
 			else
 			{
+				string msg = string.Format(R.TipServerSettingFail, rs);
 				switch(rs){
 					case -5:
-						this.Error("设置失败:没找到配置文件");
+						msg +="\n"+R.ErrorNoFindSettings;//设置失败:没找到配置文件");
 						break;
 					case -4:
-						this.Error("设置失败:无法识别的游戏代码:"+Config.GameCode);
-						break;
-					case -3:
-						this.Error("设置失败:db3没有找到");
+						msg +="\n"+string.Format(R.TipBadGameCode,Config.GameCode);
+//						this.Error("设置失败:无法识别的游戏代码:"+Config.GameCode);
 						break;
 					case -2:
-						this.Error("设置失败:设置游戏代码失败");
+						msg +="\n"+R.ErrorSetGameCodeFail;
+//						this.Error("设置失败:设置游戏代码失败");
 						break;
 					case -1:
-						this.Error("设置失败:数据库连接失败");
+						msg +="\n"+R.ErrorSqlServerNotConnect;
+//						this.Error("设置失败:数据库连接失败");
 						break;
 					default:
-						this.Error("设置失败:code=" + rs);
 						break;
 				}
+				this.Error(msg);
 				
 			}
 		}
@@ -182,7 +197,7 @@ namespace ServerManager
 			using (FolderBrowserDialog dlg = new FolderBrowserDialog())
 			{
 				dlg.SelectedPath = LastPath;
-				dlg.Description = "选择数据库备份bak文件的文件夹";
+				dlg.Description = R.TipSelectSqlBakPath;
 				if (dlg.ShowDialog() == DialogResult.OK)
 				{
 					//bak
@@ -191,11 +206,11 @@ namespace ServerManager
 					int rs = this.CreateDataBase(Config, path);
 					if (rs > 0)
 					{
-						this.Info("创建" + rs + "个数据库成功");
+						this.Info(string.Format(R.TipServerCreateDbOK, rs));
 					}
 					else
 					{
-						this.Error("创建数据库失败\n请确保数据库备份文件存在");
+						this.Error(R.ErrorServerCreateDbFail);
 					}
 				}
 			}
@@ -206,39 +221,41 @@ namespace ServerManager
 			int i = this.SplitDb(Config);
 			if (i > 0)
 			{
-				this.Info("分离" + i + "个数据库成功");
+				this.Info(string.Format(R.TipServerSplitDbOK, i));
 			}
 			else
 			{
-				this.Error("分离数据库失败\n请确保数据库存在");
+				this.Error(R.ErrorServerSplitDbFail);
 			}
 		}
 
 
 		private void btnAttachDb_Click(object sender, EventArgs e)
 		{
-			if (this.Question("是否清空日志？"))
+			if (this.Question(R.TipServerClearSqlLog))
 			{
 				int j = this.CleanDataBaseLog(Config);
+				#if DEBUG
 				if (j > 0)
 				{
-					this.Info("删除" + j + "个数据库日志");
+					this.Info("delete " + j + " sql logs");
 				}
 				else if (j < 0)
 				{
 					return;
 				}
+				#endif
 			}
 			//遍历文件，附加
 			// string[] files=Directory.GetFiles(Config.DatabasePath, "*.mdf");
 			int i = this.AttachDataBase(Config);
 			if (i > 0)
 			{
-				this.Info("附加" + i + "个数据库成功");
+				this.Info(string.Format(R.TipServerAttachDbOK , i));
 			}
 			else
 			{
-				this.Error("附加数据库失败\n请确保数据库mdf存在");
+				this.Error(R.TipServerDbAttachFail);
 			}
 		}
 
@@ -289,7 +306,7 @@ namespace ServerManager
 				}
 				else
 				{
-					MessageBox.Show("异常结束!\n" + path + " " + args);
+					MessageBox.Show(R.ErrorProcessStop+"\n" + path + " " + args);
 				}
 			}
 		}
@@ -299,11 +316,11 @@ namespace ServerManager
 			int rs = this.ShrinkDataBase(Config);
 			if (rs > 0)
 			{
-				this.Info("压缩" + rs + "个数据库成功");
+				this.Info(string.Format(R.TipServerCompressDbOK,  rs));
 			}
 			else
 			{
-				this.Error("压缩数据库失败\n请确保数据库存在");
+				this.Error(R.ErrorServerCompressDbFail);
 			}
 		}
 
@@ -311,7 +328,7 @@ namespace ServerManager
 		{
 			if (!SerivceHelper.ExistService(Config.SqlServer))
 			{
-				this.Error("SQLServer没有安装");
+				this.Error(R.ErrorSqlServerNotInstall);
 				return;
 			}
 			if (SerivceHelper.IsRunningService(Config.SqlServer))
@@ -328,39 +345,30 @@ namespace ServerManager
 		private void updateStatu(){
 			if(HttpServer!=null){
 				if(HttpServer.isListening){
-					this.btnStop.Text = "停止Web";
+					this.btnStop.Text = R.StopWeb;
 					this.btnStop.BackColor = Color.DarkRed;
 				}else{
-					this.btnStop.Text = "启动Web";
+					this.btnStop.Text = R.StartWeb;
 					this.btnStop.BackColor = Color.ForestGreen;
 				}
 			}
 			if(!isStart){
-				this.btnStart.Text = "全部启动";
+				this.btnStart.Text = R.StartAll;
 				this.btnStart.BackColor = Color.ForestGreen;
 			}else{
-				this.btnStart.Text = "全部停止";
+				this.btnStart.Text = R.StopAll;
 				this.btnStart.BackColor = Color.DarkRed;
 			}
 			if (!SerivceHelper.IsRunningService(Config.SqlServer))
 			{
-				this.btnSqlserver.Text = "启动数据库";
+				this.btnSqlserver.Text = R.StartSql;
 				this.btnSqlserver.BackColor = Color.ForestGreen;
 			}
 			else
 			{
-				this.btnSqlserver.Text = "停止数据库";
+				this.btnSqlserver.Text = R.StopSql;
 				this.btnSqlserver.BackColor = Color.DarkRed;
 			}
-//			if(ignore){
-//				if(isStart){
-//					this.btnSqlserver.Text = "停止数据库";
-//					this.btnSqlserver.BackColor = Color.DarkRed;
-//				}else{
-//					this.btnSqlserver.Text = "启动数据库";
-//					this.btnSqlserver.BackColor = Color.ForestGreen;
-//				}
-//			}
 		}
 	}
 }

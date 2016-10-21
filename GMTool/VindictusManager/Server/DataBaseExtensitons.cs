@@ -60,21 +60,11 @@ namespace ServerManager
                                 sql.SplitDataBase(db);
                                 i++;
                             }
-                            else
-                            {
-#if DEBUG
-                                main.Warnning("数据库不存在:" + db);
-#endif
-                            }
 
                         }
                         catch (Exception e)
                         {
-#if DEBUG
-                            main.Error("分离失败\n" + e);
-#else
-                            main.Error("分离失败\n" + e.Message);
-#endif
+                            main.Error(R.TipServerDbSplitFail+"\n" + e);
                             break;
                         }
                     }
@@ -104,9 +94,6 @@ namespace ServerManager
                     {
                         if (sql.Exist(db))
                         {
-#if DEBUG
-                            main.Warnning("数据库没有分离:" + db);
-#endif
                             return -1;
                         }
                         else
@@ -139,26 +126,15 @@ namespace ServerManager
                         string file = PathHelper.Combine(config.DatabasePath, db + ".mdf");
                         try
                         {
-                            if (sql.Exist(db))
+                            if (!sql.Exist(db))
                             {
-#if DEBUG
-                                main.Warnning("数据库已经存在:" + db);
-#endif
-                            }
-                            else
-                            {
-                               
                                 sql.AttachDataBase(db, file);
                                 i++;
                             }
                         }
                         catch (Exception e)
                         {
-#if DEBUG
-                            main.Error("分离失败\n" + e);
-#else
-                            main.Error("附加失败\n" + file+"\n"+e.Message);
-#endif
+                            main.Error(R.TipServerDbAttachFail+"\n" + file+"\n"+e.Message);
                             break;
                         }
                     }
@@ -191,7 +167,7 @@ namespace ServerManager
                         }
                         catch (Exception e)
                         {
-                            main.Error("创建数据库失败:" + file + "\n" + e.Message);
+                            main.Error(R.TipServerDbCreateFail+"\n" + file + "\n" + e.Message);
                             break;
                         }
                     }

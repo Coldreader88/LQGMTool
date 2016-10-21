@@ -135,6 +135,9 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Server\ServerForm.resx">
+      <DependentUpon>ServerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\WaitDialog.resx">
       <DependentUpon>WaitDialog.cs</DependentUpon>
     </EmbeddedResource>
