@@ -137,7 +137,7 @@ namespace GMTool
 			this.tab_left.Enabled = enable;
 			this.tab_mail.Enabled = enable;
 			this.list_search.Enabled = enable;
-			this.btn_senditem_send.Enabled = enable;
+			this.btnResetSearch.Enabled = enable;
 			this.btn_search_name.Enabled = enable;
 			this.btn_search_id.Enabled = enable;
 			this.tb_senditem_class.Enabled = enable;
@@ -454,15 +454,32 @@ namespace GMTool
 		{
 			SendSelectItems(5);
 		}
-
-		private void ContentMenuSendItem20Click(object sender, EventArgs e)
-		{
-			SendSelectItems(20);
-		}
-		private void contentMenuSendItem100_Click(object sender, EventArgs e)
-		{
-			SendSelectItems(100);
-		}
+        
+        private void ContentMenuSendItemSItemClick(object sender, EventArgs e)
+        {
+        	if (!CheckUser()) return;
+        	ItemClassInfo item = list_search.GetSelectItem<ItemClassInfo>();
+        	if(item==null){
+        		return;
+        	}
+        	SendSItem(item);
+        }
+        
+        private void ContentMenuSendItemXClick(object sender, EventArgs e)
+        {
+        	using(SendItemDialog dlg=new SendItemDialog(this)){
+        		if(dlg.ShowDialog() == DialogResult.OK){
+        			int count = dlg.Count;
+        			SendSelectItems(count);
+        		}
+        	}
+        }
+        private void SendSItem(ItemClassInfo item){
+        	if(item==null){
+        		return;
+        	}
+        	MessageBox.Show(item.Name);
+        }
 		private void SendSelectItems(int count)
 		{
 			if (!CheckUser()) return;
@@ -472,7 +489,7 @@ namespace GMTool
 			if (_count > 0)
 			{
 				ReadMails();
-				if(_count==1){
+				if(_count == 1){
 					log("发送" + items[0].Name + "成功");
 				}else{
 					log("发送" + _count + "个物品成功");
@@ -480,7 +497,11 @@ namespace GMTool
 			}
 			else
 			{
-				this.Warnning("含有特殊物品，不能批量发送。\n名字带有{0}都是特殊物品");
+				if(items.Length==1){
+					SendSItem(items[0]);
+				}else{
+					this.Warnning("含有特殊物品，不能批量发送。\n名字带有{0}都是特殊物品");
+				}
 			}
 			
 		}
@@ -625,31 +646,6 @@ namespace GMTool
 			AddSearchItemList(DataHelper.Searcher.SearchItems(tb_senditem_name.Text, null, cb_maincategory.Text, cb_subcategory.Text, CurUser));
 		}
 
-		private void btn_senditem_send_Click(object sender, EventArgs e)
-		{
-			if (!CheckUser()) return;
-			if (string.IsNullOrEmpty(tb_senditem_class.Text) || string.IsNullOrEmpty(tb_senditem_count.Text))
-			{
-				return;
-			}
-			try
-			{
-				int count = Convert.ToInt32(tb_senditem_count.Text);
-				if (this.SendItem(CurUser, count, tb_senditem_class.Text, tb_senditem_name.Text, this.tb_senditem_value.Text) > 0)
-				{
-					ReadMails();
-					log("发送成功:" + tb_senditem_name.Text);
-				}
-				else
-				{
-					log("发送失败:" + tb_senditem_name.Text);
-				}
-			}
-			catch (Exception)
-			{
-				this.Error("数量不是一个数字");
-			}
-		}
 		private void tb_senditem_class_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			if (e.KeyChar == (char)Keys.Enter)
@@ -671,6 +667,15 @@ namespace GMTool
 				}
 			}
 		}
+		        
+        private void BtnResetSearchClick(object sender, EventArgs e)
+        {
+        	this.cb_maincategory.SelectedIndex = 0;
+        	this.cb_subcategory.SelectedIndex =0;
+        	this.tb_senditem_class.Text="";
+        	this.tb_senditem_name.Text="";
+        }
+
 		#endregion
 
 		#region 选择

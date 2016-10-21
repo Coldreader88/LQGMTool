@@ -103,12 +103,10 @@
         	this.contentMenuSendItem1 = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuSendItem5 = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuSendItem10 = new System.Windows.Forms.ToolStripMenuItem();
-        	this.contentMenuSendItem20 = new System.Windows.Forms.ToolStripMenuItem();
-        	this.contentMenuSendItem100 = new System.Windows.Forms.ToolStripMenuItem();
+        	this.contentMenuSendItemX = new System.Windows.Forms.ToolStripMenuItem();
+        	this.contentMenuSendItemSItem = new System.Windows.Forms.ToolStripMenuItem();
+        	this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
         	this.contentMenuSendItemCopyIDs = new System.Windows.Forms.ToolStripMenuItem();
-        	this.label7 = new System.Windows.Forms.Label();
-        	this.tb_senditem_count = new System.Windows.Forms.TextBox();
-        	this.btn_senditem_send = new System.Windows.Forms.Button();
         	this.tb_senditem_name = new System.Windows.Forms.TextBox();
         	this.label8 = new System.Windows.Forms.Label();
         	this.tb_logcat = new System.Windows.Forms.TextBox();
@@ -189,8 +187,7 @@
         	this.label11 = new System.Windows.Forms.Label();
         	this.label9 = new System.Windows.Forms.Label();
         	this.label6 = new System.Windows.Forms.Label();
-        	this.tb_senditem_value = new System.Windows.Forms.TextBox();
-        	this.label12 = new System.Windows.Forms.Label();
+        	this.btnResetSearch = new System.Windows.Forms.Button();
         	this.groupBox1.SuspendLayout();
         	this.contextMenuUser.SuspendLayout();
         	this.contextMenuItem.SuspendLayout();
@@ -756,11 +753,12 @@
         	        	        	this.contentMenuSendItem1,
         	        	        	this.contentMenuSendItem5,
         	        	        	this.contentMenuSendItem10,
-        	        	        	this.contentMenuSendItem20,
-        	        	        	this.contentMenuSendItem100,
+        	        	        	this.contentMenuSendItemX,
+        	        	        	this.contentMenuSendItemSItem,
+        	        	        	this.toolStripSeparator15,
         	        	        	this.contentMenuSendItemCopyIDs});
         	this.contextMenuSend.Name = "contextMenuSend";
-        	this.contextMenuSend.Size = new System.Drawing.Size(162, 136);
+        	this.contextMenuSend.Size = new System.Drawing.Size(162, 142);
         	// 
         	// contentMenuSendItem1
         	// 
@@ -783,19 +781,24 @@
         	this.contentMenuSendItem10.Text = "发送10个";
         	this.contentMenuSendItem10.Click += new System.EventHandler(this.contentMenuSendItem10_Click);
         	// 
-        	// contentMenuSendItem20
+        	// contentMenuSendItemX
         	// 
-        	this.contentMenuSendItem20.Name = "contentMenuSendItem20";
-        	this.contentMenuSendItem20.Size = new System.Drawing.Size(161, 22);
-        	this.contentMenuSendItem20.Text = "发送20个";
-        	this.contentMenuSendItem20.Click += new System.EventHandler(this.ContentMenuSendItem20Click);
+        	this.contentMenuSendItemX.Name = "contentMenuSendItemX";
+        	this.contentMenuSendItemX.Size = new System.Drawing.Size(161, 22);
+        	this.contentMenuSendItemX.Text = "发送自定义数量";
+        	this.contentMenuSendItemX.Click += new System.EventHandler(this.ContentMenuSendItemXClick);
         	// 
-        	// contentMenuSendItem100
+        	// contentMenuSendItemSItem
         	// 
-        	this.contentMenuSendItem100.Name = "contentMenuSendItem100";
-        	this.contentMenuSendItem100.Size = new System.Drawing.Size(161, 22);
-        	this.contentMenuSendItem100.Text = "发送100个";
-        	this.contentMenuSendItem100.Click += new System.EventHandler(this.contentMenuSendItem100_Click);
+        	this.contentMenuSendItemSItem.Name = "contentMenuSendItemSItem";
+        	this.contentMenuSendItemSItem.Size = new System.Drawing.Size(161, 22);
+        	this.contentMenuSendItemSItem.Text = "发送特殊物品";
+        	this.contentMenuSendItemSItem.Click += new System.EventHandler(this.ContentMenuSendItemSItemClick);
+        	// 
+        	// toolStripSeparator15
+        	// 
+        	this.toolStripSeparator15.Name = "toolStripSeparator15";
+        	this.toolStripSeparator15.Size = new System.Drawing.Size(158, 6);
         	// 
         	// contentMenuSendItemCopyIDs
         	// 
@@ -803,40 +806,6 @@
         	this.contentMenuSendItemCopyIDs.Size = new System.Drawing.Size(161, 22);
         	this.contentMenuSendItemCopyIDs.Text = "复制选中物品ID";
         	this.contentMenuSendItemCopyIDs.Click += new System.EventHandler(this.contentMenuSendItemCopyIDs_Click);
-        	// 
-        	// label7
-        	// 
-        	this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-        	this.label7.AutoSize = true;
-        	this.label7.Location = new System.Drawing.Point(989, 614);
-        	this.label7.Name = "label7";
-        	this.label7.Size = new System.Drawing.Size(53, 12);
-        	this.label7.TabIndex = 4;
-        	this.label7.Text = "物品数量";
-        	// 
-        	// tb_senditem_count
-        	// 
-        	this.tb_senditem_count.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-        	this.tb_senditem_count.Location = new System.Drawing.Point(1045, 611);
-        	this.tb_senditem_count.MaxLength = 12;
-        	this.tb_senditem_count.Name = "tb_senditem_count";
-        	this.tb_senditem_count.Size = new System.Drawing.Size(53, 21);
-        	this.tb_senditem_count.TabIndex = 2;
-        	this.tb_senditem_count.Text = "1";
-        	this.tb_senditem_count.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-        	this.tb_senditem_count.WordWrap = false;
-        	// 
-        	// btn_senditem_send
-        	// 
-        	this.btn_senditem_send.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-        	this.btn_senditem_send.Enabled = false;
-        	this.btn_senditem_send.Location = new System.Drawing.Point(1106, 611);
-        	this.btn_senditem_send.Name = "btn_senditem_send";
-        	this.btn_senditem_send.Size = new System.Drawing.Size(110, 41);
-        	this.btn_senditem_send.TabIndex = 5;
-        	this.btn_senditem_send.Text = "发送";
-        	this.btn_senditem_send.UseVisualStyleBackColor = true;
-        	this.btn_senditem_send.Click += new System.EventHandler(this.btn_senditem_send_Click);
         	// 
         	// tb_senditem_name
         	// 
@@ -1567,33 +1536,23 @@
         	this.label6.TabIndex = 0;
         	this.label6.Text = "颜色1";
         	// 
-        	// tb_senditem_value
+        	// btnResetSearch
         	// 
-        	this.tb_senditem_value.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-        	this.tb_senditem_value.Location = new System.Drawing.Point(1045, 636);
-        	this.tb_senditem_value.MaxLength = 12;
-        	this.tb_senditem_value.Name = "tb_senditem_value";
-        	this.tb_senditem_value.Size = new System.Drawing.Size(53, 21);
-        	this.tb_senditem_value.TabIndex = 2;
-        	this.tb_senditem_value.Text = "1";
-        	this.tb_senditem_value.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-        	this.tb_senditem_value.WordWrap = false;
-        	// 
-        	// label12
-        	// 
-        	this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-        	this.label12.AutoSize = true;
-        	this.label12.Location = new System.Drawing.Point(991, 639);
-        	this.label12.Name = "label12";
-        	this.label12.Size = new System.Drawing.Size(41, 12);
-        	this.label12.TabIndex = 4;
-        	this.label12.Text = "指定值";
+        	this.btnResetSearch.Enabled = false;
+        	this.btnResetSearch.Location = new System.Drawing.Point(988, 621);
+        	this.btnResetSearch.Name = "btnResetSearch";
+        	this.btnResetSearch.Size = new System.Drawing.Size(110, 32);
+        	this.btnResetSearch.TabIndex = 11;
+        	this.btnResetSearch.Text = "重置搜索条件";
+        	this.btnResetSearch.UseVisualStyleBackColor = true;
+        	this.btnResetSearch.Click += new System.EventHandler(this.BtnResetSearchClick);
         	// 
         	// MainForm
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         	this.ClientSize = new System.Drawing.Size(1227, 661);
+        	this.Controls.Add(this.btnResetSearch);
         	this.Controls.Add(this.tab_left);
         	this.Controls.Add(this.cb_subcategory);
         	this.Controls.Add(this.cb_maincategory);
@@ -1602,17 +1561,12 @@
         	this.Controls.Add(this.tb_logcat);
         	this.Controls.Add(this.btn_search_id);
         	this.Controls.Add(this.btn_search_name);
-        	this.Controls.Add(this.btn_senditem_send);
         	this.Controls.Add(this.label10);
         	this.Controls.Add(this.label8);
         	this.Controls.Add(this.label5);
-        	this.Controls.Add(this.label12);
-        	this.Controls.Add(this.label7);
         	this.Controls.Add(this.list_search);
         	this.Controls.Add(this.tb_senditem_class);
         	this.Controls.Add(this.tb_senditem_name);
-        	this.Controls.Add(this.tb_senditem_value);
-        	this.Controls.Add(this.tb_senditem_count);
         	this.Controls.Add(this.groupBox1);
         	this.Controls.Add(this.lb_search);
         	this.Name = "MainForm";
@@ -1643,6 +1597,10 @@
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.ToolStripMenuItem contentMenuSendItemX;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
+        private System.Windows.Forms.ToolStripMenuItem contentMenuSendItemSItem;
+        private System.Windows.Forms.Button btnResetSearch;
         private System.Windows.Forms.ToolStripMenuItem contentMenuCashUnlimit;
         private System.Windows.Forms.ToolStripMenuItem contentMenuItemMaxScore;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
@@ -1657,7 +1615,6 @@
         private System.Windows.Forms.ToolStripMenuItem contentMenuUserResetDarkGroup;
         private System.Windows.Forms.ToolStripMenuItem contentMenuUserAddTitle;
         private System.Windows.Forms.ToolStripMenuItem contentMenuUserClasses;
-        private System.Windows.Forms.ToolStripMenuItem contentMenuSendItem20;
         private System.Windows.Forms.ToolStripMenuItem contentMenuSendItem5;
         private System.Windows.Forms.ToolStripMenuItem contentMenuUserTitles;
 
@@ -1686,9 +1643,6 @@
         private System.Windows.Forms.ColumnHeader ch_items_color3;
         private GMTool.Common.DListView list_search;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox tb_senditem_count;
-        private System.Windows.Forms.Button btn_senditem_send;
         private System.Windows.Forms.TextBox tb_senditem_name;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox tb_logcat;
@@ -1723,7 +1677,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuSend;
         private System.Windows.Forms.ToolStripMenuItem contentMenuSendItem1;
         private System.Windows.Forms.ToolStripMenuItem contentMenuSendItem10;
-        private System.Windows.Forms.ToolStripMenuItem contentMenuSendItem100;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem contentMenuUserRefresh;
         private System.Windows.Forms.ToolStripMenuItem contentMenuRefreshMail;
@@ -1802,8 +1755,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem contentMenuItemPower0;
         private System.Windows.Forms.ToolStripMenuItem contentMenuSendItemCopyIDs;
-        private System.Windows.Forms.TextBox tb_senditem_value;
-        private System.Windows.Forms.Label label12;
     }
 }
 

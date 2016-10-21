@@ -52,24 +52,28 @@ namespace DataBasePatch
             patchs.Add(new SignlePatch(db, Category.HAIR, ClassInfo.Lynn, country));
             patchs.Add(new SignlePatch(db, Category.HAIR, ClassInfo.Vella, country));
             patchs.Add(new SignlePatch(db, Category.HAIR, ClassInfo.Arisha, country));
+            patchs.Add(new SignlePatch(db, Category.HAIR, ClassInfo.Delia, country));
             //眉毛
             patchs.Add(new SignlePatch(db, Category.EYEBROW, ClassInfo.Fiona, country));
             patchs.Add(new SignlePatch(db, Category.EYEBROW, ClassInfo.Evy, country));
             patchs.Add(new SignlePatch(db, Category.EYEBROW, ClassInfo.Lynn, country));
             patchs.Add(new SignlePatch(db, Category.EYEBROW, ClassInfo.Vella, country));
             patchs.Add(new SignlePatch(db, Category.EYEBROW, ClassInfo.Arisha, country));
+            patchs.Add(new SignlePatch(db, Category.EYEBROW, ClassInfo.Delia, country));
             //妆容
             patchs.Add(new SignlePatch(db, Category.MAKEUP, ClassInfo.Fiona, country));
             patchs.Add(new SignlePatch(db, Category.MAKEUP, ClassInfo.Evy, country));
             patchs.Add(new SignlePatch(db, Category.MAKEUP, ClassInfo.Lynn, country));
             patchs.Add(new SignlePatch(db, Category.MAKEUP, ClassInfo.Vella, country));
             patchs.Add(new SignlePatch(db, Category.MAKEUP, ClassInfo.Arisha, country));
+            patchs.Add(new SignlePatch(db, Category.MAKEUP, ClassInfo.Delia, country));
             //内衣
             patchs.Add(new SignlePatch(db, Category.INNERARMOR, ClassInfo.Fiona, country));
             patchs.Add(new SignlePatch(db, Category.INNERARMOR, ClassInfo.Evy, country));
             patchs.Add(new SignlePatch(db, Category.INNERARMOR, ClassInfo.Lynn, country));
             patchs.Add(new SignlePatch(db, Category.INNERARMOR, ClassInfo.Vella, country));
             patchs.Add(new SignlePatch(db, Category.INNERARMOR, ClassInfo.Arisha, country));
+            patchs.Add(new SignlePatch(db, Category.INNERARMOR, ClassInfo.Delia, country));
             //价格必须放在最后
             patchs.Add(new PircePatch(db, country));
             foreach (BasePatch patch in patchs)

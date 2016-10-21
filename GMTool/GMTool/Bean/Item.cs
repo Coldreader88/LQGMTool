@@ -27,7 +27,7 @@ namespace GMTool.Bean
 		/// <summary>
 		/// 强化
 		/// </summary>
-		public ItemAttribute[] Attributes { get; private set; }
+		public List<ItemAttribute> Attributes { get; private set; }
 		public ItemStatInfo Stat { get; private set; }
 		public long MaxStack { get; private set; }
 		public int Color1  { get; private set; }
@@ -67,7 +67,7 @@ namespace GMTool.Bean
 			{
 				attrs.Add(new ItemAttribute(reader));
 			}
-			this.Attributes = attrs.ToArray<ItemAttribute>();
+			this.Attributes = attrs;
 		}
 		/// <summary>
 		/// 背包类型
