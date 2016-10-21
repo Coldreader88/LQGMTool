@@ -36,5 +36,14 @@ namespace Vindictus.Extensions
 			str=str.Replace("$vesion",Application.ProductVersion.ToString());
 			MessageBox.Show(str,R.About,MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
+		public static bool CloseServer(this MainForm form){
+			if(serverForm!=null && serverForm.isStart){
+				if(form.Question(R.TipCloseServer)){
+					serverForm.Close();
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 }

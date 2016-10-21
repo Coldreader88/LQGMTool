@@ -49,5 +49,12 @@ namespace Vindictus
 		public static string TipTaskCompleted{ 	get{ return Get("tipTaskCompleted"); } }
 		//errorGameCode
 		public static string ErrorGameCode{ 	get{ return Get("errorGameCode"); } }
+		//zhtw2zhcn
+		public static string zhTw2zhCn{ 	get{ return Get("zhtw2zhcn"); } }
+		public static string SelectZhTWPath{ 	get{ return Get("selectZhTWPath"); } }
+		public static string EnEu2zhcn{ 	get{ return Get("enEu2zhcn"); } }
+		public static string SelectEnEuPath{ 	get{ return Get("selectEnEuPath"); } }
+		//tipcloseserver
+		public static string TipCloseServer{ 	get{ return Get("tipcloseserver"); } }
 	}
 }

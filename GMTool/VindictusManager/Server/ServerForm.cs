@@ -18,7 +18,7 @@ namespace ServerManager
 	public partial class ServerForm : Form
 	{
 		private delegate void UpdateUI(bool ignore);
-		private bool isStart;
+		public bool isStart{get;private set;}
 		private HttpWebServer HttpServer;
 		string LastPath;
 		CoreConfig Config;

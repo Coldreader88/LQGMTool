@@ -4,10 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # SharpDevelop 4.4
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GMTool", "GMTool\GMTool.csproj", "{574D736F-2FFA-4510-93BC-55AC37233726}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VindictusManager", "VindictusManager\VindictusManager.csproj", "{954A6E9A-345F-4314-8003-053BDA014F87}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tool", "Tool", "{93D00CD9-539C-4846-A50D-29C01EA754D6}"
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
@@ -19,6 +15,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharpCode.SharpZLib", "SharpZipLib\ICSharpCode.SharpZLib.csproj", "{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VZipTool", "VZipTool\VZipTool.csproj", "{38996572-9EBC-4F0F-9FBA-D6E9B289C39A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GMTool", "GMTool\GMTool.csproj", "{574D736F-2FFA-4510-93BC-55AC37233726}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VindictusManager", "VindictusManager\VindictusManager.csproj", "{954A6E9A-345F-4314-8003-053BDA014F87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -28,6 +28,7 @@ namespace Vindictus
 			allSalonToolStripMenuItem.Text = R.AllSalon;
 			salonPirceToolStripMenuItem.Text= R.SalonPirce;
 			toolToolStripMenuItem.Text= R.Tool;
+			zhTW2zhCNToolStripMenuItem.Text=R.zhTw2zhCn;
 		}
 		
 		void MainFormLoad(object sender, EventArgs e)
@@ -58,6 +59,24 @@ namespace Vindictus
 		void SalonPirceToolStripMenuItemClick(object sender2, EventArgs e2)
 		{
 			this.PricePatch(Config);
+		}
+		
+		void ZhTW2zhCNToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			using(FolderBrowserDialog dlg=new FolderBrowserDialog()){
+				dlg.SelectedPath = Application.StartupPath;
+				dlg.Description=R.SelectZhTWPath;
+				if(dlg.ShowDialog()==DialogResult.OK){
+//					dlg.SelectedPath;
+				}
+			}
+		}
+		
+		void MainFormFormClosing(object sender, FormClosingEventArgs e)
+		{
+			if(!this.CloseServer()){
+				e.Cancel = true;
+			}
 		}
 	}
 }

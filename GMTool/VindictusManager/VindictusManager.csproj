@@ -57,6 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ChineseTextHelper.cs" />
     <Compile Include="Common\Database\DbHelper.cs" />
     <Compile Include="Common\Database\MSSqlHelper.cs" />
     <Compile Include="Common\Database\SQLiteHelper.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Common\PathHelper.cs" />
     <Compile Include="Common\ProcessPlus.cs" />
     <Compile Include="Common\SerivceHelper.cs" />
+    <Compile Include="Common\VZip.cs" />
     <Compile Include="Common\win32\Kernel32.cs" />
     <Compile Include="Common\win32\User32.cs" />
     <Compile Include="Common\XmlHelper.cs" />
@@ -87,6 +89,7 @@
     </Compile>
     <Compile Include="Patch\AvatarPatch.cs" />
     <Compile Include="Patch\BasePatch.cs" />
+    <Compile Include="Patch\Command.cs" />
     <Compile Include="Patch\PircePatch.cs" />
     <Compile Include="Patch\SignlePatch.cs" />
     <Compile Include="Program.cs" />

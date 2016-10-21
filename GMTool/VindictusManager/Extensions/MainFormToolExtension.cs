@@ -119,5 +119,6 @@ namespace Vindictus.Extensions
 			}
 		}
 		#endregion
+	
 	}
 }

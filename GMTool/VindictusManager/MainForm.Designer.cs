@@ -39,11 +39,12 @@ namespace Vindictus
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.serverManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.allSalonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.salonPirceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.zhTW2zhCNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -74,6 +75,38 @@ namespace Vindictus
 			this.serverManagerToolStripMenuItem.Text = "Server Manager";
 			this.serverManagerToolStripMenuItem.Click += new System.EventHandler(this.ServerManagerToolStripMenuItemClick);
 			// 
+			// toolToolStripMenuItem
+			// 
+			this.toolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.allSalonToolStripMenuItem,
+									this.salonPirceToolStripMenuItem,
+									this.zhTW2zhCNToolStripMenuItem});
+			this.toolToolStripMenuItem.Name = "toolToolStripMenuItem";
+			this.toolToolStripMenuItem.Size = new System.Drawing.Size(46, 21);
+			this.toolToolStripMenuItem.Text = "Tool";
+			// 
+			// allSalonToolStripMenuItem
+			// 
+			this.allSalonToolStripMenuItem.Name = "allSalonToolStripMenuItem";
+			this.allSalonToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.allSalonToolStripMenuItem.Text = "AllSalon";
+			this.allSalonToolStripMenuItem.Click += new System.EventHandler(this.AllSalonToolStripMenuItemClick);
+			// 
+			// salonPirceToolStripMenuItem
+			// 
+			this.salonPirceToolStripMenuItem.Name = "salonPirceToolStripMenuItem";
+			this.salonPirceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.salonPirceToolStripMenuItem.Text = "SalonPirce";
+			this.salonPirceToolStripMenuItem.Click += new System.EventHandler(this.SalonPirceToolStripMenuItemClick);
+			// 
+			// zhTW2zhCNToolStripMenuItem
+			// 
+			this.zhTW2zhCNToolStripMenuItem.Name = "zhTW2zhCNToolStripMenuItem";
+			this.zhTW2zhCNToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.zhTW2zhCNToolStripMenuItem.Text = "zhTW2zhCN";
+			this.zhTW2zhCNToolStripMenuItem.Visible = false;
+			this.zhTW2zhCNToolStripMenuItem.Click += new System.EventHandler(this.ZhTW2zhCNToolStripMenuItemClick);
+			// 
 			// helpToolStripMenuItem
 			// 
 			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -85,32 +118,9 @@ namespace Vindictus
 			// aboutToolStripMenuItem
 			// 
 			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.aboutToolStripMenuItem.Text = "About";
 			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItemClick);
-			// 
-			// toolToolStripMenuItem
-			// 
-			this.toolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.allSalonToolStripMenuItem,
-									this.salonPirceToolStripMenuItem});
-			this.toolToolStripMenuItem.Name = "toolToolStripMenuItem";
-			this.toolToolStripMenuItem.Size = new System.Drawing.Size(46, 21);
-			this.toolToolStripMenuItem.Text = "Tool";
-			// 
-			// allSalonToolStripMenuItem
-			// 
-			this.allSalonToolStripMenuItem.Name = "allSalonToolStripMenuItem";
-			this.allSalonToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-			this.allSalonToolStripMenuItem.Text = "AllSalon";
-			this.allSalonToolStripMenuItem.Click += new System.EventHandler(this.AllSalonToolStripMenuItemClick);
-			// 
-			// salonPirceToolStripMenuItem
-			// 
-			this.salonPirceToolStripMenuItem.Name = "salonPirceToolStripMenuItem";
-			this.salonPirceToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-			this.salonPirceToolStripMenuItem.Text = "SalonPirce";
-			this.salonPirceToolStripMenuItem.Click += new System.EventHandler(this.SalonPirceToolStripMenuItemClick);
 			// 
 			// MainForm
 			// 
@@ -122,12 +132,14 @@ namespace Vindictus
 			this.Name = "MainForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "VindictusManager";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
 			this.Load += new System.EventHandler(this.MainFormLoad);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripMenuItem zhTW2zhCNToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem salonPirceToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem allSalonToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem toolToolStripMenuItem;
