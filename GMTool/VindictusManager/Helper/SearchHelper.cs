@@ -5,43 +5,35 @@ using System.Linq;
 using Vindictus.Bean;
 using Vindictus.Enums;
 using Vindictus.Extensions;
+using System.Windows.Forms;
 
 namespace Vindictus.Helper
 {
 	public class SearchHelper
 	{
-		private List<ItemClassInfo> Infos;
+		private Dictionary<string, ItemClassInfo> Items;
 		
-		public Dictionary<string, ItemClassInfo> Items {get;private set;}
-		private ItemClassInfo tmp;
 		public SearchHelper(Dictionary<string, ItemClassInfo> Items)
 		{
 			this.Items = Items;
-			this.Infos=new List<ItemClassInfo>();
-		}
-		
-		public void Add(ItemClassInfo info){
-			if(!Items.TryGetValue(info.ItemClass, out tmp)){
-				Infos.Add(info);
-				Items.Add(info.ItemClass, info);
-			}
 		}
 		
 		public int Count{
 			get{
-				return Infos.Count;
+				return Items.Count;
 			}
 		}
 		public List<ItemClassInfo> SearchItems(string name, string id=null,
 		                                       string maincategory=null, string subcategory=null, User user=null)
 		{
-			List<ItemClassInfo> rs = new List<ItemClassInfo>();
+			var rs = new List<ItemClassInfo>();
             if (!string.IsNullOrEmpty(name))
             {
                 name = name.ToLower();
             }
-			foreach (ItemClassInfo info in Infos)
+			foreach (ItemClassInfo info in Items.Values)
 			{
+				/*
 				if (!string.IsNullOrEmpty(name))
 				{
                     if (string.IsNullOrEmpty(info.Name))
@@ -60,7 +52,7 @@ namespace Vindictus.Helper
 					{
 						continue;
 					}
-				}
+				}*/
 				if (!string.IsNullOrEmpty(subcategory)
 				    && subcategory != SubCategory.NONE.Name())
 				{

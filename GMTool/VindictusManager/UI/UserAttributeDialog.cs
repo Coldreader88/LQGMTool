@@ -1,22 +1,10 @@
-﻿/*
- * 由SharpDevelop创建。
- * 用户： Administrator
- * 日期: 2016/9/26
- * 时间: 16:46
- * 
- * 要改变这种模板请点击 工具|选项|代码编写|编辑标准头文件
- */
-using System;
+﻿using System;
 using System.Windows.Forms;
 using Vindictus.Bean;
-using Vindictus.Enums;
 using Vindictus.Extensions;
 
 namespace Vindictus.UI
 {
-	/// <summary>
-	/// Description of UserAttributeDialog.
-	/// </summary>
 	public class UserAttributeDialog: InputDialog
 	{
 		private MainForm mainForm;
@@ -34,9 +22,9 @@ namespace Vindictus.UI
 				return;
 			}
 			this.user = user;
-			this.Title = "修改角色属性："+name;
+			this.Title =string.Format(R.ModAttri, name);
 			int val = stat.Value(user);
-			this.ContentText="当前值："+val;
+			this.ContentText= string.Format(R.CurValue, val);
 			this.InputText = ""+val;
 		}
 		public int Value{
@@ -52,18 +40,13 @@ namespace Vindictus.UI
 			}else {
 				try{
 					_value = Convert.ToInt32(text);
+					if(_value>=1)
+					{
+						return true;
+					}
 				}catch(Exception){
-					mainForm.Error("请输入一个数字");
-					return false;
 				}
-				if(_value>=1)
-				{
-					return true;
-				}
-				else
-				{
-					this.Error("不能为0");
-				}
+				mainForm.Error(R.InputNumber);
 			}
 			return false;
 		}

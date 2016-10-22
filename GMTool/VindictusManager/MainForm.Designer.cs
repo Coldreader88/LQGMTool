@@ -62,17 +62,16 @@ namespace Vindictus
 			this.maxSubClassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.resetQuestTimesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.modNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.modLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.modClassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.modUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.modAPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.modLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.modNameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.modClassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.modAttriToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.maxGroupLightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.maxGroupDarkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.resetGroupSkillToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-			this.modUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.refreshUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.TabItemDetail = new System.Windows.Forms.TabPage();
@@ -99,6 +98,59 @@ namespace Vindictus
 			this.MailRecvList = new GMTool.Common.DListView();
 			this.chReceiverTitle = new System.Windows.Forms.ColumnHeader();
 			this.LogCatText = new System.Windows.Forms.TextBox();
+			this.SearchReset = new System.Windows.Forms.Button();
+			this.SearchSubCategory = new System.Windows.Forms.ComboBox();
+			this.SearchMainCategory = new System.Windows.Forms.ComboBox();
+			this.SearchByClass = new System.Windows.Forms.Button();
+			this.SearchByName = new System.Windows.Forms.Button();
+			this.lbSearchItemClass = new System.Windows.Forms.Label();
+			this.lbSearchName = new System.Windows.Forms.Label();
+			this.lbSearchCategory = new System.Windows.Forms.Label();
+			this.SearchListView = new GMTool.Common.DListView();
+			this.chSearchName = new System.Windows.Forms.ColumnHeader();
+			this.SendMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.send1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.send5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.send10ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.sendNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.sendItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.copyItemClassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.SearchItemClass = new System.Windows.Forms.TextBox();
+			this.SearchName = new System.Windows.Forms.TextBox();
+			this.SearchTitle = new System.Windows.Forms.Label();
+			this.tab_items = new System.Windows.Forms.TabControl();
+			this.tab_items_normal = new System.Windows.Forms.TabPage();
+			this.list_items_normal = new GMTool.Common.DListView();
+			this.ch_items_name = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader12 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader15 = new System.Windows.Forms.ColumnHeader();
+			this.ch_items_type = new System.Windows.Forms.ColumnHeader();
+			this.ch_items_color1 = new System.Windows.Forms.ColumnHeader();
+			this.ch_items_color2 = new System.Windows.Forms.ColumnHeader();
+			this.ch_items_color3 = new System.Windows.Forms.ColumnHeader();
+			this.ch_items_time = new System.Windows.Forms.ColumnHeader();
+			this.tab_items_cash = new System.Windows.Forms.TabPage();
+			this.list_items_cash = new GMTool.Common.DListView();
+			this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader14 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader7 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader8 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader9 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader10 = new System.Windows.Forms.ColumnHeader();
+			this.tab_items_quest = new System.Windows.Forms.TabPage();
+			this.list_items_quest = new GMTool.Common.DListView();
+			this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader11 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader13 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader19 = new System.Windows.Forms.ColumnHeader();
+			this.tab_items_other = new System.Windows.Forms.TabPage();
+			this.list_items_other = new GMTool.Common.DListView();
+			this.columnHeader20 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader21 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader22 = new System.Windows.Forms.ColumnHeader();
+			this.columnHeader26 = new System.Windows.Forms.ColumnHeader();
 			this.menuStrip1.SuspendLayout();
 			this.TabPanelLeft.SuspendLayout();
 			this.TabUserList.SuspendLayout();
@@ -108,6 +160,12 @@ namespace Vindictus
 			this.TabMailSend.SuspendLayout();
 			this.MailMenuStrip.SuspendLayout();
 			this.TabMailRecv.SuspendLayout();
+			this.SendMenuStrip.SuspendLayout();
+			this.tab_items.SuspendLayout();
+			this.tab_items_normal.SuspendLayout();
+			this.tab_items_cash.SuspendLayout();
+			this.tab_items_quest.SuspendLayout();
+			this.tab_items_other.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// menuStrip1
@@ -190,10 +248,10 @@ namespace Vindictus
 			| System.Windows.Forms.AnchorStyles.Left)));
 			this.TabPanelLeft.Controls.Add(this.TabUserList);
 			this.TabPanelLeft.Controls.Add(this.TabItemDetail);
-			this.TabPanelLeft.Location = new System.Drawing.Point(0, 28);
+			this.TabPanelLeft.Location = new System.Drawing.Point(0, 30);
 			this.TabPanelLeft.Name = "TabPanelLeft";
 			this.TabPanelLeft.SelectedIndex = 0;
-			this.TabPanelLeft.Size = new System.Drawing.Size(248, 280);
+			this.TabPanelLeft.Size = new System.Drawing.Size(250, 280);
 			this.TabPanelLeft.TabIndex = 11;
 			// 
 			// TabUserList
@@ -202,7 +260,7 @@ namespace Vindictus
 			this.TabUserList.Location = new System.Drawing.Point(4, 22);
 			this.TabUserList.Name = "TabUserList";
 			this.TabUserList.Padding = new System.Windows.Forms.Padding(3);
-			this.TabUserList.Size = new System.Drawing.Size(240, 254);
+			this.TabUserList.Size = new System.Drawing.Size(242, 254);
 			this.TabUserList.TabIndex = 0;
 			this.TabUserList.Text = "UserList";
 			this.TabUserList.UseVisualStyleBackColor = true;
@@ -227,7 +285,7 @@ namespace Vindictus
 			this.UserListView.MultiSelect = false;
 			this.UserListView.Name = "UserListView";
 			this.UserListView.ShowItemToolTips = true;
-			this.UserListView.Size = new System.Drawing.Size(234, 248);
+			this.UserListView.Size = new System.Drawing.Size(236, 248);
 			this.UserListView.TabIndex = 3;
 			this.UserListView.UseCompatibleStateImageBehavior = false;
 			this.UserListView.View = System.Windows.Forms.View.Details;
@@ -256,21 +314,17 @@ namespace Vindictus
 			this.maxSubClassToolStripMenuItem,
 			this.resetQuestTimesToolStripMenuItem,
 			this.toolStripSeparator3,
-			this.modNameToolStripMenuItem,
-			this.modLevelToolStripMenuItem,
+			this.modUserToolStripMenuItem,
 			this.modClassToolStripMenuItem,
-			this.modAPToolStripMenuItem,
 			this.modAttriToolStripMenuItem,
 			this.toolStripSeparator5,
 			this.maxGroupLightToolStripMenuItem,
 			this.maxGroupDarkToolStripMenuItem,
 			this.resetGroupSkillToolStripMenuItem,
-			this.toolStripSeparator4,
-			this.modUserToolStripMenuItem,
 			this.toolStripSeparator2,
 			this.refreshUserToolStripMenuItem});
 			this.UserMenuStrip.Name = "UserMenuStrip";
-			this.UserMenuStrip.Size = new System.Drawing.Size(177, 358);
+			this.UserMenuStrip.Size = new System.Drawing.Size(177, 264);
 			// 
 			// addTitleToolStripMenuItem
 			// 
@@ -304,32 +358,40 @@ namespace Vindictus
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
 			this.toolStripSeparator3.Size = new System.Drawing.Size(173, 6);
 			// 
-			// modNameToolStripMenuItem
+			// modUserToolStripMenuItem
 			// 
-			this.modNameToolStripMenuItem.Name = "modNameToolStripMenuItem";
-			this.modNameToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-			this.modNameToolStripMenuItem.Text = "ModName";
-			this.modNameToolStripMenuItem.Click += new System.EventHandler(this.modNameToolStripMenuItem_Click);
+			this.modUserToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.modAPToolStripMenuItem,
+			this.modLevelToolStripMenuItem,
+			this.modNameToolStripMenuItem});
+			this.modUserToolStripMenuItem.Name = "modUserToolStripMenuItem";
+			this.modUserToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+			this.modUserToolStripMenuItem.Text = "ModUser";
+			// 
+			// modAPToolStripMenuItem
+			// 
+			this.modAPToolStripMenuItem.Name = "modAPToolStripMenuItem";
+			this.modAPToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+			this.modAPToolStripMenuItem.Text = "ModAP";
+			this.modAPToolStripMenuItem.Click += new System.EventHandler(this.modAPToolStripMenuItem_Click);
 			// 
 			// modLevelToolStripMenuItem
 			// 
 			this.modLevelToolStripMenuItem.Name = "modLevelToolStripMenuItem";
-			this.modLevelToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+			this.modLevelToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
 			this.modLevelToolStripMenuItem.Text = "ModLevel";
-			this.modLevelToolStripMenuItem.Click += new System.EventHandler(this.modLevelToolStripMenuItem_Click);
+			// 
+			// modNameToolStripMenuItem
+			// 
+			this.modNameToolStripMenuItem.Name = "modNameToolStripMenuItem";
+			this.modNameToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+			this.modNameToolStripMenuItem.Text = "ModName";
 			// 
 			// modClassToolStripMenuItem
 			// 
 			this.modClassToolStripMenuItem.Name = "modClassToolStripMenuItem";
 			this.modClassToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
 			this.modClassToolStripMenuItem.Text = "ModClass";
-			// 
-			// modAPToolStripMenuItem
-			// 
-			this.modAPToolStripMenuItem.Name = "modAPToolStripMenuItem";
-			this.modAPToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-			this.modAPToolStripMenuItem.Text = "ModAP";
-			this.modAPToolStripMenuItem.Click += new System.EventHandler(this.modAPToolStripMenuItem_Click);
 			// 
 			// modAttriToolStripMenuItem
 			// 
@@ -363,18 +425,6 @@ namespace Vindictus
 			this.resetGroupSkillToolStripMenuItem.Text = "ResetGroupSkill";
 			this.resetGroupSkillToolStripMenuItem.Click += new System.EventHandler(this.ResetGroupSkillToolStripMenuItemClick);
 			// 
-			// toolStripSeparator4
-			// 
-			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(173, 6);
-			// 
-			// modUserToolStripMenuItem
-			// 
-			this.modUserToolStripMenuItem.Name = "modUserToolStripMenuItem";
-			this.modUserToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
-			this.modUserToolStripMenuItem.Text = "ModUser";
-			this.modUserToolStripMenuItem.Click += new System.EventHandler(this.ModUserToolStripMenuItemClick);
-			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
@@ -402,7 +452,7 @@ namespace Vindictus
 			this.TabItemDetail.Controls.Add(this.label6);
 			this.TabItemDetail.Location = new System.Drawing.Point(4, 22);
 			this.TabItemDetail.Name = "TabItemDetail";
-			this.TabItemDetail.Size = new System.Drawing.Size(240, 254);
+			this.TabItemDetail.Size = new System.Drawing.Size(242, 254);
 			this.TabItemDetail.TabIndex = 2;
 			this.TabItemDetail.Text = "ItemDetail";
 			// 
@@ -495,10 +545,10 @@ namespace Vindictus
 			| System.Windows.Forms.AnchorStyles.Left)));
 			this.TabPanelMail.Controls.Add(this.TabMailSend);
 			this.TabPanelMail.Controls.Add(this.TabMailRecv);
-			this.TabPanelMail.Location = new System.Drawing.Point(4, 314);
+			this.TabPanelMail.Location = new System.Drawing.Point(4, 310);
 			this.TabPanelMail.Name = "TabPanelMail";
 			this.TabPanelMail.SelectedIndex = 0;
-			this.TabPanelMail.Size = new System.Drawing.Size(244, 275);
+			this.TabPanelMail.Size = new System.Drawing.Size(250, 288);
 			this.TabPanelMail.TabIndex = 12;
 			// 
 			// TabMailSend
@@ -506,7 +556,7 @@ namespace Vindictus
 			this.TabMailSend.Controls.Add(this.MailSendList);
 			this.TabMailSend.Location = new System.Drawing.Point(4, 22);
 			this.TabMailSend.Name = "TabMailSend";
-			this.TabMailSend.Size = new System.Drawing.Size(236, 249);
+			this.TabMailSend.Size = new System.Drawing.Size(242, 262);
 			this.TabMailSend.TabIndex = 0;
 			this.TabMailSend.Text = "Sending";
 			this.TabMailSend.UseVisualStyleBackColor = true;
@@ -526,7 +576,7 @@ namespace Vindictus
 			this.MailSendList.Location = new System.Drawing.Point(0, 0);
 			this.MailSendList.Name = "MailSendList";
 			this.MailSendList.ShowItemToolTips = true;
-			this.MailSendList.Size = new System.Drawing.Size(236, 249);
+			this.MailSendList.Size = new System.Drawing.Size(242, 262);
 			this.MailSendList.TabIndex = 3;
 			this.MailSendList.UseCompatibleStateImageBehavior = false;
 			this.MailSendList.View = System.Windows.Forms.View.Details;
@@ -577,7 +627,7 @@ namespace Vindictus
 			this.TabMailRecv.Controls.Add(this.MailRecvList);
 			this.TabMailRecv.Location = new System.Drawing.Point(4, 22);
 			this.TabMailRecv.Name = "TabMailRecv";
-			this.TabMailRecv.Size = new System.Drawing.Size(236, 249);
+			this.TabMailRecv.Size = new System.Drawing.Size(242, 262);
 			this.TabMailRecv.TabIndex = 1;
 			this.TabMailRecv.Text = "Receiver";
 			this.TabMailRecv.UseVisualStyleBackColor = true;
@@ -597,7 +647,7 @@ namespace Vindictus
 			this.MailRecvList.Location = new System.Drawing.Point(0, 0);
 			this.MailRecvList.Name = "MailRecvList";
 			this.MailRecvList.ShowItemToolTips = true;
-			this.MailRecvList.Size = new System.Drawing.Size(236, 249);
+			this.MailRecvList.Size = new System.Drawing.Size(242, 262);
 			this.MailRecvList.TabIndex = 4;
 			this.MailRecvList.UseCompatibleStateImageBehavior = false;
 			this.MailRecvList.View = System.Windows.Forms.View.Details;
@@ -611,20 +661,498 @@ namespace Vindictus
 			// 
 			this.LogCatText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
-			this.LogCatText.Location = new System.Drawing.Point(286, 386);
+			this.LogCatText.Location = new System.Drawing.Point(254, 510);
 			this.LogCatText.Multiline = true;
 			this.LogCatText.Name = "LogCatText";
 			this.LogCatText.ReadOnly = true;
 			this.LogCatText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.LogCatText.Size = new System.Drawing.Size(582, 79);
+			this.LogCatText.Size = new System.Drawing.Size(506, 84);
 			this.LogCatText.TabIndex = 13;
-			this.LogCatText.Text = "日志";
+			// 
+			// SearchReset
+			// 
+			this.SearchReset.Location = new System.Drawing.Point(764, 568);
+			this.SearchReset.Name = "SearchReset";
+			this.SearchReset.Size = new System.Drawing.Size(235, 30);
+			this.SearchReset.TabIndex = 25;
+			this.SearchReset.Text = "SearchReset";
+			this.SearchReset.UseVisualStyleBackColor = true;
+			this.SearchReset.Click += new System.EventHandler(this.SearchReset_Click);
+			// 
+			// SearchSubCategory
+			// 
+			this.SearchSubCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.SearchSubCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.SearchSubCategory.FormattingEnabled = true;
+			this.SearchSubCategory.Location = new System.Drawing.Point(912, 505);
+			this.SearchSubCategory.Name = "SearchSubCategory";
+			this.SearchSubCategory.Size = new System.Drawing.Size(84, 20);
+			this.SearchSubCategory.TabIndex = 23;
+			// 
+			// SearchMainCategory
+			// 
+			this.SearchMainCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.SearchMainCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.SearchMainCategory.FormattingEnabled = true;
+			this.SearchMainCategory.Location = new System.Drawing.Point(819, 505);
+			this.SearchMainCategory.Name = "SearchMainCategory";
+			this.SearchMainCategory.Size = new System.Drawing.Size(83, 20);
+			this.SearchMainCategory.TabIndex = 24;
+			// 
+			// SearchByClass
+			// 
+			this.SearchByClass.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.SearchByClass.Location = new System.Drawing.Point(887, 534);
+			this.SearchByClass.Name = "SearchByClass";
+			this.SearchByClass.Size = new System.Drawing.Size(110, 30);
+			this.SearchByClass.TabIndex = 21;
+			this.SearchByClass.Text = "SearchByClass";
+			this.SearchByClass.UseVisualStyleBackColor = true;
+			this.SearchByClass.Click += new System.EventHandler(this.SearchByClass_Click);
+			// 
+			// SearchByName
+			// 
+			this.SearchByName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.SearchByName.Location = new System.Drawing.Point(766, 534);
+			this.SearchByName.Name = "SearchByName";
+			this.SearchByName.Size = new System.Drawing.Size(110, 30);
+			this.SearchByName.TabIndex = 22;
+			this.SearchByName.Text = "SearchByName";
+			this.SearchByName.UseVisualStyleBackColor = true;
+			this.SearchByName.Click += new System.EventHandler(this.SearchByName_Click);
+			// 
+			// lbSearchItemClass
+			// 
+			this.lbSearchItemClass.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.lbSearchItemClass.AutoSize = true;
+			this.lbSearchItemClass.Location = new System.Drawing.Point(761, 480);
+			this.lbSearchItemClass.Name = "lbSearchItemClass";
+			this.lbSearchItemClass.Size = new System.Drawing.Size(59, 12);
+			this.lbSearchItemClass.TabIndex = 18;
+			this.lbSearchItemClass.Text = "ItemClass";
+			// 
+			// lbSearchName
+			// 
+			this.lbSearchName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.lbSearchName.AutoSize = true;
+			this.lbSearchName.Location = new System.Drawing.Point(762, 456);
+			this.lbSearchName.Name = "lbSearchName";
+			this.lbSearchName.Size = new System.Drawing.Size(53, 12);
+			this.lbSearchName.TabIndex = 19;
+			this.lbSearchName.Text = "ItemName";
+			// 
+			// lbSearchCategory
+			// 
+			this.lbSearchCategory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.lbSearchCategory.AutoSize = true;
+			this.lbSearchCategory.Location = new System.Drawing.Point(762, 509);
+			this.lbSearchCategory.Name = "lbSearchCategory";
+			this.lbSearchCategory.Size = new System.Drawing.Size(53, 12);
+			this.lbSearchCategory.TabIndex = 20;
+			this.lbSearchCategory.Text = "Category";
+			// 
+			// SearchListView
+			// 
+			this.SearchListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.SearchListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.chSearchName});
+			this.SearchListView.ContextMenuStrip = this.SendMenuStrip;
+			this.SearchListView.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.SearchListView.FullRowSelect = true;
+			this.SearchListView.GridLines = true;
+			this.SearchListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.SearchListView.HideSelection = false;
+			this.SearchListView.LabelWrap = false;
+			this.SearchListView.Location = new System.Drawing.Point(764, 54);
+			this.SearchListView.Name = "SearchListView";
+			this.SearchListView.ShowItemToolTips = true;
+			this.SearchListView.Size = new System.Drawing.Size(235, 394);
+			this.SearchListView.TabIndex = 17;
+			this.SearchListView.UseCompatibleStateImageBehavior = false;
+			this.SearchListView.View = System.Windows.Forms.View.Details;
+			// 
+			// chSearchName
+			// 
+			this.chSearchName.Text = "Name";
+			this.chSearchName.Width = 207;
+			// 
+			// SendMenuStrip
+			// 
+			this.SendMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.send1ToolStripMenuItem,
+			this.send5ToolStripMenuItem,
+			this.send10ToolStripMenuItem,
+			this.sendNToolStripMenuItem,
+			this.sendItemToolStripMenuItem,
+			this.toolStripSeparator4,
+			this.copyItemClassToolStripMenuItem});
+			this.SendMenuStrip.Name = "SendMenuStrip";
+			this.SendMenuStrip.Size = new System.Drawing.Size(167, 164);
+			// 
+			// send1ToolStripMenuItem
+			// 
+			this.send1ToolStripMenuItem.Name = "send1ToolStripMenuItem";
+			this.send1ToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+			this.send1ToolStripMenuItem.Text = "Send 1";
+			this.send1ToolStripMenuItem.Click += new System.EventHandler(this.send1ToolStripMenuItem_Click);
+			// 
+			// send5ToolStripMenuItem
+			// 
+			this.send5ToolStripMenuItem.Name = "send5ToolStripMenuItem";
+			this.send5ToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+			this.send5ToolStripMenuItem.Text = "Send 5";
+			this.send5ToolStripMenuItem.Click += new System.EventHandler(this.send5ToolStripMenuItem_Click);
+			// 
+			// send10ToolStripMenuItem
+			// 
+			this.send10ToolStripMenuItem.Name = "send10ToolStripMenuItem";
+			this.send10ToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+			this.send10ToolStripMenuItem.Text = "Send 10";
+			this.send10ToolStripMenuItem.Click += new System.EventHandler(this.send10ToolStripMenuItem_Click);
+			// 
+			// sendNToolStripMenuItem
+			// 
+			this.sendNToolStripMenuItem.Name = "sendNToolStripMenuItem";
+			this.sendNToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+			this.sendNToolStripMenuItem.Text = "Send N";
+			this.sendNToolStripMenuItem.Click += new System.EventHandler(this.sendNToolStripMenuItem_Click);
+			// 
+			// sendItemToolStripMenuItem
+			// 
+			this.sendItemToolStripMenuItem.Name = "sendItemToolStripMenuItem";
+			this.sendItemToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+			this.sendItemToolStripMenuItem.Text = "Send Item";
+			this.sendItemToolStripMenuItem.Click += new System.EventHandler(this.sendItemToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(163, 6);
+			// 
+			// copyItemClassToolStripMenuItem
+			// 
+			this.copyItemClassToolStripMenuItem.Name = "copyItemClassToolStripMenuItem";
+			this.copyItemClassToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+			this.copyItemClassToolStripMenuItem.Text = "Copy ItemClass";
+			this.copyItemClassToolStripMenuItem.Click += new System.EventHandler(this.copyItemClassToolStripMenuItem_Click);
+			// 
+			// SearchItemClass
+			// 
+			this.SearchItemClass.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.SearchItemClass.Location = new System.Drawing.Point(820, 476);
+			this.SearchItemClass.MaxLength = 128;
+			this.SearchItemClass.Name = "SearchItemClass";
+			this.SearchItemClass.Size = new System.Drawing.Size(176, 21);
+			this.SearchItemClass.TabIndex = 15;
+			this.SearchItemClass.WordWrap = false;
+			// 
+			// SearchName
+			// 
+			this.SearchName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.SearchName.Location = new System.Drawing.Point(820, 453);
+			this.SearchName.MaxLength = 128;
+			this.SearchName.Name = "SearchName";
+			this.SearchName.Size = new System.Drawing.Size(176, 21);
+			this.SearchName.TabIndex = 16;
+			this.SearchName.WordWrap = false;
+			// 
+			// SearchTitle
+			// 
+			this.SearchTitle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.SearchTitle.BackColor = System.Drawing.SystemColors.Control;
+			this.SearchTitle.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+			this.SearchTitle.Location = new System.Drawing.Point(764, 30);
+			this.SearchTitle.Name = "SearchTitle";
+			this.SearchTitle.Size = new System.Drawing.Size(235, 23);
+			this.SearchTitle.TabIndex = 14;
+			this.SearchTitle.Text = "SearchList";
+			this.SearchTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			// 
+			// tab_items
+			// 
+			this.tab_items.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.tab_items.Controls.Add(this.tab_items_normal);
+			this.tab_items.Controls.Add(this.tab_items_cash);
+			this.tab_items.Controls.Add(this.tab_items_quest);
+			this.tab_items.Controls.Add(this.tab_items_other);
+			this.tab_items.Location = new System.Drawing.Point(253, 31);
+			this.tab_items.Name = "tab_items";
+			this.tab_items.SelectedIndex = 0;
+			this.tab_items.Size = new System.Drawing.Size(507, 473);
+			this.tab_items.TabIndex = 26;
+			// 
+			// tab_items_normal
+			// 
+			this.tab_items_normal.Controls.Add(this.list_items_normal);
+			this.tab_items_normal.Location = new System.Drawing.Point(4, 22);
+			this.tab_items_normal.Name = "tab_items_normal";
+			this.tab_items_normal.Padding = new System.Windows.Forms.Padding(3);
+			this.tab_items_normal.Size = new System.Drawing.Size(499, 447);
+			this.tab_items_normal.TabIndex = 0;
+			this.tab_items_normal.Text = "背包";
+			this.tab_items_normal.UseVisualStyleBackColor = true;
+			// 
+			// list_items_normal
+			// 
+			this.list_items_normal.BackColor = System.Drawing.SystemColors.Window;
+			this.list_items_normal.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.ch_items_name,
+			this.columnHeader12,
+			this.columnHeader15,
+			this.ch_items_type,
+			this.ch_items_color1,
+			this.ch_items_color2,
+			this.ch_items_color3,
+			this.ch_items_time});
+			this.list_items_normal.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.list_items_normal.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.list_items_normal.FullRowSelect = true;
+			this.list_items_normal.GridLines = true;
+			this.list_items_normal.HideSelection = false;
+			this.list_items_normal.LabelWrap = false;
+			this.list_items_normal.Location = new System.Drawing.Point(3, 3);
+			this.list_items_normal.Name = "list_items_normal";
+			this.list_items_normal.ShowItemToolTips = true;
+			this.list_items_normal.Size = new System.Drawing.Size(493, 441);
+			this.list_items_normal.TabIndex = 3;
+			this.list_items_normal.UseCompatibleStateImageBehavior = false;
+			this.list_items_normal.View = System.Windows.Forms.View.Details;
+			// 
+			// ch_items_name
+			// 
+			this.ch_items_name.Text = "名字";
+			this.ch_items_name.Width = 61;
+			// 
+			// columnHeader12
+			// 
+			this.columnHeader12.Text = "数量";
+			this.columnHeader12.Width = 40;
+			// 
+			// columnHeader15
+			// 
+			this.columnHeader15.Text = "分类";
+			// 
+			// ch_items_type
+			// 
+			this.ch_items_type.Text = "类型";
+			this.ch_items_type.Width = 80;
+			// 
+			// ch_items_color1
+			// 
+			this.ch_items_color1.Text = "颜色1";
+			this.ch_items_color1.Width = 52;
+			// 
+			// ch_items_color2
+			// 
+			this.ch_items_color2.Text = "颜色2";
+			this.ch_items_color2.Width = 52;
+			// 
+			// ch_items_color3
+			// 
+			this.ch_items_color3.Text = "颜色3";
+			this.ch_items_color3.Width = 49;
+			// 
+			// ch_items_time
+			// 
+			this.ch_items_time.Text = "到期时间";
+			this.ch_items_time.Width = 76;
+			// 
+			// tab_items_cash
+			// 
+			this.tab_items_cash.Controls.Add(this.list_items_cash);
+			this.tab_items_cash.Location = new System.Drawing.Point(4, 22);
+			this.tab_items_cash.Name = "tab_items_cash";
+			this.tab_items_cash.Padding = new System.Windows.Forms.Padding(3);
+			this.tab_items_cash.Size = new System.Drawing.Size(499, 447);
+			this.tab_items_cash.TabIndex = 1;
+			this.tab_items_cash.Text = "现金";
+			this.tab_items_cash.UseVisualStyleBackColor = true;
+			// 
+			// list_items_cash
+			// 
+			this.list_items_cash.BackColor = System.Drawing.SystemColors.Window;
+			this.list_items_cash.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.columnHeader5,
+			this.columnHeader14,
+			this.columnHeader6,
+			this.columnHeader7,
+			this.columnHeader8,
+			this.columnHeader9,
+			this.columnHeader10});
+			this.list_items_cash.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.list_items_cash.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.list_items_cash.FullRowSelect = true;
+			this.list_items_cash.GridLines = true;
+			this.list_items_cash.HideSelection = false;
+			this.list_items_cash.LabelWrap = false;
+			this.list_items_cash.Location = new System.Drawing.Point(3, 3);
+			this.list_items_cash.Name = "list_items_cash";
+			this.list_items_cash.ShowItemToolTips = true;
+			this.list_items_cash.Size = new System.Drawing.Size(493, 441);
+			this.list_items_cash.TabIndex = 4;
+			this.list_items_cash.UseCompatibleStateImageBehavior = false;
+			this.list_items_cash.View = System.Windows.Forms.View.Details;
+			// 
+			// columnHeader5
+			// 
+			this.columnHeader5.Text = "名字";
+			this.columnHeader5.Width = 115;
+			// 
+			// columnHeader14
+			// 
+			this.columnHeader14.Text = "数量";
+			this.columnHeader14.Width = 50;
+			// 
+			// columnHeader6
+			// 
+			this.columnHeader6.Text = "类型";
+			this.columnHeader6.Width = 80;
+			// 
+			// columnHeader7
+			// 
+			this.columnHeader7.Text = "颜色1";
+			this.columnHeader7.Width = 52;
+			// 
+			// columnHeader8
+			// 
+			this.columnHeader8.Text = "颜色2";
+			this.columnHeader8.Width = 52;
+			// 
+			// columnHeader9
+			// 
+			this.columnHeader9.Text = "颜色3";
+			this.columnHeader9.Width = 49;
+			// 
+			// columnHeader10
+			// 
+			this.columnHeader10.Text = "到期时间";
+			this.columnHeader10.Width = 75;
+			// 
+			// tab_items_quest
+			// 
+			this.tab_items_quest.Controls.Add(this.list_items_quest);
+			this.tab_items_quest.Location = new System.Drawing.Point(4, 22);
+			this.tab_items_quest.Name = "tab_items_quest";
+			this.tab_items_quest.Size = new System.Drawing.Size(499, 447);
+			this.tab_items_quest.TabIndex = 2;
+			this.tab_items_quest.Text = "任务";
+			this.tab_items_quest.UseVisualStyleBackColor = true;
+			// 
+			// list_items_quest
+			// 
+			this.list_items_quest.BackColor = System.Drawing.SystemColors.Window;
+			this.list_items_quest.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.columnHeader2,
+			this.columnHeader11,
+			this.columnHeader13,
+			this.columnHeader19});
+			this.list_items_quest.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.list_items_quest.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.list_items_quest.FullRowSelect = true;
+			this.list_items_quest.GridLines = true;
+			this.list_items_quest.HideSelection = false;
+			this.list_items_quest.LabelWrap = false;
+			this.list_items_quest.Location = new System.Drawing.Point(0, 0);
+			this.list_items_quest.Name = "list_items_quest";
+			this.list_items_quest.ShowItemToolTips = true;
+			this.list_items_quest.Size = new System.Drawing.Size(499, 447);
+			this.list_items_quest.TabIndex = 5;
+			this.list_items_quest.UseCompatibleStateImageBehavior = false;
+			this.list_items_quest.View = System.Windows.Forms.View.Details;
+			// 
+			// columnHeader2
+			// 
+			this.columnHeader2.Text = "名字";
+			this.columnHeader2.Width = 255;
+			// 
+			// columnHeader11
+			// 
+			this.columnHeader11.Text = "数量";
+			this.columnHeader11.Width = 65;
+			// 
+			// columnHeader13
+			// 
+			this.columnHeader13.Text = "类型";
+			this.columnHeader13.Width = 50;
+			// 
+			// columnHeader19
+			// 
+			this.columnHeader19.Text = "到期时间";
+			this.columnHeader19.Width = 100;
+			// 
+			// tab_items_other
+			// 
+			this.tab_items_other.Controls.Add(this.list_items_other);
+			this.tab_items_other.Location = new System.Drawing.Point(4, 22);
+			this.tab_items_other.Name = "tab_items_other";
+			this.tab_items_other.Size = new System.Drawing.Size(499, 447);
+			this.tab_items_other.TabIndex = 3;
+			this.tab_items_other.Text = "隐藏";
+			this.tab_items_other.UseVisualStyleBackColor = true;
+			// 
+			// list_items_other
+			// 
+			this.list_items_other.BackColor = System.Drawing.SystemColors.Window;
+			this.list_items_other.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.columnHeader20,
+			this.columnHeader21,
+			this.columnHeader22,
+			this.columnHeader26});
+			this.list_items_other.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.list_items_other.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.list_items_other.FullRowSelect = true;
+			this.list_items_other.GridLines = true;
+			this.list_items_other.HideSelection = false;
+			this.list_items_other.LabelWrap = false;
+			this.list_items_other.Location = new System.Drawing.Point(0, 0);
+			this.list_items_other.Name = "list_items_other";
+			this.list_items_other.ShowItemToolTips = true;
+			this.list_items_other.Size = new System.Drawing.Size(499, 447);
+			this.list_items_other.TabIndex = 5;
+			this.list_items_other.UseCompatibleStateImageBehavior = false;
+			this.list_items_other.View = System.Windows.Forms.View.Details;
+			// 
+			// columnHeader20
+			// 
+			this.columnHeader20.Text = "名字";
+			this.columnHeader20.Width = 255;
+			// 
+			// columnHeader21
+			// 
+			this.columnHeader21.Text = "数量";
+			this.columnHeader21.Width = 65;
+			// 
+			// columnHeader22
+			// 
+			this.columnHeader22.Text = "类型";
+			this.columnHeader22.Width = 50;
+			// 
+			// columnHeader26
+			// 
+			this.columnHeader26.Text = "到期时间";
+			this.columnHeader26.Width = 100;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1008, 601);
+			this.Controls.Add(this.tab_items);
+			this.Controls.Add(this.SearchReset);
+			this.Controls.Add(this.SearchSubCategory);
+			this.Controls.Add(this.SearchMainCategory);
+			this.Controls.Add(this.SearchByClass);
+			this.Controls.Add(this.SearchByName);
+			this.Controls.Add(this.lbSearchItemClass);
+			this.Controls.Add(this.lbSearchName);
+			this.Controls.Add(this.lbSearchCategory);
+			this.Controls.Add(this.SearchListView);
+			this.Controls.Add(this.SearchItemClass);
+			this.Controls.Add(this.SearchName);
+			this.Controls.Add(this.SearchTitle);
 			this.Controls.Add(this.LogCatText);
 			this.Controls.Add(this.TabPanelMail);
 			this.Controls.Add(this.TabPanelLeft);
@@ -646,11 +1174,16 @@ namespace Vindictus
 			this.TabMailSend.ResumeLayout(false);
 			this.MailMenuStrip.ResumeLayout(false);
 			this.TabMailRecv.ResumeLayout(false);
+			this.SendMenuStrip.ResumeLayout(false);
+			this.tab_items.ResumeLayout(false);
+			this.tab_items_normal.ResumeLayout(false);
+			this.tab_items_cash.ResumeLayout(false);
+			this.tab_items_quest.ResumeLayout(false);
+			this.tab_items_other.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem resetGroupSkillToolStripMenuItem;
@@ -708,5 +1241,58 @@ namespace Vindictus
 		private System.Windows.Forms.ToolStripMenuItem modAPToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem modAttriToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+		private System.Windows.Forms.Button SearchReset;
+		private System.Windows.Forms.ComboBox SearchSubCategory;
+		private System.Windows.Forms.ComboBox SearchMainCategory;
+		private System.Windows.Forms.Button SearchByClass;
+		private System.Windows.Forms.Button SearchByName;
+		private System.Windows.Forms.Label lbSearchItemClass;
+		private System.Windows.Forms.Label lbSearchName;
+		private System.Windows.Forms.Label lbSearchCategory;
+		private GMTool.Common.DListView SearchListView;
+		private System.Windows.Forms.TextBox SearchItemClass;
+		private System.Windows.Forms.TextBox SearchName;
+		private System.Windows.Forms.TabControl tab_items;
+		private System.Windows.Forms.TabPage tab_items_normal;
+		private GMTool.Common.DListView list_items_normal;
+		private System.Windows.Forms.ColumnHeader ch_items_name;
+		private System.Windows.Forms.ColumnHeader columnHeader12;
+		private System.Windows.Forms.ColumnHeader columnHeader15;
+		private System.Windows.Forms.ColumnHeader ch_items_type;
+		private System.Windows.Forms.ColumnHeader ch_items_color1;
+		private System.Windows.Forms.ColumnHeader ch_items_color2;
+		private System.Windows.Forms.ColumnHeader ch_items_color3;
+		private System.Windows.Forms.ColumnHeader ch_items_time;
+		private System.Windows.Forms.TabPage tab_items_cash;
+		private GMTool.Common.DListView list_items_cash;
+		private System.Windows.Forms.ColumnHeader columnHeader5;
+		private System.Windows.Forms.ColumnHeader columnHeader14;
+		private System.Windows.Forms.ColumnHeader columnHeader6;
+		private System.Windows.Forms.ColumnHeader columnHeader7;
+		private System.Windows.Forms.ColumnHeader columnHeader8;
+		private System.Windows.Forms.ColumnHeader columnHeader9;
+		private System.Windows.Forms.ColumnHeader columnHeader10;
+		private System.Windows.Forms.TabPage tab_items_quest;
+		private GMTool.Common.DListView list_items_quest;
+		private System.Windows.Forms.ColumnHeader columnHeader2;
+		private System.Windows.Forms.ColumnHeader columnHeader11;
+		private System.Windows.Forms.ColumnHeader columnHeader13;
+		private System.Windows.Forms.ColumnHeader columnHeader19;
+		private System.Windows.Forms.TabPage tab_items_other;
+		private GMTool.Common.DListView list_items_other;
+		private System.Windows.Forms.ColumnHeader columnHeader20;
+		private System.Windows.Forms.ColumnHeader columnHeader21;
+		private System.Windows.Forms.ColumnHeader columnHeader22;
+		private System.Windows.Forms.ColumnHeader columnHeader26;
+		private System.Windows.Forms.ColumnHeader chSearchName;
+		private System.Windows.Forms.Label SearchTitle;
+		private System.Windows.Forms.ContextMenuStrip SendMenuStrip;
+		private System.Windows.Forms.ToolStripMenuItem send1ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem send5ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem send10ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem sendNToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem sendItemToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+		private System.Windows.Forms.ToolStripMenuItem copyItemClassToolStripMenuItem;
 	}
 }

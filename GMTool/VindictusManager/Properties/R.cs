@@ -160,5 +160,14 @@ namespace Vindictus
 		public static string NameExist{get{ return Get("NameExist"); }}
 		public static string TipModLevel{get{ return Get("TipModLevel"); }}
 		public static string TipModName{get{ return Get("TipModName"); }}
+		public static string ModCurAttri{get{ return Get("ModCurAttri"); }}
+		public static string CurValue{get{ return Get("CurValue"); }}
+		public static string InputNumber{get{ return Get("InputNumber"); }}
+		
+		public static string SearchReset{get{ return Get("SearchReset"); }}
+		public static string SearchByName{get{ return Get("SearchByName"); }}
+		public static string SearchByItemClass{get{ return Get("SearchByItemClass"); }}
+		public static string ItemClass{get{ return Get("ItemClass"); }}
+		public static string SearchList{get{ return Get("SearchList"); }}
 	}
 }

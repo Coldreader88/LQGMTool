@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using Vindictus.Bean;
 using Vindictus.Extensions;
 
-namespace Vindictus.Dialog
+namespace Vindictus.UI
 {
 	/// <summary>
 	/// 修改角色名字

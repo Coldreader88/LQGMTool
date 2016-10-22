@@ -124,6 +124,7 @@ namespace System.Windows.Forms
 			int count = listView.Items.Count;
 			if (index >= 0 && index < count)
 			{
+				listView.Items[index].Selected =true;
 				listView.Items[index].EnsureVisible();
 			}
 		}

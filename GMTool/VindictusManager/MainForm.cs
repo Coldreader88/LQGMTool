@@ -13,7 +13,7 @@ using System.Threading;
 using Vindictus.Extensions;
 using Vindictus.Bean;
 using Vindictus.Enums;
-using Vindictus.Dialog;
+using Vindictus.Common;
 
 namespace Vindictus
 {
@@ -25,6 +25,7 @@ namespace Vindictus
 		public User CurUser{get;private set;}
 		public DataHelper DataHelper{get;private set;}
 		private string DefTitle;
+		private SearchHelper Searcher;
 		public MainForm()
 		{
 			Config = Program.Config;
@@ -67,6 +68,15 @@ namespace Vindictus
 			modClassToolStripMenuItem.Text=R.ModClass;
 			modLevelToolStripMenuItem.Text=R.ModLevel;
 			modNameToolStripMenuItem.Text=R.ModName;
+			//
+			SearchTitle.Text=R.SearchList;
+			chSearchName.Text=R.ItemName;
+			lbSearchName.Text =R.ItemName;
+			lbSearchItemClass.Text=R.ItemClass;
+			lbSearchCategory.Text=R.Category;
+			SearchByName.Text = R.SearchByName;
+			SearchByClass.Text=R.SearchByItemClass;
+			SearchReset.Text =R.SearchReset;
 		}
 		
 		void MainFormLoad(object sender, EventArgs e)
@@ -78,11 +88,15 @@ namespace Vindictus
 			}
 			DefTitle = R.Title+"-"+Application.ProductVersion.ToString()+" ("+Config.GameCode+")";
 			this.Text = DefTitle;
+			if(!SerivceHelper.IsRunningService(Config.SqlServer)){
+				SerivceHelper.StartService(Config.SqlServer);
+			}
 			Db=new MSSqlHelper(Config.ConnectionString);
 			DataHelper=new DataHelper(Config);
 			this.PostTask(InitTask);
 			//第一次菜单初始化
 			InitUserMenu();
+			this.AddTypes(SearchMainCategory, SearchSubCategory);
 		}
 		
 		void MainFormFormClosing(object sender, FormClosingEventArgs e)
@@ -115,6 +129,8 @@ namespace Vindictus
 			}catch(Exception e){
 				this.Error("ReadData\n"+e);
 			}
+			Searcher = new SearchHelper(DataHelper.Items);
+//			MessageBox.Show("count="+DataHelper.Items.Count);
 			dlg.SetInfo(R.TipReadUsers);
 			//读取用户
 			ReadUsers(true);
@@ -330,11 +346,6 @@ namespace Vindictus
 				UserThread.Start();
 			}
 		}
-		void ModUserToolStripMenuItemClick(object sender, EventArgs e)
-		{
-			if(!CheckUser())return;
-			this.ModUser(CurUser);
-		}
 		
 		void ResetGroupSkillToolStripMenuItemClick(object sender, EventArgs e)
 		{
@@ -426,6 +437,52 @@ namespace Vindictus
 					}
 				}
 			}
+		}
+		#endregion
+		
+		#region Search
+		void SearchReset_Click(object sender, EventArgs e)
+		{
+			SearchItemClass.Text = "";
+			SearchName.Text = "";
+			if(SearchMainCategory.Items.Count >0){
+				SearchMainCategory.SelectedIndex = 0;
+			}
+			if(SearchSubCategory.Items.Count >0){
+				SearchSubCategory.SelectedIndex = 0;
+			}
+		}
+		void SearchByName_Click(object sender, EventArgs e)
+		{
+			this.AddSearchItemList(SearchListView,SearchTitle,Searcher.SearchItems(SearchName.Text, null, SearchMainCategory.Text, SearchSubCategory.Text, CurUser));
+		}
+		void SearchByClass_Click(object sender, EventArgs e)
+		{
+			this.AddSearchItemList(SearchListView,SearchTitle, Searcher.SearchItems(null, SearchItemClass.Text, SearchMainCategory.Text, SearchSubCategory.Text, CurUser));
+		}
+		void copyItemClassToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+	
+		}
+		void send1ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+	
+		}
+		void send5ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+	
+		}
+		void send10ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+	
+		}
+		void sendNToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+	
+		}
+		void sendItemToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+	
 		}
 
 		#endregion

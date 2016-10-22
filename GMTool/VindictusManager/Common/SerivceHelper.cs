@@ -4,7 +4,7 @@ using System.ServiceProcess;
 
 namespace Vindictus.Common
 {
-    public class SerivceHelper
+    public static class SerivceHelper
     {
 
         public static ServiceController GetService(string serviceName,string machineName= "localhost")

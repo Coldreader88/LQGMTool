@@ -131,7 +131,7 @@ namespace Vindictus.Helper
 			{
 				return string.Empty;
 			}
-			return tw;
+			return tw.Replace("\\n","\n").Replace("\\t","\t");
 		}
 
 	}

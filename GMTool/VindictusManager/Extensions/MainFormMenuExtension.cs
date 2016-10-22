@@ -49,7 +49,17 @@ namespace Vindictus.Extensions
 			}
 			return true;
 		}
-		
+		#region 分类
+		public static void AddTypes(this MainForm main, ComboBox mainmenuitem, ComboBox submenuitem)
+		{
+			mainmenuitem.Items.Clear();
+			submenuitem.Items.Clear();
+			mainmenuitem.Items.AddRange(MainCategoryEx.Values);
+			submenuitem.Items.AddRange(SubCategoryEx.Values);
+			mainmenuitem.SelectedIndex = 0;
+			submenuitem.SelectedIndex = 0;
+		}
+		#endregion
 		#region 职业
 		public static void AddClassesMenus(this MainForm main,ToolStripDropDownItem menuitem)
 		{

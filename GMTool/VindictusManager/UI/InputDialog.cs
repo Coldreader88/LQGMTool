@@ -10,6 +10,7 @@ namespace Vindictus
 		public InputDialog()
 		{
 			InitializeComponent();
+			btnOK.Text =R.OK;
 		}
 		protected Func<string, bool> OnCheckText;
 		/// <summary>

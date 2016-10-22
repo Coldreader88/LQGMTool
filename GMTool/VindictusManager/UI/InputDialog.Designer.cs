@@ -72,7 +72,7 @@ namespace Vindictus
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(276, 147);
+			this.ClientSize = new System.Drawing.Size(277, 135);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.text);
 			this.Controls.Add(this.content);
@@ -86,6 +86,7 @@ namespace Vindictus
 			this.Text = "Title";
 			this.ResumeLayout(false);
 			this.PerformLayout();
+
 		}
 		private System.Windows.Forms.Button btnOK;
 		private System.Windows.Forms.TextBox text;

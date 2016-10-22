@@ -85,10 +85,6 @@ namespace Vindictus.Extensions
 			return items;
 		}
 		#endregion
-		
-		public static void ModUser(this MainForm form,User user){
-			
-		}
 		public static ListViewItem[] ToMailListViewItems(this List<Mail> mails)
 		{
 			int count = mails.Count;
@@ -113,7 +109,35 @@ namespace Vindictus.Extensions
 		public static void RefeshPackage(this MainForm form,PackageType type){
 			
 		}
-		
+		public static void AddSearchItemList(this MainForm form,ListView listview,Control label, List<ItemClassInfo> items)
+		{
+			int count = items.Count;
+//			form.Info("count="+count);
+			listview.BeginUpdate();
+			listview.Items.Clear();
+			if(label!=null){
+				label.Text = label.Text.Split(' ')[0] + " (" + count + ")";
+			}
+			if (count >= 0)
+			{
+				var vitems = new ListViewItem[count];
+				for (int i = 0; i < count; i++)
+				{
+					ItemClassInfo t = items[i];
+					vitems[i] = new ListViewItem();
+					vitems[i].Text = t.Name ?? t.ItemClass;
+					vitems[i].ToolTipText = t.ToString();
+					vitems[i].Tag = t;
+					if (i % 2 == 0)
+						vitems[i].BackColor = Color.GhostWhite;
+					else
+						vitems[i].BackColor = Color.White;
+				}
+				listview.Items.AddRange(vitems);
+			}
+			listview.EndUpdate();
+//			listview.GoToRow(0);
+		}
 		#region user
 		public static void ResetQuest(this MainForm main,User user=null){
 			string SQL = "Update Quest set TodayPlayCount = 0";

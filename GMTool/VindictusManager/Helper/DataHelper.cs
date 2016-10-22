@@ -11,13 +11,17 @@ namespace Vindictus.Helper
 	public class DataHelper
 	{
 		private CoreConfig config;
-		private Dictionary<int, SkillBonusInfo> SynthesisSkillBonues=new  Dictionary<int, SkillBonusInfo>();
-		private Dictionary<string, EnchantInfo> Enchants = new Dictionary<string, EnchantInfo>();
-		private Dictionary<long, TitleInfo> Titles=new Dictionary<long, TitleInfo>();
-		private Dictionary<string, ItemClassInfo> Items =new Dictionary<string, ItemClassInfo>();
+		public Dictionary<int, SkillBonusInfo> SynthesisSkillBonues{get;private set;}
+		public Dictionary<string, EnchantInfo> Enchants{get;private set;}
+		public Dictionary<long, TitleInfo> Titles{get;private set;}
+		public Dictionary<string, ItemClassInfo> Items{get;private set;}
 		public DataHelper(CoreConfig config)
 		{
 			this.config=config;
+			SynthesisSkillBonues=new  Dictionary<int, SkillBonusInfo>();
+			Titles=new Dictionary<long, TitleInfo>();
+			Enchants = new Dictionary<string, EnchantInfo>();
+			Items =new Dictionary<string, ItemClassInfo>();
 		}
 		public void ReadData(HeroesTextHelper HeroesText){
 			using(SQLiteHelper db=new SQLiteHelper(PathHelper.Combine(
@@ -94,7 +98,7 @@ namespace Vindictus.Helper
 			{
 				while (reader != null && reader.Read())
 				{
-					ItemClassInfo info=new ItemClassInfo(reader, HeroesText);
+					var info=new ItemClassInfo(reader, HeroesText);
 					if(!Items.ContainsKey(info.ItemClass)){
 						Items.Add(info.ItemClass, info);
 					}

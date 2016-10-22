@@ -66,8 +66,7 @@ namespace Vindictus.Bean
 		}
 		public override string ToString()
 		{
-			string txt= R.UserName+"：" + Name + " "+R.UserClass+"：" + Class.Name() + " "+R.UserLevel+":" + level;
-			return txt;
+			return Name + " [" + Class.Name() + "] lv." + level;
 		}
 	}
 }
