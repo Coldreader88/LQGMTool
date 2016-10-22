@@ -59,10 +59,10 @@ namespace GMTool
 					tsmi.ToolTipText = cls.ToString() + " " + cls.Index();
 					tsmi.Click += (object sender, EventArgs e) => {
 						if (!main.CheckUser()) return;
-						ToolStripMenuItem menu = sender as ToolStripMenuItem;
+						var menu = sender as ToolStripMenuItem;
 						if (menu != null && menu.Tag != null)
 						{
-							ClassInfo info = (ClassInfo)menu.Tag;
+							var info = (ClassInfo)menu.Tag;
 							//
 							if (main.ModUserClass(main.CurUser, info))
 							{

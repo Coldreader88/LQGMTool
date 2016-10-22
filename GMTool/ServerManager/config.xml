@@ -1,22 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <CoreConfig>
-  <ConnectionString>Data Source=.\SQLEXPRESS;Integrated Security=SSPI;Persist Security Info=False;</ConnectionString>
+  <ConnectionString>Data Source=.\JSQL2008;Integrated Security=SSPI;Persist Security Info=False;</ConnectionString>
   <ProviderName>System.Data.SqlClient</ProviderName>
   <!-- 数据库存放路径 -->
-  <DatabasePath>D:\LQServer\Server\db\</DatabasePath>
+  <DatabasePath>D:\LQServer\db\</DatabasePath>
   <!-- 游戏路径，用于版本检测，PVP主机 -->
-  <GamePath>G:\Program Files (x86)\zh-CN</GamePath>
+  <GamePath>D:\Program Files (x86)\zh-CN</GamePath>
   <!-- 启动游戏 国服是zh-cn，台服是zh-tw  -->
   <Game>Vindictus.exe -stage -dev -lang zh-cn -noupdate</Game>
   <!-- 服务端bin文件夹 -->
-  <BinPath>D:\LQServer\Server\Bin</BinPath>
+  <BinPath>D:\LQServer\Bin</BinPath>
   <!-- 游戏代码GM模式兼容非GM模式 -->
   <GameCode>zh-CN</GameCode>
   <!-- sqlserver 服务名 -->
-  <SqlServer>MSSQL$SQLEXPRESS</SqlServer>
+  <SqlServer>MSSQL$JSQL2008</SqlServer>
   <!-- web服务 -->
   <WebPort>80</WebPort>
-  <WebRoot>D:\LQServer\server\www</WebRoot>
+  <WebRoot>D:\LQServer\www</WebRoot>
   <!-- 数据库名 -->
   <DataBases>
     <item>heroes</item>
@@ -27,8 +27,8 @@
     <item>heroesShare</item>
   </DataBases>
   <Apps>
-    <App name="认证服务" path="D:\LQServer\Server\NMServer.exe"/>
-    <App name="游戏服务" path="D:\LQServer\Server\Bin\Executer.exe">
+    <App name="认证服务" path="D:\LQServer\NMServer.exe"/>
+    <App name="游戏服务" path="D:\LQServer\Bin\Executer.exe">
       <StubApps>
         <StubApp name="定位服务-LocationService" args="UnifiedNetwork.dll UnifiedNetwork.LocationService.LocationService StartService LocationService 42"/>
         <StubApp name="主服务-FrontendService" args="FrontendServiceCore.dll FrontendServiceCore.FrontendService StartService FrontendService 127.0.0.1 42"/>

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using Vindictus.Enums;
 using Vindictus.Helper;
 using System.ComponentModel;
 using System.Xml;
@@ -113,5 +114,35 @@ namespace Vindictus.Extensions
 			}
 		}
 		#endregion
+		
+		public static bool ModUserInfo(this MainForm main, User user,string name,object value)
+		{
+			try
+			{
+				main.Db.ExcuteSQL("update characterInfo set "+name+" = N'"+value+"'"+
+				             " where id = "+ user.CID );
+			}
+			catch (Exception)
+			{
+				return false;
+			}
+			return true;
+		}
+		public static bool ModUserLevel(this MainForm db, User user, int level)
+		{
+			return ModUserInfo(db, user, "Level", level);
+		}
+		public static bool ModUserClass(this MainForm db, User user, ClassInfo cls)
+		{
+			return ModUserInfo(db, user, "class", cls.Index());
+		}
+		public static bool ModUserName(this MainForm db, User user, string name)
+		{
+			return ModUserInfo(db, user, "name", name);
+		}
+		public static bool ModUserAP(this MainForm db, User user, int ap)
+		{
+			return ModUserInfo(db, user, "ap", ap);
+		}
 	}
 }

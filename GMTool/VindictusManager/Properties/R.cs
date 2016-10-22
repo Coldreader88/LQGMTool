@@ -150,5 +150,15 @@ namespace Vindictus
 		public static string ModUser{get{ return Get("ModUser"); }}
 		public static string ResetQuestTimes{get{ return Get("ResetQuestTimes"); }}
 		
+		public static string ModLevel{get{ return Get("ModLevel"); }}
+		public static string ModClass{get{ return Get("ModClass"); }}
+		public static string ModName{get{ return Get("ModName"); }}
+		public static string ModAP{get{ return Get("ModAP"); }}
+		public static string ModAttri{get{ return Get("ModAttri"); }}
+		
+		public static string ClassMod{get{ return Get("ClassMod"); }}
+		public static string NameExist{get{ return Get("NameExist"); }}
+		public static string TipModLevel{get{ return Get("TipModLevel"); }}
+		public static string TipModName{get{ return Get("TipModName"); }}
 	}
 }

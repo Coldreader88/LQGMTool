@@ -13,6 +13,7 @@ using System.Threading;
 using Vindictus.Extensions;
 using Vindictus.Bean;
 using Vindictus.Enums;
+using Vindictus.Dialog;
 
 namespace Vindictus
 {
@@ -60,6 +61,12 @@ namespace Vindictus
 			refreshUserToolStripMenuItem.Text=R.RefreshUser;
 			addTitlesToolStripMenuItem.Text=R.AddTitles;
 			addTitleToolStripMenuItem.Text=R.AddTitle;
+			//
+			modAPToolStripMenuItem.Text = R.ModAP;
+			modAttriToolStripMenuItem.Text = R.ModAttri;
+			modClassToolStripMenuItem.Text=R.ModClass;
+			modLevelToolStripMenuItem.Text=R.ModLevel;
+			modNameToolStripMenuItem.Text=R.ModName;
 		}
 		
 		void MainFormLoad(object sender, EventArgs e)
@@ -74,6 +81,8 @@ namespace Vindictus
 			Db=new MSSqlHelper(Config.ConnectionString);
 			DataHelper=new DataHelper(Config);
 			this.PostTask(InitTask);
+			//第一次菜单初始化
+			InitUserMenu();
 		}
 		
 		void MainFormFormClosing(object sender, FormClosingEventArgs e)
@@ -92,10 +101,11 @@ namespace Vindictus
 					Db.ExcuteSQL("use heroes;");
 				}catch(Exception e){
 					this.Error(""+e);
+					return;
 				}
 			}
 			dlg.SetInfo(R.TipReadText);
-			HeroesTextHelper HeroesText=new HeroesTextHelper();
+			var HeroesText=new HeroesTextHelper();
 			HeroesText.Read(Config.GameText, Config.PatchText);
 			//
 			dlg.SetInfo(R.TipReadItem);
@@ -108,7 +118,6 @@ namespace Vindictus
 			dlg.SetInfo(R.TipReadUsers);
 			//读取用户
 			ReadUsers(true);
-			//第一次菜单初始化
 		}
 		#endregion
 		
@@ -135,7 +144,7 @@ namespace Vindictus
 		
 		void ZhTW2zhCNToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			using(FolderBrowserDialog dlg=new FolderBrowserDialog()){
+			using(var dlg=new FolderBrowserDialog()){
 				dlg.SelectedPath = Application.StartupPath;
 				dlg.Description=R.SelectZhTWPath;
 				if(dlg.ShowDialog()==DialogResult.OK){
@@ -212,7 +221,7 @@ namespace Vindictus
 		}
 		private ListView GetMailMenu(object sender)
 		{
-			ToolStripMenuItem menu = sender as ToolStripMenuItem;
+			var menu = sender as ToolStripMenuItem;
 			Control parent = null;
 			ListView listview = null;
 			if (menu != null)
@@ -290,12 +299,18 @@ namespace Vindictus
 		#endregion
 		
 		#region user menu
+		void InitUserMenu(){
+			//classs
+			this.AddClassesMenus(modClassToolStripMenuItem);
+			//attri
+			this.InitModAttrMenu(modAttriToolStripMenuItem);
+		}
 		Thread UserThread;
 		void RefreshUserToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			ReadUsers(false);
 		}
-		public void ReadUsers(bool isThread){
+		public void ReadUsers(bool isThread=false){
 			int index;
 			List<User> users = Db.ReadAllUsers();
 			if(isThread){
@@ -356,6 +371,63 @@ namespace Vindictus
 			if(!CheckUser())return;
 			this.GetAllTitles(CurUser);
 		}
+		void modNameToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (!CheckUser()) return;
+			using (var dlg = new UserNameDialog(this))
+			{
+				dlg.SetUser(CurUser);
+				if (dlg.ShowDialog() == DialogResult.OK)
+				{
+					try
+					{
+						string name = dlg.InputText;
+						this.ModUserName(CurUser, name);
+						log("成功修改[" + CurUser.Name + "]名字为[" + name + "]");
+						ReadUsers();
+					}
+					catch (Exception ex)
+					{
+						this.Error("修改角色名字失败\n" + ex.Message);
+					}
+				}
+			}
+		}
+		void modLevelToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (!CheckUser()) return;
+			using (var form = new UserLevelDialog(this))
+			{
+				form.SetUser(CurUser);
+				if (form.ShowDialog() == DialogResult.OK)
+				{
+					int level = form.Level;
+					if (level > 0 && this.ModUserLevel(CurUser, level))
+					{
+						log("成功修改用户[" + CurUser.Name + "]等级");
+						ReadUsers();
+					}
+				}
+			}
+		}
+		void modAPToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (!CheckUser()) return;
+			using (var form = new UserAttributeDialog(this))
+			{
+				form.SetUser(CurUser, "AP", "AP");
+				if (form.ShowDialog() == DialogResult.OK)
+				{
+					int ap = form.Value;
+					if (ap > 0 && this.ModUserAP(CurUser, ap))
+					{
+						log("成功修改用户[" + CurUser.Name + "]AP为" + ap);
+						ReadUsers();
+					}
+				}
+			}
+		}
+
 		#endregion
 	}
 }

@@ -145,6 +145,15 @@
     <Compile Include="UI\ServerForm.Designer.cs">
       <DependentUpon>ServerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\UserAttributeDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\UserLevelDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\UserNameDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\WaitDialog.cs" />
     <Compile Include="UI\WaitDialog.Designer.cs">
       <DependentUpon>WaitDialog.cs</DependentUpon>

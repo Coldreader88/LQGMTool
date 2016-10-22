@@ -224,7 +224,7 @@ namespace DataBasePatch
                 else
                 {
                     if (i > 1)
-                        LogCat(info);
+                    	LogCat(info.ToString());
                 }
             }
             LogCat("set=" + i);
