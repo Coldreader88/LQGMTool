@@ -9,20 +9,6 @@ using System.Windows.Forms;
 
 namespace WebServer
 {
-	/// <summary>
-	/// Used with socket handling messages
-	/// </summary>
-	public class HttpCommandArgs
-	{
-		public string m_Message;
-	}
-	/// <summary>
-	/// To allow messages to be sent to the host app
-	/// </summary>
-	/// <param name="sender"></param>
-	/// <param name="e"></param>
-	public delegate void clientEventHandler(object sender, HttpCommandArgs e);
-
 	public class HttpWebServer
 	{
 		/// <summary>
@@ -42,7 +28,7 @@ namespace WebServer
 		// file type of the processed pages
 		public string appFileType = ".lua";
 		
-		public HttpWebServer(string rootPath="www",int portNumber=8081){
+		public HttpWebServer(string rootPath="./www",int portNumber=8081){
 			this.rootPath=rootPath;
 			this.portNumber=portNumber;
 		}
@@ -54,43 +40,15 @@ namespace WebServer
 		public string appCmdResponse = "<html>OK</html>";
 		public string appErrorResponse = "<html>No application handler!</html>";
 		public bool isListening{get;private set;}
-		private string rootPath = @"./web";
+		public string rootPath{get;private set;}
 		private const string defaultPage = @"index.html";
 
 		//===================================================================
 
 		// declare a Delegate
-		public delegate string ProcessMessage(string type, string message);
+		public delegate string ProcessMessage(string type, string file);
 		// use a instance of the declared Delegate
-		public ProcessMessage MessageHandler;
-
-		//===================================================================
-
-		// to raise the message received
-		public event clientEventHandler controlMessage;
-
-		/// <summary>
-		/// Invoke the message received event
-		/// </summary>
-		/// <param name="e"></param>
-		protected virtual void OnCommand(HttpCommandArgs e)
-		{
-			// check to see that there is at least one event handler listening
-			if (controlMessage != null) controlMessage(this, e);
-		}
-
-		/// <summary>
-		/// Set up the parameters and raise a Reply message event
-		/// </summary>
-		/// <param name="strMessage">Message to be raised </param>
-		private void RaiseCommand(string strMessage)
-		{
-			HttpCommandArgs s = new HttpCommandArgs();
-			s.m_Message = strMessage;
-			OnCommand(s);
-		}
-
-		//===================================================================
+		public ProcessMessage FileHandler;
 
 		/// <summary>
 		/// Creates the http server and opens listener
@@ -103,7 +61,6 @@ namespace WebServer
 			listener.Prefixes.Add("http://*:" + portNumber + "/");
 			listener.Start();
 			listener.BeginGetContext(ProcessRequest, listener);
-			Console.WriteLine("Connection Started");
 		}
 
 		/// <summary>
@@ -116,171 +73,100 @@ namespace WebServer
 			listener.Stop();
 		}
 
+		string GetContentType(string filetype){
+			string responseType;
+			switch (filetype)
+			{
+				case (".png"):
+				case (".jpg"):
+				case (".jpeg"):
+				case (".gif"):
+				case (".tiff"):
+					responseType = "image/" + filetype.Substring(1);    // leave off the decimal point
+					break;
+				case (".js"):
+					responseType = "application/javascript";
+					break;
+
+				case (".ico"):
+					responseType = "image/x-icon";
+					break;
+				case (".txt"):
+					responseType = "text/" + filetype.Substring(1);    // leave off the decimal point
+					break;
+				case (".xml"):
+				case (".css"):
+					responseType = "text/" + filetype.Substring(1);    // leave off the decimal point
+					break;
+
+				case (".json"):
+					responseType = "application/json";
+					break;
+
+				case (".cachemanifest"):
+					responseType = " text/cache-manifest";
+					break;
+
+				case (".htm"):
+				case (".html"):
+				case (".htmls"):
+				default:
+					responseType = "text/html";
+					break;
+			}
+			return responseType;
+		}
 		/// <summary>
 		/// Process the web request
 		/// </summary>
 		/// <param name="result"></param>
-		private void ProcessRequest(IAsyncResult result)
+		void ProcessRequest(IAsyncResult result)
 		{
 			if(!isListening)return;
 			var listener = (HttpListener)result.AsyncState;
 			try{
-				string responseString = "";
-				string pageString = "";
-				string responseType = "text/html";
-				string filetype = "";
-				bool binary = false;
-				byte[] buffer;
-//			int pos;
-				StreamReader streamReader;
-				
+				byte[] responseContent;
 				HttpListenerContext context = listener.EndGetContext(result);
 				HttpListenerRequest request = context.Request;
-
 				string path = rootPath + request.RawUrl;
 				string webMethod = request.HttpMethod;
-				if (path == rootPath + "/") path += defaultPage;
-
-				filetype = Path.GetExtension(path);
-				// take off any parameters at the end of the url
+				if (path == rootPath + "/"){
+					path += defaultPage;
+				}
+				//
+				string filetype = Path.GetExtension(path);
 				filetype = StripParameters(filetype);
-
-				switch (filetype)
-				{
-					case (".png"):
-					case (".jpg"):
-					case (".jpeg"):
-					case (".gif"):
-					case (".tiff"):
-						responseType = "image/" + filetype.Substring(1);    // leave off the decimal point
-						binary = true;
-						break;
-
-					case (".htm"):
-					case (".html"):
-					case (".htmls"):
-						responseType = "text/html";
-						binary = false;
-						break;
-
-					case (".js"):
-						responseType = "application/javascript";
-						binary = false;
-						break;
-
-					case (".ico"):
-						responseType = "image/x-icon";
-						binary = true;
-						break;
-					case (".txt"):
-//					responseType = "text/" + filetype.Substring(1);    // leave off the decimal point
-//					binary = true;
-//					break;
-					case (".xml"):
-					case (".css"):
-						responseType = "text/" + filetype.Substring(1);    // leave off the decimal point
-						binary = false;
-						break;
-
-					case (".json"):
-						responseType = "application/json";
-						binary = false;
-						break;
-
-					case (".cachemanifest"):
-						responseType = " text/cache-manifest";
-						binary = false;
-						break;
-
-					default:
-						break;
-				}
-
+				string contentType = GetContentType(filetype);
 				HttpListenerResponse response = context.Response;
-				if (File.Exists(path))
-				{
-					if (binary)
-					{
-						//Open image as byte stream to send to requestor
-						FileInfo fInfo = new FileInfo(path);
+				response.StatusCode = 200;
+				if(FileHandler!=null){
+					string str = FileHandler(filetype, path);
+					if(str == null){
+						str = "";
+					}
+					responseContent = Encoding.UTF8.GetBytes(str);
+				}else{
+					if(File.Exists(path)){
+						var fInfo = new FileInfo(path);
 						long numBytes = fInfo.Length;
-						FileStream fStream = new FileStream(path, FileMode.Open, FileAccess.Read);
-						BinaryReader binaryReader = new BinaryReader(fStream);
-						buffer = binaryReader.ReadBytes((int)numBytes);
-						binaryReader.Close();
-					}
-					else
-					{
-						// read text file
-						Encoding encoding = EncodingType.GetType(path, Encoding.UTF8);
-						streamReader = new StreamReader(path, encoding);
-						pageString = streamReader.ReadToEnd();
-
-						if (filetype == appFileType)
-						{
-							// treat as an application filetype, to be processed by the host application
-							// cf .php, .cf, .asmx, .lua etc
-							// should return a text for the response string
-
-							// Deal with the message
-							if (MessageHandler != null)
-							{
-								responseString = MessageHandler(webMethod, pageString);
-							}
-							else
-							{
-								responseString = appErrorResponse;
+						using(var fStream = new FileStream(path, FileMode.Open, FileAccess.Read)){
+							using(var binaryReader = new BinaryReader(fStream)){
+								responseContent = binaryReader.ReadBytes((int)numBytes);
+								binaryReader.Close();
 							}
 						}
-						else
-						{
-							responseString = pageString;
-
-						}
-						buffer = encoding.GetBytes(responseString);
-						streamReader.Close();
+					}else{
+						response.StatusCode = 404;
+						responseContent = new byte[0];
 					}
 				}
-
-				// file doesn't exist
-				// check for json, xml requests
-				else if (filetype == ".json" || filetype == ".xml" || filetype == ".txt")
-				{
-					// Deal with the message
-					if (MessageHandler != null)
-					{
-						responseString = MessageHandler(webMethod, request.RawUrl);
-					}
-					else
-					{
-						responseString = appErrorResponse;
-					}
-					buffer = Encoding.UTF8.GetBytes(responseString);
+				response.ContentType = contentType;
+				response.ContentLength64 = responseContent.Length;
+				using(Stream output = response.OutputStream){
+					output.Write(responseContent, 0, responseContent.Length);
 				}
-
-				// check for a command
-//			else if ((pos = path.IndexOf("cmd=", 0)) > 0)
-//			{
-//				string command = path.Substring(pos + 4);
-//				RaiseCommand(command);
-//				responseString = "<html>OK</html>";
-//				buffer = Encoding.UTF8.GetBytes(responseString);
-//			}
-				else
-				{
-					responseString = "<html>Unknown file: " + request.RawUrl + "</html>";
-					RaiseCommand("Unknown");
-					buffer = Encoding.UTF8.GetBytes(responseString);
-				}
-				
-				response.ContentType = responseType;
-				response.ContentLength64 = buffer.Length;
-				Stream output = response.OutputStream;
-				output.Write(buffer, 0, buffer.Length);
-				output.Close();
-
 			}catch(Exception e){
-				MessageBox.Show("web\n"+e);
+			//	MessageBox.Show("web\n"+e);
 			}
 			listener.BeginGetContext(ProcessRequest, listener);
 		}
@@ -293,9 +179,9 @@ namespace WebServer
 		private string StripParameters(string filetype)
 		{
 			string stripped = filetype;
-			if (stripped.IndexOf("?") != -1)
+			if (stripped.IndexOf('?') != -1)
 			{
-				int n = stripped.IndexOf("?");
+				int n = stripped.IndexOf('?');
 				stripped = stripped.Substring(0, n);
 			}
 			return stripped;
