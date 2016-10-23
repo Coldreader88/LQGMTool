@@ -165,7 +165,7 @@ namespace WebServer
 				using(Stream output = response.OutputStream){
 					output.Write(responseContent, 0, responseContent.Length);
 				}
-			}catch(Exception e){
+			}catch(Exception){
 			//	MessageBox.Show("web\n"+e);
 			}
 			listener.BeginGetContext(ProcessRequest, listener);

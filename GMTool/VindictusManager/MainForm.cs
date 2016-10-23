@@ -235,24 +235,32 @@ namespace Vindictus
 			MailThread.Start();
 //			this.AddMails(, Db.ReadRecvMailList(CurUser));
 		}
+		void MailMenuStrip_Opening(object sender, CancelEventArgs e)
+		{
+			var menu = sender as ContextMenuStrip;
+			if(menu !=null){
+				menu.Tag = menu.SourceControl;
+				//菜单隐藏
+			}
+		}
 		private ListView GetMailMenu(object sender)
 		{
-			var menu = sender as ToolStripMenuItem;
-			Control parent = null;
-			ListView listview = null;
-			if (menu != null)
-			{
-				parent = menu.GetMenuConrtol();
-			}
-			if (parent == this.MailSendList)
-			{
-				listview = this.MailSendList;
-			}
-			else if (parent == this.MailRecvList)
-			{
-				listview = this.MailRecvList;
-			}
-			return listview;
+//			var menu = sender as ToolStripMenuItem;
+//			Control parent = null;
+//			ListView listview = null;
+//			if (menu != null)
+//			{
+//				parent = menu.GetMenuConrtol();
+//			}
+//			if (parent == this.MailSendList)
+//			{
+//				listview = this.MailSendList;
+//			}
+//			else if (parent == this.MailRecvList)
+//			{
+//				listview = this.MailRecvList;
+//			}
+			return MailMenuStrip.Tag as ListView;
 		}
 		
 		void RefreshMailToolStripMenuItemClick(object sender, EventArgs e)
@@ -462,27 +470,27 @@ namespace Vindictus
 		}
 		void copyItemClassToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-	
+			
 		}
 		void send1ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-	
+			
 		}
 		void send5ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-	
+			
 		}
 		void send10ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-	
+			
 		}
 		void sendNToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-	
+			
 		}
 		void sendItemToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-	
+			
 		}
 
 		#endregion

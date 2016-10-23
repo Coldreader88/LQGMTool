@@ -113,7 +113,6 @@ namespace Vindictus
 			this.send5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.send10ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.sendNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.sendItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.copyItemClassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.SearchItemClass = new System.Windows.Forms.TextBox();
@@ -594,7 +593,8 @@ namespace Vindictus
 			this.deleteMailsToolStripMenuItem,
 			this.deleteAllMailsToolStripMenuItem});
 			this.MailMenuStrip.Name = "MailMenuStrip";
-			this.MailMenuStrip.Size = new System.Drawing.Size(159, 76);
+			this.MailMenuStrip.Size = new System.Drawing.Size(159, 98);
+			this.MailMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.MailMenuStrip_Opening);
 			// 
 			// refreshMailToolStripMenuItem
 			// 
@@ -784,11 +784,10 @@ namespace Vindictus
 			this.send5ToolStripMenuItem,
 			this.send10ToolStripMenuItem,
 			this.sendNToolStripMenuItem,
-			this.sendItemToolStripMenuItem,
 			this.toolStripSeparator4,
 			this.copyItemClassToolStripMenuItem});
 			this.SendMenuStrip.Name = "SendMenuStrip";
-			this.SendMenuStrip.Size = new System.Drawing.Size(167, 164);
+			this.SendMenuStrip.Size = new System.Drawing.Size(167, 120);
 			// 
 			// send1ToolStripMenuItem
 			// 
@@ -817,13 +816,6 @@ namespace Vindictus
 			this.sendNToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
 			this.sendNToolStripMenuItem.Text = "Send N";
 			this.sendNToolStripMenuItem.Click += new System.EventHandler(this.sendNToolStripMenuItem_Click);
-			// 
-			// sendItemToolStripMenuItem
-			// 
-			this.sendItemToolStripMenuItem.Name = "sendItemToolStripMenuItem";
-			this.sendItemToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
-			this.sendItemToolStripMenuItem.Text = "Send Item";
-			this.sendItemToolStripMenuItem.Click += new System.EventHandler(this.sendItemToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator4
 			// 
@@ -1291,7 +1283,6 @@ namespace Vindictus
 		private System.Windows.Forms.ToolStripMenuItem send5ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem send10ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem sendNToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem sendItemToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
 		private System.Windows.Forms.ToolStripMenuItem copyItemClassToolStripMenuItem;
 	}
