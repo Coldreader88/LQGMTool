@@ -109,13 +109,6 @@ namespace ServerManager
 			return true;
 		}
 		private void StopAll(){
-			if (SerivceHelper.IsRunningService(Config.SqlServer))
-			{
-				if (this.Question("是否停止数据库?"))
-				{
-					SerivceHelper.StopService(Config.SqlServer);
-				}
-			}
 			if (ProcessPanels != null)
 			{
 				new Thread(() =>
@@ -129,6 +122,13 @@ namespace ServerManager
 				           	}
 				           	//	Invoke(new UpdateUI(updateStatu), new object[]{false});
 				           }).Start();
+			}
+			if (SerivceHelper.IsRunningService(Config.SqlServer))
+			{
+				if (this.Question("是否停止数据库?"))
+				{
+					SerivceHelper.StopService(Config.SqlServer);
+				}
 			}
 			if(HttpServer!=null){
 				HttpServer.Stop();
