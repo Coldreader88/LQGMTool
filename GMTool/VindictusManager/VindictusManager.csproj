@@ -7,8 +7,9 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Vindictus</RootNamespace>
     <AssemblyName>VindictusManager</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
@@ -139,6 +140,7 @@
     <Compile Include="UI\ProcessPanel.Designer.cs">
       <DependentUpon>ProcessPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\SendItemDialog.cs" />
     <Compile Include="UI\ServerForm.cs">
       <SubType>Form</SubType>
     </Compile>

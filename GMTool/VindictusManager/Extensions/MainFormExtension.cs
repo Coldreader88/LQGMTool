@@ -9,10 +9,12 @@ using System.Xml;
 using ServerManager;
 using Vindictus.UI;
 using System.Data.Common;
+using System.Data;
 using System.IO;
 using System.Threading;
 using Vindictus.Bean;
 using Vindictus.Enums;
+using System.Data.SqlClient;
 
 namespace Vindictus.Extensions
 {
@@ -379,6 +381,98 @@ namespace Vindictus.Extensions
 			TitleThread.Start();
 		}
 		
+		#endregion
+		#region 发送
+		/// <summary>
+		/// 发送物品
+		/// </summary>
+		public static int SendItems(this MainForm main, User user, int count, params ItemClassInfo[] items)
+		{
+			if (user == null || items == null)
+			{
+				return 0;
+			}
+			int rs = 0;
+			int i = 0;
+            foreach (ItemClassInfo item in items)
+            {
+                if (item != null)
+                {
+                    if (item.Name != null && item.Name.Contains("{0}"))
+                    {
+                        return -i;
+                    }
+                }
+                i++;
+            }
+            foreach (ItemClassInfo item in items)
+			{
+				if (item != null)
+				{
+					rs += SendItem(main, user, count, item.ItemClass, item.Name, null);
+				}
+			}
+			return rs;
+		}
+
+		/// <summary>
+		/// 发送物品
+		/// </summary>
+		public static int SendItem(this MainForm main, User user, int count, string item, string name,string value)
+		{
+			if (user == null || string.IsNullOrEmpty(item))
+			{
+				return 0;
+			}
+            if (!string.IsNullOrEmpty(value))
+            {
+                item += "[VALUE:" + value + "]";
+            }
+            if (string.IsNullOrEmpty(name))
+			{
+				name = item;
+			}
+			return SendMail(main, user, name + "(" + count + ")", name + "\\n(" + item + ":" + count + ")", count, item);
+		}
+
+		public static int SendMail(this MainForm main, User user, string title, string content, int count, string itemClass)
+		{
+			try
+			{
+				string strSQL = "heroes.dbo.HDV_SendItemMail";
+				var paras = new SqlParameter[8];
+				paras[0] = new SqlParameter("@CID", SqlDbType.BigInt);
+				paras[0].Direction = ParameterDirection.Input;
+				paras[0].Value = user.CID;
+				paras[1] = new SqlParameter("@ItemClassEx", SqlDbType.NVarChar);
+				paras[1].Direction = ParameterDirection.Input;
+				paras[1].Value = itemClass;
+				paras[2] = new SqlParameter("@Count", SqlDbType.Int);
+				paras[2].Direction = ParameterDirection.Input;
+				paras[2].Value = count;
+				paras[3] = new SqlParameter("@IsCharacterBinded", SqlDbType.Bit);
+				paras[3].Direction = ParameterDirection.Input;
+				paras[3].Value = 0;
+				paras[4] = new SqlParameter("@MailTitle", SqlDbType.NVarChar);
+				paras[4].Direction = ParameterDirection.Input;
+				paras[4].Value = title;
+				paras[5] = new SqlParameter("@MailContent", SqlDbType.NVarChar);
+				paras[5].Direction = ParameterDirection.Input;
+				paras[5].Value = content;
+				paras[6] = new SqlParameter("@Result", SqlDbType.Int);
+				paras[6].Direction = ParameterDirection.Output;
+				paras[6].Value = 0;
+				paras[7] = new SqlParameter("@CharacterName", SqlDbType.NVarChar);
+				paras[7].Direction = ParameterDirection.Output;
+				paras[7].Value = "";
+				main.Db.ExcuteSQL(strSQL, CommandType.StoredProcedure, paras);
+				return 1;
+			}
+			catch (Exception)
+			{
+			}
+			return 0;
+		}
 		#endregion
 	}
 }

@@ -14,6 +14,7 @@ using Vindictus.Extensions;
 using Vindictus.Bean;
 using Vindictus.Enums;
 using Vindictus.Common;
+using System.Text;
 
 namespace Vindictus
 {
@@ -470,29 +471,75 @@ namespace Vindictus
 		}
 		void copyItemClassToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			
+			var items= this.SearchListView.GetSelectItems<ItemClassInfo>();
+			if (items != null)
+			{
+				var sb = new StringBuilder();
+				foreach (ItemClassInfo item in items)
+				{
+					sb.Append(item.ItemClass);
+					sb.AppendLine();
+				}
+				Clipboard.SetDataObject(sb.ToString());
+				this.Info("复制了"+items.Length+"个物品ID");
+			}
 		}
 		void send1ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			
+			SendSelectItems(1);
 		}
 		void send5ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			
+			SendSelectItems(5);
 		}
 		void send10ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			
+			SendSelectItems(10);
 		}
 		void sendNToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			
+			using(var dlg=new SendItemDialog(this)){
+				if(dlg.ShowDialog() == DialogResult.OK){
+					int count = dlg.Count;
+					SendSelectItems(count);
+				}
+			}
 		}
-		void sendItemToolStripMenuItem_Click(object sender, EventArgs e)
+		private void SendSelectItems(int count)
 		{
-			
+			if (!CheckUser()) return;
+			ItemClassInfo[] items = SearchListView.GetSelectItems<ItemClassInfo>();
+			if (items == null || items.Length == 0) return;
+			int _count = this.SendItems(CurUser, count, items);
+			if (_count > 0)
+			{
+				ReadMails();
+				if(_count == 1){
+					log("发送" + items[0].Name + "成功");
+				}else{
+					log("发送" + _count + "个物品成功");
+				}
+			}
+			else
+			{
+				if(items.Length==1){
+					SendSItem(items[0]);
+				}else{
+					this.Warnning("含有特殊物品，不能批量发送。\n名字带有{0}都是特殊物品");
+				}
+			}
 		}
-
+		void SendSItem(ItemClassInfo item){
+			if(item==null){
+				return;
+			}
+			using(var dlg=new SendItemDialog(this)){
+				if(dlg.ShowDialog() == DialogResult.OK){
+					int count = dlg.Count;
+					SendSelectItems(count);
+				}
+			}
+		}
 		#endregion
 	}
 }
