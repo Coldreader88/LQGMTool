@@ -37,7 +37,9 @@ namespace Vindictus.Helper
 		public TitleInfo[] GetTitles(){
 			return Titles.Values.ToArray<TitleInfo>();
 		}
-		
+		public EnchantInfo[] GetEnchantInfos(){
+			return Enchants.Values.ToArray<EnchantInfo>();
+		}
 		public EnchantInfo GetEnchant(string name){
 			EnchantInfo info;
 			if(Enchants.TryGetValue(name, out info)){

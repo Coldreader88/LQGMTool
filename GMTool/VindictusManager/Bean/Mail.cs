@@ -14,7 +14,7 @@ namespace Vindictus.Bean
 		public long MailID { get; private set; }
 		public string Title { get; private set; }
 		public string Text { get; private set; }
-
+		public string ItemClassEx{get;private set;}
 		public int Count { get;private set; }
 		public Mail(){
 			
@@ -25,6 +25,7 @@ namespace Vindictus.Bean
 			string title = reader.ReadString("MailTitle");
 			title = HeroesTextHelper.GetMailTitle(title);
 			this.Title = title;
+			this.ItemClassEx=reader.ReadString("ItemClassEx");
 			//Content
 			this.Text =	reader.ReadString("MailContent");
 			this.Count = reader.ReadInt32("Count");

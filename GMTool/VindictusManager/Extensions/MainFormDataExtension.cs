@@ -144,5 +144,83 @@ namespace Vindictus.Extensions
 		{
 			return ModUserInfo(db, user, "ap", ap);
 		}
+		/// <summary>
+		/// 评分最大
+		/// </summary>
+		public static int ModItemScoreMax(this MainForm main, User user,params Item[] items)
+		{
+			return ModItemScore(main, user,"S", items);
+		}
+		/// <summary>
+		/// 评分最大
+		/// </summary>
+		public static int ModItemScore(this MainForm main, User user,string score, params Item[] items)
+		{
+			if (items == null || items.Length == 0)
+			{
+				return 0;
+			}
+			else
+			{
+				int count = 0;
+				foreach (Item item in items)
+				{
+					if(ModItemAttr(main, new ItemAttribute(ItemAttributeType.SYNTHESISGRADE, score), item)){
+						count++;
+					}
+				}
+				return count;
+			}
+		}
+		private static bool ModItemAttr(this MainForm main,ItemAttribute attr, Item item)
+		{
+			long itemID = item.ItemID;
+			string val = (attr.Value==null?"":attr.Value);
+			if(main.Db.ExcuteSQL("update ItemAttribute set Value='"+val+
+			                "',Arg="+attr.Arg+
+			                ",Arg2="+attr.Arg2+
+			                " where ItemID = " + itemID +" and Attribute = '"+
+			                attr.Type.ToString()
+			                +"'")==0){
+				//修改
+				return main.Db.ExcuteSQL("insert into ItemAttribute(ItemID,Attribute,Value,Arg,Arg2)"+
+				                    " values(" + itemID + ",'"+attr.Type.ToString()
+				                    +"','"+val+"',"+attr.Arg+","+attr.Arg2+")") > 0;
+			}else{
+				//插入
+				return true;
+			}
+		}
+		/// <summary>
+		/// 附魔
+		/// </summary>
+		public static bool ItemEnchant(this MainForm main, Item item, EnchantInfo attribute)
+		{
+			if (attribute == null || item == null)
+			{
+				return false;
+			}
+			ItemClassInfo info = main.DataHelper.getItemClassInfo(item.ItemClass);
+			if (info != null)
+			{
+				if (!(info.MainCategory == MainCategory.WEAPON
+				      || info.SubCategory == SubCategory.INNERARMOR
+				      || info.MainCategory == MainCategory.CLOTH
+				      || info.MainCategory == MainCategory.LIGHTARMOR
+				      || info.MainCategory == MainCategory.HEAVYARMOR
+				      || info.MainCategory == MainCategory.PLATEARMOR
+				      || info.MainCategory == MainCategory.ACCESSORY))
+				{
+					if (!main.Question("该类型[" + info.MainCategory.Name() + "]不适合附魔，确定强制附魔？"))
+					{
+						return false;
+					}
+				}
+			}
+			
+			ItemAttributeType type = attribute.IsPrefix ? ItemAttributeType.PREFIX : ItemAttributeType.SUFFIX;
+			
+			return ModItemAttr(main, new ItemAttribute(type, attribute.Class).SetArg(attribute.MaxArg), item);
+		}
 	}
 }

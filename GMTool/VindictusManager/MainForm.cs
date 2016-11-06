@@ -27,6 +27,7 @@ namespace Vindictus
 		public DataHelper DataHelper{get;private set;}
 		private string DefTitle;
 		private SearchHelper Searcher;
+		private ListView curListView;
 		public MainForm()
 		{
 			Config = Program.Config;
@@ -62,7 +63,7 @@ namespace Vindictus
 			maxSubClassToolStripMenuItem.Text=R.MaxSubClass;
 			refreshUserToolStripMenuItem.Text=R.RefreshUser;
 			addTitlesToolStripMenuItem.Text=R.AddTitles;
-			addTitleToolStripMenuItem.Text=R.AddTitle;
+			addTitle0ToolStripMenuItem.Text=R.AddTitle;
 			//
 			modAPToolStripMenuItem.Text = R.ModAP;
 			modAttriToolStripMenuItem.Text = R.ModAttri;
@@ -104,6 +105,9 @@ namespace Vindictus
 			//第一次菜单初始化
 			InitUserMenu();
 			this.AddTypes(SearchMainCategory, SearchSubCategory);
+			this.AddTitles(addTitle0ToolStripMenuItem);
+			this.InitCashEnchantMenu(innerEnchantToolStripMenuItem);
+			this.InitEnchantMenu(prefixEnchantToolStripMenuItem, suffixEnchantToolStripMenuItem);
 		}
 		
 		void MainFormFormClosing(object sender, FormClosingEventArgs e)
@@ -176,22 +180,46 @@ namespace Vindictus
 			}
 		}
 		#endregion
-
+		
+		public void ReadPackage(PackageType type){
+			
+		}
+		
+		#region 列表选择
+		void AddTitle0ToolStripMenuItemMouseEnter(object sender, EventArgs e)
+		{
+			this.HideAddTitles(CurUser, addTitle0ToolStripMenuItem);
+		}
 		void UserListViewSelectedIndexChanged(object sender, EventArgs e)
 		{
 			User user = this.UserListView.GetSelectItem<User>();
 			if (user != null)
 			{
 				this.CurUser = user;
-				this.RefeshPackage(PackageType.All);
+				this.ReadPackage(PackageType.All);
 				this.ReadMails();
 //				this.NormalCurItem = 0;
 //				this.CashCurItem = 0;
 				this.Text = this.DefTitle + "  -  " + user.ToString();
-				this.AddTitles(this.addTitleToolStripMenuItem);
+				this.AddSkillBouns(user, clothesSocreToolStripMenuItem);
 				//form.AddSkillBouns(user, this.contentMenuItemMaxScore, this.list_items_cash);
 			}
 		}
+		
+		void SearchListViewSelectedIndexChanged(object sender, EventArgs e)
+		{
+			ItemClassInfo item = this.SearchListView.GetSelectItem<ItemClassInfo>();
+			//SetCurItems(item);
+		}
+		void ItemListPackageSelectedIndexChanged(object sender, EventArgs e)
+		{
+			
+		}
+		void ItemListCashSelectedIndexChanged(object sender, EventArgs e)
+		{
+			
+		}
+		#endregion
 		
 		#region common
 		public delegate void AddListView(ListView listview,Control label, ListViewItem[] items,int index);
@@ -223,6 +251,77 @@ namespace Vindictus
 		}
 		#endregion
 		
+		#region 菜单显示
+		void MailMenuStrip_Opening(object sender, CancelEventArgs e)
+		{
+			var menu = sender as ContextMenuStrip;
+			if(menu !=null){
+				menu.Tag = menu.SourceControl;
+				curListView = menu.SourceControl as ListView;
+				if(curListView == MailSendList){
+					//发送箱
+					showMenu(MENU_MAIL_BASE|MENU_ATTRIBUTES|MENU_INNET_ANCHANT);
+				}else if(curListView == MailRecvList){
+					//收件箱
+					showMenu(MENU_MAIL_BASE);
+				}else if(curListView ==SearchListView){
+					//搜过结果
+				}else if(curListView == ItemListCash){
+					//现金
+					showMenu(MENU_ITEM_BASE|MENU_INNET_ANCHANT);
+				}else if(curListView==ItemListOther){
+					//隐藏
+					showMenu(MENU_ITEM_BASE);
+				}else if(curListView==ItemListPackage){
+					//背包
+					showMenu(MENU_ITEM_BASE|MENU_ATTRIBUTES|MENU_COLOR);
+				}else if(curListView==ItemListTask){
+					//任务
+					showMenu(MENU_ITEM_BASE);
+				}
+			}
+		}
+		
+		public ListView GetListView(){
+			return curListView;
+		}
+		public bool isMailListView(){
+			return curListView == MailSendList
+				||curListView == MailRecvList;
+		}
+		
+		private void showMenu(int flags){
+			this.refreshMailToolStripMenuItem.Visible = (flags & MENU_MAIL_BASE)==MENU_MAIL_BASE;
+			this.refreshItemToolStripMenuItem.Visible= (flags & MENU_ITEM_BASE)==MENU_ITEM_BASE;
+			this.refreshSep.Visible = (flags & MENU_ATTRIBUTES)==MENU_ATTRIBUTES || (flags & MENU_INNET_ANCHANT)==MENU_INNET_ANCHANT
+				||(flags & MENU_ITEM_BASE)==MENU_ITEM_BASE;
+			this.innerEnchantToolStripMenuItem.Visible= (flags & MENU_INNET_ANCHANT)==MENU_INNET_ANCHANT;
+			this.prefixEnchantToolStripMenuItem.Visible= (flags & MENU_ATTRIBUTES)==MENU_ATTRIBUTES;
+			this.suffixEnchantToolStripMenuItem.Visible= (flags & MENU_ATTRIBUTES)==MENU_ATTRIBUTES;
+			this.enhanceToolStripMenuItem.Visible= (flags & MENU_ATTRIBUTES)==MENU_ATTRIBUTES;
+			this.clothesSocreToolStripMenuItem.Visible= (flags & MENU_ATTRIBUTES)==MENU_ATTRIBUTES;
+			this.itemStarToolStripMenuItem.Visible= (flags & MENU_ATTRIBUTES)==MENU_ATTRIBUTES;
+			this.itemCountToolStripMenuItem.Visible=(flags & MENU_ITEM_BASE)==MENU_ITEM_BASE;
+			this.unlimitTimeToolStripMenuItem.Visible= (flags & MENU_ITEM_BASE)==MENU_ITEM_BASE;
+			this.colorSep.Visible= (flags & MENU_COLOR)==MENU_COLOR;
+			this.color1ToolStripMenuItem.Visible= (flags & MENU_COLOR)==MENU_COLOR;
+			this.color2ToolStripMenuItem.Visible= (flags & MENU_COLOR)==MENU_COLOR;
+			this.color3ToolStripMenuItem.Visible= (flags & MENU_COLOR)==MENU_COLOR;
+			this.allColorToolStripMenuItem.Visible= (flags & MENU_COLOR)==MENU_COLOR;
+			this.deleteSep.Visible = (flags & MENU_MAIL_BASE)==MENU_MAIL_BASE || (flags & MENU_ITEM_BASE)==MENU_ITEM_BASE;
+			this.deleteItemToolStripMenuItem.Visible= (flags & MENU_ITEM_BASE)==MENU_ITEM_BASE;
+			this.gemToolStripMenuItem.Visible= (flags & MENU_ATTRIBUTES)==MENU_ATTRIBUTES;
+			this.lookToolStripMenuItem.Visible= (flags & MENU_ATTRIBUTES)==MENU_ATTRIBUTES;
+			this.deleteMailsToolStripMenuItem.Visible = (flags & MENU_MAIL_BASE)==MENU_MAIL_BASE;
+			this.deleteAllMailsToolStripMenuItem.Visible= (flags & MENU_MAIL_BASE)==MENU_MAIL_BASE;
+		}
+		const int MENU_MAIL_BASE =1;
+		const int MENU_ITEM_BASE =2;
+		const int MENU_ATTRIBUTES=4;
+		const int MENU_INNET_ANCHANT=8;
+		const int MENU_COLOR = 0x10;
+		#endregion
+		
 		#region mail menu
 		Thread MailThread;
 		public void ReadMails(){
@@ -242,34 +341,7 @@ namespace Vindictus
 			MailThread.Start();
 //			this.AddMails(, Db.ReadRecvMailList(CurUser));
 		}
-		void MailMenuStrip_Opening(object sender, CancelEventArgs e)
-		{
-			var menu = sender as ContextMenuStrip;
-			if(menu !=null){
-				menu.Tag = menu.SourceControl;
-				//菜单隐藏
-			}
-		}
-		private ListView GetMailMenu(object sender)
-		{
-//			var menu = sender as ToolStripMenuItem;
-//			Control parent = null;
-//			ListView listview = null;
-//			if (menu != null)
-//			{
-//				parent = menu.GetMenuConrtol();
-//			}
-//			if (parent == this.MailSendList)
-//			{
-//				listview = this.MailSendList;
-//			}
-//			else if (parent == this.MailRecvList)
-//			{
-//				listview = this.MailRecvList;
-//			}
-			return MailMenuStrip.Tag as ListView;
-		}
-		
+
 		void RefreshMailToolStripMenuItemClick(object sender, EventArgs e)
 		{
 			if (!CheckUser()) return;
@@ -278,8 +350,8 @@ namespace Vindictus
 		
 		void DeleteMailsToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			if (!CheckUser()) return;
-			ListView listview = GetMailMenu(sender);
+			if (!CheckUser() || curListView==null) return;
+			ListView listview = curListView;
 			bool isSend = listview == this.MailSendList;
 			if (listview != null)
 			{
@@ -304,8 +376,8 @@ namespace Vindictus
 		
 		void DeleteAllMailsToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			if (!CheckUser()) return;
-			ListView listview = GetMailMenu(sender);
+			if (!CheckUser() || curListView==null) return;
+			ListView listview = curListView;
 			bool isSend = listview == this.MailSendList;
 			if (listview != null)
 			{
@@ -538,11 +610,6 @@ namespace Vindictus
 				}
 			}
 			ReadMails();
-		}
-		void SearchListViewSelectedIndexChanged(object sender, EventArgs e)
-		{
-			ItemClassInfo item = this.SearchListView.GetSelectItem<ItemClassInfo>();
-			//SetCurItems(item);
 		}
 		#endregion
 	}

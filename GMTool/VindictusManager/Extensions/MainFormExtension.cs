@@ -20,11 +20,6 @@ namespace Vindictus.Extensions
 {
 	public static class MainFormExtension
 	{
-		public delegate void _AddMenus(ToolStripDropDownItem menuitem, ToolStripDropDownItem[] items);
-		public static void AddMenus(ToolStripDropDownItem menuitem, ToolStripDropDownItem[] items){
-			menuitem.DropDownItems.Clear();
-			menuitem.DropDownItems.AddRange(items);
-		}
 		#region posttask
 		public static void PostTask(this Form form, Action<IWaitDialog> action){
 			if(action==null)return;
@@ -87,6 +82,8 @@ namespace Vindictus.Extensions
 			return items;
 		}
 		#endregion
+		
+		#region mail list
 		public static ListViewItem[] ToMailListViewItems(this List<Mail> mails)
 		{
 			int count = mails.Count;
@@ -108,9 +105,9 @@ namespace Vindictus.Extensions
 			}
 			return items;
 		}
-		public static void RefeshPackage(this MainForm form,PackageType type){
-			
-		}
+		#endregion
+
+		#region search list
 		public static void AddSearchItemList(this MainForm form,ListView listview,Control label, List<ItemClassInfo> items)
 		{
 			int count = items.Count;
@@ -140,6 +137,8 @@ namespace Vindictus.Extensions
 			listview.EndUpdate();
 //			listview.GoToRow(0);
 		}
+		#endregion
+		
 		#region user
 		public static void ResetQuest(this MainForm main,User user=null){
 			string SQL = "Update Quest set TodayPlayCount = 0";
@@ -287,101 +286,6 @@ namespace Vindictus.Extensions
 		}
 		#endregion
 		
-		#region 头衔
-		public static List<long> GetTitles(this MainForm main,User user){
-			List<long> titles=new List<long>();
-			using(DbDataReader reader=main.Db.GetReader("select TitleID from Title where Acquired =1 and CID="+user.CID)){
-				while(reader!=null&&reader.Read()){
-					titles.Add(reader.ReadInt64("TitleID"));
-				}
-			}
-			return titles;
-		}
-
-		static Thread TitleThread;
-		public static void AddTitles(this MainForm main, ToolStripDropDownItem menuitem)
-		{
-			List<long> titleIds= main.GetTitles(main.CurUser);
-			if(TitleThread!=null){
-				TitleThread.Interrupt();
-			}
-			TitleThread=new Thread(
-				()=>{
-					TitleInfo[] titles = main.DataHelper.GetTitles();
-					int k = 0;
-					User user = main.CurUser;
-					if (user == null) return;
-					List<ToolStripDropDownItem> items=new List<ToolStripDropDownItem>();
-					ToolStripMenuItem level = new ToolStripMenuItem("lv." + (k * 10 + 1) + "-" + ((k + 1) * 10));
-					items.Add(level);
-					int max = 20;
-					int i = 0;
-					foreach (TitleInfo cls in titles)
-					{
-						if (!user.IsEnable(cls.ClassRestriction))
-						{
-							continue;
-						}
-						if (cls.OnlyClass != ClassInfo.UnKnown)
-						{
-							if (user.Class != cls.OnlyClass)
-							{
-								continue;
-							}
-						}
-						
-						if (cls.RequiredLevel <= (k + 1) * 10)
-						{
-							if (i % max == 0 && i >= max)
-							{
-								level = new ToolStripMenuItem("lv." + (k * 10 + 1) + "-" + ((k + 1) * 10) + "(" + (i / max + 1) + ")");
-								items.Add(level);
-							}
-							i++;
-							ToolStripMenuItem tsmi = new ToolStripMenuItem(cls.ToShortString());
-							tsmi.Tag = cls;
-							tsmi.ToolTipText = cls.ToString();
-
-							if (titleIds.Contains(cls.TitleID))
-							{
-								tsmi.Checked = true;
-							}
-							else
-							{
-								tsmi.Click += (object sender, EventArgs e) => {
-									if (!main.CheckUser()) return;
-									ToolStripMenuItem menu = sender as ToolStripMenuItem;
-									if (menu != null && menu.Tag != null)
-									{
-										TitleInfo info = (TitleInfo)menu.Tag;
-//								if (!main.CurUser.IsEnable(info.ClassRestriction))
-//								{
-//									main.Info("该头衔不适合当前职业");
-//									return;
-//								}
-										//
-										main.AddTitle(main.CurUser, info);
-										main.ReadUsers(false);
-									}
-								};
-							}
-							level.DropDownItems.Add(tsmi);
-						}
-						else
-						{
-							i = 0;
-							k = cls.RequiredLevel / 10;
-							level = new ToolStripMenuItem("lv." + (k * 10 + 1) + "-" + ((k + 1) * 10));
-							items.Add(level);
-						}
-					}
-					main.Invoke(new _AddMenus(AddMenus), new object[]{menuitem, items.ToArray()});
-				});
-			TitleThread.IsBackground =true;
-			TitleThread.Start();
-		}
-		
-		#endregion
 		#region 发送
 		/// <summary>
 		/// 发送物品
@@ -393,7 +297,7 @@ namespace Vindictus.Extensions
 				return 0;
 			}
 			int rs = 0;
-            foreach (ItemClassInfo item in items)
+			foreach (ItemClassInfo item in items)
 			{
 				if (item != null)
 				{
@@ -412,17 +316,20 @@ namespace Vindictus.Extensions
 			{
 				return 0;
 			}
-            if (!string.IsNullOrEmpty(value))
-            {
-                item += "[VALUE:" + value + "]";
-            }
-            if (string.IsNullOrEmpty(name))
+			if (!string.IsNullOrEmpty(value))
+			{
+				item += "[VALUE:" + value + "]";
+			}
+			if (string.IsNullOrEmpty(name))
 			{
 				name = item;
 			}
 			return SendMail(main, user, name + "(" + count + ")", name + "\\n(" + item + ":" + count + ")", count, item);
 		}
-
+		public static bool ModMailItem(this MSSqlHelper db, Mail mail,string itemclass){
+			string sql = "update QueuedItem set ItemClassEx='"+itemclass+"' where RowID="+mail.MailID;
+			return db.ExcuteSQL(sql)>0;
+		}
 		public static int SendMail(this MainForm main, User user, string title, string content, int count, string itemClass)
 		{
 			try
