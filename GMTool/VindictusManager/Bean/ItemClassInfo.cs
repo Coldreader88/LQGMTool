@@ -11,7 +11,7 @@ namespace Vindictus.Bean
 {
 	public class ItemClassInfo
 	{
-		public string ItemClass{get;private set;}
+		public string ItemClass{get;protected set;}
 		/// <summary>
 		/// 子目录
 		/// </summary>
@@ -34,9 +34,13 @@ namespace Vindictus.Bean
 		public string Desc{get;private set;}
 		public ItemStatInfo Stat{get;private set;}
 		public long MaxStack{get;private set;}
-        public string Feature { get; private set; }
-        public ItemClassInfo(){
+		public string Feature { get; private set; }
+
+		public ItemClassInfo(){
 			
+		}
+		public ItemClassInfo(ItemClassInfo info){
+			cloneFrom(info);
 		}
 		public ItemClassInfo(DbDataReader reader,HeroesTextHelper HeroesText){
 			this.ItemClass = reader.ReadString("ItemClass", "").ToLower();
@@ -57,17 +61,39 @@ namespace Vindictus.Bean
 			if(!stat.IsEmpty()){
 				this.Stat = stat;
 			}
-            this.Feature = reader.ReadString("Feature");
-        }
+			this.Feature = reader.ReadString("Feature");
+		}
+		public void cloneFrom(ItemClassInfo info){
+			if(info == null){
+				this.Name = this.ItemClass;
+				this.MaxStack=1;
+				this.RequiredLevel=1;
+				this.SubCategory=SubCategory.NONE;
+				this.MainCategory=MainCategory.NONE;
+				return;
+			}
+			//this.ItemClass=info.ItemClass;
+			this.SubCategory=info.SubCategory;
+			this.MainCategory=info.MainCategory;
+			this.RequiredLevel=info.RequiredLevel;
+			this.ClassRestriction=info.ClassRestriction;
+			this.Name=info.Name;
+			this.Desc=info.Desc;
+			if(info.Stat != null){
+				this.Stat= new ItemStatInfo(info.Stat);
+			}
+			this.MaxStack=info.MaxStack;
+			this.Feature=info.Feature;
+		}
 		public override string ToString()
 		{
 			return "ID："+ ItemClass+"\n"+R.ItemName+"："+Name
 				+" \n"+R.ItemRequireLevel+"： "+ RequiredLevel
-                +"\n"+R.ItemMaxStack+"："+(MaxStack<0?R.UnLimit:""+MaxStack)
-                +"\n"+R.Category+"："+ SubCategory.Name()+ "  "+MainCategory.Name()
+				+"\n"+R.ItemMaxStack+"："+(MaxStack<0?R.UnLimit:""+MaxStack)
+				+"\n"+R.Category+"："+ SubCategory.Name()+ "  "+MainCategory.Name()
 				+ "\n"+R.Feature+":"+Feature
-				+"\n"+R.ClassRestriction+"：" +ClassInfoEx.GetClassText(ClassRestriction)  +(Stat==null?"":"\n"+Stat.ToString()) 
-                + "\n" + Desc;
+				+"\n"+R.ClassRestriction+"：" +ClassInfoEx.GetClassText(ClassRestriction)  +(Stat==null?"":"\n"+Stat)
+				+ "\n" + Desc;
 		}
 	}
 }

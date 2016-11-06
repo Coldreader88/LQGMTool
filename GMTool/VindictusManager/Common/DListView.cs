@@ -9,7 +9,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace GMTool.Common
+namespace Vindictus.Common
 {
 	public class DListView : ListView
 	{

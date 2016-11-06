@@ -78,6 +78,12 @@ namespace Vindictus
 			SearchByName.Text = R.SearchByName;
 			SearchByClass.Text=R.SearchByItemClass;
 			SearchReset.Text =R.SearchReset;
+			//
+			send1ToolStripMenuItem.Text=string.Format(R.SendItemCount, 1);
+			send5ToolStripMenuItem.Text=string.Format(R.SendItemCount, 5);
+			send10ToolStripMenuItem.Text=string.Format(R.SendItemCount, 10);
+			sendNToolStripMenuItem.Text=string.Format(R.SendItemCount, "N");
+			copyItemClassToolStripMenuItem.Text=R.CopyItemClass;//;
 		}
 		
 		void MainFormLoad(object sender, EventArgs e)
@@ -498,7 +504,7 @@ namespace Vindictus
 		}
 		void sendNToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			using(var dlg=new SendItemDialog(this)){
+			using(var dlg=new SendItemDialog(this, R.InputSendCount)){
 				if(dlg.ShowDialog() == DialogResult.OK){
 					int count = dlg.Count;
 					SendSelectItems(count);
@@ -510,35 +516,33 @@ namespace Vindictus
 			if (!CheckUser()) return;
 			ItemClassInfo[] items = SearchListView.GetSelectItems<ItemClassInfo>();
 			if (items == null || items.Length == 0) return;
-			int _count = this.SendItems(CurUser, count, items);
-			if (_count > 0)
-			{
-				ReadMails();
-				if(_count == 1){
-					log("发送" + items[0].Name + "成功");
+			foreach(var item in items){
+				int val = 0;
+				if (item.Name != null && item.Name.Contains("{0}"))
+				{
+					using(var dlg=new SendItemDialog(this, R.InputNumber)){
+						if(dlg.ShowDialog() == DialogResult.OK){
+							val = dlg.Count;
+						}
+					}
+					//弹框输入
+					if(val < 0){
+						continue;
+					}
+				}
+				string extra = val > 0? ""+val:null;
+				if(this.SendItem(CurUser, count, item.ItemClass, item.Name, extra)>0){
+					log("发送" + item.Name + "成功");
 				}else{
-					log("发送" + _count + "个物品成功");
+					log("发送" + item.Name + "失败");
 				}
 			}
-			else
-			{
-				if(items.Length==1){
-					SendSItem(items[0]);
-				}else{
-					this.Warnning("含有特殊物品，不能批量发送。\n名字带有{0}都是特殊物品");
-				}
-			}
+			ReadMails();
 		}
-		void SendSItem(ItemClassInfo item){
-			if(item==null){
-				return;
-			}
-			using(var dlg=new SendItemDialog(this)){
-				if(dlg.ShowDialog() == DialogResult.OK){
-					int count = dlg.Count;
-					SendSelectItems(count);
-				}
-			}
+		void SearchListViewSelectedIndexChanged(object sender, EventArgs e)
+		{
+			ItemClassInfo item = this.SearchListView.GetSelectItem<ItemClassInfo>();
+			//SetCurItems(item);
 		}
 		#endregion
 	}

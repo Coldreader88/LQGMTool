@@ -6,9 +6,9 @@
 	<ConnectionString>Data Source=.\JSQL2008;Integrated Security=SSPI;Persist Security Info=False;</ConnectionString>
 	<ProviderName>System.Data.SqlClient</ProviderName>
 	<!-- 游戏文件夹，用于版本检测，PVP主机 -->
-	<GamePath>D:\LQServer2</GamePath>
+	<GamePath>D:\LQServer</GamePath>
 	<!-- 服务端文件夹 -->
-	<ServerPath>D:\LQServer2\</ServerPath>
+	<ServerPath>D:\LQServer\</ServerPath>
 	<!-- 数据库存放路径 -->
 	<DatabasePath>D:\LQServer\db\</DatabasePath>
 	<!-- 游戏代码GM模式兼容非GM模式 16850955-->

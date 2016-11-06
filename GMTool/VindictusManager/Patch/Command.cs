@@ -1,12 +1,4 @@
-﻿/*
- * 由SharpDevelop创建。
- * 用户： Administrator
- * 日期: 2016/10/12
- * 时间: 12:30
- * 
- * 要改变这种模板请点击 工具|选项|代码编写|编辑标准头文件
- */
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 using System.Data.Common;
@@ -14,7 +6,7 @@ using System.Windows.Forms;
 using Vindictus.Common;
 using Vindictus.Helper;
 
-namespace GMTool
+namespace Vindictus
 {
 	public class Command
 	{

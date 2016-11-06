@@ -52,7 +52,7 @@ namespace Vindictus
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.TabPanelLeft = new System.Windows.Forms.TabControl();
 			this.TabUserList = new System.Windows.Forms.TabPage();
-			this.UserListView = new GMTool.Common.DListView();
+			this.UserListView = new Vindictus.Common.DListView();
 			this.chUserName = new System.Windows.Forms.ColumnHeader();
 			this.chUserClass = new System.Windows.Forms.ColumnHeader();
 			this.chUserLevel = new System.Windows.Forms.ColumnHeader();
@@ -87,7 +87,7 @@ namespace Vindictus
 			this.label6 = new System.Windows.Forms.Label();
 			this.TabPanelMail = new System.Windows.Forms.TabControl();
 			this.TabMailSend = new System.Windows.Forms.TabPage();
-			this.MailSendList = new GMTool.Common.DListView();
+			this.MailSendList = new Vindictus.Common.DListView();
 			this.chSendingTitle = new System.Windows.Forms.ColumnHeader();
 			this.MailMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.refreshMailToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,7 +95,7 @@ namespace Vindictus
 			this.deleteMailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteAllMailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.TabMailRecv = new System.Windows.Forms.TabPage();
-			this.MailRecvList = new GMTool.Common.DListView();
+			this.MailRecvList = new Vindictus.Common.DListView();
 			this.chReceiverTitle = new System.Windows.Forms.ColumnHeader();
 			this.LogCatText = new System.Windows.Forms.TextBox();
 			this.SearchReset = new System.Windows.Forms.Button();
@@ -106,7 +106,7 @@ namespace Vindictus
 			this.lbSearchItemClass = new System.Windows.Forms.Label();
 			this.lbSearchName = new System.Windows.Forms.Label();
 			this.lbSearchCategory = new System.Windows.Forms.Label();
-			this.SearchListView = new GMTool.Common.DListView();
+			this.SearchListView = new Vindictus.Common.DListView();
 			this.chSearchName = new System.Windows.Forms.ColumnHeader();
 			this.SendMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.send1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -120,7 +120,7 @@ namespace Vindictus
 			this.SearchTitle = new System.Windows.Forms.Label();
 			this.tab_items = new System.Windows.Forms.TabControl();
 			this.tab_items_normal = new System.Windows.Forms.TabPage();
-			this.list_items_normal = new GMTool.Common.DListView();
+			this.list_items_normal = new Vindictus.Common.DListView();
 			this.ch_items_name = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader12 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader15 = new System.Windows.Forms.ColumnHeader();
@@ -130,7 +130,7 @@ namespace Vindictus
 			this.ch_items_color3 = new System.Windows.Forms.ColumnHeader();
 			this.ch_items_time = new System.Windows.Forms.ColumnHeader();
 			this.tab_items_cash = new System.Windows.Forms.TabPage();
-			this.list_items_cash = new GMTool.Common.DListView();
+			this.list_items_cash = new Vindictus.Common.DListView();
 			this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader14 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
@@ -139,13 +139,13 @@ namespace Vindictus
 			this.columnHeader9 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader10 = new System.Windows.Forms.ColumnHeader();
 			this.tab_items_quest = new System.Windows.Forms.TabPage();
-			this.list_items_quest = new GMTool.Common.DListView();
+			this.list_items_quest = new Vindictus.Common.DListView();
 			this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader11 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader13 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader19 = new System.Windows.Forms.ColumnHeader();
 			this.tab_items_other = new System.Windows.Forms.TabPage();
-			this.list_items_other = new GMTool.Common.DListView();
+			this.list_items_other = new Vindictus.Common.DListView();
 			this.columnHeader20 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader21 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader22 = new System.Windows.Forms.ColumnHeader();
@@ -593,7 +593,7 @@ namespace Vindictus
 			this.deleteMailsToolStripMenuItem,
 			this.deleteAllMailsToolStripMenuItem});
 			this.MailMenuStrip.Name = "MailMenuStrip";
-			this.MailMenuStrip.Size = new System.Drawing.Size(159, 98);
+			this.MailMenuStrip.Size = new System.Drawing.Size(159, 76);
 			this.MailMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.MailMenuStrip_Opening);
 			// 
 			// refreshMailToolStripMenuItem
@@ -771,6 +771,7 @@ namespace Vindictus
 			this.SearchListView.TabIndex = 17;
 			this.SearchListView.UseCompatibleStateImageBehavior = false;
 			this.SearchListView.View = System.Windows.Forms.View.Details;
+			this.SearchListView.SelectedIndexChanged += new System.EventHandler(this.SearchListViewSelectedIndexChanged);
 			// 
 			// chSearchName
 			// 
@@ -1195,10 +1196,10 @@ namespace Vindictus
 		private System.Windows.Forms.ToolStripMenuItem refreshMailToolStripMenuItem;
 		private System.Windows.Forms.ContextMenuStrip MailMenuStrip;
 		private System.Windows.Forms.ColumnHeader chReceiverTitle;
-		private GMTool.Common.DListView MailRecvList;
+		private Vindictus.Common.DListView MailRecvList;
 		private System.Windows.Forms.TabPage TabMailRecv;
 		private System.Windows.Forms.ColumnHeader chSendingTitle;
-		private GMTool.Common.DListView MailSendList;
+		private Vindictus.Common.DListView MailSendList;
 		private System.Windows.Forms.TabPage TabMailSend;
 		private System.Windows.Forms.TabControl TabPanelMail;
 		private System.Windows.Forms.Label label6;
@@ -1215,7 +1216,7 @@ namespace Vindictus
 		private System.Windows.Forms.ColumnHeader chUserLevel;
 		private System.Windows.Forms.ColumnHeader chUserClass;
 		private System.Windows.Forms.ColumnHeader chUserName;
-		private GMTool.Common.DListView UserListView;
+		private Vindictus.Common.DListView UserListView;
 		private System.Windows.Forms.TabPage TabUserList;
 		private System.Windows.Forms.TabControl TabPanelLeft;
 		private System.Windows.Forms.ToolStripMenuItem zhTW2zhCNToolStripMenuItem;
@@ -1241,12 +1242,12 @@ namespace Vindictus
 		private System.Windows.Forms.Label lbSearchItemClass;
 		private System.Windows.Forms.Label lbSearchName;
 		private System.Windows.Forms.Label lbSearchCategory;
-		private GMTool.Common.DListView SearchListView;
+		private Vindictus.Common.DListView SearchListView;
 		private System.Windows.Forms.TextBox SearchItemClass;
 		private System.Windows.Forms.TextBox SearchName;
 		private System.Windows.Forms.TabControl tab_items;
 		private System.Windows.Forms.TabPage tab_items_normal;
-		private GMTool.Common.DListView list_items_normal;
+		private Vindictus.Common.DListView list_items_normal;
 		private System.Windows.Forms.ColumnHeader ch_items_name;
 		private System.Windows.Forms.ColumnHeader columnHeader12;
 		private System.Windows.Forms.ColumnHeader columnHeader15;
@@ -1256,7 +1257,7 @@ namespace Vindictus
 		private System.Windows.Forms.ColumnHeader ch_items_color3;
 		private System.Windows.Forms.ColumnHeader ch_items_time;
 		private System.Windows.Forms.TabPage tab_items_cash;
-		private GMTool.Common.DListView list_items_cash;
+		private Vindictus.Common.DListView list_items_cash;
 		private System.Windows.Forms.ColumnHeader columnHeader5;
 		private System.Windows.Forms.ColumnHeader columnHeader14;
 		private System.Windows.Forms.ColumnHeader columnHeader6;
@@ -1265,13 +1266,13 @@ namespace Vindictus
 		private System.Windows.Forms.ColumnHeader columnHeader9;
 		private System.Windows.Forms.ColumnHeader columnHeader10;
 		private System.Windows.Forms.TabPage tab_items_quest;
-		private GMTool.Common.DListView list_items_quest;
+		private Vindictus.Common.DListView list_items_quest;
 		private System.Windows.Forms.ColumnHeader columnHeader2;
 		private System.Windows.Forms.ColumnHeader columnHeader11;
 		private System.Windows.Forms.ColumnHeader columnHeader13;
 		private System.Windows.Forms.ColumnHeader columnHeader19;
 		private System.Windows.Forms.TabPage tab_items_other;
-		private GMTool.Common.DListView list_items_other;
+		private Vindictus.Common.DListView list_items_other;
 		private System.Windows.Forms.ColumnHeader columnHeader20;
 		private System.Windows.Forms.ColumnHeader columnHeader21;
 		private System.Windows.Forms.ColumnHeader columnHeader22;

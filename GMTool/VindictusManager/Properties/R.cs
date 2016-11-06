@@ -169,5 +169,20 @@ namespace Vindictus
 		public static string SearchByItemClass{get{ return Get("SearchByItemClass"); }}
 		public static string ItemClass{get{ return Get("ItemClass"); }}
 		public static string SearchList{get{ return Get("SearchList"); }}
+		public static string InputSendCount{get{ return Get("InputSendCount"); }}
+		public static string Package{get{ return Get("Package"); }}
+		public static string TimeDate{get{ return Get("TimeDate"); }}
+		public static string Color{get{ return Get("Color"); }}
+		public static string MaxStackCount{get{ return Get("MaxStackCount"); }}
+		public static string Enhance{get{ return Get("Enhance"); }}
+		
+		public static string  Score{get{ return Get("Score"); }}
+		public static string  Star{get{ return Get("Star"); }}
+		public static string  PrefixEnchant{get{ return Get("PrefixEnchant"); }}
+		public static string  SuffixEnchant{get{ return Get("SuffixEnchant"); }}
+		
+		public static string  SendItemCount{get{ return Get("SendItemCount"); }}
+		public static string  CopyItemClass{get{ return Get("CopyItemClass"); }}
+		
 	}
 }

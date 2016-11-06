@@ -38,6 +38,29 @@ namespace Vindictus.Helper
 			return Titles.Values.ToArray<TitleInfo>();
 		}
 		
+		public EnchantInfo GetEnchant(string name){
+			EnchantInfo info;
+			if(Enchants.TryGetValue(name, out info)){
+				return info;
+			}
+			return null;
+		}
+		
+		public ItemClassInfo getItemClassInfo(string itemclass){
+			ItemClassInfo info;
+			if(Items.TryGetValue(itemclass, out info)){
+				return info;
+			}
+			return null;
+		}
+		public SkillBonusInfo getSkillBonusInfo(int id){
+			SkillBonusInfo info;
+			if(SynthesisSkillBonues.TryGetValue(id, out info)){
+				return info;
+			}
+			return null;
+		}
+		
 		#region synskillbonuds
 		private void ReadSkillBonuds(SQLiteHelper db,HeroesTextHelper HeroesText){
 			using (DbDataReader reader = db.GetReader("select * from synthesisskillbonus order by classRestriction;"))

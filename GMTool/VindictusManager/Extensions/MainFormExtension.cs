@@ -393,18 +393,6 @@ namespace Vindictus.Extensions
 				return 0;
 			}
 			int rs = 0;
-			int i = 0;
-            foreach (ItemClassInfo item in items)
-            {
-                if (item != null)
-                {
-                    if (item.Name != null && item.Name.Contains("{0}"))
-                    {
-                        return -i;
-                    }
-                }
-                i++;
-            }
             foreach (ItemClassInfo item in items)
 			{
 				if (item != null)

@@ -30,10 +30,23 @@ namespace Vindictus.Bean
 		public int PVP_MATK;
 		public int PVP_DEF;
 		public int TOWN_SPEED;
-		private string text;
 		
 		public ItemStatInfo()
 		{
+		}
+		public ItemStatInfo(ItemStatInfo info)
+		{
+			this.ATK=info.ATK;
+			this.ATK_Speed=info.ATK_Speed;
+			this.Critical=info.Critical;
+			this.Balance=info.Balance;
+			this.MATK=info.MATK;
+			this.DEF=info.DEF;
+			this.Res_Critical=info.Res_Critical;
+			this.PVP_ATK=info.PVP_ATK;
+			this.PVP_MATK=info.PVP_MATK;
+			this.PVP_DEF=info.PVP_DEF;
+			this.TOWN_SPEED=info.TOWN_SPEED;
 		}
 		public ItemStatInfo(DbDataReader reader):base(reader){
 			this.ATK = reader.ReadInt32("ATK");
@@ -50,42 +63,39 @@ namespace Vindictus.Bean
 		}
 		public new bool IsEmpty(){
 			bool b = (ATK != 0 || ATK_Speed !=0 || Critical!=0||Balance!=0||MATK!=0
-			         ||DEF!=0||Res_Critical!=0||PVP_ATK!=0||PVP_MATK!=0||PVP_DEF!=0||TOWN_SPEED!=0);
+			          ||DEF!=0||Res_Critical!=0||PVP_ATK!=0||PVP_MATK!=0||PVP_DEF!=0||TOWN_SPEED!=0);
 			if(b)return false;
 			if(!base.IsEmpty())return false;
 			return  true;
 		}
 		public override string ToString()
 		{
-			if(text==null){
-				StringBuilder sb=new StringBuilder();
-				if(ATK>0)
-					sb.Append("\n"+"ATK".StatName()+":"+ATK);
-				if(ATK_Speed>0)
-					sb.Append("\n"+"ATK_Speed".StatName()+":"+ATK_Speed);
-				if(Critical>0)
-					sb.Append("\n"+"Critical".StatName()+":"+Critical);
-				if(Balance>0)
-					sb.Append("\n"+"Balance".StatName()+":"+Balance);
-				if(MATK>0)
-					sb.Append("\n"+"MATK".StatName()+":"+MATK);
-				if(DEF>0)
-					sb.Append("\n"+"DEF".StatName()+":"+DEF);
-				if(Res_Critical>0)
-					sb.Append("\n"+"Res_Critical".StatName()+":"+Res_Critical);
-				if(!base.IsEmpty())
-					sb.Append(base.ToString());
-				if(PVP_ATK>0)
-					sb.Append("\n"+"PVP_ATK".StatName()+":"+PVP_ATK);
-				if(PVP_MATK>0)
-					sb.Append("\n"+"PVP_MATK".StatName()+":"+PVP_MATK);
-				if(PVP_DEF>0)
-					sb.Append("\n"+"PVP_DEF".StatName()+":"+PVP_DEF);
-				if(TOWN_SPEED>0)
-					sb.Append("\n"+"TOWN_SPEED".StatName()+":+"+TOWN_SPEED+"%");
-				text= sb.ToString();
-			}
-			return text;
+			StringBuilder sb=new StringBuilder();
+			if(ATK>0)
+				sb.Append("\n"+"ATK".StatName()+":"+ATK);
+			if(ATK_Speed>0)
+				sb.Append("\n"+"ATK_Speed".StatName()+":"+ATK_Speed);
+			if(Critical>0)
+				sb.Append("\n"+"Critical".StatName()+":"+Critical);
+			if(Balance>0)
+				sb.Append("\n"+"Balance".StatName()+":"+Balance);
+			if(MATK>0)
+				sb.Append("\n"+"MATK".StatName()+":"+MATK);
+			if(DEF>0)
+				sb.Append("\n"+"DEF".StatName()+":"+DEF);
+			if(Res_Critical>0)
+				sb.Append("\n"+"Res_Critical".StatName()+":"+Res_Critical);
+			if(!base.IsEmpty())
+				sb.Append(base.ToString());
+			if(PVP_ATK>0)
+				sb.Append("\n"+"PVP_ATK".StatName()+":"+PVP_ATK);
+			if(PVP_MATK>0)
+				sb.Append("\n"+"PVP_MATK".StatName()+":"+PVP_MATK);
+			if(PVP_DEF>0)
+				sb.Append("\n"+"PVP_DEF".StatName()+":"+PVP_DEF);
+			if(TOWN_SPEED>0)
+				sb.Append("\n"+"TOWN_SPEED".StatName()+":+"+TOWN_SPEED+"%");
+			return sb.ToString();
 		}
 
 	}

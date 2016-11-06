@@ -33,7 +33,6 @@ namespace Vindictus.Helper
             }
 			foreach (ItemClassInfo info in Items.Values)
 			{
-				/*
 				if (!string.IsNullOrEmpty(name))
 				{
                     if (string.IsNullOrEmpty(info.Name))
@@ -52,7 +51,7 @@ namespace Vindictus.Helper
 					{
 						continue;
 					}
-				}*/
+				}
 				if (!string.IsNullOrEmpty(subcategory)
 				    && subcategory != SubCategory.NONE.Name())
 				{

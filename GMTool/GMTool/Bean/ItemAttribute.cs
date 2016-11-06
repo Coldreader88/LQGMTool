@@ -92,8 +92,7 @@ namespace GMTool.Bean
                 }
             }
             else if (Type == ItemAttributeType.VALUE){
-                _Desc = "";
-                
+                _Desc = Type+":"+Value+" "+Arg+","+Arg2;
 			}
 			return _Desc;
 		}

@@ -10,10 +10,11 @@ namespace Vindictus.UI
 		private User user;
 		private ItemClassInfo item;
 		private int count;
-		public SendItemDialog(MainForm main):base()
+		public SendItemDialog(MainForm main,string text):base()
 		{
 			this.mainForm=main;
-			this.Title = "输入发送数量";
+			this.Title =text;
+			this.ContentText="";
 			this.OnCheckText  = OnCheckCount;
 			this.InputText = "1";
 			SetUserAndItem(mainForm.CurUser, null);

@@ -69,6 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bean\EnchantInfo.cs" />
+    <Compile Include="Bean\Item.cs" />
+    <Compile Include="Bean\ItemAttribute.cs" />
     <Compile Include="Bean\ItemClassInfo.cs" />
     <Compile Include="Bean\ItemStatInfo.cs" />
     <Compile Include="Bean\Mail.cs" />
