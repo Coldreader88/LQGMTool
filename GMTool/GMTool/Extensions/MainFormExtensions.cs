@@ -374,9 +374,9 @@ namespace GMTool
 					                     ")");
 				}
 				//清空记录
-				strSQL = "delete from TitleGoalProgress "+
-					"WHERE CID =" + user.CID+" and TitleGoalID="+titleId;
-				db.ExcuteSQL(strSQL);
+				//strSQL = "delete from TitleGoalProgress "+
+				//	"WHERE CID =" + user.CID+" and TitleGoalID="+titleId;
+				//db.ExcuteSQL(strSQL);
 				return count;
 			}
 			catch (Exception exception)

@@ -166,7 +166,7 @@ namespace Vindictus.Extensions
 				else
 				{
 					main.Db.ExcuteSQL(string.Concat(new object[] {
-					                                	"update Manufacture set Grade = 4,ExperiencePoint = 3990000 where ManufacturelID = N'", className, "' and CID = ", user.CID }));
+					                                	"update Manufacture set Grade = 4,ExperiencePoint = 1000 where ManufacturelID = N'", className, "' and CID = ", user.CID }));
 				}
 			}
 			catch (Exception ex)

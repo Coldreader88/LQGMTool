@@ -115,7 +115,9 @@
     <Compile Include="Helper\HeroesTextHelper.cs" />
     <Compile Include="Helper\SearchHelper.cs" />
     <Compile Include="Helper\SettingHelper.cs" />
-    <Compile Include="MainForm.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
@@ -140,7 +142,9 @@
     <Compile Include="UI\ProcessPanel.Designer.cs">
       <DependentUpon>ProcessPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\SendItemDialog.cs" />
+    <Compile Include="UI\SendItemDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\ServerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,7 +160,9 @@
     <Compile Include="UI\UserNameDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\WaitDialog.cs" />
+    <Compile Include="UI\WaitDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\WaitDialog.Designer.cs">
       <DependentUpon>WaitDialog.cs</DependentUpon>
     </Compile>
@@ -186,16 +192,6 @@
       <DependentUpon>WaitDialog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\win32" />
-    <Folder Include="Common\Database" />
-    <Folder Include="Common" />
-    <Folder Include="Enums" />
-    <Folder Include="UI" />
-    <Folder Include="Patch" />
-    <Folder Include="Extensions" />
-    <Folder Include="Bean" />
-    <Folder Include="Helper" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -89,6 +89,7 @@ namespace Vindictus.Common
 			};
 			try{
 				process.Start();
+				process.PriorityClass = ProcessPriorityClass.High;
 //				StringBuilder sbText = new StringBuilder(200);
 //				User32.GetWindowText(Window,sbText ,200);
 //				Title = sbText.ToString();

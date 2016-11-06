@@ -139,7 +139,7 @@ namespace Vindictus
 		#endregion
 		
 		#region menu
-		void ServerManagerToolStripMenuItemClick(object sender2, EventArgs ex)
+		void ServerManagerToolStripMenuItemClick(object sender, EventArgs ex)
 		{
 			this.ShowServerManager();
 		}

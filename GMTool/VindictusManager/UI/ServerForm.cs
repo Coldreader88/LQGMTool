@@ -114,13 +114,6 @@ namespace ServerManager
 			return true;
 		}
 		private void StopAll(){
-			if (SerivceHelper.IsRunningService(Config.SqlServer))
-			{
-				if (this.Question(R.TipServerStopSqlServer))
-				{
-					SerivceHelper.StopService(Config.SqlServer);
-				}
-			}
 			if (ProcessPanels != null)
 			{
 				new Thread(() =>
@@ -134,6 +127,13 @@ namespace ServerManager
 				           	}
 				           	//	Invoke(new UpdateUI(updateStatu), new object[]{false});
 				           }).Start();
+			}
+			if (SerivceHelper.IsRunningService(Config.SqlServer))
+			{
+				if (this.Question(R.TipServerStopSqlServer))
+				{
+					SerivceHelper.StopService(Config.SqlServer);
+				}
 			}
 			if(HttpServer!=null){
 				HttpServer.Stop();

@@ -83,7 +83,7 @@ namespace GMTool.Common
 			process.EnableRaisingEvents = true;
 			IsShow = false;
 			process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-			process.Exited += (object sender, EventArgs e)=>{
+			process.Exited += (sender, e)=>{
 				if(isRunning){
 					Stop();
 					//异常结束
@@ -97,6 +97,7 @@ namespace GMTool.Common
 			};
 			try{
 				process.Start();
+				process.PriorityClass = ProcessPriorityClass.High;
 //				StringBuilder sbText = new StringBuilder(200);
 //				User32.GetWindowText(Window,sbText ,200);
 //				Title = sbText.ToString();
