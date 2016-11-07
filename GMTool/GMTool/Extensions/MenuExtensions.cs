@@ -15,18 +15,17 @@ namespace GMTool
 	{
 		public static void AddSkillBouns(this MainForm main,User user,ToolStripDropDownItem menuitem,ListView listview){
 			menuitem.DropDownItems.Clear();
-            var infos =main.DataHelper.SynthesisSkillBonues.Values;
+			var infos =main.DataHelper.SynthesisSkillBonues.Values;
 			foreach (SkillBonusInfo info in infos)
 			{
 				if(user.IsEnable(info.ClassRestriction)){
-					ToolStripMenuItem tsmi = new ToolStripMenuItem(info.Grade+" "+info.DESC);
-					tsmi.Tag = info;
-                    tsmi.ToolTipText = info.ToString();
-                    tsmi.Click += (object sender, EventArgs e) => {
+					var tsmi = new ToolStripMenuItem(info.Grade+" "+info.DESC);
+					tsmi.ToolTipText = info.ToString();
+					tsmi.Click += (sender, e) => {
 						if (!main.CheckUser()) return;
 						if (main.ModItemScore(main.CurUser, info.GetKey(), listview.GetSelectItems<Item>())>0)
 						{
-                            main.ReadPackage(PackageType.Cash);
+							main.ReadPackage(PackageType.Cash);
 						}
 					};
 					menuitem.DropDownItems.Add(tsmi);
@@ -50,24 +49,17 @@ namespace GMTool
 			{
 				if (cls != ClassInfo.UnKnown)
 				{
-					ToolStripMenuItem tsmi = new ToolStripMenuItem(cls.Name());
-					tsmi.Tag = cls;
+					var tsmi = new ToolStripMenuItem(cls.Name());
 					if (user != null && user.Class == cls)
 					{
 						tsmi.Checked = true;
 					}
 					tsmi.ToolTipText = cls.ToString() + " " + cls.Index();
-					tsmi.Click += (object sender, EventArgs e) => {
+					tsmi.Click += (sender, e) => {
 						if (!main.CheckUser()) return;
-						var menu = sender as ToolStripMenuItem;
-						if (menu != null && menu.Tag != null)
+						if (main.ModUserClass(main.CurUser, cls))
 						{
-							var info = (ClassInfo)menu.Tag;
-							//
-							if (main.ModUserClass(main.CurUser, info))
-							{
-								main.ReadUsers();
-							}
+							main.ReadUsers();
 						}
 					};
 					menuitem.DropDownItems.Add(tsmi);
@@ -96,23 +88,23 @@ namespace GMTool
 			int k = 0;
 			User user = main.CurUser;
 			if (user == null) return;
-			ToolStripMenuItem level = new ToolStripMenuItem("lv." + (k * 10 + 1) + "-" + ((k + 1) * 10));
+			var level = new ToolStripMenuItem("lv." + (k * 10 + 1) + "-" + ((k + 1) * 10));
 			menuitem.DropDownItems.Add(level);
 			int max = 20;
 			int i = 0;
 			foreach (TitleInfo cls in titles)
 			{
-				if (!user.IsEnable(cls.ClassRestriction))
-				{
-					continue;
-				}
-				if (cls.OnlyClass != ClassInfo.UnKnown)
-				{
-					if (user.Class != cls.OnlyClass)
-					{
-						continue;
-					}
-				}
+//				if (!user.IsEnable(cls.ClassRestriction))
+//				{
+//					continue;
+//				}
+//				if (cls.OnlyClass != ClassInfo.UnKnown)
+//				{
+//					if (user.Class != cls.OnlyClass)
+//					{
+//						continue;
+//					}
+//				}
 				
 				if (cls.RequiredLevel <= (k + 1) * 10)
 				{
@@ -123,30 +115,24 @@ namespace GMTool
 					}
 					i++;
 					ToolStripMenuItem tsmi = new ToolStripMenuItemEx(cls.ToShortString());
-					tsmi.Tag = cls;
 					tsmi.ToolTipText = cls.ToString();
-
 					if (titleIds.Contains(cls.TitleID))
 					{
 						tsmi.Checked = true;
 					}
 					else
 					{
-						tsmi.Click += (object sender, EventArgs e) => {
+						tsmi.Click += (sender, e) => {
 							if (!main.CheckUser()) return;
-							ToolStripMenuItem menu = sender as ToolStripMenuItem;
-							if (menu != null && menu.Tag != null)
+							if (!main.CurUser.IsEnable(cls.ClassRestriction)
+							    ||(cls.OnlyClass != ClassInfo.UnKnown && user.Class != cls.OnlyClass))
 							{
-								TitleInfo info = (TitleInfo)menu.Tag;
-								if (!main.CurUser.IsEnable(info.ClassRestriction))
-								{
-									main.Info("该头衔不适合当前职业");
-									return;
-								}
-								//
-								main.AddTitle(main.CurUser, info);
-								main.ReadUsers();
+								main.Info("该头衔不适合当前职业");
+								return;
 							}
+							//
+							main.AddTitle(main.CurUser, cls);
+							main.ReadUsers();
 						};
 					}
 					level.DropDownItems.Add(tsmi);
@@ -171,26 +157,24 @@ namespace GMTool
 			foreach (EnchantInfo info in enchantinfos)
 			{
 				ToolStripMenuItem tsmi = new ToolStripMenuItemEx(info.Name);
-				tsmi.Tag = info;
 				tsmi.ToolTipText = info.ToString();//提示文字为真实路径
-				tsmi.Click += (object sender, EventArgs e) => {
-					ToolStripMenuItem menu = sender as ToolStripMenuItem;
+				tsmi.Click += (sender, e) => {
+					var menu = sender as ToolStripMenuItem;
 					if (menu != null && menu.Tag != null)
 					{
-						EnchantInfo _info = menu.Tag as EnchantInfo;
 						Item item = listview.GetSelectItem<Item>();
-						if (_info != null && item!=null)
+						if (item!=null)
 						{
 							//附魔
-							if (main.ItemEnchant(item, _info))
+							if (main.ItemEnchant(item, info))
 							{
-								main.log(item.ItemName + " 附魔【" + _info.Name + "】成功。");
+								main.log(item.ItemName + " 附魔【" + info.Name + "】成功。");
 								main.ReadPackage(item.Package);
 							}
 							else
 							{
 								//main.Warnning(item.ItemName + " 附魔【" + _info.Name + "】失败。");
-								main.log(item.ItemName + " 附魔【" + _info.Name + "】失败。");
+								main.log(item.ItemName + " 附魔【" + info.Name + "】失败。");
 							}
 						}
 					}
@@ -216,28 +200,23 @@ namespace GMTool
 			int max = 15;
 			foreach (EnchantInfo info in enchantinfos)
 			{
-				ToolStripMenuItem tsmi = new ToolStripMenuItemEx(info.Name);
-				tsmi.Tag = info;
+				var tsmi = new ToolStripMenuItemEx(info.Name);
 				tsmi.ToolTipText = info.ToString();//提示文字为真实路径
-				tsmi.Click += (object sender, EventArgs e)=> {
+				tsmi.Click += (sender, e)=> {
 					Item item = listview.GetSelectItem<Item>();
-					ToolStripMenuItem menu = sender as ToolStripMenuItem;
+					var menu = sender as ToolStripMenuItem;
 					if (menu != null && menu.Tag != null && item!=null)
 					{
-						EnchantInfo _info = menu.Tag as EnchantInfo;
-						if (_info != null)
+						//附魔
+						if (main.ItemEnchant(item, info))
 						{
-							//附魔
-							if (main.ItemEnchant(item, _info))
-							{
-								main.log(item.ItemName + " 附魔【" + _info.Name + "】成功。");
-								main.ReadPackage(item.Package);
-							}
-							else
-							{
-								// main.Warnning(item.ItemName + " 附魔【" + _info.Name + "】失败。");
-								main.log(item.ItemName + " 附魔【" + _info.Name + "】失败。");
-							}
+							main.log(item.ItemName + " 附魔【" + info.Name + "】成功。");
+							main.ReadPackage(item.Package);
+						}
+						else
+						{
+							// main.Warnning(item.ItemName + " 附魔【" + _info.Name + "】失败。");
+							main.log(item.ItemName + " 附魔【" + info.Name + "】失败。");
 						}
 					}
 				};
@@ -286,7 +265,7 @@ namespace GMTool
 		
 		#region 属性
 		public static void InitModAttrMenu(this MainForm main,ToolStripDropDownItem menuitem){
-			string[] stats=new string[]{
+			string[] stats={
 				"STR",
 				"DEX",
 				"INT",
@@ -298,25 +277,18 @@ namespace GMTool
 			menuitem.DropDownItems.Clear();
 			foreach(string stat in stats){
 				string name = stat.StatName();
-				ToolStripMenuItem tsmi = new ToolStripMenuItem(name);
-				tsmi.Tag = stat;
-				tsmi.Click += (object sender, EventArgs e) => {
+				var tsmi = new ToolStripMenuItem(name);
+				tsmi.Click += (sender, e) => {
 					if (!main.CheckUser()) return;
-					ToolStripMenuItem menu = sender as ToolStripMenuItem;
-					if (menu != null && menu.Tag != null)
+					using (var form = new UserAttributeDialog(main))
 					{
-						string info = (string)menu.Tag;
-						//
-						using (UserAttributeDialog form = new UserAttributeDialog(main))
+						form.SetUser(main.CurUser, stat, name);
+						if (form.ShowDialog() == DialogResult.OK)
 						{
-							form.SetUser(main.CurUser, stat, name);
-							if (form.ShowDialog() == DialogResult.OK)
-							{
-								int ap = form.Value;
-								if(ap>0 && main.ModUserInfo(main.CurUser, info, ap)){
-									main.log("成功修改用户[" + main.CurUser.Name + "]"+name+"为"+ap);
-									main.ReadUsers();
-								}
+							int ap = form.Value;
+							if(ap>0 && main.ModUserInfo(main.CurUser, stat, ap)){
+								main.log("成功修改用户[" + main.CurUser.Name + "]"+name+"为"+ap);
+								main.ReadUsers();
 							}
 						}
 					}

@@ -85,6 +85,8 @@ namespace Vindictus
 			send10ToolStripMenuItem.Text=string.Format(R.SendItemCount, 10);
 			sendNToolStripMenuItem.Text=string.Format(R.SendItemCount, "N");
 			copyItemClassToolStripMenuItem.Text=R.CopyItemClass;//;
+			//
+			itemCountToolStripMenuItem.Text = R.ModItemCount;
 		}
 		
 		void MainFormLoad(object sender, EventArgs e)
@@ -108,6 +110,8 @@ namespace Vindictus
 			this.AddTitles(addTitle0ToolStripMenuItem);
 			this.InitCashEnchantMenu(innerEnchantToolStripMenuItem);
 			this.InitEnchantMenu(prefixEnchantToolStripMenuItem, suffixEnchantToolStripMenuItem);
+			this.InitStart(itemStarToolStripMenuItem);
+			this.InitEnhance(enhanceToolStripMenuItem);
 		}
 		
 		void MainFormFormClosing(object sender, FormClosingEventArgs e)
@@ -180,7 +184,6 @@ namespace Vindictus
 			}
 		}
 		#endregion
-		
 		public void ReadPackage(PackageType type){
 			
 		}
@@ -299,7 +302,7 @@ namespace Vindictus
 			this.prefixEnchantToolStripMenuItem.Visible= (flags & MENU_ATTRIBUTES)==MENU_ATTRIBUTES;
 			this.suffixEnchantToolStripMenuItem.Visible= (flags & MENU_ATTRIBUTES)==MENU_ATTRIBUTES;
 			this.enhanceToolStripMenuItem.Visible= (flags & MENU_ATTRIBUTES)==MENU_ATTRIBUTES;
-			this.clothesSocreToolStripMenuItem.Visible= (flags & MENU_ATTRIBUTES)==MENU_ATTRIBUTES;
+			this.clothesSocreToolStripMenuItem.Visible= (flags & MENU_INNET_ANCHANT)==MENU_INNET_ANCHANT;
 			this.itemStarToolStripMenuItem.Visible= (flags & MENU_ATTRIBUTES)==MENU_ATTRIBUTES;
 			this.itemCountToolStripMenuItem.Visible=(flags & MENU_ITEM_BASE)==MENU_ITEM_BASE;
 			this.unlimitTimeToolStripMenuItem.Visible= (flags & MENU_ITEM_BASE)==MENU_ITEM_BASE;
@@ -610,6 +613,34 @@ namespace Vindictus
 				}
 			}
 			ReadMails();
+		}
+		#endregion
+		#region item
+		void UnlimitTimeToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			if(CheckUser()){
+				this.ModItemTime(CurUser,null);
+			}
+		}
+		void ItemCountToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			if (!CheckUser()||curListView==null) return;
+			Item item = curListView.GetSelectItem<Item>();
+			if (item == null)
+			{
+				return;
+			}
+			using (var dlg = new ItemModCountDialog(this))
+			{
+				dlg.SetUserAndItem(CurUser, item);
+				if (dlg.ShowDialog() == DialogResult.OK)
+				{
+					if (this.ModItemCount(CurUser, item, dlg.Count))
+					{
+						ReadPackage(PackageType.All);
+					}
+				}
+			}
 		}
 		#endregion
 	}

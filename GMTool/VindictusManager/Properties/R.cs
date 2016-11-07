@@ -180,7 +180,7 @@ namespace Vindictus
 		public static string  Star{get{ return Get("Star"); }}
 		public static string  PrefixEnchant{get{ return Get("PrefixEnchant"); }}
 		public static string  SuffixEnchant{get{ return Get("SuffixEnchant"); }}
-		
+		public static string  ModItemCount{get{ return Get("ModItemCount"); }}
 		public static string  SendItemCount{get{ return Get("SendItemCount"); }}
 		public static string  CopyItemClass{get{ return Get("CopyItemClass"); }}
 		

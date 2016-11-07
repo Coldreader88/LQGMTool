@@ -94,18 +94,27 @@ namespace Vindictus
 			this.refreshItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.refreshSep = new System.Windows.Forms.ToolStripSeparator();
 			this.innerEnchantToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.prefixEnchantToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.suffixEnchantToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.enhanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
-			this.clearEnhanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearInnerEnchantToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.clothesSocreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearSocreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+			this.prefixEnchantToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearPrefixToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+			this.suffixEnchantToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearSuffixToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+			this.enhanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearEnhanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
 			this.itemStarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearItemStarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+			this.gemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearGemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+			this.lookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.itemCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.unlimitTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.colorSep = new System.Windows.Forms.ToolStripSeparator();
@@ -117,8 +126,6 @@ namespace Vindictus
 			this.deleteItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteMailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteAllMailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.gemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.lookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.TabMailRecv = new System.Windows.Forms.TabPage();
 			this.MailRecvList = new Vindictus.Common.DListView();
 			this.chReceiverTitle = new System.Windows.Forms.ColumnHeader();
@@ -619,10 +626,10 @@ namespace Vindictus
 			this.refreshItemToolStripMenuItem,
 			this.refreshSep,
 			this.innerEnchantToolStripMenuItem,
+			this.clothesSocreToolStripMenuItem,
 			this.prefixEnchantToolStripMenuItem,
 			this.suffixEnchantToolStripMenuItem,
 			this.enhanceToolStripMenuItem,
-			this.clothesSocreToolStripMenuItem,
 			this.itemStarToolStripMenuItem,
 			this.gemToolStripMenuItem,
 			this.lookToolStripMenuItem,
@@ -661,71 +668,92 @@ namespace Vindictus
 			// 
 			// innerEnchantToolStripMenuItem
 			// 
+			this.innerEnchantToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.clearInnerEnchantToolStripMenuItem,
+			this.toolStripSeparator1});
 			this.innerEnchantToolStripMenuItem.Name = "innerEnchantToolStripMenuItem";
 			this.innerEnchantToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.innerEnchantToolStripMenuItem.Text = "InnerEnchant";
 			// 
+			// clearInnerEnchantToolStripMenuItem
+			// 
+			this.clearInnerEnchantToolStripMenuItem.Name = "clearInnerEnchantToolStripMenuItem";
+			this.clearInnerEnchantToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+			this.clearInnerEnchantToolStripMenuItem.Text = "ClearInnerEnchant";
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
+			// 
+			// clothesSocreToolStripMenuItem
+			// 
+			this.clothesSocreToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.clearSocreToolStripMenuItem,
+			this.toolStripSeparator6});
+			this.clothesSocreToolStripMenuItem.Name = "clothesSocreToolStripMenuItem";
+			this.clothesSocreToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+			this.clothesSocreToolStripMenuItem.Text = "ClothesSocre";
+			// 
+			// clearSocreToolStripMenuItem
+			// 
+			this.clearSocreToolStripMenuItem.Name = "clearSocreToolStripMenuItem";
+			this.clearSocreToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+			this.clearSocreToolStripMenuItem.Text = "ClearSocre";
+			// 
+			// toolStripSeparator6
+			// 
+			this.toolStripSeparator6.Name = "toolStripSeparator6";
+			this.toolStripSeparator6.Size = new System.Drawing.Size(136, 6);
+			// 
 			// prefixEnchantToolStripMenuItem
 			// 
+			this.prefixEnchantToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.clearPrefixToolStripMenuItem,
+			this.toolStripSeparator7});
 			this.prefixEnchantToolStripMenuItem.Name = "prefixEnchantToolStripMenuItem";
 			this.prefixEnchantToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.prefixEnchantToolStripMenuItem.Text = "PrefixEnchant";
 			// 
+			// clearPrefixToolStripMenuItem
+			// 
+			this.clearPrefixToolStripMenuItem.Name = "clearPrefixToolStripMenuItem";
+			this.clearPrefixToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+			this.clearPrefixToolStripMenuItem.Text = "ClearPrefix";
+			// 
+			// toolStripSeparator7
+			// 
+			this.toolStripSeparator7.Name = "toolStripSeparator7";
+			this.toolStripSeparator7.Size = new System.Drawing.Size(135, 6);
+			// 
 			// suffixEnchantToolStripMenuItem
 			// 
+			this.suffixEnchantToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.clearSuffixToolStripMenuItem,
+			this.toolStripSeparator8});
 			this.suffixEnchantToolStripMenuItem.Name = "suffixEnchantToolStripMenuItem";
 			this.suffixEnchantToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.suffixEnchantToolStripMenuItem.Text = "SuffixEnchant";
 			// 
+			// clearSuffixToolStripMenuItem
+			// 
+			this.clearSuffixToolStripMenuItem.Name = "clearSuffixToolStripMenuItem";
+			this.clearSuffixToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+			this.clearSuffixToolStripMenuItem.Text = "ClearSuffix";
+			// 
+			// toolStripSeparator8
+			// 
+			this.toolStripSeparator8.Name = "toolStripSeparator8";
+			this.toolStripSeparator8.Size = new System.Drawing.Size(134, 6);
+			// 
 			// enhanceToolStripMenuItem
 			// 
 			this.enhanceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toolStripMenuItem2,
-			this.toolStripMenuItem3,
-			this.toolStripMenuItem4,
-			this.toolStripMenuItem5,
-			this.toolStripMenuItem6,
-			this.toolStripMenuItem8,
-			this.clearEnhanceToolStripMenuItem});
+			this.clearEnhanceToolStripMenuItem,
+			this.toolStripSeparator9});
 			this.enhanceToolStripMenuItem.Name = "enhanceToolStripMenuItem";
 			this.enhanceToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.enhanceToolStripMenuItem.Text = "Enhance";
-			// 
-			// toolStripMenuItem2
-			// 
-			this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-			this.toolStripMenuItem2.Size = new System.Drawing.Size(154, 22);
-			this.toolStripMenuItem2.Text = "+3";
-			// 
-			// toolStripMenuItem3
-			// 
-			this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-			this.toolStripMenuItem3.Size = new System.Drawing.Size(154, 22);
-			this.toolStripMenuItem3.Text = "+5";
-			// 
-			// toolStripMenuItem4
-			// 
-			this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-			this.toolStripMenuItem4.Size = new System.Drawing.Size(154, 22);
-			this.toolStripMenuItem4.Text = "+10";
-			// 
-			// toolStripMenuItem5
-			// 
-			this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-			this.toolStripMenuItem5.Size = new System.Drawing.Size(154, 22);
-			this.toolStripMenuItem5.Text = "+12";
-			// 
-			// toolStripMenuItem6
-			// 
-			this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-			this.toolStripMenuItem6.Size = new System.Drawing.Size(154, 22);
-			this.toolStripMenuItem6.Text = "+13";
-			// 
-			// toolStripMenuItem8
-			// 
-			this.toolStripMenuItem8.Name = "toolStripMenuItem8";
-			this.toolStripMenuItem8.Size = new System.Drawing.Size(154, 22);
-			this.toolStripMenuItem8.Text = "+15";
 			// 
 			// clearEnhanceToolStripMenuItem
 			// 
@@ -733,29 +761,70 @@ namespace Vindictus
 			this.clearEnhanceToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
 			this.clearEnhanceToolStripMenuItem.Text = "ClearEnhance";
 			// 
-			// clothesSocreToolStripMenuItem
+			// toolStripSeparator9
 			// 
-			this.clothesSocreToolStripMenuItem.Name = "clothesSocreToolStripMenuItem";
-			this.clothesSocreToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-			this.clothesSocreToolStripMenuItem.Text = "ClothesSocre";
+			this.toolStripSeparator9.Name = "toolStripSeparator9";
+			this.toolStripSeparator9.Size = new System.Drawing.Size(151, 6);
 			// 
 			// itemStarToolStripMenuItem
 			// 
+			this.itemStarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.clearItemStarToolStripMenuItem,
+			this.toolStripSeparator10});
 			this.itemStarToolStripMenuItem.Name = "itemStarToolStripMenuItem";
 			this.itemStarToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.itemStarToolStripMenuItem.Text = "ItemStar";
+			// 
+			// clearItemStarToolStripMenuItem
+			// 
+			this.clearItemStarToolStripMenuItem.Name = "clearItemStarToolStripMenuItem";
+			this.clearItemStarToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+			this.clearItemStarToolStripMenuItem.Text = "ClearItemStar";
+			// 
+			// toolStripSeparator10
+			// 
+			this.toolStripSeparator10.Name = "toolStripSeparator10";
+			this.toolStripSeparator10.Size = new System.Drawing.Size(152, 6);
+			// 
+			// gemToolStripMenuItem
+			// 
+			this.gemToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.clearGemToolStripMenuItem,
+			this.toolStripSeparator11});
+			this.gemToolStripMenuItem.Name = "gemToolStripMenuItem";
+			this.gemToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+			this.gemToolStripMenuItem.Text = "Gem";
+			// 
+			// clearGemToolStripMenuItem
+			// 
+			this.clearGemToolStripMenuItem.Name = "clearGemToolStripMenuItem";
+			this.clearGemToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+			this.clearGemToolStripMenuItem.Text = "ClearGem";
+			// 
+			// toolStripSeparator11
+			// 
+			this.toolStripSeparator11.Name = "toolStripSeparator11";
+			this.toolStripSeparator11.Size = new System.Drawing.Size(130, 6);
+			// 
+			// lookToolStripMenuItem
+			// 
+			this.lookToolStripMenuItem.Name = "lookToolStripMenuItem";
+			this.lookToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+			this.lookToolStripMenuItem.Text = "Look";
 			// 
 			// itemCountToolStripMenuItem
 			// 
 			this.itemCountToolStripMenuItem.Name = "itemCountToolStripMenuItem";
 			this.itemCountToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.itemCountToolStripMenuItem.Text = "ItemCount";
+			this.itemCountToolStripMenuItem.Click += new System.EventHandler(this.ItemCountToolStripMenuItemClick);
 			// 
 			// unlimitTimeToolStripMenuItem
 			// 
 			this.unlimitTimeToolStripMenuItem.Name = "unlimitTimeToolStripMenuItem";
 			this.unlimitTimeToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.unlimitTimeToolStripMenuItem.Text = "UnlimitTime";
+			this.unlimitTimeToolStripMenuItem.Click += new System.EventHandler(this.UnlimitTimeToolStripMenuItemClick);
 			// 
 			// colorSep
 			// 
@@ -810,18 +879,6 @@ namespace Vindictus
 			this.deleteAllMailsToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.deleteAllMailsToolStripMenuItem.Text = "DeleteAllMails";
 			this.deleteAllMailsToolStripMenuItem.Click += new System.EventHandler(this.DeleteAllMailsToolStripMenuItemClick);
-			// 
-			// gemToolStripMenuItem
-			// 
-			this.gemToolStripMenuItem.Name = "gemToolStripMenuItem";
-			this.gemToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-			this.gemToolStripMenuItem.Text = "Gem";
-			// 
-			// lookToolStripMenuItem
-			// 
-			this.lookToolStripMenuItem.Name = "lookToolStripMenuItem";
-			this.lookToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-			this.lookToolStripMenuItem.Text = "Look";
 			// 
 			// TabMailRecv
 			// 
@@ -1504,12 +1561,6 @@ namespace Vindictus
 		private System.Windows.Forms.ToolStripMenuItem itemCountToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem deleteItemToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem unlimitTimeToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem8;
 		private System.Windows.Forms.ToolStripMenuItem clearEnhanceToolStripMenuItem;
 		private System.Windows.Forms.ToolStripSeparator colorSep;
 		private System.Windows.Forms.ToolStripMenuItem color1ToolStripMenuItem;
@@ -1519,5 +1570,18 @@ namespace Vindictus
 		private System.Windows.Forms.ToolStripSeparator deleteSep;
 		private System.Windows.Forms.ToolStripMenuItem gemToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem lookToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem clearInnerEnchantToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem clearSocreToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem clearPrefixToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem clearSuffixToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem clearItemStarToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem clearGemToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
 	}
 }

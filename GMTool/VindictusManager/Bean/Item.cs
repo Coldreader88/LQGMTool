@@ -10,6 +10,8 @@ namespace Vindictus.Bean
 {
 	public class Item : ItemClassInfo
 	{
+		public const int MAX_STAR = 7;
+		public const int MAX_ENHANCE = 15;
 		public long ItemID { get; private set; }
 
 		public int RequiredClass  { get; private set; }

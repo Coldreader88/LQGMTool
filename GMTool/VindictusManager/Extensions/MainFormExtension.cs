@@ -330,6 +330,7 @@ namespace Vindictus.Extensions
 			string sql = "update QueuedItem set ItemClassEx='"+itemclass+"' where RowID="+mail.MailID;
 			return db.ExcuteSQL(sql)>0;
 		}
+
 		public static int SendMail(this MainForm main, User user, string title, string content, int count, string itemClass)
 		{
 			try

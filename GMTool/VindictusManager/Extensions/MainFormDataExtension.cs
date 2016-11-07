@@ -120,7 +120,7 @@ namespace Vindictus.Extensions
 			try
 			{
 				main.Db.ExcuteSQL("update characterInfo set "+name+" = N'"+value+"'"+
-				             " where id = "+ user.CID );
+				                  " where id = "+ user.CID );
 			}
 			catch (Exception)
 			{
@@ -172,20 +172,96 @@ namespace Vindictus.Extensions
 				return count;
 			}
 		}
+		/// <summary>
+		/// 强化
+		/// </summary>
+		public static bool ModItemPower(this MainForm main, Item item, int power)
+		{
+			if (item == null) return false;
+			try
+			{
+				if (power == 0)
+				{
+					main.Db.ExcuteSQL(string.Concat(new object[] { "DELETE FROM ItemAttribute where itemID=", item.ItemID, "and Attribute = 'ENHANCE'" }));
+					return true;
+				}
+				return ModItemAttr(main, new ItemAttribute(ItemAttributeType.ENHANCE, ""+power), item);
+			}
+			catch (Exception e)
+			{
+				main.Error("强化失败：" + e);
+			}
+			return false;
+		}
+		/// <summary>
+		/// 无限时间
+		/// </summary>
+		public static bool ModItemTime(this MainForm main, User user, params Item[] items)
+		{
+			if (items == null || items.Length == 0)
+			{
+				main.Db.ExcuteSQL("UPDATE Item SET EXpireDateTime = NULL WHERE OwnerID =" + user.CID);
+			}
+			else
+			{
+				foreach (Item item in items)
+				{
+					main.Db.ExcuteSQL("UPDATE Item SET EXpireDateTime = NULL WHERE OwnerID =" + user.CID + " and ID = " + item.ItemID);
+				}
+			}
+			return true;
+		}
+		/// <summary>
+		/// 修改物品数量
+		/// </summary>
+		public static bool ModItemCount(this MainForm main, User user, Item item,int count)
+		{
+			if (item == null)
+			{
+				return false;
+			}
+			if(count > item.MaxStack){
+				return false;
+			}
+			main.Db.ExcuteSQL("UPDATE Item SET Count = "+count+
+			             " WHERE OwnerID =" + user.CID + " and ID = " + item.ItemID);
+			return true;
+		}
+		/// <summary>
+		/// 品质最大
+		/// </summary>
+		public static int ModItemStar(this MainForm main, User user, int q,params Item[] items)
+		{
+			if (items == null || items.Length == 0)
+			{
+				return 0;
+			}
+			else
+			{
+				int count = 0;
+				foreach (Item item in items)
+				{
+					if(ModItemAttr(main, new ItemAttribute(ItemAttributeType.QUALITY, q), item)){
+						count++;
+					}
+				}
+				return count;
+			}
+		}
 		private static bool ModItemAttr(this MainForm main,ItemAttribute attr, Item item)
 		{
 			long itemID = item.ItemID;
 			string val = (attr.Value==null?"":attr.Value);
 			if(main.Db.ExcuteSQL("update ItemAttribute set Value='"+val+
-			                "',Arg="+attr.Arg+
-			                ",Arg2="+attr.Arg2+
-			                " where ItemID = " + itemID +" and Attribute = '"+
-			                attr.Type.ToString()
-			                +"'")==0){
+			                     "',Arg="+attr.Arg+
+			                     ",Arg2="+attr.Arg2+
+			                     " where ItemID = " + itemID +" and Attribute = '"+
+			                     attr.Type.ToString()
+			                     +"'")==0){
 				//修改
 				return main.Db.ExcuteSQL("insert into ItemAttribute(ItemID,Attribute,Value,Arg,Arg2)"+
-				                    " values(" + itemID + ",'"+attr.Type.ToString()
-				                    +"','"+val+"',"+attr.Arg+","+attr.Arg2+")") > 0;
+				                         " values(" + itemID + ",'"+attr.Type.ToString()
+				                         +"','"+val+"',"+attr.Arg+","+attr.Arg2+")") > 0;
 			}else{
 				//插入
 				return true;

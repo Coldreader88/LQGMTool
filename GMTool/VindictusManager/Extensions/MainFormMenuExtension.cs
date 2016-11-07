@@ -56,14 +56,23 @@ namespace Vindictus.Extensions
 			{
 				if(user.IsEnable(info.ClassRestriction)){
 					var tsmi = new ToolStripMenuItem(info.Grade+" "+info.DESC);
-					tsmi.Tag = info;
 					tsmi.ToolTipText = info.ToString();
 					tsmi.Click += (sender, e) => {
 						if (!main.CheckUser()) return;
 						ListView listview= main.GetListView();
-						if (listview != null && main.ModItemScore(main.CurUser, info.GetKey(), listview.GetSelectItems<Item>())>0)
-						{
-							main.ReadPackage(PackageType.Cash);
+						if(listview ==null){
+							return;
+						}
+						if(main.isMailListView()){
+							Mail mail = listview.GetSelectItem<Mail>();
+							if(mail!=null){
+								ModItemStringAttr(mail.ItemClassEx, ItemAttributeType.SYNTHESISGRADE.ToString(), info.GetKey());
+							}
+						}else{
+							if ( main.ModItemScore(main.CurUser, info.GetKey(), listview.GetSelectItems<Item>())>0)
+							{
+								main.ReadPackage(PackageType.Cash);
+							}
 						}
 					};
 					menuitem.DropDownItems.Add(tsmi);
@@ -197,23 +206,17 @@ namespace Vindictus.Extensions
 				if (cls != ClassInfo.UnKnown)
 				{
 					var tsmi = new ToolStripMenuItem(cls.Name());
-					tsmi.Tag = cls;
 					tsmi.ToolTipText = cls.ToString() + " " + cls.Index();
-					tsmi.Click += (object sender, EventArgs e) => {
+					tsmi.Click += (sender,  e) => {
 						if (!main.CheckUser()) return;
-						var menu = sender as ToolStripMenuItem;
-						if (menu != null && menu.Tag != null)
-						{
-							var info = (ClassInfo)menu.Tag;
-							if(main.CurUser.Class == info){
-								return;
-							}
-							if(main.Question(string.Format(R.ClassMod,  main.CurUser.Class.Name(), info.Name()))){
-								//
-								if (main.ModUserClass(main.CurUser, info))
-								{
-									main.ReadUsers(false);
-								}
+						if(main.CurUser.Class == cls){
+							return;
+						}
+						if(main.Question(string.Format(R.ClassMod,  main.CurUser.Class.Name(), cls.Name()))){
+							//
+							if (main.ModUserClass(main.CurUser, cls))
+							{
+								main.ReadUsers(false);
 							}
 						}
 					};
@@ -238,21 +241,18 @@ namespace Vindictus.Extensions
 			foreach(string stat in stats){
 				string name = stat.StatName();
 				var tsmi = new ToolStripMenuItem(name);
-				tsmi.Tag = stat;
-				tsmi.Click += (object sender, EventArgs e) => {
+				tsmi.Click += (sender, e) => {
 					if (!main.CheckUser()) return;
 					var menu = sender as ToolStripMenuItem;
 					if (menu != null && menu.Tag != null)
 					{
-						string info = (string)menu.Tag;
-						//
 						using (var form = new UserAttributeDialog(main))
 						{
 							form.SetUser(main.CurUser, stat, name);
 							if (form.ShowDialog() == DialogResult.OK)
 							{
 								int ap = form.Value;
-								if(ap>0 && main.ModUserInfo(main.CurUser, info, ap)){
+								if(ap>0 && main.ModUserInfo(main.CurUser, stat, ap)){
 									main.log("Mod Ap[" + main.CurUser.Name + "]"+name+"为"+ap);
 									main.ReadUsers(false);
 								}
@@ -265,31 +265,92 @@ namespace Vindictus.Extensions
 		}
 		#endregion
 		
+		#region item star/enhance
+		public static void InitEnhance(this MainForm main, ToolStripDropDownItem menu){
+			
+			int[] enhances=new int[]{3,5,8,10,12,13,14,15};
+			var items =new ToolStripMenuItem[enhances.Length];
+			int index = 0;
+			foreach(int i in enhances){
+				items[index] = new ToolStripMenuItem("+"+i);
+				items[index].Click += (sender, e) => {
+					ListView listview = main.GetListView();
+					User user = main.CurUser;
+					if(listview == null||user==null){
+						return;
+					}
+					if(main.isMailListView()){
+						Mail mail = listview.GetSelectItem<Mail>();
+						if(mail!=null){
+							ModItemStringAttr(mail.ItemClassEx, ""+ItemAttributeType.ENHANCE, ""+i);
+						}
+					}else{
+						Item item = listview.GetSelectItem<Item>();
+						if(item != null){ 
+							main.ModItemPower(item, i);
+						}
+					}
+				};
+				index++;
+			}
+			menu.DropDownItems.AddRange(items);
+		}
+		public static void InitStart(this MainForm main, ToolStripDropDownItem menu){
+			var items =new ToolStripMenuItem[Item.MAX_STAR];
+			for(int i=1;i<=Item.MAX_STAR;i++){
+				items[i-1] = new ToolStripMenuItem("★"+i);
+				items[i-1].Click += (sender, e) => {
+					ListView listview = main.GetListView();
+					User user = main.CurUser;
+					if(listview == null||user==null){
+						return;
+					}
+					if(main.isMailListView()){
+						Mail mail = listview.GetSelectItem<Mail>();
+						if(mail!=null){
+							ModItemStringAttr(mail.ItemClassEx, ""+ItemAttributeType.QUALITY, ""+i);
+						}
+					}else{
+						Item item = listview.GetSelectItem<Item>();
+						if(item != null){
+							main.ModItemStar(user, i, item);
+						}
+					}
+				};
+			}
+			menu.DropDownItems.AddRange(items);
+		}
+		#endregion
+		private static string ModItemStringAttr(string itemclass,string type,string value){
+			string head = "["+type+":";
+			//xxx[prefix:xx][suffix:xxx]
+			int i = itemclass.IndexOf(head);
+			if(i>0){
+				int e = itemclass.IndexOf("]", i+head.Length);
+				string val = itemclass.Substring(0, i);
+				val+="["+type+":"+value+"]";
+				val+=itemclass.Substring(e+1);
+				itemclass = val;
+			}else{
+				itemclass +="["+type+":"+value+"]";
+			}
+			return itemclass;
+		}
 		#region 附魔
 		private static void EnchantItem(MainForm main, EnchantInfo info,ListView listview){
 			if(info ==null||listview==null)
 				return;
 			if(main.isMailListView()){
 				Mail mail = listview.GetSelectItem<Mail>();
-				string itemclass= mail.ItemClassEx;
-				//xxx[prefix:xx][suffix:xxx]
-				string type= (info.IsPrefix?ItemAttributeType.PREFIX:ItemAttributeType.SUFFIX).ToString();
-				string head = "["+type+":";
-				int i = itemclass.IndexOf(head);
-				if(i>0){
-					int e = itemclass.IndexOf("]", i+head.Length);
-					string val = itemclass.Substring(0, i);
-					val+="["+type+":"+info.Class+"]";
-					val+=itemclass.Substring(e+1);
-					itemclass = val;
-				}else{
-					itemclass +="["+type+":"+info.Class+"]";
-				}
-				if(main.Db.ModMailItem(mail, itemclass)){
-					main.log(mail.Title + " 附魔【" + info.Name + "】成功。");
-					main.ReadMails();
-				}else{
-					main.log(mail.Title + " 附魔【" + info.Name + "】失败。");
+				if(mail!=null){
+					string type= (info.IsPrefix?ItemAttributeType.PREFIX:ItemAttributeType.SUFFIX).ToString();
+					string itemclass= ModItemStringAttr(mail.ItemClassEx, type, ""+info.Class);
+					if(main.Db.ModMailItem(mail, itemclass)){
+						main.log(mail.Title + " 附魔【" + info.Name + "】成功。");
+						main.ReadMails();
+					}else{
+						main.log(mail.Title + " 附魔【" + info.Name + "】失败。");
+					}
 				}
 			}else{
 				Item item = listview.GetSelectItem<Item>();
@@ -309,26 +370,17 @@ namespace Vindictus.Extensions
 		public static void InitCashEnchantMenu(this MainForm main, ToolStripDropDownItem inner)
 		{
 			//contentMenuCashInnerEnchant
-			inner.DropDownItems.Clear();
 			EnchantInfo[] enchantinfos = main.DataHelper.GetEnchantInfos();
 			foreach (EnchantInfo info in enchantinfos)
 			{
 				var tsmi = new ToolStripMenuItem(info.Name);
-				tsmi.Tag = info;
 				tsmi.ToolTipText = info.ToString();//提示文字为真实路径
 				tsmi.Click += (sender, e) => {
 					ListView listview = main.GetListView();
 					if(listview == null){
 						return;
 					}
-					
-					var menu = sender as ToolStripMenuItem;
-					if (menu == null || menu.Tag == null)
-					{
-						return;
-					}
-					var _info = menu.Tag as EnchantInfo;
-					EnchantItem(main,_info,listview);
+					EnchantItem(main, info, listview);
 				};
 				if (info.Constraint!=null && info.Constraint.Contains(SubCategory.INNERARMOR.ToString()))
 				{
@@ -341,8 +393,6 @@ namespace Vindictus.Extensions
 		}
 		public static void InitEnchantMenu(this MainForm main, ToolStripDropDownItem prefixmenuitem, ToolStripDropDownItem suffixmenuitem)
 		{
-			prefixmenuitem.DropDownItems.Clear();
-			suffixmenuitem.DropDownItems.Clear();
 			EnchantInfo[] enchantinfos = main.DataHelper.GetEnchantInfos();
 			ToolStripMenuItem prelist = null;
 			ToolStripMenuItem suflist = null;
@@ -352,21 +402,13 @@ namespace Vindictus.Extensions
 			foreach (EnchantInfo info in enchantinfos)
 			{
 				var tsmi = new ToolStripMenuItem(info.Name);
-				tsmi.Tag = info;
 				tsmi.ToolTipText = info.ToString();//提示文字为真实路径
 				tsmi.Click += (sender, e)=> {
 					ListView listview = main.GetListView();
 					if(listview == null){
 						return;
 					}
-					
-					var menu = sender as ToolStripMenuItem;
-					if (menu == null || menu.Tag == null)
-					{
-						return;
-					}
-					var _info = menu.Tag as EnchantInfo;
-					EnchantItem(main,_info,listview);
+					EnchantItem(main, info,listview);
 				};
 				
 				if (info.IsPrefix)
@@ -375,12 +417,12 @@ namespace Vindictus.Extensions
 					{
 						maxi = 0;
 						li = info.EnchantLevel;
-						prelist = new ToolStripMenuItem("等级："+li);
+						prelist = new ToolStripMenuItem("lv："+li);
 						prefixmenuitem.DropDownItems.Add(prelist);
 					}
 					if (maxi % max == 0 && maxi>=max)
 					{
-						prelist = new ToolStripMenuItem("等级：" + li + "-" + (maxi / max+1));
+						prelist = new ToolStripMenuItem("lv：" + li + " (" + (maxi / max+1)+")");
 						prefixmenuitem.DropDownItems.Add(prelist);
 					}
 					if (info.Constraint != SubCategory.INNERARMOR.ToString())
@@ -395,12 +437,12 @@ namespace Vindictus.Extensions
 					{
 						maxj = 0;
 						lj = info.EnchantLevel;
-						suflist = new ToolStripMenuItem("等级：" + lj);
+						suflist = new ToolStripMenuItem("lv：" + lj);
 						suffixmenuitem.DropDownItems.Add(suflist);
 					}
 					if (maxj % max == 0 && maxj>=max)
 					{
-						prelist = new ToolStripMenuItem("等级：" + lj + "-" + (maxj / max+1));
+						prelist = new ToolStripMenuItem("lv：" + lj + "-" + (maxj / max+1));
 						suffixmenuitem.DropDownItems.Add(suflist);
 					}
 					maxj++;
