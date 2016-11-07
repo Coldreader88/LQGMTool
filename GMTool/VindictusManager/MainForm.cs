@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 using Vindictus.Helper;
-using System.ComponentModel;
-using System.Xml;
 using ServerManager;
 using Vindictus.UI;
 using System.Data.Common;
-using System.IO;
+using System.ComponentModel;
 using System.Threading;
 using Vindictus.Extensions;
 using Vindictus.Bean;
@@ -28,6 +25,9 @@ namespace Vindictus
 		private string DefTitle;
 		private SearchHelper Searcher;
 		private ListView curListView;
+		private ServerForm serverForm;
+		private bool IsClosing = false;
+		private delegate void InitFail();
 		public MainForm()
 		{
 			Config = Program.Config;
@@ -101,7 +101,7 @@ namespace Vindictus
 			if(!SerivceHelper.IsRunningService(Config.SqlServer)){
 				SerivceHelper.StartService(Config.SqlServer);
 			}
-			Db=new MSSqlHelper(Config.ConnectionString);
+			Db = new MSSqlHelper(Config.ConnectionString);
 			DataHelper=new DataHelper(Config);
 			this.PostTask(InitTask);
 			//第一次菜单初始化
@@ -116,20 +116,63 @@ namespace Vindictus
 		
 		void MainFormFormClosing(object sender, FormClosingEventArgs e)
 		{
-			if(!this.CloseServer()){
+			if(!CloseServer()){
 				e.Cancel = true;
 			}
 		}
-		private void InitTask(IWaitDialog dlg){
+		void ShowAbout(){
+			string str = R.AboutText;
+			str=str.Replace("$author","QQ247321453");
+			str=str.Replace("$name",R.Title);
+			str=str.Replace("$vesion",Application.ProductVersion.ToString());
+			MessageBox.Show(str,R.About,MessageBoxButtons.OK, MessageBoxIcon.Information);
+		}
+		bool CloseServer(){
+			if(serverForm!=null && serverForm.isStart){
+				if(this.Question(R.TipCloseServer)){
+					IsClosing = true;
+					serverForm.Close();
+					return true;
+				}else{
+					return false;
+				}
+			}
+			return true;
+		}
+		void ShowServerManager()
+		{
+			if(serverForm == null){
+				serverForm =new ServerForm();
+				serverForm.Closing += (sender, e)=> {
+					serverForm.Hide();
+					e.Cancel = true;
+					if(!IsClosing){
+						if(Db == null){
+							this.PostTask(InitTask);
+						}
+					}
+				};
+			}
+			serverForm.Show();
+			serverForm.Activate();
+		}
+		void InitTask(IWaitDialog dlg){
 			dlg.SetTitle(R.TipInit);
 			dlg.SetInfo(R.ConnectSqlServer);
 			if(!Db.Open()){
+				Db.Close();
+				Db = null;
 				this.Error(R.ErrorSqlServerNotConnect);
+				Invoke(new InitFail(this.ShowServerManager));
+				return;
 			}else{
 				try{
 					Db.ExcuteSQL("use heroes;");
 				}catch(Exception e){
 					this.Error(""+e);
+					Db.Close();
+					Db=null;
+					Invoke(new InitFail(this.ShowServerManager));
 					return;
 				}
 			}

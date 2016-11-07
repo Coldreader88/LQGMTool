@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System.ComponentModel;
-using ServerManager;
 using Vindictus;
 using System.Data.Common;
 using Vindictus.Bean;
@@ -14,40 +12,6 @@ namespace Vindictus.Extensions
 {
 	public static class MainFormMenuExtension
 	{
-		#region main menu
-		private static ServerForm serverForm;
-		public static void ShowServerManager(this MainForm form)
-		{
-			if(serverForm==null){
-				serverForm =new ServerForm();
-				serverForm.Closing+= delegate(object sender, CancelEventArgs e) {
-					serverForm.Hide();
-					e.Cancel = true;
-				};
-			}
-			serverForm.Show();
-			serverForm.Activate();
-		}
-		public static void ShowAbout(this MainForm form){
-			string str = R.AboutText;
-			str=str.Replace("$author","QQ247321453");
-			str=str.Replace("$name",R.Title);
-			str=str.Replace("$vesion",Application.ProductVersion.ToString());
-			MessageBox.Show(str,R.About,MessageBoxButtons.OK, MessageBoxIcon.Information);
-		}
-		public static bool CloseServer(this MainForm form){
-			if(serverForm!=null && serverForm.isStart){
-				if(form.Question(R.TipCloseServer)){
-					serverForm.Close();
-					return true;
-				}else{
-					return false;
-				}
-			}
-			return true;
-		}
-		#endregion
-		
 		#region 时装合成
 		public static void AddSkillBouns(this MainForm main,User user,ToolStripDropDownItem menuitem){
 			menuitem.DropDownItems.Clear();
