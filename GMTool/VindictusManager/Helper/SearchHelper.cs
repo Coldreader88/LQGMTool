@@ -18,6 +18,10 @@ namespace Vindictus.Helper
 			this.Items = Items;
 		}
 		
+		public void Attch(Dictionary<string, ItemClassInfo> Items){
+			this.Items = Items;
+		}
+		
 		public int Count{
 			get{
 				return Items.Count;

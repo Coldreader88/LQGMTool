@@ -27,7 +27,8 @@ namespace Vindictus
 		private ListView curListView;
 		private ServerForm serverForm;
 		private bool IsClosing = false;
-		private delegate void InitFail();
+		private delegate void InitFail(bool force);
+		private delegate void InitOk();
 		public MainForm()
 		{
 			Config = Program.Config;
@@ -99,19 +100,21 @@ namespace Vindictus
 			DefTitle = R.Title+"-"+Application.ProductVersion.ToString()+" ("+Config.GameCode+")";
 			this.Text = DefTitle;
 			if(!SerivceHelper.IsRunningService(Config.SqlServer)){
-				SerivceHelper.StartService(Config.SqlServer);
+				Hide();
+				ShowServerManager(true);
+			}else{
+				Init();
+			}
+		}
+		void Init(){
+			if(Db != null){
+				Db.Close();
 			}
 			Db = new MSSqlHelper(Config.ConnectionString);
-			DataHelper=new DataHelper(Config);
+			if(DataHelper==null){
+				DataHelper=new DataHelper(Config);
+			}
 			this.PostTask(InitTask);
-			//第一次菜单初始化
-			InitUserMenu();
-			this.AddTypes(SearchMainCategory, SearchSubCategory);
-			this.AddTitles(addTitle0ToolStripMenuItem);
-			this.InitCashEnchantMenu(innerEnchantToolStripMenuItem);
-			this.InitEnchantMenu(prefixEnchantToolStripMenuItem, suffixEnchantToolStripMenuItem);
-			this.InitStart(itemStarToolStripMenuItem);
-			this.InitEnhance(enhanceToolStripMenuItem);
 		}
 		
 		void MainFormFormClosing(object sender, FormClosingEventArgs e)
@@ -139,7 +142,7 @@ namespace Vindictus
 			}
 			return true;
 		}
-		void ShowServerManager()
+		void ShowServerManager(bool force=false)
 		{
 			if(serverForm == null){
 				serverForm =new ServerForm();
@@ -148,13 +151,17 @@ namespace Vindictus
 					e.Cancel = true;
 					if(!IsClosing){
 						if(Db == null){
-							this.PostTask(InitTask);
+							Init();
 						}
 					}
 				};
 			}
-			serverForm.Show();
-			serverForm.Activate();
+			if(force){
+				serverForm.ShowDialog();
+			}else{
+				serverForm.Show();
+				serverForm.Activate();
+			}
 		}
 		void InitTask(IWaitDialog dlg){
 			dlg.SetTitle(R.TipInit);
@@ -163,7 +170,7 @@ namespace Vindictus
 				Db.Close();
 				Db = null;
 				this.Error(R.ErrorSqlServerNotConnect);
-				Invoke(new InitFail(this.ShowServerManager));
+				Invoke(new InitFail(ShowServerManager), new object[]{true});
 				return;
 			}else{
 				try{
@@ -172,7 +179,7 @@ namespace Vindictus
 					this.Error(""+e);
 					Db.Close();
 					Db=null;
-					Invoke(new InitFail(this.ShowServerManager));
+					Invoke(new InitFail(ShowServerManager), new object[]{true});
 					return;
 				}
 			}
@@ -187,11 +194,26 @@ namespace Vindictus
 			}catch(Exception e){
 				this.Error("ReadData\n"+e);
 			}
-			Searcher = new SearchHelper(DataHelper.Items);
+			if(Searcher==null)
+				Searcher = new SearchHelper(DataHelper.Items);
+			else
+				Searcher.Attch(DataHelper.Items);
 //			MessageBox.Show("count="+DataHelper.Items.Count);
 			dlg.SetInfo(R.TipReadUsers);
+			Invoke(new InitOk(InitAllMenus));
 			//读取用户
 			ReadUsers(true);
+		}
+		void InitAllMenus(){
+			//第一次菜单初始化
+			InitUserMenu();
+			this.AddTypes(SearchMainCategory, SearchSubCategory);
+			this.AddTitles(addTitle0ToolStripMenuItem);
+			this.InitCashEnchantMenu(innerEnchantToolStripMenuItem);
+			this.InitEnchantMenu(prefixEnchantToolStripMenuItem, suffixEnchantToolStripMenuItem);
+			this.InitStart(itemStarToolStripMenuItem);
+			this.InitEnhance(enhanceToolStripMenuItem);
+			Show();
 		}
 		#endregion
 		

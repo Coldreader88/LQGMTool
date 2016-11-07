@@ -47,6 +47,9 @@ namespace Vindictus.Extensions
 		
 		#region 头衔
 		public static List<long> GetTitles(this MainForm main,User user){
+			if(user == null){
+				return null;
+			}
 			List<long> titles=new List<long>();
 			using(DbDataReader reader=main.Db.GetReader("select TitleID from Title where Acquired =1 and CID="+user.CID)){
 				while(reader!=null&&reader.Read()){
@@ -60,12 +63,13 @@ namespace Vindictus.Extensions
 			if(user==null||lastClass == user.Class){
 				return;
 			}
+			List<long> titleIds= main.GetTitles(user);
 			lastClass = user.Class;
 			ToolStripItemCollection _items= menuitem.DropDownItems;
 			foreach(ToolStripDropDownItem _item in _items){
 				int count = _item.DropDownItems.Count;
 				ToolStripItemCollection items= _item.DropDownItems;
-				foreach(ToolStripDropDownItem item in items){
+				foreach(ToolStripMenuItem item in items){
 					item.Visible = true;
 					var info = item.Tag as TitleInfo;
 					if(info != null){
@@ -83,6 +87,10 @@ namespace Vindictus.Extensions
 							}
 						}
 					}
+					if (titleIds!=null && titleIds.Contains(info.TitleID))
+					{
+						item.Checked = true;
+					}
 				}
 				if(count == 0){
 					_item.Visible = false;
@@ -93,7 +101,6 @@ namespace Vindictus.Extensions
 		}
 		public static void AddTitles(this MainForm main, ToolStripDropDownItem menuitem)
 		{
-			List<long> titleIds= main.GetTitles(main.CurUser);
 			TitleInfo[] titles = main.DataHelper.GetTitles();
 			int k = 0;
 			var items=new List<ToolStripDropDownItem>();
@@ -114,24 +121,19 @@ namespace Vindictus.Extensions
 					var tsmi = new ToolStripMenuItem(cls.ToShortString());
 					tsmi.Tag = cls;
 					tsmi.ToolTipText = cls.ToString();
-
-					if (titleIds.Contains(cls.TitleID))
-					{
-						tsmi.Checked = true;
-					}
-					else
-					{
-						tsmi.Click += (object sender, EventArgs e) => {
-							if (!main.CheckUser()) return;
-							var menu = sender as ToolStripMenuItem;
-							if (menu != null && menu.Tag != null)
-							{
-								var info = menu.Tag as TitleInfo;
-								main.AddTitle(main.CurUser, info);
-								main.ReadUsers(false);
-							}
-						};
-					}
+					tsmi.Click += (sender, e) => {
+						if(tsmi.Checked){
+							return;
+						}
+						if (!main.CheckUser()) return;
+						var menu = sender as ToolStripMenuItem;
+						if (menu != null && menu.Tag != null)
+						{
+							var info = menu.Tag as TitleInfo;
+							main.AddTitle(main.CurUser, info);
+							main.ReadUsers(false);
+						}
+					};
 					level.DropDownItems.Add(tsmi);
 				}
 				else
@@ -250,7 +252,7 @@ namespace Vindictus.Extensions
 						}
 					}else{
 						Item item = listview.GetSelectItem<Item>();
-						if(item != null){ 
+						if(item != null){
 							main.ModItemPower(item, i);
 						}
 					}
