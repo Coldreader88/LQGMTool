@@ -213,6 +213,7 @@ namespace Vindictus
 			this.InitEnchantMenu(prefixEnchantToolStripMenuItem, suffixEnchantToolStripMenuItem);
 			this.InitStart(itemStarToolStripMenuItem);
 			this.InitEnhance(enhanceToolStripMenuItem);
+			this.InitSkillBouns(clothesSocreToolStripMenuItem);
 			Show();
 		}
 		#endregion
@@ -254,6 +255,10 @@ namespace Vindictus
 		}
 		
 		#region 列表选择
+		void ClothesSocreToolStripMenuItemMouseEnter(object sender, EventArgs e)
+		{
+			this.HideSkillBouns(clothesSocreToolStripMenuItem, CurUser);
+		}
 		void AddTitle0ToolStripMenuItemMouseEnter(object sender, EventArgs e)
 		{
 			this.HideAddTitles(CurUser, addTitle0ToolStripMenuItem);
@@ -269,7 +274,6 @@ namespace Vindictus
 //				this.NormalCurItem = 0;
 //				this.CashCurItem = 0;
 				this.Text = this.DefTitle + "  -  " + user.ToString();
-				this.AddSkillBouns(user, clothesSocreToolStripMenuItem);
 				//form.AddSkillBouns(user, this.contentMenuItemMaxScore, this.list_items_cash);
 			}
 		}

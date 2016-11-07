@@ -13,34 +13,52 @@ namespace Vindictus.Extensions
 	public static class MainFormMenuExtension
 	{
 		#region 时装合成
-		public static void AddSkillBouns(this MainForm main,User user,ToolStripDropDownItem menuitem){
-			menuitem.DropDownItems.Clear();
+		static ClassInfo skilllastClass;
+		public static void HideSkillBouns(this MainForm main,ToolStripDropDownItem menuitem,User user){
+			if(user==null || skilllastClass== user.Class){
+				return;
+			}
+			skilllastClass = user.Class;
+			ToolStripItemCollection items= menuitem.DropDownItems;
+			foreach(ToolStripItem _item in items){
+				var item = _item as ToolStripMenuItem;
+				if(item == null){
+					continue;
+				}
+				SkillBonusInfo info = item.Tag as SkillBonusInfo;
+				if(info!=null){
+					item.Visible = skilllastClass.IsEnable(info.ClassRestriction);
+				}
+			}
+		}
+		public static void InitSkillBouns(this MainForm main,ToolStripDropDownItem menuitem){
 			var infos =main.DataHelper.SynthesisSkillBonues.Values;
 			foreach (SkillBonusInfo info in infos)
 			{
-				if(user.IsEnable(info.ClassRestriction)){
-					var tsmi = new ToolStripMenuItem(info.Grade+" "+info.DESC);
-					tsmi.ToolTipText = info.ToString();
-					tsmi.Click += (sender, e) => {
-						if (!main.CheckUser()) return;
-						ListView listview= main.GetListView();
-						if(listview ==null){
-							return;
+//				if(user.IsEnable(info.ClassRestriction)){
+				var tsmi = new ToolStripMenuItem(info.Grade+" "+info.DESC);
+				tsmi.ToolTipText = info.ToString();
+				tsmi.Tag = info;
+				tsmi.Click += (sender, e) => {
+					if (!main.CheckUser()) return;
+					ListView listview= main.GetListView();
+					if(listview ==null){
+						return;
+					}
+					if(main.isMailListView()){
+						Mail mail = listview.GetSelectItem<Mail>();
+						if(mail!=null){
+							ModItemStringAttr(mail.ItemClassEx, ItemAttributeType.SYNTHESISGRADE.ToString(), info.GetKey());
 						}
-						if(main.isMailListView()){
-							Mail mail = listview.GetSelectItem<Mail>();
-							if(mail!=null){
-								ModItemStringAttr(mail.ItemClassEx, ItemAttributeType.SYNTHESISGRADE.ToString(), info.GetKey());
-							}
-						}else{
-							if ( main.ModItemScore(main.CurUser, info.GetKey(), listview.GetSelectItems<Item>())>0)
-							{
-								main.ReadPackage(PackageType.Cash);
-							}
+					}else{
+						if ( main.ModItemScore(main.CurUser, info.GetKey(), listview.GetSelectItems<Item>())>0)
+						{
+							main.ReadPackage(PackageType.Cash);
 						}
-					};
-					menuitem.DropDownItems.Add(tsmi);
-				}
+					}
+				};
+				menuitem.DropDownItems.Add(tsmi);
+//				}
 			}
 		}
 		#endregion
@@ -50,7 +68,7 @@ namespace Vindictus.Extensions
 			if(user == null){
 				return null;
 			}
-			List<long> titles=new List<long>();
+			var titles=new List<long>();
 			using(DbDataReader reader=main.Db.GetReader("select TitleID from Title where Acquired =1 and CID="+user.CID)){
 				while(reader!=null&&reader.Read()){
 					titles.Add(reader.ReadInt64("TitleID"));
@@ -66,10 +84,18 @@ namespace Vindictus.Extensions
 			List<long> titleIds= main.GetTitles(user);
 			lastClass = user.Class;
 			ToolStripItemCollection _items= menuitem.DropDownItems;
-			foreach(ToolStripDropDownItem _item in _items){
-				int count = _item.DropDownItems.Count;
-				ToolStripItemCollection items= _item.DropDownItems;
-				foreach(ToolStripMenuItem item in items){
+			foreach(ToolStripItem _item in _items){
+				var titem = _item as ToolStripMenuItem;
+				if(titem == null){
+					continue;
+				}
+				int count = titem.DropDownItems.Count;
+				ToolStripItemCollection items= titem.DropDownItems;
+				foreach(ToolStripItem item2 in items){
+					var item = item2 as ToolStripMenuItem;
+					if(item == null){
+						continue;
+					}
 					item.Visible = true;
 					var info = item.Tag as TitleInfo;
 					if(info != null){

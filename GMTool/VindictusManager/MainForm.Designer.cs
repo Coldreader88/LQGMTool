@@ -694,17 +694,18 @@ namespace Vindictus
 			this.clothesSocreToolStripMenuItem.Name = "clothesSocreToolStripMenuItem";
 			this.clothesSocreToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.clothesSocreToolStripMenuItem.Text = "ClothesSocre";
+			this.clothesSocreToolStripMenuItem.MouseEnter += new System.EventHandler(this.ClothesSocreToolStripMenuItemMouseEnter);
 			// 
 			// clearSocreToolStripMenuItem
 			// 
 			this.clearSocreToolStripMenuItem.Name = "clearSocreToolStripMenuItem";
-			this.clearSocreToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+			this.clearSocreToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.clearSocreToolStripMenuItem.Text = "ClearSocre";
 			// 
 			// toolStripSeparator6
 			// 
 			this.toolStripSeparator6.Name = "toolStripSeparator6";
-			this.toolStripSeparator6.Size = new System.Drawing.Size(136, 6);
+			this.toolStripSeparator6.Size = new System.Drawing.Size(149, 6);
 			// 
 			// prefixEnchantToolStripMenuItem
 			// 
