@@ -116,6 +116,7 @@ namespace Vindictus
 			this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
 			this.lookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clearLookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
 			this.itemCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.unlimitTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.colorSep = new System.Windows.Forms.ToolStripSeparator();
@@ -183,7 +184,6 @@ namespace Vindictus
 			this.columnHeader21 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader22 = new System.Windows.Forms.ColumnHeader();
 			this.columnHeader26 = new System.Windows.Forms.ColumnHeader();
-			this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
 			this.menuStrip1.SuspendLayout();
 			this.TabPanelLeft.SuspendLayout();
 			this.TabUserList.SuspendLayout();
@@ -798,17 +798,18 @@ namespace Vindictus
 			this.gemToolStripMenuItem.Name = "gemToolStripMenuItem";
 			this.gemToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.gemToolStripMenuItem.Text = "Gem";
+			this.gemToolStripMenuItem.Visible = false;
 			// 
 			// clearGemToolStripMenuItem
 			// 
 			this.clearGemToolStripMenuItem.Name = "clearGemToolStripMenuItem";
-			this.clearGemToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+			this.clearGemToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.clearGemToolStripMenuItem.Text = "ClearGem";
 			// 
 			// toolStripSeparator11
 			// 
 			this.toolStripSeparator11.Name = "toolStripSeparator11";
-			this.toolStripSeparator11.Size = new System.Drawing.Size(130, 6);
+			this.toolStripSeparator11.Size = new System.Drawing.Size(149, 6);
 			// 
 			// lookToolStripMenuItem
 			// 
@@ -822,8 +823,13 @@ namespace Vindictus
 			// clearLookToolStripMenuItem
 			// 
 			this.clearLookToolStripMenuItem.Name = "clearLookToolStripMenuItem";
-			this.clearLookToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.clearLookToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
 			this.clearLookToolStripMenuItem.Text = "ClearLook";
+			// 
+			// toolStripSeparator12
+			// 
+			this.toolStripSeparator12.Name = "toolStripSeparator12";
+			this.toolStripSeparator12.Size = new System.Drawing.Size(132, 6);
 			// 
 			// itemCountToolStripMenuItem
 			// 
@@ -1406,11 +1412,6 @@ namespace Vindictus
 			// 
 			this.columnHeader26.Text = "到期时间";
 			this.columnHeader26.Width = 100;
-			// 
-			// toolStripSeparator12
-			// 
-			this.toolStripSeparator12.Name = "toolStripSeparator12";
-			this.toolStripSeparator12.Size = new System.Drawing.Size(149, 6);
 			// 
 			// MainForm
 			// 
