@@ -183,6 +183,6 @@ namespace Vindictus
 		public static string  ModItemCount{get{ return Get("ModItemCount"); }}
 		public static string  SendItemCount{get{ return Get("SendItemCount"); }}
 		public static string  CopyItemClass{get{ return Get("CopyItemClass"); }}
-		
+		public static string  Clear{get{ return Get("Clear"); }}
 	}
 }

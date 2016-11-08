@@ -133,3 +133,4 @@ Score=评分
 SendItemCount=发送{0}个
 CopyItemClass=复制选中物品ID
 ModItemCount=修改物品数量
+Clear=清除

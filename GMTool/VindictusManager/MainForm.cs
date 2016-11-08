@@ -88,6 +88,13 @@ namespace Vindictus
 			copyItemClassToolStripMenuItem.Text=R.CopyItemClass;//;
 			//
 			itemCountToolStripMenuItem.Text = R.ModItemCount;
+			clearEnhanceToolStripMenuItem.Text = R.Clear;
+			clearGemToolStripMenuItem.Text = R.Clear;
+			clearInnerEnchantToolStripMenuItem.Text = R.Clear;
+			clearItemStarToolStripMenuItem.Text = R.Clear;
+			clearPrefixToolStripMenuItem.Text = R.Clear;
+			clearSocreToolStripMenuItem.Text = R.Clear;
+			clearSuffixToolStripMenuItem.Text = R.Clear;
 		}
 		
 		void MainFormLoad(object sender, EventArgs e)
@@ -250,6 +257,7 @@ namespace Vindictus
 			}
 		}
 		#endregion
+		
 		public void ReadPackage(PackageType type){
 			
 		}
@@ -684,6 +692,7 @@ namespace Vindictus
 			ReadMails();
 		}
 		#endregion
+		
 		#region item
 		void UnlimitTimeToolStripMenuItemClick(object sender, EventArgs e)
 		{
