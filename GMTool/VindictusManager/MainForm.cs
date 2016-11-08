@@ -115,6 +115,7 @@ namespace Vindictus
 			clothesSocreToolStripMenuItem.Text=R.ClothesScore;
 			gemToolStripMenuItem.Text=R.Gem;
 			lookToolStripMenuItem.Text=R.Look;
+			setItemClassToolStripMenuItem.Text=R.SetItemClass;
 		}
 		
 		void MainFormLoad(object sender, EventArgs e)
@@ -756,6 +757,34 @@ namespace Vindictus
 			if(items!=null){
 				this.DeleteItem(CurUser, items);
 				ReadPackage(PackageType.All);
+			}
+		}
+		void SetItemClassToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			//TODO 输入itemclass，查找物品，（武器才需要）提示分类是否一样
+			ListView listview=GetListView();
+			if(listview == null||isMailListView()){
+				return;
+			}
+			Item item = listview.GetSelectItem<Item>();
+			if(item == null){
+				#if DEBUG
+				item = new Item("test", MainCategory.LIGHTARMOR,SubCategory.BOOTS);
+				#else
+					return;
+				#endif
+				
+			}
+			using(var dlg = new ItemClassDialog(this)){
+				dlg.SetItem(item);
+				if(dlg.ShowDialog() == DialogResult.OK){
+					ItemClassInfo info = dlg.ItemInfo;
+					if(this.ModItemAttr(new ItemAttribute(ItemAttributeType.LOOK, info.ItemClass), item)){
+						log("修改["+item.Name+"]外观为["+info.Name+"]成功");
+					}else{
+						log("修改["+item.Name+"]外观为["+info.Name+"]失败");
+					}
+				}
 			}
 		}
 		#endregion

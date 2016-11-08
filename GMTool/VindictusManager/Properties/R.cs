@@ -203,5 +203,12 @@ namespace Vindictus
 		public static string  ClothesScore{get{ return Get("ClothesScore"); }}
 		public static string  Gem{get{ return Get("Gem"); }}
 		public static string  Look{get{ return Get("Look"); }}
+		
+		public static string SetItemClass{get{ return Get("SetItemClass"); }}
+		
+		public static string  NoItem{get{ return Get("NoItem"); }}
+		public static string  ItemNotIs{get{ return Get("ItemNotIs"); }}
+		public static string  WeaponNotSame{get{ return Get("WeaponNotSame"); }}
+		public static string  SetLookTip{get{ return Get("SetLookTip"); }}
 	}
 }

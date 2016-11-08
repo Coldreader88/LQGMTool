@@ -35,7 +35,7 @@ namespace Vindictus.UI
 			{
 				mainForm.Error(R.NoUser);
 				DialogResult = DialogResult.Cancel;
-			}if((user.level+"") == text){
+			}else if((user.level+"") == text){
 				DialogResult = DialogResult.Cancel;
 			}else {
 				try{

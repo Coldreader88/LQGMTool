@@ -38,9 +38,9 @@ namespace Vindictus
 		{
 			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-									"测试",
-									"艾丽莎",
-									"12"}, 0);
+			"测试",
+			"艾丽莎",
+			"12"}, 0);
 			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
 			this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.serverManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -117,6 +117,7 @@ namespace Vindictus
 			this.lookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.clearLookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
+			this.setItemClassToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.itemCountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.unlimitTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.colorSep = new System.Windows.Forms.ToolStripSeparator();
@@ -204,9 +205,9 @@ namespace Vindictus
 			// menuStrip1
 			// 
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.viewToolStripMenuItem,
-									this.toolToolStripMenuItem,
-									this.helpToolStripMenuItem});
+			this.viewToolStripMenuItem,
+			this.toolToolStripMenuItem,
+			this.helpToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Size = new System.Drawing.Size(1008, 25);
@@ -216,7 +217,7 @@ namespace Vindictus
 			// viewToolStripMenuItem
 			// 
 			this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.serverManagerToolStripMenuItem});
+			this.serverManagerToolStripMenuItem});
 			this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
 			this.viewToolStripMenuItem.Size = new System.Drawing.Size(47, 21);
 			this.viewToolStripMenuItem.Text = "View";
@@ -231,9 +232,9 @@ namespace Vindictus
 			// toolToolStripMenuItem
 			// 
 			this.toolToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.allSalonToolStripMenuItem,
-									this.salonPirceToolStripMenuItem,
-									this.zhTW2zhCNToolStripMenuItem});
+			this.allSalonToolStripMenuItem,
+			this.salonPirceToolStripMenuItem,
+			this.zhTW2zhCNToolStripMenuItem});
 			this.toolToolStripMenuItem.Name = "toolToolStripMenuItem";
 			this.toolToolStripMenuItem.Size = new System.Drawing.Size(46, 21);
 			this.toolToolStripMenuItem.Text = "Tool";
@@ -263,7 +264,7 @@ namespace Vindictus
 			// helpToolStripMenuItem
 			// 
 			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.aboutToolStripMenuItem});
+			this.aboutToolStripMenuItem});
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
 			this.helpToolStripMenuItem.Size = new System.Drawing.Size(47, 21);
 			this.helpToolStripMenuItem.Text = "Help";
@@ -278,7 +279,7 @@ namespace Vindictus
 			// TabPanelLeft
 			// 
 			this.TabPanelLeft.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-									| System.Windows.Forms.AnchorStyles.Left)));
+			| System.Windows.Forms.AnchorStyles.Left)));
 			this.TabPanelLeft.Controls.Add(this.TabUserList);
 			this.TabPanelLeft.Controls.Add(this.TabItemDetail);
 			this.TabPanelLeft.Location = new System.Drawing.Point(0, 30);
@@ -301,9 +302,9 @@ namespace Vindictus
 			// UserListView
 			// 
 			this.UserListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-									this.chUserName,
-									this.chUserClass,
-									this.chUserLevel});
+			this.chUserName,
+			this.chUserClass,
+			this.chUserLevel});
 			this.UserListView.ContextMenuStrip = this.UserMenuStrip;
 			this.UserListView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.UserListView.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -312,7 +313,7 @@ namespace Vindictus
 			this.UserListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.UserListView.HideSelection = false;
 			this.UserListView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-									listViewItem1});
+			listViewItem1});
 			this.UserListView.LabelWrap = false;
 			this.UserListView.Location = new System.Drawing.Point(3, 3);
 			this.UserListView.MultiSelect = false;
@@ -342,20 +343,20 @@ namespace Vindictus
 			// UserMenuStrip
 			// 
 			this.UserMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.addTitle0ToolStripMenuItem,
-									this.addTitlesToolStripMenuItem,
-									this.maxSubClassToolStripMenuItem,
-									this.resetQuestTimesToolStripMenuItem,
-									this.toolStripSeparator3,
-									this.modUserToolStripMenuItem,
-									this.modClassToolStripMenuItem,
-									this.modAttriToolStripMenuItem,
-									this.toolStripSeparator5,
-									this.maxGroupLightToolStripMenuItem,
-									this.maxGroupDarkToolStripMenuItem,
-									this.resetGroupSkillToolStripMenuItem,
-									this.toolStripSeparator2,
-									this.refreshUserToolStripMenuItem});
+			this.addTitle0ToolStripMenuItem,
+			this.addTitlesToolStripMenuItem,
+			this.maxSubClassToolStripMenuItem,
+			this.resetQuestTimesToolStripMenuItem,
+			this.toolStripSeparator3,
+			this.modUserToolStripMenuItem,
+			this.modClassToolStripMenuItem,
+			this.modAttriToolStripMenuItem,
+			this.toolStripSeparator5,
+			this.maxGroupLightToolStripMenuItem,
+			this.maxGroupDarkToolStripMenuItem,
+			this.resetGroupSkillToolStripMenuItem,
+			this.toolStripSeparator2,
+			this.refreshUserToolStripMenuItem});
 			this.UserMenuStrip.Name = "UserMenuStrip";
 			this.UserMenuStrip.Size = new System.Drawing.Size(177, 264);
 			this.UserMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.MailMenuStrip_Opening);
@@ -396,9 +397,9 @@ namespace Vindictus
 			// modUserToolStripMenuItem
 			// 
 			this.modUserToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.modAPToolStripMenuItem,
-									this.modLevelToolStripMenuItem,
-									this.modNameToolStripMenuItem});
+			this.modAPToolStripMenuItem,
+			this.modLevelToolStripMenuItem,
+			this.modNameToolStripMenuItem});
 			this.modUserToolStripMenuItem.Name = "modUserToolStripMenuItem";
 			this.modUserToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
 			this.modUserToolStripMenuItem.Text = "ModUser";
@@ -577,7 +578,7 @@ namespace Vindictus
 			// TabPanelMail
 			// 
 			this.TabPanelMail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-									| System.Windows.Forms.AnchorStyles.Left)));
+			| System.Windows.Forms.AnchorStyles.Left)));
 			this.TabPanelMail.Controls.Add(this.TabMailSend);
 			this.TabPanelMail.Controls.Add(this.TabMailRecv);
 			this.TabPanelMail.Location = new System.Drawing.Point(4, 310);
@@ -599,7 +600,7 @@ namespace Vindictus
 			// MailSendList
 			// 
 			this.MailSendList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-									this.chSendingTitle});
+			this.chSendingTitle});
 			this.MailSendList.ContextMenuStrip = this.ItemMenuStrip;
 			this.MailSendList.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.MailSendList.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -624,28 +625,28 @@ namespace Vindictus
 			// ItemMenuStrip
 			// 
 			this.ItemMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.refreshMailToolStripMenuItem,
-									this.refreshItemToolStripMenuItem,
-									this.refreshSep,
-									this.innerEnchantToolStripMenuItem,
-									this.clothesSocreToolStripMenuItem,
-									this.prefixEnchantToolStripMenuItem,
-									this.suffixEnchantToolStripMenuItem,
-									this.enhanceToolStripMenuItem,
-									this.itemStarToolStripMenuItem,
-									this.gemToolStripMenuItem,
-									this.lookToolStripMenuItem,
-									this.itemCountToolStripMenuItem,
-									this.unlimitTimeToolStripMenuItem,
-									this.colorSep,
-									this.color1ToolStripMenuItem,
-									this.color2ToolStripMenuItem,
-									this.color3ToolStripMenuItem,
-									this.allColorToolStripMenuItem,
-									this.deleteSep,
-									this.deleteItemToolStripMenuItem,
-									this.deleteMailsToolStripMenuItem,
-									this.deleteAllMailsToolStripMenuItem});
+			this.refreshMailToolStripMenuItem,
+			this.refreshItemToolStripMenuItem,
+			this.refreshSep,
+			this.innerEnchantToolStripMenuItem,
+			this.clothesSocreToolStripMenuItem,
+			this.prefixEnchantToolStripMenuItem,
+			this.suffixEnchantToolStripMenuItem,
+			this.enhanceToolStripMenuItem,
+			this.itemStarToolStripMenuItem,
+			this.gemToolStripMenuItem,
+			this.lookToolStripMenuItem,
+			this.itemCountToolStripMenuItem,
+			this.unlimitTimeToolStripMenuItem,
+			this.colorSep,
+			this.color1ToolStripMenuItem,
+			this.color2ToolStripMenuItem,
+			this.color3ToolStripMenuItem,
+			this.allColorToolStripMenuItem,
+			this.deleteSep,
+			this.deleteItemToolStripMenuItem,
+			this.deleteMailsToolStripMenuItem,
+			this.deleteAllMailsToolStripMenuItem});
 			this.ItemMenuStrip.Name = "MailMenuStrip";
 			this.ItemMenuStrip.Size = new System.Drawing.Size(159, 462);
 			this.ItemMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.MailMenuStrip_Opening);
@@ -672,8 +673,8 @@ namespace Vindictus
 			// innerEnchantToolStripMenuItem
 			// 
 			this.innerEnchantToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.clearInnerEnchantToolStripMenuItem,
-									this.toolStripSeparator1});
+			this.clearInnerEnchantToolStripMenuItem,
+			this.toolStripSeparator1});
 			this.innerEnchantToolStripMenuItem.Name = "innerEnchantToolStripMenuItem";
 			this.innerEnchantToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.innerEnchantToolStripMenuItem.Text = "InnerEnchant";
@@ -692,8 +693,8 @@ namespace Vindictus
 			// clothesSocreToolStripMenuItem
 			// 
 			this.clothesSocreToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.clearSocreToolStripMenuItem,
-									this.toolStripSeparator6});
+			this.clearSocreToolStripMenuItem,
+			this.toolStripSeparator6});
 			this.clothesSocreToolStripMenuItem.Name = "clothesSocreToolStripMenuItem";
 			this.clothesSocreToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.clothesSocreToolStripMenuItem.Text = "ClothesSocre";
@@ -713,8 +714,8 @@ namespace Vindictus
 			// prefixEnchantToolStripMenuItem
 			// 
 			this.prefixEnchantToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.clearPrefixToolStripMenuItem,
-									this.toolStripSeparator7});
+			this.clearPrefixToolStripMenuItem,
+			this.toolStripSeparator7});
 			this.prefixEnchantToolStripMenuItem.Name = "prefixEnchantToolStripMenuItem";
 			this.prefixEnchantToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.prefixEnchantToolStripMenuItem.Text = "PrefixEnchant";
@@ -733,8 +734,8 @@ namespace Vindictus
 			// suffixEnchantToolStripMenuItem
 			// 
 			this.suffixEnchantToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.clearSuffixToolStripMenuItem,
-									this.toolStripSeparator8});
+			this.clearSuffixToolStripMenuItem,
+			this.toolStripSeparator8});
 			this.suffixEnchantToolStripMenuItem.Name = "suffixEnchantToolStripMenuItem";
 			this.suffixEnchantToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.suffixEnchantToolStripMenuItem.Text = "SuffixEnchant";
@@ -742,19 +743,19 @@ namespace Vindictus
 			// clearSuffixToolStripMenuItem
 			// 
 			this.clearSuffixToolStripMenuItem.Name = "clearSuffixToolStripMenuItem";
-			this.clearSuffixToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+			this.clearSuffixToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.clearSuffixToolStripMenuItem.Text = "ClearSuffix";
 			// 
 			// toolStripSeparator8
 			// 
 			this.toolStripSeparator8.Name = "toolStripSeparator8";
-			this.toolStripSeparator8.Size = new System.Drawing.Size(134, 6);
+			this.toolStripSeparator8.Size = new System.Drawing.Size(149, 6);
 			// 
 			// enhanceToolStripMenuItem
 			// 
 			this.enhanceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.clearEnhanceToolStripMenuItem,
-									this.toolStripSeparator9});
+			this.clearEnhanceToolStripMenuItem,
+			this.toolStripSeparator9});
 			this.enhanceToolStripMenuItem.Name = "enhanceToolStripMenuItem";
 			this.enhanceToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.enhanceToolStripMenuItem.Text = "Enhance";
@@ -773,8 +774,8 @@ namespace Vindictus
 			// itemStarToolStripMenuItem
 			// 
 			this.itemStarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.clearItemStarToolStripMenuItem,
-									this.toolStripSeparator10});
+			this.clearItemStarToolStripMenuItem,
+			this.toolStripSeparator10});
 			this.itemStarToolStripMenuItem.Name = "itemStarToolStripMenuItem";
 			this.itemStarToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.itemStarToolStripMenuItem.Text = "ItemStar";
@@ -793,8 +794,8 @@ namespace Vindictus
 			// gemToolStripMenuItem
 			// 
 			this.gemToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.clearGemToolStripMenuItem,
-									this.toolStripSeparator11});
+			this.clearGemToolStripMenuItem,
+			this.toolStripSeparator11});
 			this.gemToolStripMenuItem.Name = "gemToolStripMenuItem";
 			this.gemToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.gemToolStripMenuItem.Text = "Gem";
@@ -814,8 +815,9 @@ namespace Vindictus
 			// lookToolStripMenuItem
 			// 
 			this.lookToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.clearLookToolStripMenuItem,
-									this.toolStripSeparator12});
+			this.clearLookToolStripMenuItem,
+			this.toolStripSeparator12,
+			this.setItemClassToolStripMenuItem});
 			this.lookToolStripMenuItem.Name = "lookToolStripMenuItem";
 			this.lookToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
 			this.lookToolStripMenuItem.Text = "Look";
@@ -823,13 +825,20 @@ namespace Vindictus
 			// clearLookToolStripMenuItem
 			// 
 			this.clearLookToolStripMenuItem.Name = "clearLookToolStripMenuItem";
-			this.clearLookToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+			this.clearLookToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.clearLookToolStripMenuItem.Text = "ClearLook";
 			// 
 			// toolStripSeparator12
 			// 
 			this.toolStripSeparator12.Name = "toolStripSeparator12";
-			this.toolStripSeparator12.Size = new System.Drawing.Size(132, 6);
+			this.toolStripSeparator12.Size = new System.Drawing.Size(149, 6);
+			// 
+			// setItemClassToolStripMenuItem
+			// 
+			this.setItemClassToolStripMenuItem.Name = "setItemClassToolStripMenuItem";
+			this.setItemClassToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.setItemClassToolStripMenuItem.Text = "setItemClass";
+			this.setItemClassToolStripMenuItem.Click += new System.EventHandler(this.SetItemClassToolStripMenuItemClick);
 			// 
 			// itemCountToolStripMenuItem
 			// 
@@ -913,7 +922,7 @@ namespace Vindictus
 			// MailRecvList
 			// 
 			this.MailRecvList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-									this.chReceiverTitle});
+			this.chReceiverTitle});
 			this.MailRecvList.ContextMenuStrip = this.ItemMenuStrip;
 			this.MailRecvList.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.MailRecvList.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -938,7 +947,7 @@ namespace Vindictus
 			// LogCatText
 			// 
 			this.LogCatText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.LogCatText.Location = new System.Drawing.Point(254, 510);
 			this.LogCatText.Multiline = true;
 			this.LogCatText.Name = "LogCatText";
@@ -1032,9 +1041,9 @@ namespace Vindictus
 			// SearchListView
 			// 
 			this.SearchListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-									| System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.SearchListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-									this.chSearchName});
+			this.chSearchName});
 			this.SearchListView.ContextMenuStrip = this.SendMenuStrip;
 			this.SearchListView.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
 			this.SearchListView.FullRowSelect = true;
@@ -1059,12 +1068,12 @@ namespace Vindictus
 			// SendMenuStrip
 			// 
 			this.SendMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.send1ToolStripMenuItem,
-									this.send5ToolStripMenuItem,
-									this.send10ToolStripMenuItem,
-									this.sendNToolStripMenuItem,
-									this.toolStripSeparator4,
-									this.copyItemClassToolStripMenuItem});
+			this.send1ToolStripMenuItem,
+			this.send5ToolStripMenuItem,
+			this.send10ToolStripMenuItem,
+			this.sendNToolStripMenuItem,
+			this.toolStripSeparator4,
+			this.copyItemClassToolStripMenuItem});
 			this.SendMenuStrip.Name = "SendMenuStrip";
 			this.SendMenuStrip.Size = new System.Drawing.Size(167, 120);
 			this.SendMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.MailMenuStrip_Opening);
@@ -1144,8 +1153,8 @@ namespace Vindictus
 			// tab_items
 			// 
 			this.tab_items.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-									| System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tab_items.Controls.Add(this.tab_items_normal);
 			this.tab_items.Controls.Add(this.tab_items_cash);
 			this.tab_items.Controls.Add(this.tab_items_quest);
@@ -1171,14 +1180,14 @@ namespace Vindictus
 			// 
 			this.ItemListPackage.BackColor = System.Drawing.SystemColors.Window;
 			this.ItemListPackage.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-									this.ch_items_name,
-									this.columnHeader12,
-									this.columnHeader15,
-									this.ch_items_type,
-									this.ch_items_color1,
-									this.ch_items_color2,
-									this.ch_items_color3,
-									this.ch_items_time});
+			this.ch_items_name,
+			this.columnHeader12,
+			this.columnHeader15,
+			this.ch_items_type,
+			this.ch_items_color1,
+			this.ch_items_color2,
+			this.ch_items_color3,
+			this.ch_items_time});
 			this.ItemListPackage.ContextMenuStrip = this.ItemMenuStrip;
 			this.ItemListPackage.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.ItemListPackage.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1249,13 +1258,13 @@ namespace Vindictus
 			// 
 			this.ItemListCash.BackColor = System.Drawing.SystemColors.Window;
 			this.ItemListCash.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-									this.columnHeader5,
-									this.columnHeader14,
-									this.columnHeader6,
-									this.columnHeader7,
-									this.columnHeader8,
-									this.columnHeader9,
-									this.columnHeader10});
+			this.columnHeader5,
+			this.columnHeader14,
+			this.columnHeader6,
+			this.columnHeader7,
+			this.columnHeader8,
+			this.columnHeader9,
+			this.columnHeader10});
 			this.ItemListCash.ContextMenuStrip = this.ItemMenuStrip;
 			this.ItemListCash.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.ItemListCash.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1321,10 +1330,10 @@ namespace Vindictus
 			// 
 			this.ItemListTask.BackColor = System.Drawing.SystemColors.Window;
 			this.ItemListTask.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-									this.columnHeader2,
-									this.columnHeader11,
-									this.columnHeader13,
-									this.columnHeader19});
+			this.columnHeader2,
+			this.columnHeader11,
+			this.columnHeader13,
+			this.columnHeader19});
 			this.ItemListTask.ContextMenuStrip = this.ItemMenuStrip;
 			this.ItemListTask.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.ItemListTask.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1374,10 +1383,10 @@ namespace Vindictus
 			// 
 			this.ItemListOther.BackColor = System.Drawing.SystemColors.Window;
 			this.ItemListOther.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-									this.columnHeader20,
-									this.columnHeader21,
-									this.columnHeader22,
-									this.columnHeader26});
+			this.columnHeader20,
+			this.columnHeader21,
+			this.columnHeader22,
+			this.columnHeader26});
 			this.ItemListOther.ContextMenuStrip = this.ItemMenuStrip;
 			this.ItemListOther.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.ItemListOther.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1460,6 +1469,7 @@ namespace Vindictus
 			this.tab_items_other.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
+
 		}
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
 		private System.Windows.Forms.ToolStripMenuItem clearLookToolStripMenuItem;
@@ -1604,5 +1614,6 @@ namespace Vindictus
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+		private System.Windows.Forms.ToolStripMenuItem setItemClassToolStripMenuItem;
 	}
 }

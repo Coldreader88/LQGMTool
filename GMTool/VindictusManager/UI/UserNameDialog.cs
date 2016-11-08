@@ -32,7 +32,7 @@ namespace Vindictus.UI
 			{
 				mainForm.Error(R.NoUser);
 				DialogResult = DialogResult.Cancel;
-			}if(user.Name == text){
+			}else if(user.Name == text){
 				DialogResult = DialogResult.Cancel;
 			}else if (!mainForm.CheckName(text))
 			{

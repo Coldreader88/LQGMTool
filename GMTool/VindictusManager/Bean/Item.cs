@@ -31,6 +31,11 @@ namespace Vindictus.Bean
 		public Item(){
 			
 		}
+		public Item(string itemclass,MainCategory main,SubCategory sub){
+			this.ItemClass = itemclass;
+			MainCategory =main;
+			SubCategory =sub;
+		}
 		public Item(DbDataReader reader, DataHelper datahelper)
 		{
 			this.ItemID = reader.ReadInt64("ID");

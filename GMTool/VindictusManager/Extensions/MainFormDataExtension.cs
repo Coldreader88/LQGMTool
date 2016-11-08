@@ -283,7 +283,7 @@ namespace Vindictus.Extensions
 				return count;
 			}
 		}
-		private static bool ModItemAttr(this MainForm main,ItemAttribute attr, Item item)
+		public static bool ModItemAttr(this MainForm main,ItemAttribute attr, Item item)
 		{
 			long itemID = item.ItemID;
 			string val = (attr.Value==null?"":attr.Value);

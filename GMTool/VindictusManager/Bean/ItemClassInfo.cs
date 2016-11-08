@@ -15,26 +15,26 @@ namespace Vindictus.Bean
 		/// <summary>
 		/// 子目录
 		/// </summary>
-		public SubCategory SubCategory{get;private set;}
+		public SubCategory SubCategory{get;protected set;}
 		/// <summary>
 		/// 主分类
 		/// </summary>
-		public MainCategory MainCategory{get;private set;}
+		public MainCategory MainCategory{get;protected set;}
 		/// <summary>
 		/// 等级需求
 		/// </summary>
-		public int RequiredLevel{get;private set;}
+		public int RequiredLevel{get;protected set;}
 		/// <summary>
 		/// 职业限制
 		/// </summary>
-		public int ClassRestriction{get;private set;}
+		public int ClassRestriction{get;protected set;}
 
-		public string Name{get;private set;}
+		public string Name{get;protected set;}
 
-		public string Desc{get;private set;}
-		public ItemStatInfo Stat{get;private set;}
-		public long MaxStack{get;private set;}
-		public string Feature { get; private set; }
+		public string Desc{get;protected set;}
+		public ItemStatInfo Stat{get;protected set;}
+		public long MaxStack{get;protected set;}
+		public string Feature { get; protected set; }
 
 		public ItemClassInfo(){
 			

@@ -137,6 +137,9 @@
     <Compile Include="UI\InputDialog.Designer.cs">
       <DependentUpon>InputDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\ItemClassDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="UI\ItemModCountDialog.cs">
       <SubType>Form</SubType>
     </Compile>
