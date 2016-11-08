@@ -14,6 +14,7 @@ namespace Vindictus.UI
 		private readonly MainForm mainForm;
 		private Item item;
 		private ItemClassInfo info;
+		private ClassInfo Class;
 		public ItemClassDialog(MainForm main):base()
 		{
 			this.mainForm = main;
@@ -22,10 +23,11 @@ namespace Vindictus.UI
 			this.OnCheckText  = OnCheckName;
 		}
 		
-		public void SetItem(Item item){
-			if(item==null){
+		public void SetItem(User user,Item item){
+			if(user==null||item==null){
 				return;
 			}
+			this.Class=user.Class;
 			this.item = item;
 			this.InputText = item.Name;
 		}
@@ -41,6 +43,10 @@ namespace Vindictus.UI
 				info = mainForm.DataHelper.getItemClassInfo(text);
 				if(info == null){
 					mainForm.Error(R.NoItem);
+					return false;
+				}
+				if(!Class.IsEnable(info.ClassRestriction)){
+					mainForm.Error(R.ClassDontUse);
 					return false;
 				}
 				if(item.MainCategory == MainCategory.WEAPON){

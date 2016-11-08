@@ -205,6 +205,7 @@ namespace Vindictus
 		public static string  Look{get{ return Get("Look"); }}
 		
 		public static string SetItemClass{get{ return Get("SetItemClass"); }}
+		public static string ClassDontUse{get{ return Get("ClassDontUse"); }}
 		
 		public static string  NoItem{get{ return Get("NoItem"); }}
 		public static string  ItemNotIs{get{ return Get("ItemNotIs"); }}

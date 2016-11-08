@@ -156,3 +156,4 @@ NoItem=没有该物品
 ItemNotIs={0} 并不是{1}!
 WeaponNotSame=武器的类型必须一样!\n当前是:{1}
 SetLookTip=是否把外观改为[{0}]
+ClassDontUse=当前职业不能使用

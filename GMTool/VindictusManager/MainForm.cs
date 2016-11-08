@@ -761,22 +761,17 @@ namespace Vindictus
 		}
 		void SetItemClassToolStripMenuItemClick(object sender, EventArgs e)
 		{
-			//TODO 输入itemclass，查找物品，（武器才需要）提示分类是否一样
+			if(!CheckUser())return;
 			ListView listview=GetListView();
 			if(listview == null||isMailListView()){
 				return;
 			}
 			Item item = listview.GetSelectItem<Item>();
 			if(item == null){
-				#if DEBUG
-				item = new Item("test", MainCategory.LIGHTARMOR,SubCategory.BOOTS);
-				#else
-					return;
-				#endif
-				
+				return;
 			}
 			using(var dlg = new ItemClassDialog(this)){
-				dlg.SetItem(item);
+				dlg.SetItem(CurUser, item);
 				if(dlg.ShowDialog() == DialogResult.OK){
 					ItemClassInfo info = dlg.ItemInfo;
 					if(this.ModItemAttr(new ItemAttribute(ItemAttributeType.LOOK, info.ItemClass), item)){
