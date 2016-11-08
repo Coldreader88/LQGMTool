@@ -32,11 +32,12 @@ namespace Vindictus.Extensions
 			}
 		}
 		public static void InitSkillBouns(this MainForm main,ToolStripDropDownItem menuitem){
-			var infos =main.DataHelper.SynthesisSkillBonues.Values;
+			var infos = main.DataHelper.SynthesisSkillBonues.Values;
+			ClassInfo classinfo=ClassInfo.Lethita;
 			foreach (SkillBonusInfo info in infos)
 			{
-//				if(user.IsEnable(info.ClassRestriction)){
 				var tsmi = new ToolStripMenuItem(info.Grade+" "+info.DESC);
+				tsmi.Visible = classinfo.IsEnable(info.ClassRestriction);
 				tsmi.ToolTipText = info.ToString();
 				tsmi.Tag = info;
 				tsmi.Click += (sender, e) => {
@@ -58,7 +59,6 @@ namespace Vindictus.Extensions
 					}
 				};
 				menuitem.DropDownItems.Add(tsmi);
-//				}
 			}
 		}
 		#endregion

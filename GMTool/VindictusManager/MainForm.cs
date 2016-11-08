@@ -95,6 +95,26 @@ namespace Vindictus
 			clearPrefixToolStripMenuItem.Text = R.Clear;
 			clearSocreToolStripMenuItem.Text = R.Clear;
 			clearSuffixToolStripMenuItem.Text = R.Clear;
+			clearLookToolStripMenuItem.Text = R.Clear;
+			deleteItemToolStripMenuItem.Text = R.DeleteSelectItem;
+			refreshItemToolStripMenuItem.Text = R.RefreshPackage;
+			unlimitTimeToolStripMenuItem.Text = R.UnLimitTime;
+			color1ToolStripMenuItem.Text=R.ModColor1;
+			color2ToolStripMenuItem.Text=R.ModColor2;
+			color3ToolStripMenuItem.Text=R.ModColor3;
+			allColorToolStripMenuItem.Text=R.AllModColor;
+			lbColor1.Text=R.Color1;
+			lbColor2.Text=R.Color2;
+			lbColor3.Text=R.Color3;
+			LockColorChk.Text=R.LockColor;
+			enhanceToolStripMenuItem.Text=R.Enhance;
+			itemStarToolStripMenuItem.Text=R.Star;
+			prefixEnchantToolStripMenuItem.Text=R.PrefixEnchant;
+			suffixEnchantToolStripMenuItem.Text=R.SuffixEnchant;
+			innerEnchantToolStripMenuItem.Text=R.InnerEnchant;
+			clothesSocreToolStripMenuItem.Text=R.ClothesScore;
+			gemToolStripMenuItem.Text=R.Gem;
+			lookToolStripMenuItem.Text=R.Look;
 		}
 		
 		void MainFormLoad(object sender, EventArgs e)
@@ -718,6 +738,24 @@ namespace Vindictus
 						ReadPackage(PackageType.All);
 					}
 				}
+			}
+		}
+		void RefreshItemToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			ReadPackage(PackageType.All);
+		}
+		
+		void DeleteItemToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			if(!CheckUser())return;
+			ListView list=GetListView();
+			if(isMailListView()){
+				return;
+			}
+			Item[] items=list.GetSelectItems<Item>();
+			if(items!=null){
+				this.DeleteItem(CurUser, items);
+				ReadPackage(PackageType.All);
 			}
 		}
 		#endregion

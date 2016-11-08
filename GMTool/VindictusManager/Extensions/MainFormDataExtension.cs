@@ -19,7 +19,7 @@ namespace Vindictus.Extensions
 	public static class MainFormDataExtension
 	{
 		#region user
-		private const string SQL_QUERY_USERS = "select * from CharacterInfo WHERE DeleteTime is NULL and CreateTime >= '2016-01-01' ORDER BY Name, CreateTime;";
+		private const string SQL_QUERY_USERS = "select * from CharacterInfo WHERE DeleteTime is NULL ORDER BY Name, CreateTime;";
 		public static List<User> ReadAllUsers(this MSSqlHelper db)
 		{
 			List<User> userList = new List<User>();
@@ -114,7 +114,42 @@ namespace Vindictus.Extensions
 			}
 		}
 		#endregion
-		
+		/// <summary>
+		/// 删除物品
+		/// </summary>
+		public static bool DeleteItem(this MainForm main, User user,params Item[] items)
+		{
+			if (items != null)
+			{
+				if (items.Length == 1)
+				{
+					if (!main.Question(string.Format(R.DeleteItem, items[0].Name)))
+					{
+						return false;
+					}
+				}
+				else if(items.Length > 1)
+				{
+					if (!main.Question(string.Format(R.DeleteItems,items.Length)))
+					{
+						return false;
+					}
+				}
+				try
+				{
+					foreach (Item item in items)
+					{
+						main.Db.ExcuteSQL("DELETE FROM Item Where ID=" + item.ItemID);
+						main.log("删除["+item.Name+"]"+item.ItemClass);
+					}
+					return true;
+				}
+				catch (Exception)
+				{
+				}
+			}
+			return false;
+		}
 		public static bool ModUserInfo(this MainForm main, User user,string name,object value)
 		{
 			try
@@ -224,7 +259,7 @@ namespace Vindictus.Extensions
 				return false;
 			}
 			main.Db.ExcuteSQL("UPDATE Item SET Count = "+count+
-			             " WHERE OwnerID =" + user.CID + " and ID = " + item.ItemID);
+			                  " WHERE OwnerID =" + user.CID + " and ID = " + item.ItemID);
 			return true;
 		}
 		/// <summary>

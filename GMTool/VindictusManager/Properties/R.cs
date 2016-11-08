@@ -184,5 +184,24 @@ namespace Vindictus
 		public static string  SendItemCount{get{ return Get("SendItemCount"); }}
 		public static string  CopyItemClass{get{ return Get("CopyItemClass"); }}
 		public static string  Clear{get{ return Get("Clear"); }}
+		
+		public static string  DeleteItem{get{ return Get("DeleteItem"); }}
+		public static string  DeleteSelectItem{get{ return Get("DeleteSelectItem"); }}
+		public static string  RefreshPackage{get{ return Get("RefreshPackage"); }}
+		public static string  DeleteItems{get{ return Get("DeleteItems"); }}
+		public static string  UnLimitTime{get{ return Get("UnLimitTime"); }}
+		public static string  Color1{get{ return Get("Color1"); }}
+		public static string  Color2{get{ return Get("Color2"); }}
+		public static string  Color3{get{ return Get("Color3"); }}
+		public static string  ModColor1{get{ return Get("ModColor1"); }}
+		public static string  ModColor2{get{ return Get("ModColor2"); }}
+		public static string  ModColor3{get{ return Get("ModColor3"); }}
+		public static string  AllModColor{get{ return Get("AllModColor"); }}
+		public static string  LockColor{get{ return Get("LockColor"); }}
+		
+		public static string  InnerEnchant{get{ return Get("InnerEnchant"); }}
+		public static string  ClothesScore{get{ return Get("ClothesScore"); }}
+		public static string  Gem{get{ return Get("Gem"); }}
+		public static string  Look{get{ return Get("Look"); }}
 	}
 }
