@@ -33,6 +33,7 @@ namespace Vindictus
 		{
 			Config = Program.Config;
 			InitializeComponent();
+			#region 翻译
 			viewToolStripMenuItem.Text = R.View;
 			serverManagerToolStripMenuItem.Text = R.ServerManager;
 			helpToolStripMenuItem.Text = R.Help;
@@ -116,6 +117,7 @@ namespace Vindictus
 			gemToolStripMenuItem.Text=R.Gem;
 			lookToolStripMenuItem.Text=R.Look;
 			setItemClassToolStripMenuItem.Text=R.SetItemClass;
+			#endregion
 		}
 		
 		void MainFormLoad(object sender, EventArgs e)
@@ -763,25 +765,46 @@ namespace Vindictus
 		{
 			if(!CheckUser())return;
 			ListView listview=GetListView();
-			if(listview == null||isMailListView()){
+			if(listview == null){
 				return;
 			}
-			Item item = listview.GetSelectItem<Item>();
-			if(item == null){
-				return;
-			}
-			using(var dlg = new ItemClassDialog(this)){
-				dlg.SetItem(CurUser, item);
-				if(dlg.ShowDialog() == DialogResult.OK){
-					ItemClassInfo info = dlg.ItemInfo;
-					if(this.ModItemAttr(new ItemAttribute(ItemAttributeType.LOOK, info.ItemClass), item)){
-						log("修改["+item.Name+"]外观为["+info.Name+"]成功");
-					}else{
-						log("修改["+item.Name+"]外观为["+info.Name+"]失败");
+			if(isMailListView()){
+				Mail mail = listview.GetSelectItem<Mail>();
+				if(mail==null){
+					return;
+				}
+				using(var dlg = new ItemClassDialog(this)){
+					dlg.SetItem(CurUser, null);
+					if(dlg.ShowDialog() == DialogResult.OK){
+						ItemClassInfo info = dlg.ItemInfo;
+						
+					}
+				}
+			}else{
+				Item item = listview.GetSelectItem<Item>();
+				if(item == null){
+					return;
+				}
+				using(var dlg = new ItemClassDialog(this)){
+					dlg.SetItem(CurUser, item);
+					if(dlg.ShowDialog() == DialogResult.OK){
+						ItemClassInfo info = dlg.ItemInfo;
+						if(this.ModItemAttr(new ItemAttribute(ItemAttributeType.LOOK, info.ItemClass), item)){
+							log("修改["+item.Name+"]外观为["+info.Name+"]成功");
+						}else{
+							log("修改["+item.Name+"]外观为["+info.Name+"]失败");
+						}
 					}
 				}
 			}
 		}
 		#endregion
+		
+		void ClearMenu_Click(object sender, EventArgs e)
+		{
+			if(sender == innerEnchantToolStripMenuItem){
+				
+			}
+		}
 	}
 }

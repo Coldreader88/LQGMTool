@@ -29,7 +29,7 @@ namespace Vindictus.UI
 			}
 			this.Class=user.Class;
 			this.item = item;
-			this.InputText = item.Name;
+			this.InputText = item==null?"":item.Name;
 		}
 		public ItemClassInfo ItemInfo{
 			get{return info;}
@@ -48,6 +48,9 @@ namespace Vindictus.UI
 				if(!Class.IsEnable(info.ClassRestriction)){
 					mainForm.Error(R.ClassDontUse);
 					return false;
+				}
+				if(item == null){
+					return !string.IsNullOrEmpty(text);
 				}
 				if(item.MainCategory == MainCategory.WEAPON){
 					if(info.MainCategory != MainCategory.WEAPON){
