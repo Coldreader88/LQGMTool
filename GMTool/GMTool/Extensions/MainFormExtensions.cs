@@ -297,14 +297,11 @@ namespace GMTool
 		{
 			try
 			{
-				if (db.ExcuteScalarSQL("select count(*) from vocation where cid=" + user.CID) == 0)
-				{
-					db.ExcuteSQL(string.Concat(new object[] { "insert into vocation(CID,vocationClass,VocationLevel,VocationEXP,LastTransform) values(", user.CID, ",", (int)group, ","+level+",0,'", DateTime.Now.ToString(), "')" }));
-				}
-				else
-				{
-					db.ExcuteSQL("update vocation set vocationClass = "+ (int)group + ",VocationLevel = "+level+" where cid =" + user.CID);
-				}
+				db.ExcuteSQL("delete from vocation where cid = "+user.CID+";");
+				db.ExcuteSQL("insert into vocation(CID,vocationClass,VocationLevel,VocationEXP,LastTransform) values("+
+				             user.CID+ ","+
+				             (int)group +","+
+				             level+",0,'"+ DateTime.Now+"')");
 				if (reset)
 				{
 					ResetGroupSkill(main, user);
@@ -399,18 +396,18 @@ namespace GMTool
 			}
 			int rs = 0;
 			int i = 0;
-            foreach (ItemClassInfo item in items)
-            {
-                if (item != null)
-                {
-                    if (item.Name != null && item.Name.Contains("{0}"))
-                    {
-                        return -i;
-                    }
-                }
-                i++;
-            }
-            foreach (ItemClassInfo item in items)
+			foreach (ItemClassInfo item in items)
+			{
+				if (item != null)
+				{
+					if (item.Name != null && item.Name.Contains("{0}"))
+					{
+						return -i;
+					}
+				}
+				i++;
+			}
+			foreach (ItemClassInfo item in items)
 			{
 				if (item != null)
 				{
@@ -429,11 +426,11 @@ namespace GMTool
 			{
 				return 0;
 			}
-            if (!string.IsNullOrEmpty(value))
-            {
-                item += "[VALUE:" + value + "]";
-            }
-            if (string.IsNullOrEmpty(name))
+			if (!string.IsNullOrEmpty(value))
+			{
+				item += "[VALUE:" + value + "]";
+			}
+			if (string.IsNullOrEmpty(name))
 			{
 				name = item;
 			}

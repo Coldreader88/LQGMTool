@@ -14,6 +14,7 @@ using GMTool.Common;
 using System.IO;
 using System.Threading;
 using WebServer;
+using System.Diagnostics;
 
 namespace ServerManager
 {
@@ -395,6 +396,23 @@ namespace ServerManager
 				this.WindowState = FormWindowState.Normal;
 				this.notifyIcon1.Visible = false;
 				this.ShowInTaskbar = true;
+			}
+		}
+		void BtnGameClick(object sender, EventArgs ea)
+		{
+			string path = PathHelper.Combine(Config.GamePath, "Vindictus.exe");
+			string arg =  " -stage -dev -lang "+Config.GameCode+" -noupdate  -localized";
+			var process = new Process();
+			process.StartInfo.FileName = path;
+			process.StartInfo.WorkingDirectory = Path.GetDirectoryName(path);
+			//设定程式执行参数
+//			process.StartInfo.UseShellExecute = false;
+//			process.StartInfo.CreateNoWindow = true;
+			process.StartInfo.Arguments = arg;
+			try{
+				process.Start();
+			}catch(Exception e){
+				this.Error("启动游戏失败。\n"+(path+" "+arg)+"\n"+e);
 			}
 		}
 	}

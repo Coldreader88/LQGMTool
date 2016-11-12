@@ -50,12 +50,13 @@ namespace ServerManager
 			this.btnSqlserver = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+			this.btnGame = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// btnUpdateConfig
 			// 
-			this.btnUpdateConfig.Location = new System.Drawing.Point(256, 67);
+			this.btnUpdateConfig.Location = new System.Drawing.Point(9, 97);
 			this.btnUpdateConfig.Name = "btnUpdateConfig";
 			this.btnUpdateConfig.Size = new System.Drawing.Size(123, 28);
 			this.btnUpdateConfig.TabIndex = 1;
@@ -90,9 +91,9 @@ namespace ServerManager
 			// 
 			this.btnStart.BackColor = System.Drawing.Color.ForestGreen;
 			this.btnStart.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-			this.btnStart.Location = new System.Drawing.Point(83, 67);
+			this.btnStart.Location = new System.Drawing.Point(140, 65);
 			this.btnStart.Name = "btnStart";
-			this.btnStart.Size = new System.Drawing.Size(80, 28);
+			this.btnStart.Size = new System.Drawing.Size(123, 28);
 			this.btnStart.TabIndex = 0;
 			this.btnStart.Text = "全部启动";
 			this.toolTip1.SetToolTip(this.btnStart, "启动全部服务");
@@ -102,7 +103,7 @@ namespace ServerManager
 			// chkNoPeople
 			// 
 			this.chkNoPeople.AutoSize = true;
-			this.chkNoPeople.Location = new System.Drawing.Point(8, 74);
+			this.chkNoPeople.Location = new System.Drawing.Point(13, 69);
 			this.chkNoPeople.Name = "chkNoPeople";
 			this.chkNoPeople.Size = new System.Drawing.Size(72, 16);
 			this.chkNoPeople.TabIndex = 3;
@@ -125,9 +126,9 @@ namespace ServerManager
 			// 
 			this.btnStop.BackColor = System.Drawing.Color.ForestGreen;
 			this.btnStop.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-			this.btnStop.Location = new System.Drawing.Point(170, 67);
+			this.btnStop.Location = new System.Drawing.Point(140, 97);
 			this.btnStop.Name = "btnStop";
-			this.btnStop.Size = new System.Drawing.Size(80, 28);
+			this.btnStop.Size = new System.Drawing.Size(123, 28);
 			this.btnStop.TabIndex = 1;
 			this.btnStop.Text = "启动Web";
 			this.toolTip1.SetToolTip(this.btnStop, "EndPoint.txt的服务");
@@ -151,9 +152,9 @@ namespace ServerManager
 			| System.Windows.Forms.AnchorStyles.Left) 
 			| System.Windows.Forms.AnchorStyles.Right)));
 			this.layoutMain.AutoScroll = true;
-			this.layoutMain.Location = new System.Drawing.Point(2, 101);
+			this.layoutMain.Location = new System.Drawing.Point(2, 130);
 			this.layoutMain.Name = "layoutMain";
-			this.layoutMain.Size = new System.Drawing.Size(382, 415);
+			this.layoutMain.Size = new System.Drawing.Size(382, 386);
 			this.layoutMain.TabIndex = 2;
 			// 
 			// btnSqlserver
@@ -188,11 +189,22 @@ namespace ServerManager
 			this.notifyIcon1.Text = "服务端管理 ";
 			this.notifyIcon1.Click += new System.EventHandler(this.NotifyIcon1Click);
 			// 
+			// btnGame
+			// 
+			this.btnGame.Location = new System.Drawing.Point(269, 66);
+			this.btnGame.Name = "btnGame";
+			this.btnGame.Size = new System.Drawing.Size(104, 58);
+			this.btnGame.TabIndex = 5;
+			this.btnGame.Text = "启动游戏";
+			this.btnGame.UseVisualStyleBackColor = true;
+			this.btnGame.Click += new System.EventHandler(this.BtnGameClick);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(384, 517);
+			this.Controls.Add(this.btnGame);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.chkNoPeople);
 			this.Controls.Add(this.layoutMain);
@@ -226,5 +238,6 @@ namespace ServerManager
         private System.Windows.Forms.Button btnShrink;
         private System.Windows.Forms.Button btnSqlserver;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.Button btnGame;
     }
 }
