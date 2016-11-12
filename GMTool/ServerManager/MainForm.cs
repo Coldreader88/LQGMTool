@@ -378,5 +378,24 @@ namespace ServerManager
 //				}
 //			}
 		}
+		void MainFormSizeChanged(object sender, EventArgs e)
+		{
+			if (this.WindowState == FormWindowState.Minimized)
+			{
+				this.Hide();
+				this.ShowInTaskbar = false;
+				this.notifyIcon1.Visible = true;
+			}
+		}
+		void NotifyIcon1Click(object sender, EventArgs e)
+		{
+			if (this.WindowState == FormWindowState.Minimized)
+			{
+				this.Show();
+				this.WindowState = FormWindowState.Normal;
+				this.notifyIcon1.Visible = false;
+				this.ShowInTaskbar = true;
+			}
+		}
 	}
 }

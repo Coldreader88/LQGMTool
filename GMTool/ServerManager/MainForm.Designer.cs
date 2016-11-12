@@ -44,11 +44,12 @@ namespace ServerManager
 			this.btnStart = new System.Windows.Forms.Button();
 			this.chkNoPeople = new System.Windows.Forms.CheckBox();
 			this.btnCreateDbFromBackup = new System.Windows.Forms.Button();
-			this.layoutMain = new System.Windows.Forms.FlowLayoutPanel();
 			this.btnStop = new System.Windows.Forms.Button();
 			this.btnShrink = new System.Windows.Forms.Button();
+			this.layoutMain = new System.Windows.Forms.FlowLayoutPanel();
 			this.btnSqlserver = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -120,17 +121,6 @@ namespace ServerManager
 			this.btnCreateDbFromBackup.UseVisualStyleBackColor = true;
 			this.btnCreateDbFromBackup.Click += new System.EventHandler(this.btnCreateDbFromBackup_Click);
 			// 
-			// layoutMain
-			// 
-			this.layoutMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-									| System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
-			this.layoutMain.AutoScroll = true;
-			this.layoutMain.Location = new System.Drawing.Point(2, 101);
-			this.layoutMain.Name = "layoutMain";
-			this.layoutMain.Size = new System.Drawing.Size(382, 415);
-			this.layoutMain.TabIndex = 2;
-			// 
 			// btnStop
 			// 
 			this.btnStop.BackColor = System.Drawing.Color.ForestGreen;
@@ -154,6 +144,17 @@ namespace ServerManager
 			this.toolTip1.SetToolTip(this.btnShrink, "回收删除的空间");
 			this.btnShrink.UseVisualStyleBackColor = true;
 			this.btnShrink.Click += new System.EventHandler(this.button1_Click);
+			// 
+			// layoutMain
+			// 
+			this.layoutMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.layoutMain.AutoScroll = true;
+			this.layoutMain.Location = new System.Drawing.Point(2, 101);
+			this.layoutMain.Name = "layoutMain";
+			this.layoutMain.Size = new System.Drawing.Size(382, 415);
+			this.layoutMain.TabIndex = 2;
 			// 
 			// btnSqlserver
 			// 
@@ -181,6 +182,12 @@ namespace ServerManager
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "数据库";
 			// 
+			// notifyIcon1
+			// 
+			this.notifyIcon1.Icon = global::ServerManager.Properties.ImageResource.icon;
+			this.notifyIcon1.Text = "服务端管理 ";
+			this.notifyIcon1.Click += new System.EventHandler(this.NotifyIcon1Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -192,6 +199,7 @@ namespace ServerManager
 			this.Controls.Add(this.btnStop);
 			this.Controls.Add(this.btnStart);
 			this.Controls.Add(this.btnUpdateConfig);
+			this.Icon = global::ServerManager.Properties.ImageResource.icon;
 			this.MaximizeBox = false;
 			this.MaximumSize = new System.Drawing.Size(400, 800);
 			this.Name = "MainForm";
@@ -199,9 +207,11 @@ namespace ServerManager
 			this.Text = "服务端管理";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
 			this.Load += new System.EventHandler(this.MainForm_Load);
+			this.SizeChanged += new System.EventHandler(this.MainFormSizeChanged);
 			this.groupBox1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
+
 		}
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.ToolTip toolTip1;
@@ -215,5 +225,6 @@ namespace ServerManager
         private System.Windows.Forms.CheckBox chkNoPeople;
         private System.Windows.Forms.Button btnShrink;
         private System.Windows.Forms.Button btnSqlserver;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }

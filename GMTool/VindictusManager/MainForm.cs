@@ -117,6 +117,7 @@ namespace Vindictus
 			gemToolStripMenuItem.Text=R.Gem;
 			lookToolStripMenuItem.Text=R.Look;
 			setItemClassToolStripMenuItem.Text=R.SetItemClass;
+			MyNotifyIcon.Text = this.Text;
 			#endregion
 		}
 		
@@ -804,6 +805,24 @@ namespace Vindictus
 		{
 			if(sender == innerEnchantToolStripMenuItem){
 				
+			}
+		}
+		void MainFormSizeChanged(object sender, EventArgs e)
+		{
+			if (this.WindowState == FormWindowState.Minimized)
+			{
+				this.Hide();
+				this.ShowInTaskbar = false;
+				this.MyNotifyIcon.Visible = true;
+			}
+		}
+		void MyNotifyIconMouseClick(object sender, MouseEventArgs e)
+		{
+			if(e.Button == MouseButtons.Left){
+				this.Show();
+				this.WindowState = FormWindowState.Normal;
+				this.MyNotifyIcon.Visible = false;
+				this.ShowInTaskbar = true;
 			}
 		}
 	}

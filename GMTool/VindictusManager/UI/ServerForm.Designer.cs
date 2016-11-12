@@ -147,8 +147,8 @@ namespace ServerManager
 			// layoutMain
 			// 
 			this.layoutMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-									| System.Windows.Forms.AnchorStyles.Left) 
-									| System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.layoutMain.AutoScroll = true;
 			this.layoutMain.Location = new System.Drawing.Point(2, 101);
 			this.layoutMain.Name = "layoutMain";
@@ -192,6 +192,7 @@ namespace ServerManager
 			this.Controls.Add(this.btnStop);
 			this.Controls.Add(this.btnStart);
 			this.Controls.Add(this.btnUpdateConfig);
+			this.Icon = global::Vindictus.Properties.ResourceImage.icon;
 			this.MaximizeBox = false;
 			this.MaximumSize = new System.Drawing.Size(400, 800);
 			this.Name = "ServerForm";
@@ -202,6 +203,7 @@ namespace ServerManager
 			this.groupBox1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
+
 		}
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.ToolTip toolTip1;
