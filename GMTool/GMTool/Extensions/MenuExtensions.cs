@@ -159,23 +159,19 @@ namespace GMTool
 				ToolStripMenuItem tsmi = new ToolStripMenuItemEx(info.Name);
 				tsmi.ToolTipText = info.ToString();//提示文字为真实路径
 				tsmi.Click += (sender, e) => {
-					var menu = sender as ToolStripMenuItem;
-					if (menu != null && menu.Tag != null)
+					Item item = listview.GetSelectItem<Item>();
+					if (item!=null)
 					{
-						Item item = listview.GetSelectItem<Item>();
-						if (item!=null)
+						//附魔
+						if (main.ItemEnchant(item, info))
 						{
-							//附魔
-							if (main.ItemEnchant(item, info))
-							{
-								main.log(item.ItemName + " 附魔【" + info.Name + "】成功。");
-								main.ReadPackage(item.Package);
-							}
-							else
-							{
-								//main.Warnning(item.ItemName + " 附魔【" + _info.Name + "】失败。");
-								main.log(item.ItemName + " 附魔【" + info.Name + "】失败。");
-							}
+							main.log(item.ItemName + " 附魔【" + info.Name + "】成功。");
+							main.ReadPackage(item.Package);
+						}
+						else
+						{
+							//main.Warnning(item.ItemName + " 附魔【" + _info.Name + "】失败。");
+							main.log(item.ItemName + " 附魔【" + info.Name + "】失败。");
 						}
 					}
 				};
@@ -204,20 +200,16 @@ namespace GMTool
 				tsmi.ToolTipText = info.ToString();//提示文字为真实路径
 				tsmi.Click += (sender, e)=> {
 					Item item = listview.GetSelectItem<Item>();
-					var menu = sender as ToolStripMenuItem;
-					if (menu != null && menu.Tag != null && item!=null)
+					//附魔
+					if (main.ItemEnchant(item, info))
 					{
-						//附魔
-						if (main.ItemEnchant(item, info))
-						{
-							main.log(item.ItemName + " 附魔【" + info.Name + "】成功。");
-							main.ReadPackage(item.Package);
-						}
-						else
-						{
-							// main.Warnning(item.ItemName + " 附魔【" + _info.Name + "】失败。");
-							main.log(item.ItemName + " 附魔【" + info.Name + "】失败。");
-						}
+						main.log(item.ItemName + " 附魔【" + info.Name + "】成功。");
+						main.ReadPackage(item.Package);
+					}
+					else
+					{
+						// main.Warnning(item.ItemName + " 附魔【" + _info.Name + "】失败。");
+						main.log(item.ItemName + " 附魔【" + info.Name + "】失败。");
 					}
 				};
 				

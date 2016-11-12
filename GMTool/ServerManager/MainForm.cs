@@ -411,6 +411,7 @@ namespace ServerManager
 			process.StartInfo.Arguments = arg;
 			try{
 				process.Start();
+				this.WindowState = FormWindowState.Minimized;
 			}catch(Exception e){
 				this.Error("启动游戏失败。\n"+(path+" "+arg)+"\n"+e);
 			}
