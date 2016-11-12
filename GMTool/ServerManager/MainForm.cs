@@ -43,6 +43,13 @@ namespace ServerManager
 
 		private void MainFormFormClosing(object sender, FormClosingEventArgs e)
 		{
+			if(isStart){
+				if(!this.Question("服务端正在运行，是否强制退出？")){
+					e.Cancel = true;
+	//				this.WindowState = FormWindowState.Minimized;
+					return;
+				}
+			}
 			if (ProcessPanels != null)
 			{
 				foreach (ProcessPanel p in ProcessPanels)
