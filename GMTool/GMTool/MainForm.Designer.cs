@@ -30,9 +30,9 @@
         {
         	this.components = new System.ComponentModel.Container();
         	System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-        	        	        	"测试",
-        	        	        	"艾丽莎",
-        	        	        	"12"}, -1);
+			"测试",
+			"艾丽莎",
+			"12"}, 0);
         	this.label1 = new System.Windows.Forms.Label();
         	this.groupBox1 = new System.Windows.Forms.GroupBox();
         	this.btn_mssql_open = new System.Windows.Forms.Button();
@@ -104,7 +104,6 @@
         	this.contentMenuSendItem5 = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuSendItem10 = new System.Windows.Forms.ToolStripMenuItem();
         	this.contentMenuSendItemX = new System.Windows.Forms.ToolStripMenuItem();
-        	this.contentMenuSendItemSItem = new System.Windows.Forms.ToolStripMenuItem();
         	this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
         	this.contentMenuSendItemCopyIDs = new System.Windows.Forms.ToolStripMenuItem();
         	this.tb_senditem_name = new System.Windows.Forms.TextBox();
@@ -313,9 +312,9 @@
         	// list_users
         	// 
         	this.list_users.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-        	        	        	this.ch_userlist_name,
-        	        	        	this.ch_userlist_class,
-        	        	        	this.ch_userlist_level});
+			this.ch_userlist_name,
+			this.ch_userlist_class,
+			this.ch_userlist_level});
         	this.list_users.ContextMenuStrip = this.contextMenuUser;
         	this.list_users.Dock = System.Windows.Forms.DockStyle.Fill;
         	this.list_users.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -323,7 +322,7 @@
         	this.list_users.GridLines = true;
         	this.list_users.HideSelection = false;
         	this.list_users.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-        	        	        	listViewItem1});
+			listViewItem1});
         	this.list_users.LabelWrap = false;
         	this.list_users.Location = new System.Drawing.Point(3, 3);
         	this.list_users.MultiSelect = false;
@@ -353,22 +352,22 @@
         	// contextMenuUser
         	// 
         	this.contextMenuUser.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-        	        	        	this.contentMenuUserAddTitle,
-        	        	        	this.contentMenuUserMaxSecondClass,
-        	        	        	this.contentMenuUserResetQuest,
-        	        	        	this.contentMenuUserTitles,
-        	        	        	this.toolStripSeparator4,
-        	        	        	this.contentMenuUserModName,
-        	        	        	this.contentMenuUserModLevel,
-        	        	        	this.contentMenuUserModAp,
-        	        	        	this.contentMenuUserClasses,
-        	        	        	this.contentMenuUserModAttr,
-        	        	        	this.toolStripSeparator5,
-        	        	        	this.contentMenuUserMaxLight,
-        	        	        	this.contentMenuUserMaxDark,
-        	        	        	this.contentMenuUserResetDarkGroup,
-        	        	        	this.toolStripSeparator6,
-        	        	        	this.contentMenuUserRefresh});
+			this.contentMenuUserAddTitle,
+			this.contentMenuUserMaxSecondClass,
+			this.contentMenuUserResetQuest,
+			this.contentMenuUserTitles,
+			this.toolStripSeparator4,
+			this.contentMenuUserModName,
+			this.contentMenuUserModLevel,
+			this.contentMenuUserModAp,
+			this.contentMenuUserClasses,
+			this.contentMenuUserModAttr,
+			this.toolStripSeparator5,
+			this.contentMenuUserMaxLight,
+			this.contentMenuUserMaxDark,
+			this.contentMenuUserResetDarkGroup,
+			this.toolStripSeparator6,
+			this.contentMenuUserRefresh});
         	this.contextMenuUser.Name = "contextMenuUser";
         	this.contextMenuUser.Size = new System.Drawing.Size(157, 308);
         	// 
@@ -479,14 +478,14 @@
         	// 
         	this.list_items_normal.BackColor = System.Drawing.SystemColors.Window;
         	this.list_items_normal.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-        	        	        	this.ch_items_name,
-        	        	        	this.columnHeader12,
-        	        	        	this.columnHeader15,
-        	        	        	this.ch_items_type,
-        	        	        	this.ch_items_color1,
-        	        	        	this.ch_items_color2,
-        	        	        	this.ch_items_color3,
-        	        	        	this.ch_items_time});
+			this.ch_items_name,
+			this.columnHeader12,
+			this.columnHeader15,
+			this.ch_items_type,
+			this.ch_items_color1,
+			this.ch_items_color2,
+			this.ch_items_color3,
+			this.ch_items_time});
         	this.list_items_normal.ContextMenuStrip = this.contextMenuItem;
         	this.list_items_normal.Dock = System.Windows.Forms.DockStyle.Fill;
         	this.list_items_normal.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -545,22 +544,22 @@
         	// contextMenuItem
         	// 
         	this.contextMenuItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-        	        	        	this.contentMenuItemRefesh,
-        	        	        	this.toolStripSeparator12,
-        	        	        	this.contentMenuEnchantPrefix,
-        	        	        	this.contentMenuEnchantSuffix,
-        	        	        	this.contentMenuItemPower,
-        	        	        	this.toolStripSeparator1,
-        	        	        	this.contentMenuItemColor1,
-        	        	        	this.contentMenuItemColor2,
-        	        	        	this.contentMenuItemColor3,
-        	        	        	this.contentMenuItemColorAll,
-        	        	        	this.toolStripSeparator8,
-        	        	        	this.contentMenuItemCount,
-        	        	        	this.contentMenuItemMaxStar,
-        	        	        	this.contentMenuItemUnLimitTime,
-        	        	        	this.toolStripSeparator3,
-        	        	        	this.contentMenuDeleteItems});
+			this.contentMenuItemRefesh,
+			this.toolStripSeparator12,
+			this.contentMenuEnchantPrefix,
+			this.contentMenuEnchantSuffix,
+			this.contentMenuItemPower,
+			this.toolStripSeparator1,
+			this.contentMenuItemColor1,
+			this.contentMenuItemColor2,
+			this.contentMenuItemColor3,
+			this.contentMenuItemColorAll,
+			this.toolStripSeparator8,
+			this.contentMenuItemCount,
+			this.contentMenuItemMaxStar,
+			this.contentMenuItemUnLimitTime,
+			this.toolStripSeparator3,
+			this.contentMenuDeleteItems});
         	this.contextMenuItem.Name = "contextMenuItem";
         	this.contextMenuItem.Size = new System.Drawing.Size(149, 292);
         	// 
@@ -591,13 +590,13 @@
         	// contentMenuItemPower
         	// 
         	this.contentMenuItemPower.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-        	        	        	this.contentMenuItemPower5,
-        	        	        	this.contentMenuItemPower10,
-        	        	        	this.contentMenuItemPower12,
-        	        	        	this.contentMenuItemPower13,
-        	        	        	this.contentMenuItemPower15,
-        	        	        	this.toolStripSeparator2,
-        	        	        	this.contentMenuItemPower0});
+			this.contentMenuItemPower5,
+			this.contentMenuItemPower10,
+			this.contentMenuItemPower12,
+			this.contentMenuItemPower13,
+			this.contentMenuItemPower15,
+			this.toolStripSeparator2,
+			this.contentMenuItemPower0});
         	this.contentMenuItemPower.Name = "contentMenuItemPower";
         	this.contentMenuItemPower.Size = new System.Drawing.Size(148, 22);
         	this.contentMenuItemPower.Text = "物品强化";
@@ -723,9 +722,9 @@
         	// list_search
         	// 
         	this.list_search.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-        	        	        	| System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Right)));
         	this.list_search.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-        	        	        	this.columnHeader1});
+			this.columnHeader1});
         	this.list_search.ContextMenuStrip = this.contextMenuSend;
         	this.list_search.Enabled = false;
         	this.list_search.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -750,15 +749,14 @@
         	// contextMenuSend
         	// 
         	this.contextMenuSend.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-        	        	        	this.contentMenuSendItem1,
-        	        	        	this.contentMenuSendItem5,
-        	        	        	this.contentMenuSendItem10,
-        	        	        	this.contentMenuSendItemX,
-        	        	        	this.contentMenuSendItemSItem,
-        	        	        	this.toolStripSeparator15,
-        	        	        	this.contentMenuSendItemCopyIDs});
+			this.contentMenuSendItem1,
+			this.contentMenuSendItem5,
+			this.contentMenuSendItem10,
+			this.contentMenuSendItemX,
+			this.toolStripSeparator15,
+			this.contentMenuSendItemCopyIDs});
         	this.contextMenuSend.Name = "contextMenuSend";
-        	this.contextMenuSend.Size = new System.Drawing.Size(162, 142);
+        	this.contextMenuSend.Size = new System.Drawing.Size(162, 120);
         	// 
         	// contentMenuSendItem1
         	// 
@@ -787,13 +785,6 @@
         	this.contentMenuSendItemX.Size = new System.Drawing.Size(161, 22);
         	this.contentMenuSendItemX.Text = "发送自定义数量";
         	this.contentMenuSendItemX.Click += new System.EventHandler(this.ContentMenuSendItemXClick);
-        	// 
-        	// contentMenuSendItemSItem
-        	// 
-        	this.contentMenuSendItemSItem.Name = "contentMenuSendItemSItem";
-        	this.contentMenuSendItemSItem.Size = new System.Drawing.Size(161, 22);
-        	this.contentMenuSendItemSItem.Text = "发送特殊物品";
-        	this.contentMenuSendItemSItem.Click += new System.EventHandler(this.ContentMenuSendItemSItemClick);
         	// 
         	// toolStripSeparator15
         	// 
@@ -832,7 +823,7 @@
         	// tb_logcat
         	// 
         	this.tb_logcat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-        	        	        	| System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Right)));
         	this.tb_logcat.Location = new System.Drawing.Point(394, 574);
         	this.tb_logcat.Multiline = true;
         	this.tb_logcat.Name = "tb_logcat";
@@ -925,7 +916,7 @@
         	// list_mail_send
         	// 
         	this.list_mail_send.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-        	        	        	this.columnHeader3});
+			this.columnHeader3});
         	this.list_mail_send.ContextMenuStrip = this.contextMenuMail;
         	this.list_mail_send.Dock = System.Windows.Forms.DockStyle.Fill;
         	this.list_mail_send.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -949,10 +940,10 @@
         	// contextMenuMail
         	// 
         	this.contextMenuMail.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-        	        	        	this.contentMenuRefreshMail,
-        	        	        	this.toolStripSeparator7,
-        	        	        	this.contentMenuDeleteMail,
-        	        	        	this.contentMenuDeleteAllMails});
+			this.contentMenuRefreshMail,
+			this.toolStripSeparator7,
+			this.contentMenuDeleteMail,
+			this.contentMenuDeleteAllMails});
         	this.contextMenuMail.Name = "contextMenuMail";
         	this.contextMenuMail.Size = new System.Drawing.Size(149, 76);
         	// 
@@ -995,7 +986,7 @@
         	// list_mail_user
         	// 
         	this.list_mail_user.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-        	        	        	this.columnHeader4});
+			this.columnHeader4});
         	this.list_mail_user.ContextMenuStrip = this.contextMenuMail;
         	this.list_mail_user.Dock = System.Windows.Forms.DockStyle.Fill;
         	this.list_mail_user.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1019,8 +1010,8 @@
         	// tab_items
         	// 
         	this.tab_items.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-        	        	        	| System.Windows.Forms.AnchorStyles.Left) 
-        	        	        	| System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
         	this.tab_items.ContextMenuStrip = this.contextMenuOther;
         	this.tab_items.Controls.Add(this.tab_items_normal);
         	this.tab_items.Controls.Add(this.tab_items_cash);
@@ -1036,12 +1027,12 @@
         	// contextMenuOther
         	// 
         	this.contextMenuOther.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-        	        	        	this.contentMenuOtherRefresh,
-        	        	        	this.toolStripSeparator11,
-        	        	        	this.contentMenuOtherCount,
-        	        	        	this.contentMenuOtherUnlimit,
-        	        	        	this.toolStripSeparator14,
-        	        	        	this.contentMenuOtherDelete});
+			this.contentMenuOtherRefresh,
+			this.toolStripSeparator11,
+			this.contentMenuOtherCount,
+			this.contentMenuOtherUnlimit,
+			this.toolStripSeparator14,
+			this.contentMenuOtherDelete});
         	this.contextMenuOther.Name = "contextMenuOther";
         	this.contextMenuOther.Size = new System.Drawing.Size(125, 104);
         	// 
@@ -1109,13 +1100,13 @@
         	// 
         	this.list_items_cash.BackColor = System.Drawing.SystemColors.Window;
         	this.list_items_cash.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-        	        	        	this.columnHeader5,
-        	        	        	this.columnHeader14,
-        	        	        	this.columnHeader6,
-        	        	        	this.columnHeader7,
-        	        	        	this.columnHeader8,
-        	        	        	this.columnHeader9,
-        	        	        	this.columnHeader10});
+			this.columnHeader5,
+			this.columnHeader14,
+			this.columnHeader6,
+			this.columnHeader7,
+			this.columnHeader8,
+			this.columnHeader9,
+			this.columnHeader10});
         	this.list_items_cash.ContextMenuStrip = this.contextMenuCashItem;
         	this.list_items_cash.Dock = System.Windows.Forms.DockStyle.Fill;
         	this.list_items_cash.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1170,19 +1161,19 @@
         	// contextMenuCashItem
         	// 
         	this.contextMenuCashItem.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-        	        	        	this.contentMenuCashRefresh,
-        	        	        	this.toolStripSeparator13,
-        	        	        	this.contentMenuCashUnlimit,
-        	        	        	this.contentMenuCashCount,
-        	        	        	this.contentMenuCashInnerEnchant,
-        	        	        	this.contentMenuItemMaxScore,
-        	        	        	this.toolStripSeparator10,
-        	        	        	this.contentMenuCashColor1,
-        	        	        	this.contentMenuCashColor2,
-        	        	        	this.contentMenuCashColor3,
-        	        	        	this.contentMenuCashColorAll,
-        	        	        	this.toolStripSeparator9,
-        	        	        	this.contentMenuCashDelete});
+			this.contentMenuCashRefresh,
+			this.toolStripSeparator13,
+			this.contentMenuCashUnlimit,
+			this.contentMenuCashCount,
+			this.contentMenuCashInnerEnchant,
+			this.contentMenuItemMaxScore,
+			this.toolStripSeparator10,
+			this.contentMenuCashColor1,
+			this.contentMenuCashColor2,
+			this.contentMenuCashColor3,
+			this.contentMenuCashColorAll,
+			this.toolStripSeparator9,
+			this.contentMenuCashDelete});
         	this.contextMenuCashItem.Name = "contextMenuCashItem";
         	this.contextMenuCashItem.Size = new System.Drawing.Size(149, 242);
         	// 
@@ -1283,10 +1274,10 @@
         	// 
         	this.list_items_quest.BackColor = System.Drawing.SystemColors.Window;
         	this.list_items_quest.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-        	        	        	this.columnHeader2,
-        	        	        	this.columnHeader11,
-        	        	        	this.columnHeader13,
-        	        	        	this.columnHeader19});
+			this.columnHeader2,
+			this.columnHeader11,
+			this.columnHeader13,
+			this.columnHeader19});
         	this.list_items_quest.ContextMenuStrip = this.contextMenuOther;
         	this.list_items_quest.Dock = System.Windows.Forms.DockStyle.Fill;
         	this.list_items_quest.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1336,10 +1327,10 @@
         	// 
         	this.list_items_other.BackColor = System.Drawing.SystemColors.Window;
         	this.list_items_other.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-        	        	        	this.columnHeader20,
-        	        	        	this.columnHeader21,
-        	        	        	this.columnHeader22,
-        	        	        	this.columnHeader26});
+			this.columnHeader20,
+			this.columnHeader21,
+			this.columnHeader22,
+			this.columnHeader26});
         	this.list_items_other.ContextMenuStrip = this.contextMenuOther;
         	this.list_items_other.Dock = System.Windows.Forms.DockStyle.Fill;
         	this.list_items_other.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1541,7 +1532,7 @@
         	this.btnResetSearch.Enabled = false;
         	this.btnResetSearch.Location = new System.Drawing.Point(988, 621);
         	this.btnResetSearch.Name = "btnResetSearch";
-        	this.btnResetSearch.Size = new System.Drawing.Size(110, 32);
+        	this.btnResetSearch.Size = new System.Drawing.Size(227, 32);
         	this.btnResetSearch.TabIndex = 11;
         	this.btnResetSearch.Text = "重置搜索条件";
         	this.btnResetSearch.UseVisualStyleBackColor = true;
@@ -1596,10 +1587,10 @@
         	this.tab_color.PerformLayout();
         	this.ResumeLayout(false);
         	this.PerformLayout();
+
         }
         private System.Windows.Forms.ToolStripMenuItem contentMenuSendItemX;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
-        private System.Windows.Forms.ToolStripMenuItem contentMenuSendItemSItem;
         private System.Windows.Forms.Button btnResetSearch;
         private System.Windows.Forms.ToolStripMenuItem contentMenuCashUnlimit;
         private System.Windows.Forms.ToolStripMenuItem contentMenuItemMaxScore;

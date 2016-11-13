@@ -454,32 +454,31 @@ namespace GMTool
 		{
 			SendSelectItems(5);
 		}
-        
-        private void ContentMenuSendItemSItemClick(object sender, EventArgs e)
-        {
-        	if (!CheckUser()) return;
-        	ItemClassInfo item = list_search.GetSelectItem<ItemClassInfo>();
-        	if(item==null){
-        		return;
-        	}
-        	SendSItem(item);
-        }
-        
-        private void ContentMenuSendItemXClick(object sender, EventArgs e)
-        {
-        	using(SendItemDialog dlg=new SendItemDialog(this)){
-        		if(dlg.ShowDialog() == DialogResult.OK){
-        			int count = dlg.Count;
-        			SendSelectItems(count);
-        		}
-        	}
-        }
-        private void SendSItem(ItemClassInfo item){
-        	if(item==null){
-        		return;
-        	}
-        	MessageBox.Show(item.Name);
-        }
+		
+		private void ContentMenuSendItemXClick(object sender, EventArgs e)
+		{
+			using(SendItemDialog dlg=new SendItemDialog(this)){
+				if(dlg.ShowDialog() == DialogResult.OK){
+					int count = dlg.Count;
+					SendSelectItems(count);
+				}
+			}
+		}
+		private void SendSItem(ItemClassInfo item,int count){
+			if(item==null){
+				return;
+			}
+			MessageBox.Show(item.Name);
+			using(SendItemDialog dlg=new SendItemDialog(this)){
+				dlg.Title ="请输入一个数字（将替换"+item.Name+"的{0}）";
+				if(dlg.ShowDialog() == DialogResult.OK){
+					int var = dlg.Count;
+					if(this.SendItem(CurUser, count, item.ItemClass, item.Name, ""+var)>0){
+						log("发送" + item.Name + "成功");
+					}
+				}
+			}
+		}
 		private void SendSelectItems(int count)
 		{
 			if (!CheckUser()) return;
@@ -498,7 +497,7 @@ namespace GMTool
 			else
 			{
 				if(items.Length==1){
-					SendSItem(items[0]);
+					SendSItem(items[0], count);
 				}else{
 					this.Warnning("含有特殊物品，不能批量发送。\n名字带有{0}都是特殊物品");
 				}
@@ -667,14 +666,14 @@ namespace GMTool
 				}
 			}
 		}
-		        
-        private void BtnResetSearchClick(object sender, EventArgs e)
-        {
-        	this.cb_maincategory.SelectedIndex = 0;
-        	this.cb_subcategory.SelectedIndex =0;
-        	this.tb_senditem_class.Text="";
-        	this.tb_senditem_name.Text="";
-        }
+		
+		private void BtnResetSearchClick(object sender, EventArgs e)
+		{
+			this.cb_maincategory.SelectedIndex = 0;
+			this.cb_subcategory.SelectedIndex =0;
+			this.tb_senditem_class.Text="";
+			this.tb_senditem_name.Text="";
+		}
 
 		#endregion
 
