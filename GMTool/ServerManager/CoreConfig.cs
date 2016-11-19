@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using System.Diagnostics;
 
 namespace ServerManager
 {
@@ -18,6 +19,8 @@ namespace ServerManager
         public string SqlServer;
 		public int WebPort;
 		public string WebRoot;
+		public ProcessPriorityClass ServerPriority;
+		public ProcessPriorityClass ClientPriority;
         [XmlArray("DataBases")]
         [XmlArrayItem("item")]
         public List<string> DataBases;

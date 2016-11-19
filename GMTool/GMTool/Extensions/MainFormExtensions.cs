@@ -215,7 +215,7 @@ namespace GMTool
 				main.Error("重置副本出错\n"+e);
 			}
 		}
-		public static List<long> GetTitles(this MainForm main,User user){
+		public static List<long> GetTitles(this MainForm main,User user=null){
 			List<long> titles=new List<long>();
 			using(DbDataReader reader=db.GetReader("select TitleID from Title where Acquired =1 and CID="+user.CID)){
 				while(reader!=null&&reader.Read()){

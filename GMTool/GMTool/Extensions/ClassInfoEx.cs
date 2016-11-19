@@ -102,7 +102,11 @@ namespace GMTool.Extensions
 			| (int)ClassInfo.Arisha;
 		public const int ALL_20150922 = ALL | (int)ClassInfo.Hagie;
 		public const int ALL_20160203 = ALL_20150922 | (int)ClassInfo.Delia;
-		
+			public static bool IsEnable(this ClassInfo user,int ClassRestriction){
+            if (ClassRestriction == 0) return true;
+            int cls = (int)user;
+			return (cls & ClassRestriction) == cls;
+		}
 		public static bool IsEnable(this User user,int ClassRestriction){
             if (ClassRestriction == 0) return true;
             int cls = (int)user.Class;

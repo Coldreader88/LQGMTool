@@ -53,6 +53,7 @@ namespace GMTool
 			this.list_search.Items.Clear();
 			this.tb_logcat.Text = "";
 			this.AddTypes(this.cb_maincategory, this.cb_subcategory);
+			this.AddTitles(this.contentMenuUserAddTitle);
 		}
 
 		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -689,7 +690,7 @@ namespace GMTool
 				this.Text = this.DefTitle + "  -  角色：" + user.Name;
 				ReadMails();
 				ReadPackage(PackageType.All);
-				this.AddTitles(this.contentMenuUserAddTitle, this.GetTitles(CurUser));
+				this.HideAddTitles(user, this.contentMenuUserAddTitle);
 				this.AddClasses(CurUser, this.contentMenuUserClasses);
 				this.AddSkillBouns(CurUser, this.contentMenuItemMaxScore, this.list_items_cash);
 			}

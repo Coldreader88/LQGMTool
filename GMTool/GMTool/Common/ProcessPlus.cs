@@ -25,6 +25,7 @@ namespace GMTool.Common
 		public IntPtr Window{get;private set;}
 		public bool IsShow{get;private set;}
 		public Action<string,string,bool> OnExitEvent;
+		public ProcessPriorityClass Priority= ProcessPriorityClass.Normal;
 		
 		public ProcessPlus(string title,string path,string args)
 		{
@@ -41,17 +42,17 @@ namespace GMTool.Common
 		}
 		public IntPtr GetWindow()
 		{
-            if (process == null)
-                return IntPtr.Zero;
-            if (Window == IntPtr.Zero){
+			if (process == null)
+				return IntPtr.Zero;
+			if (Window == IntPtr.Zero){
 				Window = User32.GetWindowByPid(process.Id);
 			}
 			return Window;
 		}
 		public bool Show()
 		{
-            if (IsShow) return true;
-            GetWindow();
+			if (IsShow) return true;
+			GetWindow();
 			if (Window != IntPtr.Zero)
 			{
 				return (IsShow=User32.ShowWindowAsync(Window, User32.SW_SHOW));
@@ -60,7 +61,7 @@ namespace GMTool.Common
 		}
 		public bool Hide()
 		{
-            if (!IsShow) return true;
+			if (!IsShow) return true;
 			GetWindow();
 			if (Window != IntPtr.Zero)
 			{
@@ -97,16 +98,18 @@ namespace GMTool.Common
 			};
 			try{
 				process.Start();
-				process.PriorityClass = ProcessPriorityClass.High;
+				if((int)Priority > 0){
+					process.PriorityClass = Priority;
+				}
 //				StringBuilder sbText = new StringBuilder(200);
 //				User32.GetWindowText(Window,sbText ,200);
 //				Title = sbText.ToString();
 				return true;
 			}catch(Exception e){
-                process.Close();
-                process = null;
-                isRunning = false;
-                MessageBox.Show(ExePath + "\n"+e, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				process.Close();
+				process = null;
+				isRunning = false;
+				MessageBox.Show(ExePath + "\n"+e, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 			return false;
 		}

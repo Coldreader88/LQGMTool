@@ -46,7 +46,7 @@ namespace ServerManager
 			if(isStart){
 				if(!this.Question("服务端正在运行，是否强制退出？")){
 					e.Cancel = true;
-	//				this.WindowState = FormWindowState.Minimized;
+					//				this.WindowState = FormWindowState.Minimized;
 					return;
 				}
 			}
@@ -285,7 +285,7 @@ namespace ServerManager
 							if (a.Disable) continue;
 							// apps.Add(a);
 							a.Path = app.Path;
-							ProcessPanel p = new ProcessPanel(a, width);
+							ProcessPanel p = new ProcessPanel(a, width,Config.ServerPriority);
 							p.OnProcessExit = onProcessExit;
 							ProcessPanels.Add(p);
 							this.layoutMain.Controls.Add(p);
@@ -294,7 +294,7 @@ namespace ServerManager
 					else
 					{
 						//apps.Add(app);
-						ProcessPanel p = new ProcessPanel(app, width);
+						ProcessPanel p = new ProcessPanel(app, width,Config.ServerPriority);
 						p.OnProcessExit = onProcessExit;
 						ProcessPanels.Add(p);
 						this.layoutMain.Controls.Add(p);
@@ -421,6 +421,13 @@ namespace ServerManager
 				this.WindowState = FormWindowState.Minimized;
 			}catch(Exception e){
 				this.Error("启动游戏失败。\n"+(path+" "+arg)+"\n"+e);
+			}
+			if((int)Config.ClientPriority > 0){
+				try{
+					process.PriorityClass = Config.ClientPriority;
+				}catch{
+					
+				}
 			}
 		}
 	}

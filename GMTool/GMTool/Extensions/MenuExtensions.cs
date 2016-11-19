@@ -81,13 +81,62 @@ namespace GMTool
 		#endregion
 		
 		#region 头衔
-		public static void AddTitles(this MainForm main, ToolStripDropDownItem menuitem,List<long> titleIds)
+		static ClassInfo lastClass;
+		public static void HideAddTitles(this  MainForm main,User user, ToolStripDropDownItem menuitem){
+			if(user==null||lastClass == user.Class){
+				return;
+			}
+			List<long> titleIds= main.GetTitles(user);
+			lastClass = user.Class;
+			ToolStripItemCollection _items= menuitem.DropDownItems;
+			foreach(ToolStripItem _item in _items){
+				var titem = _item as ToolStripMenuItem;
+				if(titem == null){
+					continue;
+				}
+				int count = titem.DropDownItems.Count;
+				ToolStripItemCollection items= titem.DropDownItems;
+				foreach(ToolStripItem item2 in items){
+					var item = item2 as ToolStripMenuItem;
+					if(item == null){
+						continue;
+					}
+					item.Visible = true;
+					var info = item.Tag as TitleInfo;
+					if(info != null){
+						if (!lastClass.IsEnable(info.ClassRestriction))
+						{
+							item.Visible = false;
+							count--;
+						}
+						if (info.OnlyClass != ClassInfo.UnKnown)
+						{
+							if (lastClass != info.OnlyClass)
+							{
+								item.Visible = false;
+								count--;
+							}
+						}
+					}
+					if (titleIds!=null && titleIds.Contains(info.TitleID))
+					{
+						item.Checked = true;
+					}
+				}
+				if(count == 0){
+					_item.Visible = false;
+				}else{
+					_item.Visible = true;
+				}
+			}
+		}
+		public static void AddTitles(this MainForm main, ToolStripDropDownItem menuitem)
 		{
 			menuitem.DropDownItems.Clear();
 			TitleInfo[] titles = main.DataHelper.GetTitles();
 			int k = 0;
-			User user = main.CurUser;
-			if (user == null) return;
+//			User user = main.CurUser;
+//			if (user == null) return;
 			var level = new ToolStripMenuItem("lv." + (k * 10 + 1) + "-" + ((k + 1) * 10));
 			menuitem.DropDownItems.Add(level);
 			int max = 20;
@@ -105,7 +154,7 @@ namespace GMTool
 //						continue;
 //					}
 //				}
-				
+//				
 				if (cls.RequiredLevel <= (k + 1) * 10)
 				{
 					if (i % max == 0 && i >= max)
@@ -116,15 +165,10 @@ namespace GMTool
 					i++;
 					ToolStripMenuItem tsmi = new ToolStripMenuItemEx(cls.ToShortString());
 					tsmi.ToolTipText = cls.ToString();
-					if (titleIds.Contains(cls.TitleID))
-					{
-						tsmi.Checked = true;
-					}
-					else
-					{
 						tsmi.Click += (sender, e) => {
 							if (!main.CheckUser()) return;
-							if (!main.CurUser.IsEnable(cls.ClassRestriction)
+							User user = main.CurUser;
+							if (!user.IsEnable(cls.ClassRestriction)
 							    ||(cls.OnlyClass != ClassInfo.UnKnown && user.Class != cls.OnlyClass))
 							{
 								main.Info("该头衔不适合当前职业");
@@ -134,7 +178,6 @@ namespace GMTool
 							main.AddTitle(main.CurUser, cls);
 							main.ReadUsers();
 						};
-					}
 					level.DropDownItems.Add(tsmi);
 				}
 				else

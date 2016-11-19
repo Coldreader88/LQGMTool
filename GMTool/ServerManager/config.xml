@@ -17,6 +17,9 @@
   <!-- web服务 -->
   <WebPort>80</WebPort>
   <WebRoot>D:\LQServer\www</WebRoot>
+ <!-- Normal=32 High=128  BelowNormal=16384 AboveNormal=32768-->
+  <ServerPriority>Normal</ServerPriority>
+  <ClientPriority>High</ClientPriority>
   <!-- 数据库名 -->
   <DataBases>
     <item>heroes</item>

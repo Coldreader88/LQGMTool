@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.IO;
 using GMTool.Common;
 using System.Threading;
+using System.Diagnostics;
 
 namespace ServerManager
 {
@@ -18,18 +19,21 @@ namespace ServerManager
         public Action<ProcessPanel,string, string, bool> OnProcessExit;
         private StubApp App;
         SynchronizationContext m_SyncContext = null;
+        ProcessPriorityClass Priority;
         public ProcessPanel()
         {
             InitializeComponent();
             m_SyncContext = SynchronizationContext.Current;
         }
-        public ProcessPanel(StubApp app,int width)
+        public ProcessPanel(StubApp app,int width,ProcessPriorityClass priority = ProcessPriorityClass.Normal)
         {
             InitializeComponent();
             int h = this.Size.Height;
             this.Size = new Size(width, h);
+            Priority = priority;
             SetApp(app);
         }
+        
         public void SetApp(StubApp app)
         {
             this.App = app;
@@ -47,6 +51,7 @@ namespace ServerManager
                 }
                 toolTip1.SetToolTip(btnProcessTitle, btnProcessTitle.Text+"\n"+app.Path+"\n"+app.Args);
                 process = new ProcessPlus(app.Path, app.Args);
+                process.Priority = Priority;
                 process.OnExitEvent += delegate (string path, string arg, bool error) {
                     UpdateStatus();
                     if (OnProcessExit != null)
