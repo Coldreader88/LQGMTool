@@ -130,7 +130,7 @@ namespace GMTool
 				}
 			}
 		}
-		public static void AddTitles(this MainForm main, ToolStripDropDownItem menuitem)
+		public static void InitTitles(this MainForm main, ToolStripDropDownItem menuitem)
 		{
 			menuitem.DropDownItems.Clear();
 			TitleInfo[] titles = main.DataHelper.GetTitles();

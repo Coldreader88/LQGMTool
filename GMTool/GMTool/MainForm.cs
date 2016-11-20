@@ -53,7 +53,6 @@ namespace GMTool
 			this.list_search.Items.Clear();
 			this.tb_logcat.Text = "";
 			this.AddTypes(this.cb_maincategory, this.cb_subcategory);
-			this.AddTitles(this.contentMenuUserAddTitle);
 		}
 
 		private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -117,6 +116,7 @@ namespace GMTool
 					this.InitEnchantMenu(this.contentMenuEnchantPrefix, this.contentMenuEnchantSuffix, this.list_items_normal);
 					this.InitCashEnchantMenu(this.contentMenuCashInnerEnchant, this.list_items_cash);
 					this.InitModAttrMenu(this.contentMenuUserModAttr);
+					this.InitTitles(this.contentMenuUserAddTitle);
 					//this.InitEnchantMenu(this.contentMenuCashInnerEnchant, null);
 				}
 				if (this.connectDataBase(this.tb_mssql_server.Text, this.tb_mssql_user.Text, this.tb_mssql_pwd.Text, this.tb_mssql_db.Text))
