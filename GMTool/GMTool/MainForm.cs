@@ -690,7 +690,7 @@ namespace GMTool
 				this.Text = this.DefTitle + "  -  角色：" + user.Name;
 				ReadMails();
 				ReadPackage(PackageType.All);
-				this.HideAddTitles(user, this.contentMenuUserAddTitle);
+				this.HideAddTitles(CurUser, this.contentMenuUserAddTitle);
 				this.AddClasses(CurUser, this.contentMenuUserClasses);
 				this.AddSkillBouns(CurUser, this.contentMenuItemMaxScore, this.list_items_cash);
 			}
