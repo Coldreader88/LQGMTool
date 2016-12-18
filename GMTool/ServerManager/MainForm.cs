@@ -30,6 +30,7 @@ namespace ServerManager
 		CoreConfig Config;
 		string ConfigPath;
 		List<ProcessPanel> ProcessPanels;
+		private int Pid;
 		public MainForm(string path = null)
 		{
 			LastPath = Application.StartupPath;
@@ -418,6 +419,8 @@ namespace ServerManager
 			process.StartInfo.Arguments = arg;
 			try{
 				process.Start();
+				Keys.F10
+				Pid = process.Id;
 				this.WindowState = FormWindowState.Minimized;
 			}catch(Exception e){
 				this.Error("启动游戏失败。\n"+(path+" "+arg)+"\n"+e);

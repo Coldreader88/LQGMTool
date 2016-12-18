@@ -218,7 +218,7 @@ namespace GMTool.Helper
 		private void ReadTitles(SQLiteHelper db,HeroesTextHelper HeroesText){
 			List<TitleInfo> titles=new List<TitleInfo>();
 			using (DbDataReader reader = db.GetReader(
-				"select ts.titleid,ti.description as name,feature,tg.description,category,autogivelevel,requiredlevel,classrestriction" +
+				"select ts.titleid,ti.description as name,feature,tg.description,category,autogivelevel,requiredlevel,classrestriction,tg.targetcount as tcount" +
 				" from (titlestatinfo as ts left join titleinfo as ti on  ts.titleid = ti.id )"+
 				" left join titlegoalinfo as tg on tg.titleid=ts.titleid"+
 				" group by ts.titleid order by requiredlevel"))

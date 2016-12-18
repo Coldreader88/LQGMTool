@@ -342,18 +342,18 @@ namespace GMTool
 						continue;
 					}
 				}
-				count += UserAddTitle(main, user, cls.TitleID);
+				count += UserAddTitle(main, user, cls.TitleID, cls.TotalCount);
 			}
 			return count;
 		}
 		
 		public static bool AddTitle(this MainForm main,User user,TitleInfo title){
-			return UserAddTitle(main, user, title.TitleID)>0;
+			return UserAddTitle(main, user, title.TitleID, title.TotalCount)>0;
 		}
-		public static int UserAddTitle(this MainForm main,User user,long titleId){
+		public static int UserAddTitle(this MainForm main,User user,long titleId,int value){
 			//[Title]
 
-			string strSQL = "update Title set Acquired = 1 , AcquiredTime='"+DateTime.Now.ToString()
+			string strSQL = "update Title set Acquired = 1 , AcquiredTime='"+DateTime.Now
 				+"' WHERE CID =" + user.CID+" and TitleID="+titleId;
 			try
 			{
@@ -367,8 +367,15 @@ namespace GMTool
 					                     user.CID+","+
 					                     titleId+","+
 					                     "1,'"+
-					                     DateTime.Now.ToString()+"',NULL,NULL"+
-					                     ")");
+					                     DateTime.Now+"',NULL,NULL"+
+					                     ");");
+				}
+				if(value > 0){
+					long id = titleId - 400000;
+					if(db.ExcuteSQL("UPDATE TitleGoalProgress SET Progress='"+value+"' WHERE CID='"+user.CID+
+					                "' AND TitleGoalID='"+id+"';")==0){
+						db.ExcuteSQL("INSERT INTO TitleGoalProgress (CID, TitleGoalID, Progress) VALUES ('"+user.CID+"', '"+id+"', '"+value+"');");
+					}
 				}
 				//清空记录
 				//strSQL = "delete from TitleGoalProgress "+
@@ -378,7 +385,7 @@ namespace GMTool
 			}
 			catch (Exception exception)
 			{
-				main.Error("获取全部头衔\n" + exception);
+				main.Error("获取头衔\n" + exception);
 			}
 			return 0;
 		}

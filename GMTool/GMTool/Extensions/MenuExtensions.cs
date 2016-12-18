@@ -83,7 +83,7 @@ namespace GMTool
 		#region 头衔
 		static ClassInfo lastClass;
 		public static void HideAddTitles(this  MainForm main,User user, ToolStripDropDownItem menuitem){
-			if(user==null||lastClass == user.Class||menuitem==null){
+			if(user==null||menuitem==null){
 				return;
 			}
 			lastClass = user.Class;
@@ -178,8 +178,11 @@ namespace GMTool
 							return;
 						}
 						//
-						main.AddTitle(main.CurUser, cls);
-						main.ReadUsers();
+						if(!main.AddTitle(main.CurUser, cls)){
+							main.Warnning("添加头衔失败");
+						}else{
+							main.ReadUsers();
+						}
 					};
 					level.DropDownItems.Add(tsmi);
 				}

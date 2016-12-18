@@ -28,6 +28,7 @@ namespace GMTool.Bean
 		public int RequiredLevel{get;private set;}
 		public int ClassRestriction{get;private set;}
 		public string Feature{get;private set;}
+		public int TotalCount{get;private set;}
 		public ClassInfo OnlyClass{get;private set;}
 		/// <summary>
 		/// 属性
@@ -57,6 +58,7 @@ namespace GMTool.Bean
 			this.AutoGiveLevel = reader.ReadInt32("AutoGiveLevel");
 			this.RequiredLevel = reader.ReadInt32("RequiredLevel");
 			this.ClassRestriction = reader.ReadInt32("ClassRestriction",-1);
+			this.TotalCount = reader.ReadInt32("tcount", -1);
 			this.Effect="";
 		}
 		
@@ -83,7 +85,7 @@ namespace GMTool.Bean
 		}
 		public override string ToString()
 		{
-			return Name+(OnlyClass!=ClassInfo.UnKnown? "[" + OnlyClass.Name()+"专属]":"")+
+			return "("+TitleID+")"+Name+(OnlyClass!=ClassInfo.UnKnown? "[" + OnlyClass.Name()+"专属]":"")+
 				"\n"+Description
 //				+"\n等级限制："+RequiredLevel+"\n职业限制："+ClassInfoEx.GetClassText(ClassRestriction)
 				+"\n"+Effect;

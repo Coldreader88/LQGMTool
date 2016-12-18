@@ -308,7 +308,6 @@ namespace GMTool
 		private void AddUserList(List<User> users)
 		{
 			int count = users.Count;
-			//TODO
 			this.list_users.BeginUpdate();
 			this.list_users.Items.Clear();
 			this.tab_user.Text = this.tab_user.Text.Split(' ')[0] + " (" + count + ")";
